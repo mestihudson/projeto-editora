@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Produto > Cadastrar Livro" styleClass="title" rendered="#{empty produtoBean.produto.id}" style="line-height: 20px;" />
+		<h:outputText value="Produto > Editar Livro" styleClass="title" rendered="#{not empty produtoBean.produto.id}" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" />
+	</div>
+	</ui:define>
+
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;" align="center">
+		
+		<h:form rendered="#{loginBean.usuario.perfil.id==3}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+
+		
+		</div>
+		</h:form>	
+		
+			<h:form id="form_cadastrar_produto" rendered="#{loginBean.usuario.perfil.id!=3}">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="CADASTRAR LIVRO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{empty produtoBean.produto.id}" />
+				<h:outputText value="EDITAR LIVRO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{not empty produtoBean.produto.id}" />
+			</div>
+			
+			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
+			
+			<h:panelGrid id="botton" columns="2" style="float: right;">
+			
+				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaProduto.show();" style="float: right; cursor: pointer;"
+					title="Editar Produto" />
+			
+				<h:graphicImage value="/resources/img/tipo.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
+					title="Adicionar Novo Tipo de Produto" />
+			
+			</h:panelGrid>
+											
+					<h:panelGrid id="grid" columns="5">
+					
+					<h:outputLabel value="Tipo do Produto" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<h:outputLabel value="#{produtoBean.produto.tipo.nome}" rendered="#{not empty produtoBean.produto.id}" />
+					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{empty produtoBean.produto.id}"
+					required="true" requiredMessage="Informe o tipo" styleClass="input">
+						<f:selectItems value="#{tipoProdutoBean.id1}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
+							<f:ajax event="blur" render="error_nome_tipo" />
+					</p:selectOneMenu>
+					<p:message id="error_nome_tipo" for="prod_tipo" />
+					<br /><br />
+					  
+					<h:outputLabel value="Título da Obra" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe o título da obra"
+					styleClass="input" maxlength="40">
+						<f:ajax event="blur" render="error_nome" />
+					</p:inputTextarea>
+					<p:message id="error_nome" for="prod_nome" />
+					<br /><br />
+										
+					<h:outputLabel value="Autor" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:autoComplete id="prod_autor" value="#{produtoBean.produto.autor}" size="31"
+					required="true" requiredMessage="Informe o autor do livro" completeMethod="#{produtoBean.autocompleteautor}" minQueryLength="4" maxResults="1" queryDelay="30" var="a" itemLabel="#{a}"
+					itemValue="#{a}" validatorMessage="Informe corretamente o autor" >
+						<f:ajax event="blur" render="error_autor" />
+						<f:validateLength minimum="5" />
+					</p:autoComplete>
+					<p:message id="error_autor" for="prod_autor" />
+					<br /><br />
+					
+					<h:outputLabel value="Editora" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:autoComplete id="prod_editora" value="#{produtoBean.produto.editora}" styleClass="input" 
+					completeMethod="#{produtoBean.autocompleteeditora}" size="31"
+					minQueryLength="2" maxResults="1" queryDelay="30" var="e" itemLabel="#{e}" itemValue="#{e}"
+					required="true" requiredMessage="Informe a editora do livro" validatorMessage="Informe corretamente a editora">
+						<f:ajax event="blur" render="error_editora" />
+						<f:validateLength minimum="5" />
+					</p:autoComplete>
+					<p:message id="error_editora" for="prod_editora" />
+					<br /><br />
+					
+					<h:outputLabel value="Categoria" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:autoComplete id="prod_categoria" value="#{produtoBean.produto.categoria}" styleClass="input"
+					required="true" requiredMessage="Informe a categoria do livro" completeMethod="#{produtoBean.autocompletecategoria}" size="31" minQueryLength="2" maxResults="1" queryDelay="1"
+					var="c" itemValue="#{c}" itemLabel="#{c}" validatorMessage="Informe corretamente a categoria">
+						<f:ajax event="blur" render="error_categoria" />
+						<f:validateLength minimum="5" />
+					</p:autoComplete>
+					<p:message id="error_categoria" for="prod_categoria" />
+					<br /><br />
+					
+					<h:outputLabel value="ISBN" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
+					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números">
+						<f:validateLength maximum="13" minimum="13" />
+						<f:ajax event="blur" render="error_codigobarra" />
+					</p:inputText>
+					<p:message id="error_codigobarra" for="prod_isbn" />
+										
+					</h:panelGrid><br /><br />
+										
+					</fieldset>										
+			
+			<div style="background: #C4D2EB; height: 28px;" align="center">
+				<p:commandButton action="#{produtoBean.addProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{empty produtoBean.produto.id}"
+				update="@form">
+						<f:ajax render="@form" />
+					</p:commandButton>
+					
+				<p:commandButton action="#{produtoBean.alterProduto}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{not empty produtoBean.produto.id}"
+				update="@form">
+						<f:ajax render="@form" />
+					</p:commandButton>&nbsp;
+					
+				<p:commandButton action="cadastrarProduto.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />	
+			</div><br />
+						
+			<div align="center" style="float: center; text-align: center;">
+				<h:outputLabel value="Os Campos Com " styleClass="OutPut" /><h:graphicImage value="/resources/img/as.png" />
+				<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
+			</div>
+
+				<div align="left" style="width: 350px; margin-right: 500px;">
+					<p:messages autoUpdate="true" />
+				</div>
+
+			</h:form>								
+			
+		</div>
+		
+		<!-- 			Aqui começa o dialog Add Tipo -->
+			
+			<p:dialog header="Adicionar Tipo de Produto" widgetVar="dlgTipoProduto" resizable="false" modal="true" closable="false" showEffect="fold">
+				<h:form id="form_dialog_tipo">
+				
+				<h:panelGrid id="grid" columns="4">
+					  
+					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" />
+					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="Informe o nome do tipo de produto">
+						<f:ajax event="change" />
+					</p:inputText>
+															
+				</h:panelGrid>
+					<br />
+
+					<p:commandButton action="#{tipoProdutoBean.addTipoProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check">
+						<f:ajax render="@all" />
+					</p:commandButton>&nbsp;
+					
+					<p:commandButton type="reset" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true">
+						<f:ajax render="@all" />
+					</p:commandButton>	
+							
+				</h:form>
+				
+			</p:dialog>	
+			
+<!-- 			Aqui começa o dialog para Editar Produto -->
+			
+			<p:dialog header="Editar Livro" 
+			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
+				<h:form id="form_dialog_edita">
+					
+					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos">
+					
+						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
+							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
+								id="link_codigo">
+								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+							</h:commandLink>
+						</p:column>	
+						
+						<p:column headerText="Produto" filterBy="#{p.nome}" filterMatchMode="contains" style="text-align: center;">
+							<h:commandLink value="#{p.nome}" onclick="dlgEditaProduto.hide()"
+								id="link_codigo2">
+								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+							</h:commandLink>
+						</p:column>			
+					
+					</p:dataTable>
+				
+				
+				</h:form>
+			</p:dialog>	
+	</ui:define>
+</ui:composition>
+</html>
