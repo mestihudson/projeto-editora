@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Consultar Fornecedor" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" ></div>	
+	</div>
+	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;">
+		
+			<h:form id="form_consultar_fornecedor">
+			
+			<fieldset style="border-color: #F8F8FF; border-top: white;">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="CONSULTAR FORNECEDOR" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>
+			
+			<h:outputText value="Nome do Fornecedor: " />
+				<p:autoComplete value="#{fornecedorBean.fornecedor.nome}" completeMethod="#{fornecedorBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" 
+				minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar"/>
+		
+	 			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{fornecedorBean.getListaFornecedoresByName}" ajax="false"  />
+	 			<br /><br />
+	 			
+			
+			<p:dataTable id="list" value="#{fornecedorBean.fornecedores}"
+					var="f"  emptyMessage="" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					
+<!-- 					o display é o h:panelGrid com os dados do fornecedor -->
+					
+<!-- 					<p:column style="text-align: center; float: center;"> -->
+<!-- 						<p:commandButton id="selectButton" update=":form2:display"  -->
+<!-- 						icon="ui-icon-search" title="Detalhar">   -->
+<!--                 			<f:setPropertyActionListener -->
+<!-- 											target="#{fornecedorBean.fornecedor}" value="#{fornecedor}" /> -->
+<!--             			</p:commandButton> -->
+<!-- 					</p:column> -->
+					
+					<p:column style="text-align: center;" headerText="CNPJ">
+						<h:outputText value="#{f.cnpj}" /> 
+					</p:column>
+					
+					<p:column headerText="Razão Social / Nome Fantasia">
+						<h:outputText value="#{f.nome}" /> 
+					</p:column>
+					
+					<p:column style="text-align: center;" headerText="Porcent. Pagamento" width="10">
+						<h:outputText value="#{f.porcentagem}%" /> 
+					</p:column>
+					
+					<p:column headerText="Telefone 1">
+						<h:outputText value="#{f.telefone1}" /> 
+					</p:column>
+					
+					<p:column headerText="Telefone 2">
+						<h:outputText value="#{f.telefone2}" /> 
+					</p:column>
+					
+					<p:column headerText="Email">
+						<h:outputText value="#{f.email}" /> 
+					</p:column>
+					
+			</p:dataTable>	
+					
+			</fieldset>
+			
+			<p:messages id="msg" />
+			
+			</h:form>
+			
+		</div>
+		
+	</ui:define>		
+	
+</ui:composition>	
+</html>

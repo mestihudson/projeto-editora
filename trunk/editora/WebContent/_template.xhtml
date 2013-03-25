@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Sistema Editora</title>
+	<h:outputStylesheet name="leo.css" library="css" />
+	<h:outputScript name="mascaraTexto.js" library="js" />
+	<h:outputScript name="verifica.js" library="js" />
+	<h:outputScript name="numeros.js" library="js" />
+	<h:outputScript name="locale.js" library="js" />
+</h:head>
+
+<h:body styleClass="shadow">
+ 	
+	<div style="background: white;"  align="center">
+	
+	
+	<div style="background: #394674; width: 95%; height: 20px; line-height: 20px; text-align: left;">
+	<h:form>
+		<h:outputText value="UFRR - DTI - " style="margin-left: 10px; font-size: 15px; font-weight: bold; color: white;" />
+		<h:outputText value="Sistema de Vendas Editora" style="color: white; font-size: 13px;" />
+		
+		<div style="float: right">
+			<h:commandLink action="#{loginBean.sair}" value="SAIR" styleClass="cabecalho" immediate="true"
+			style="text-align: left; color: white; font-size: 12px; margin-right: 10px; font-weight: bold;" />	
+		</div>	
+	</h:form>
+
+	</div>
+	
+	<div id="rodape2">
+	
+	</div>
+		
+	<div style="background: #C4D2EB; height: 60px; width: 95%" align="right" id="menu">
+		
+		<h:outputText value="#{loginBean.usuario.pessoa.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px " />
+			
+			<p:graphicImage value="/resources/img/inicio.png" onclick="confirmation.show()" style="cursor: pointer; margin-top: 5px;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/cadastrar.png" onclick="dlgCad.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/venda.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/clubamigo.png" style="cursor: pointer; margin-right: 10px; " styleClass="acende" /><br />
+			<p:graphicImage value="/resources/img/estoque.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/relatorio.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/pesquisar.png" onclick="dlgPesquisa.show();" style="cursor: pointer; margin-right: 128px;" styleClass="acende" rendered="#{loginBean.usuario.perfil.id!=1}" />
+			<p:graphicImage value="/resources/img/pesquisar.png" onclick="dlgPesquisa.show();" style="cursor: pointer;" styleClass="acende" rendered="#{loginBean.usuario.perfil.id==1}" />&nbsp;
+			<p:graphicImage value="/resources/img/usuario.png" style="cursor: pointer; margin-right: 10px;" styleClass="acende" rendered="#{loginBean.usuario.perfil.id==1}" />
+		
+		<h:outputText value="UNIVERSIDADE FEDERAL DE RORAIMA" style="float: left; font-size: 13px; margin-left: 10px;" />
+		
+				
+	</div>
+	
+	<ui:insert name="head">
+	
+	</ui:insert>
+	<br /><br /><br />
+	
+	<div style="width: 95%; background: white;">
+				
+			<ui:insert name="body" />
+	
+	</div>
+		
+	<p:dialog modal="true" width="500" widgetVar="dlgCad" resizable="false" showEffect="fold">
+		<h:form>
+			
+			<div align="center">
+			<p:panel header="Módulo de Cadastro">
+				
+					<p:commandLink action="/pages/fornecedor/cadastrarFornecedor.xhtml?faces-redirect=true">
+						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;				
+				
+					<p:graphicImage style="cursor: pointer;" styleClass="acende"
+					 value="/resources/img/produto.png" onclick="dlgProduto.show();" />&nbsp;&nbsp;
+					
+					<p:commandLink>
+						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+					
+					<p:commandLink>
+						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+			
+			
+			</p:panel>
+			</div>	
+		</h:form>		
+	</p:dialog>		
+	
+	<p:dialog modal="true" width="500" widgetVar="dlgPesquisa" resizable="false" showEffect="explode">
+		<h:form id="form_pesquisa">
+			
+			<div align="center">
+			<p:panel header="Módulo de Consulta">
+				
+					<p:commandLink action="/pages/fornecedor/consultarFornecedor.xhtml?faces-redirect=true">
+						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;				
+				
+					<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
+						<p:graphicImage value="/resources/img/produto.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+					
+					<p:commandLink>
+						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+					
+					<p:commandLink>
+						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+			
+			
+			</p:panel>
+			</div>	
+		</h:form>		
+	</p:dialog>
+	
+	<p:dialog header="Tipo Produto" modal="true" width="300" widgetVar="dlgProduto" resizable="false" showEffect="fold">
+		<h:form>
+			
+			<div align="center">
+			
+				<h:panelGrid columns="2" cellspacing="10">	
+					<p:commandLink value="Livro" action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true" />			
+				
+					<p:commandLink value="Outros" action="/pages/produto/cadastrarProdutoOutros.xhtml?faces-redirect=true" />	
+				</h:panelGrid>	
+
+			</div>	
+		</h:form>		
+	</p:dialog>
+	
+	<p:confirmDialog id="confirmDialog" message="Deseja retornar a página inicial"  
+                severity="alert" widgetVar="confirmation"> 
+        <h:form id="form_bt">  
+        
+        <div align="center">       
+                  
+        	<p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide()" action="#{loginBean.redireciona}"  />  
+                    
+        	<p:commandButton id="decline" value="Não" onclick="confirmation.hide()" type="button" />
+        	
+        </div>	
+        
+        </h:form>   
+                  
+    </p:confirmDialog>  
+			
+	<div style="width: 95%; display: block;" align="center" />
+	<div id="rodape" style="background: #394674; width: 95%; height: 20px; line-height: 20px; text-align: center;">
+		&copy; Copyright 2013 &nbsp;&nbsp; UFRR - DTI - CSI
+	</div>
+	
+	</div>
+	</h:body>
+</html>

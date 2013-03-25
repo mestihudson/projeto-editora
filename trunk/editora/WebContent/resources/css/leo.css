@@ -1,0 +1,278 @@
+@charset "UTF-8";
+* { margin:0px; padding:0px; }
+a:LINK, a:VISITED {
+	text-decoration: none;
+}
+
+a:HOVER {
+	color: #4682B4;
+	text-decoration: underline;
+}
+
+a:ACTIVE {
+	text-decoration: none;
+}
+
+.shadow {
+	box-shadow: 10px 10px 45px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+body {
+	font-size: 10px;
+	line-height: 1.25em;
+	font-family: Verdana, sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+	width: 1100px;
+	float: center;
+	text-align: center;
+	margin: 0 auto;
+	height: auto;
+	background-image: url("../resources/img/background1.png");
+
+}
+
+.formulario {
+	padding: 0px;
+	font-family: Verdana, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	font-variant: small-caps;
+	color: white;
+	border: 1px solid #6A6A6A;
+	border-bottom: 0;
+	margin-right: 400px; 
+}
+
+.form {
+	padding: 0px;
+	font-family: Verdana, sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	margin-right: 400px;
+}
+
+#cancelar {
+	color: red;
+}
+
+#usuarioLogado {
+	float: center;
+	text-align: center;
+	color: #1874CD;
+	font-size: 13px;
+	font-weight: bolder;
+}
+
+form fieldset legend {
+	font-weight: bold;
+	padding: 0px 5px;
+	border: blue;
+}
+
+#links {
+	width: 135px;
+	float: center;
+	border: 0;
+}
+
+/* miolo */
+#conteudo, section {
+	width: 1100px;
+}
+
+/** cabeçalho **/
+#cabecalho {
+	text-align: center;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 10 10px;
+}
+
+/** rodape **/
+#rodape {
+	clear: both;
+	border-top: 4px solid #D99C44;
+	position: relative;
+	line-height: 2em;
+	color: #FFF;
+	text-align: center;
+	background: #404E82;
+	margin-top: 300px;
+	
+}
+
+#rodape3 {
+	clear: both;
+	border-top: 4px solid #D99C44;
+	position: relative;
+	line-height: 2em;
+	color: #FFF;
+	text-align: center;
+	background: #404E82;
+	margin-top: 100px;
+	
+}
+
+/** rodape **/
+#rodape2 {
+	clear: both;
+	border-top: 4px solid #D99C44;
+	position: relative;
+	line-height: 2em;
+	color: #FFF;
+	text-align: center;
+	background: #404E82;
+	width: 95%;
+}
+
+button {
+	font-size:10px; 
+	size: 12px; 
+}
+
+form {
+	margin-bottom: 10px;
+	position: relative;
+	text-align: left;
+}
+
+form .campos {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+/* validacao */
+.erros {
+	margin: 0 0 10px 0;
+	padding: 0 8px;
+	clear: both;
+	width: 100px;
+	height: 200px;
+	}
+	
+.erros li {
+	display: inline;
+	list-style-position: inside;
+	list-style-type: none;
+	color: #C22;
+	background: #FFDFDF;
+	border: 2px solid #DF7D7D;
+	float: left;
+	padding: 6px;
+	margin: 3px;	
+}
+
+#img {
+	width: 80px;
+	height: 80px;
+}
+
+#pfieldset {
+	float: left; 
+	text-align: left;
+	font-family: sans-serif;
+	text-align: justify;
+	font-size: 16px;
+}
+
+/* botão */
+.buton {
+	cursor:pointer;
+	margin-left: 100px;
+}
+
+.box {
+	padding: 20px;
+	width: 340px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	width: 300px;
+}
+
+.ui-datatable .ui-datatable-data .even-row td{  
+    background-color:#F0F9FF;  
+}  
+      
+.ui-datatable .ui-datatable-data .odd-row td{  
+    background-color:#DDDDDD;  
+}
+
+#titulo{
+	color: #1E90FF;
+	font-weight:bold;
+}
+
+/* Cor do outPutText Formulario */
+.OutPutForm {
+	font-weight: bold;
+	color: #394674;
+	margin-right: 400px;
+}
+
+/* Cor do outPutText */
+.OutPut {
+	font-weight: bold;
+	color: #394674
+}
+
+/* asterisco */
+.as {
+	font-weight: bold;
+	color: red;
+}
+
+.title {
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 20px;
+	color: #00369E;
+	top: 10px 10px;
+	line-height: 20px;
+}
+
+.input {
+	width: 180px;
+}
+
+/* Div */
+
+div#titulo {
+	background: #EFF3FA;
+	height: 26px;
+	width: 95%;
+	text-align: left;
+	line-height: 150px;
+}
+
+/* efeito a hover */
+img.acende {
+	color: #aacac7;
+	
+}
+
+img.acende:hover {
+	opacity: 200.0;
+	color: #aacac7;
+	-webkit-transition-duration: .10s;
+	-moz-transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	border-radius: 5%; /* Borde redondeado */
+	box-shadow: 0px 0px 15px #000; /* Sombra */
+}
+
+/* Tabela zebrada */
+
+.ui-datatable .ui-datatable-data .even-row td{  
+    background-color:#F0F9FF;  
+}  
+      
+.ui-datatable .ui-datatable-data .odd-row td{  
+    background-color:#DDDDDD;  
+}  
