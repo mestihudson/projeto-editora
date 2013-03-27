@@ -45,7 +45,7 @@
 						style="color: red; font-weight: bold;" />
 				<br />
 					<h:outputLabel
-						value="Ao informar seu Login e senha sistema diferencia letras maiúsculas de minúsculas" />
+						value="Ao informar seu Login e senha o sistema diferencia letras maiúsculas de minúsculas" />
 			</div>
 			
 			<div class="Centralizar" style="width: 95%; text-align: left;" >
@@ -83,9 +83,9 @@
 						<h:outputLabel value="Data de Nascimento" for="nascimento"
 							styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:calendar id="nascimento"
+						<p:calendar id="nascimento" effect="slideDown" showButtonPanel="true" navigator="true" yearRange="60"
 							value="#{pessoaBean.pessoa.nascimento}" required="true"
-							requiredMessage="Informe a data de nascimento" locale="pt_BR">
+							requiredMessage="Informe a data de nascimento" locale="pt_BR" pattern="dd/MM/yyyy">
 							<f:ajax event="blur" render="error_nasc" />
 						</p:calendar>
 						<p:message id="error_nasc" for="nascimento" />
@@ -138,20 +138,25 @@
 							<f:ajax event="change" render="error_fone2" />
 						</p:inputMask>
 						<p:message id="error_fone2" for="fone2" />
+						
+						</h:panelGrid>
 						<br />
 						<br />
-
+						
+						
 						<!-- 					Aqui começa as informações do login -->
+						
+					<p:fieldset legend="Login" style="width: 77%; margin-left: 15px;">
+					
+					<h:panelGrid id="grid2" columns="12" cellpadding="5" cellspacing="5">
 
 						<h:outputLabel value="Email" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="email" value="#{pessoaBean.usuario.login}"
+						<p:inputText id="email" value="#{pessoaBean.usuario.login}" size="35"
 							required="true" requiredMessage="Informe seu email">
 							<f:ajax event="blur" render="error_email" />
 						</p:inputText>
-						<p:message id="error_email" for="email" />
-						<br />
-						<br />
+						<p:message id="error_email" for="email" display="icon" />
 
 						<h:outputLabel value="Senha" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -159,27 +164,29 @@
 							required="true" requiredMessage="Informe sua senha">
 							<f:ajax event="blur" render="error_senha" />
 						</p:password>
-						<p:message id="error_senha" for="senha" />
+						<p:message id="error_senha" for="senha" display="icon" />
 						<br />
 						<br />
 
 						<h:outputLabel value="Repita a Senha" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="rsenha"
+						<p:password id="rsenha"
 							value="#{pessoaBean.usuario.repetirSenha}" required="true"
 							requiredMessage="Senha inválida">
 							<f:ajax event="blur" render="error_rsenha" />
-						</p:inputText>
-						<p:message id="error_rsenha" for="rsenha" />
+						</p:password>
+						<p:message id="error_rsenha" for="rsenha" display="icon" />
+					
+					</h:panelGrid>	
+					</p:fieldset>
 						
-				</h:panelGrid>	
 				<br /><br />
 					
 <!-- 					Aqui começa as informações do endereço -->
 
-					<p:fieldset legend="Endereço" style="width: 70%; margin-left: 15px;" rendered="#{empty pessoaBean.pessoa.id}">
+					<p:fieldset legend="Endereço" style="width: 77%; margin-left: 15px;">
 					
-						<h:panelGrid id="grid2" columns="8">
+						<h:panelGrid id="grid3" columns="8">
 						
 						<h:outputLabel value="Estado" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
@@ -253,22 +260,16 @@
 					</fieldset>
 					
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{fornecedorBean.addFornecedor}"
-					value="Cadastrar" ajax="false" icon="ui-icon-check" update="@form"
-					rendered="#{empty pessoaBean.pessoa.id}">
-					<f:ajax render="@form" />
-				</p:commandButton>
-
-				<p:commandButton action="#{fornecedorBean.alterFornecedor}"
-					value="Editar" ajax="false" icon="ui-icon-pencil" update="@form"
-					rendered="#{not empty pessoaBean.pessoa.id}">
+				<p:commandButton action="#{pessoaBean.addPessoa}"
+					value="OK" ajax="false" icon="ui-icon-check" update="@form">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				&nbsp;
 
-				<p:commandButton
-					action="cadastrarFornecedor.xhtml?faces-redirect=true"
-					value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />
+				<p:commandButton action="index.xhtml?faces-redirect=true" immediate="true"
+					value="Cancelar" ajax="false" icon="ui-icon-close">
+						<f:ajax render="@form" />
+				</p:commandButton>		
 			</div>
 			<br />
 
@@ -291,26 +292,7 @@
 
 		</div>	
 			
-			</h:form>		
-
-	<p:confirmDialog id="confirmDialog"
-		message="Deseja cancelar" severity="alert"
-		widgetVar="confirmation">
-		<h:form id="form_bt">
-
-			<div align="center">
-
-				<p:commandButton id="confirm" value="Sim"
-					oncomplete="confirmation.hide()" action="index.xhtml?faces-rediredt=true" />
-
-				<p:commandButton id="decline" value="Não"
-					onclick="confirmation.hide()" type="button" />
-
-			</div>
-
-		</h:form>
-
-	</p:confirmDialog>
+		</h:form>		
 
 
 

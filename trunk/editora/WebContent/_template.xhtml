@@ -47,9 +47,8 @@
 			<p:graphicImage value="/resources/img/clubamigo.png" style="cursor: pointer; margin-right: 10px; " styleClass="acende" /><br />
 			<p:graphicImage value="/resources/img/estoque.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
 			<p:graphicImage value="/resources/img/relatorio.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
-			<p:graphicImage value="/resources/img/pesquisar.png" onclick="dlgPesquisa.show();" style="cursor: pointer; margin-right: 128px;" styleClass="acende" rendered="#{loginBean.usuario.perfil.id!=1}" />
-			<p:graphicImage value="/resources/img/pesquisar.png" onclick="dlgPesquisa.show();" style="cursor: pointer;" styleClass="acende" rendered="#{loginBean.usuario.perfil.id==1}" />&nbsp;
-			<p:graphicImage value="/resources/img/usuario.png" style="cursor: pointer; margin-right: 10px;" styleClass="acende" rendered="#{loginBean.usuario.perfil.id==1}" />
+			<p:graphicImage value="/resources/img/pesquisar.png" onclick="dlgPesquisa.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/usuario.png" onclick="dlgUsuario.show();" style="cursor: pointer; margin-right: 10px;" styleClass="acende" />
 		
 		<h:outputText value="UNIVERSIDADE FEDERAL DE RORAIMA" style="float: left; font-size: 13px; margin-left: 10px;" />
 		
@@ -137,13 +136,33 @@
 		</h:form>		
 	</p:dialog>
 	
+	<p:dialog modal="true" width="300" widgetVar="dlgUsuario" resizable="false" showEffect="fold">
+		<h:form id="form_usuario">
+			
+			<div align="center">
+			<p:panel header="Módulo Usuário">
+				
+					<p:commandLink action="/pages/usuario/senhaCadastro.xhtml?faces-redirect=true">
+						<p:graphicImage value="/resources/img/update.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;				
+				
+					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" />
+					</p:commandLink>
+			
+			
+			</p:panel>
+			</div>	
+		</h:form>		
+	</p:dialog>
+	
 	<p:confirmDialog id="confirmDialog" message="Deseja retornar a página inicial"  
                 severity="alert" widgetVar="confirmation"> 
         <h:form id="form_bt">  
         
         <div align="center">       
                   
-        	<p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide()" action="#{loginBean.redireciona}"  />  
+        	<p:commandButton id="confirm" value="Sim" onclick="confirmation.hide()" action="#{loginBean.redirect}"  />  
                     
         	<p:commandButton id="decline" value="Não" onclick="confirmation.hide()" type="button" />
         	
@@ -151,8 +170,8 @@
         
         </h:form>   
                   
-    </p:confirmDialog>  
-			
+    </p:confirmDialog>
+    
 	<div style="width: 95%; display: block;" align="center" />
 	<div id="rodape" style="background: #394674; width: 95%; height: 20px; line-height: 20px; text-align: center;">
 		&copy; Copyright 2013 &nbsp;&nbsp; UFRR - DTI - CSI

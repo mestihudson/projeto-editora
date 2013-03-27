@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Nome do Sistema</title>
+	<title>Sistema Editora</title>
 	<h:outputStylesheet name="leo.css" library="css" />
 </h:head>
 
@@ -56,12 +56,13 @@
 			
 					
 					<h:outputLabel value="Email: " />
-					<p:inputText value="#{loginBean.usuario.login}" required="true" requiredMessage="Informe seu login" size="30" validatorMessage="Email inválido">
-						<f:ajax event="change" />
-					</p:inputText>
+					<p:autoComplete id="email" maxResults="5" minQueryLength="10" queryDelay="30" var="l" itemLabel="#{l}" itemValue="#{l}" completeMethod="#{usuarioBean.autocompletelogin}" 
+						value="#{loginBean.usuario.login}" size="30" validatorMessage="Email inválido">
+							<f:ajax event="change" />
+					</p:autoComplete>
 					
 					<h:outputLabel value="Senha: " />
-					<p:password value="#{loginBean.usuario.senha}" required="true" requiredMessage="Informe sua senha" size="30" feedback="true">
+					<p:password value="#{loginBean.usuario.senha}" size="30" feedback="true">
 						<f:ajax event="change" />
 					</p:password>	
 			
@@ -80,10 +81,12 @@
 			<h:outputLabel value="Servidor," style="font-weight: bold;" /><br />
 			<h:outputLabel value="caso ainda não possua cadastro no sistema," /><br />
 			<h:outputLabel value="clique no link abaixo." /><br /><br />
-				<p:commandLink action="/pages/fornecedor/cadastrarFornecedor.xhtml?faces-redirect=true">
+			
+				
+				<h:commandLink action="solicitacao.xhtml?faces-redirect=true">
 					<p:graphicImage value="/resources/img/adduser.png" /><br />
 					<h:outputText value="Cadastre-se" styleClass="OutPut" style="color: blue; text-decoration: none;" />
-				</p:commandLink>
+				</h:commandLink>
 	</div>
 				
 	<div style="width: 95%; display: block;" align="center" />
