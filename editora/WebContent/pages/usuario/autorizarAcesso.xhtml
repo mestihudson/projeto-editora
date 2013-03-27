@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Usuário > Ativar Usuário" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" ></div>	
+	</div>
+	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;">
+		
+			<h:form id="form_consultar_fornecedor">
+			
+			<fieldset style="border-color: #F8F8FF; border-top: white;">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="SOLICITAÇÃO DE ACESSO" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>		
+			
+			<p:dataTable id="list" value="#{usuarioBean.usuariosE}"
+					var="u"  emptyMessage="" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					
+<!-- 					o display é o h:panelGrid com os dados do fornecedor -->
+					
+<!-- 					<p:column style="text-align: center; float: center;"> -->
+<!-- 						<p:commandButton id="selectButton" update=":form2:display"  -->
+<!-- 						icon="ui-icon-search" title="Detalhar">   -->
+<!--                 			<f:setPropertyActionListener -->
+<!-- 											target="#{fornecedorBean.fornecedor}" value="#{fornecedor}" /> -->
+<!--             			</p:commandButton> -->
+<!-- 					</p:column> -->
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{u.nome}" /> 
+					</p:column>
+					
+					<p:column style="text-align: center;" headerText="CPF">
+						<h:outputText value="#{u.cpf}" /> 
+					</p:column>
+					
+					<p:column headerText="Email">
+						<h:outputText value="#{u.login}" /> 
+					</p:column>
+										
+					<p:column headerText="Telefone">
+						<h:outputText value="#{u.telefone1}" /> 
+					</p:column>
+					
+					<p:column headerText="Universitário">
+						<h:outputText value="#{u.universitario}" /> 
+					</p:column>
+					
+					<p:column headerText="Local de Trabalho">
+						<h:outputText value="#{u.localTrabalho}" /> 
+					</p:column>
+										
+			</p:dataTable>	
+					
+			</fieldset>
+			
+			<p:messages id="msg" />
+			
+			</h:form>
+			
+		</div>
+		
+	</ui:define>		
+	
+</ui:composition>	
+</html>
