@@ -68,7 +68,7 @@ public class ProdutoBean implements Serializable {
 		for (Produto produtos : this.getProdutos()) {
 			if(produtos.getNome().equalsIgnoreCase(this.getProduto().getNome()) &&
 					produtos.getEditora().equalsIgnoreCase(this.getProduto().getEditora()) ||
-					produtos.getIsbn().equals(this.getProduto().getIsbn())){ //fk: nome and editora ou ISBN 
+					produtos.getIsbn().equals(this.getProduto().getIsbn())){ //uk: nome and editora ou ISBN 
 				this.cadastro = false;
 				break;
 			}
