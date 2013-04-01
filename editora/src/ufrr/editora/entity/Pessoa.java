@@ -59,7 +59,7 @@ public class Pessoa {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 
 	public void setId(Long id) {
@@ -87,7 +87,7 @@ public class Pessoa {
 	}
 
 	public void setUniversitario(String universitario) {
-		this.universitario = universitario;
+		this.universitario = universitario.toUpperCase();
 	}
 
 	public String getLocalTrabalho() {
@@ -95,7 +95,7 @@ public class Pessoa {
 	}
 
 	public void setLocalTrabalho(String localTrabalho) {
-		this.localTrabalho = localTrabalho;
+		this.localTrabalho = localTrabalho.toUpperCase();
 	}
 
 	public String getTelefone1() {

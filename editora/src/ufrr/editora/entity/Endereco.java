@@ -46,6 +46,10 @@ public class Endereco implements BaseEntity {
 	public String getLogradouro() {
 		return logradouro;
 	}
+	
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro.toUpperCase();
+	}
 
 	public Long getId() {
 		return id;
@@ -53,10 +57,6 @@ public class Endereco implements BaseEntity {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
 	}
 
 	public Integer getNumero() {
@@ -80,7 +80,7 @@ public class Endereco implements BaseEntity {
 	}
 
 	public void setBairro(String bairro) {
-		this.bairro = bairro;
+		this.bairro = bairro.toUpperCase();
 	}
 
 	public String getTipoLogradouro() {
@@ -96,7 +96,7 @@ public class Endereco implements BaseEntity {
 	}
 
 	public void setUnidade(String unidade) {
-		this.unidade = unidade;
+		this.unidade = unidade.toUpperCase();
 	}
 
 	public Fornecedor getFornecedor() {
@@ -120,7 +120,7 @@ public class Endereco implements BaseEntity {
 	}
 
 	public void setMunicipio(String municipio) {
-		this.municipio = municipio;
+		this.municipio = municipio.toUpperCase();
 	}
 	
 	@Override
