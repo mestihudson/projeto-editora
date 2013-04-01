@@ -19,6 +19,7 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Usuario usuario = new Usuario();
+	private String senhaVerifica;
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
 	
 	
@@ -35,6 +36,7 @@ public class LoginBean implements Serializable {
 		this.dao = dao;
 	}
 	
+	//efetua login
 	public String efetuaLogin() {
 		UsuarioDAO dao = new UsuarioDAO();
 		this.usuario = dao.existe(this.usuario);
@@ -44,7 +46,7 @@ public class LoginBean implements Serializable {
 			} else {
 				if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 1 ||
 						this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 2) {
-//					Msg.addMsgInfo("Seja Bem Vindo  " + getUsuario().getPessoa().getNome() + ". Sistema de Vendas Editora");
+					Msg.addMsgInfo("Seja Bem Vindo  " + getUsuario().getPessoa().getNome() + ". Sistema de Vendas Editora");
 					return "_template.xhtml?faces-redirect=true";
 					
 				}else {
@@ -59,13 +61,33 @@ public class LoginBean implements Serializable {
 		}
 	}
 	
+	//autorização para alterar dados do cadastro
+	public String updateLogin() {
+		if (getSenhaVerifica().equalsIgnoreCase(LoginBean.this.usuario.getSenha())) {
+	
+				if (this.getUsuario().getSenha().isEmpty()) {
+					Msg.addMsgInfo("Informe sua senha para atualizar seus dados");
+					
+				}else {
+					return "/pages/usuario/atualizarCadastro.xhtml?faces-redirect=true";
+				}
+			}else {	
+			Msg.addMsgFatal("Senha inválida");
+			System.out.println("Chegou aqui...");
+			System.out.println(LoginBean.this.getUsuario().getLogin());
+			return "/pages/usuario/senhaCadastro.xhtml";		
+			
+			}
+		return null;
+		}
+	
 	// Método para redireciona o usuario para a página inicial
-		public String redireciona() {
-			if (this.getUsuario().getPerfil().getId().equals(1)) {
-				return "_template.jsf?faces-redirect=true";
+		public String redirect() {
+			if (this.getUsuario().getPerfil().getId() == 1) {
+				return "/_template.xhtml?faces-redirect=true";
 			}
 			if (this.getUsuario().getPerfil().getId().equals(2)) {
-				return "home.xhtml?faces-redirect=true";
+				return "/home.xhtml?faces-redirect=true";
 			}
 			if (this.getUsuario().getPerfil().getId().equals(3)) {
 				return "homeVenda.xhtml?faces-redirect=true";
@@ -88,6 +110,12 @@ public class LoginBean implements Serializable {
 	
 	public boolean isLogado() {
 		return usuario.getLogin() != null;
+	}
+	public String getSenhaVerifica() {
+		return senhaVerifica;
+	}
+	public void setSenhaVerifica(String senhaVerifica) {
+		this.senhaVerifica = senhaVerifica;
 	}
 	
 }
