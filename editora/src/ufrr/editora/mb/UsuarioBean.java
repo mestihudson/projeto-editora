@@ -1,6 +1,7 @@
 package ufrr.editora.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -21,49 +22,67 @@ public class UsuarioBean implements Serializable {
 	private String senhaCriptografada;
 	
 	private Usuario usuario = new Usuario();
-	private List<Usuario> funcionarios;
-	private List<Usuario> funcionariosE; // Lista com os Funcionários "Em Espera"
-	private List<Usuario> funcionariosD; // Lista com os Funcionários "Desativado"
+	private List<Usuario> usuarios;
+	private List<Usuario> usuariosE; // Lista com Usuarios "Em Espera"
+	private List<Usuario> usuariosD; // Lista com Usuarios "Desativado"
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
 	public Boolean cadastro = true;
+	
+	//AutoComplete Login
+	public List<String> autocompletelogin(String nome) {
+		List<Usuario> array = dao.getAllByName("login", nome);
+		ArrayList<String> nomes = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			nomes.add(array.get(i).getLogin());
+		}
+		return nomes;
+	}
 	
 	
 	public LoginBean getLogin() {
 		return login;
 	}
+
 	public void setLogin(LoginBean login) {
 		this.login = login;
 	}
+
 	public String getSenhaCriptografada() {
 		return senhaCriptografada;
 	}
+
 	public void setSenhaCriptografada(String senhaCriptografada) {
 		this.senhaCriptografada = senhaCriptografada;
 	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public List<Usuario> getFuncionarios() {
-		return funcionarios;
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
-	public void setFuncionarios(List<Usuario> funcionarios) {
-		this.funcionarios = funcionarios;
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
-	public List<Usuario> getFuncionariosE() {
-		return funcionariosE;
+
+	public void setUsuariosE(List<Usuario> usuariosE) {
+		this.usuariosE = usuariosE;
 	}
-	public void setFuncionariosE(List<Usuario> funcionariosE) {
-		this.funcionariosE = funcionariosE;
+
+	public List<Usuario> getUsuariosD() {
+		return usuariosD;
 	}
-	public List<Usuario> getFuncionariosD() {
-		return funcionariosD;
+
+	public void setUsuariosD(List<Usuario> usuariosD) {
+		this.usuariosD = usuariosD;
 	}
-	public void setFuncionariosD(List<Usuario> funcionariosD) {
-		this.funcionariosD = funcionariosD;
-	}
+	
 	public DAO<Usuario> getDao() {
 		return dao;
 	}
@@ -98,13 +117,7 @@ public class UsuarioBean implements Serializable {
 //			this.funcionario = new Funcionario();
 //		}
 //	
-//	//Método Enviar Mensagem;
-//		public void enviar() { 
-//				Msg.addMsgInfo("Mensagem Enviada Para Usuário: " + getFuncionario().getNome());
-//				dao.atualiza(funcionario);
-//				System.out.println("...Mensagem Enviada Para " + getFuncionario().getNome());
-//				this.funcionario = new Funcionario();
-//			}
+
 //	
 //	//Método para solicitação de cadastro
 //	public void grava() {
@@ -135,8 +148,8 @@ public class UsuarioBean implements Serializable {
 //		 this.cadastro = true;
 //	}
 //	
-	public String solicitar() {
-		for (Usuario UsuarioLista : this.getFuncionarios()) {
+	public String addUsuario() {
+		for (Usuario UsuarioLista : this.getUsuarios()) {
 			if(UsuarioLista.getLogin().equalsIgnoreCase(this.usuario.getLogin()) 
 					|| UsuarioLista.getPessoa().getCpf().equalsIgnoreCase(this.usuario.getPessoa().getCpf())){
 				this.cadastro = false;
@@ -159,7 +172,7 @@ public class UsuarioBean implements Serializable {
 			if(this.usuario.getLogin() == null){
 				Msg.addMsgError("Seu login será seu email, informe um email para proseguir com o cadastro");
 			} else {
-				Msg.addMsgError("Já existe um cadastro com este CPF");
+				Msg.addMsgError("Este cadastro já existe");
 			}
 			return "solicitacao.xhtml";
 		}
@@ -178,27 +191,32 @@ public class UsuarioBean implements Serializable {
 //		return funcionario.getLogin() != null;
 //	}
 //	
-//	// Método para Listar todos os Funcionários com Status "Logado"
-//	public List<Funcionario> getFuncionariosLogado() {
-//		funcionariosE = new ArrayList<Funcionario>();
-//		for (Funcionario func : this.getFuncionarios()) {
-//			if(func.getLogado().equals(true)){
-//				funcionariosE.add(func);
-//			}
-//		}
-//		return funcionariosE;
-//	}
-//	
-//	// Método para Listar todos os Funcionários com Status "Em Espera"
-//	public List<Funcionario> getFuncionariosE() {
-//		funcionariosE = new ArrayList<Funcionario>();
-//		for (Funcionario func : this.getFuncionarios()) {
-//			if(func.getStatus().equalsIgnoreCase("Em Espera")){
-//				funcionariosE.add(func);
-//			}
-//		}
-//		return funcionariosE;
-//	}
+
+	// Método para Listar os usuários com status "null" (em espera)
+	public List<Usuario> getUsuariosE() {
+		usuariosE = new ArrayList<Usuario>();
+		for (Usuario u : this.getUsuarios()) {
+			if(u.getStatus().equals(null)){
+				usuariosE.add(u);
+			}
+		}
+		return usuariosE;
+	}
+	
+	// Ativar usuário (permitir acesso)
+		public String ativaUsuario(){
+				if(this.getUsuario().getStatus().equals(null) || this.getUsuario().getStatus().equals(false)){
+					this.getUsuario().setStatus(true);
+//					funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
+					Msg.addMsgInfo("Usuário: " + getUsuario().getPessoa().getNome() + " ativado com sucesso");
+					dao.atualiza(usuario);
+					System.out.println("...Usuário ativado");
+				} else {
+					System.out.println("..Não foi possível ativar funcionário");
+				}
+			return null;
+				
+		}
 //	
 //	// Método para Listar todos os Funcionários com Status "Desativado"
 //	public List<Funcionario> getFuncionariosD() {
@@ -225,23 +243,7 @@ public class UsuarioBean implements Serializable {
 //			return funcionariosD;
 //		}
 //	
-//	// Método para ativar funcionário, permitindo assim o seu login
-//		public String ativaFuncionario(){
-//				if(this.getFuncionario().getStatus().equalsIgnoreCase("Em Espera") || this.getFuncionario().getStatus().equalsIgnoreCase("Desativado")){
-//					this.getFuncionario().setStatus("Ativado");
-//					this.getFuncionario().setAcesso(1);
-//					this.getFuncionario().setPagina(1);
-//					funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
-//					funcionario.setCampo_secreto(TransformaStringMD5.md5(funcionario.getCampo_secreto()));
-//					Msg.addMsgInfo("Usuário Ativado Com Sucesso");
-//					dao.atualiza(funcionario);
-//					System.out.println("------------------------------------------------------OK!!!!!!!!!!!");
-//				} else {
-//					System.out.println("-------------------------------------------------------Algum erro ocorreu e não foi possível ativar o funcionário. Por Favor, contate a administração.");
-//				}
-//			return null;
-//				
-//		}
+
 //		
 //		// Método para ativar funcionário expirado
 //				public void ativaFuncionario2(){
