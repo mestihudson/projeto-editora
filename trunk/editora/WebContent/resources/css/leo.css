@@ -270,9 +270,15 @@ img.acende:hover {
 /* Tabela zebrada */
 
 .ui-datatable .ui-datatable-data .even-row td{  
-    background-color:#F0F9FF;  
+    background-color:#EFF3FA;  
 }  
       
 .ui-datatable .ui-datatable-data .odd-row td{  
-    background-color:#DDDDDD;  
-}  
+    background-color:#FAFAFA;  
+}
+
+/* Para mensagens em growl */
+#growl {
+	margin-left: 30px;
+	margin-top: 60px;
+}
