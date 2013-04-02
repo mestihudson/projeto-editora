@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="head">
+
+		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
+			align="left">
+			<h:outputText value="Página Principal" styleClass="title"
+				style="line-height: 20px;" />
+			<div style="background: #C4D2EB; height: 2px;"></div>
+		</div>
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;" align="center">
+
+			<h:form rendered="#{loginBean.usuario.perfil.id==3}">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</h:form>
+
+			<h:form id="form_cadastrar_fornecedor"
+				rendered="#{loginBean.usuario.perfil.id!=3}">
+
+				<h:graphicImage value="/resources/img/logoeditora.png"
+					style="float: right; width: 250px; margin-right: 30px;" />
+				
+<!-- 				troca de mensagem -->
+				<br /><br /><br />
+				<div
+					style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
+					align="center">
+					<h:outputText value="MENSAGENS"
+						style="color: white; font-size: 12px;" styleClass="OutPut" />
+				</div>
+
+				<fieldset style="border-color: #F8F8FF; border-top: white; width: 441px;">
+					Exibição de Mensagens
+
+				</fieldset><br /><br /><br />
+				
+				
+<!-- 				exibição de estoque -->
+				<div
+					style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
+					align="center">
+					<h:outputText value="ESTOQUE"
+						style="color: white; font-size: 12px;" styleClass="OutPut" />
+				</div>
+
+				<fieldset style="border-color: #F8F8FF; border-top: white; width: 441px;">
+					Estoque Disponível
+
+				</fieldset>
+				
+			</h:form>
+			
+			<p:growl life="10000" id="growl" sticky="true" />
+			
+		</div>	
+	</ui:define>
+</ui:composition>
+</html>
