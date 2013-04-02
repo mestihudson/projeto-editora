@@ -51,12 +51,12 @@
    		 border-radius: 1em;">
 		<br />
 		
+		<p:focus context="grid" />
 		
-			<h:panelGrid id="grid" columns="2" cellpadding="10" cellspacing="10">
-			
+			<h:panelGrid id="grid" columns="2" cellpadding="10" cellspacing="10">			
 					
 					<h:outputLabel value="Email: " />
-					<p:autoComplete id="email" maxResults="5" minQueryLength="10" queryDelay="30" var="l" itemLabel="#{l}" itemValue="#{l}" completeMethod="#{usuarioBean.autocompletelogin}" 
+					<p:autoComplete id="email" maxResults="5" minQueryLength="3" queryDelay="30" var="l" itemLabel="#{l}" itemValue="#{l}" completeMethod="#{usuarioBean.autocompletelogin}" 
 						value="#{loginBean.usuario.login}" size="30" validatorMessage="Email inválido">
 							<f:ajax event="change" />
 					</p:autoComplete>
