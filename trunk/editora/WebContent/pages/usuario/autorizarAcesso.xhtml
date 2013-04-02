@@ -11,7 +11,7 @@
 	<ui:define name="head">
 	
 	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Usuário > Ativar Usuário" styleClass="title" style="line-height: 20px;" />
+		<h:outputText value="Usuário > Autorizar Acesso" styleClass="title" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" ></div>	
 	</div>
 	
@@ -29,41 +29,45 @@
 				<h:outputText value="SOLICITAÇÃO DE ACESSO" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>		
 			
-			<p:dataTable id="list" value="#{usuarioBean.usuariosE}"
-					var="u"  emptyMessage="" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
-					
-<!-- 					o display é o h:panelGrid com os dados do fornecedor -->
-					
-<!-- 					<p:column style="text-align: center; float: center;"> -->
-<!-- 						<p:commandButton id="selectButton" update=":form2:display"  -->
-<!-- 						icon="ui-icon-search" title="Detalhar">   -->
-<!--                 			<f:setPropertyActionListener -->
-<!-- 											target="#{fornecedorBean.fornecedor}" value="#{fornecedor}" /> -->
-<!--             			</p:commandButton> -->
-<!-- 					</p:column> -->
+			<p:dataTable id="list" value="#{usuarioBean.usuariosNulls}"
+					var="u"  emptyMessage="Nenhuma solicitação no momento"  
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 					
 					<p:column headerText="Nome">
-						<h:outputText value="#{u.nome}" /> 
+						<h:outputText value="#{u.pessoa.nome}" /> 
 					</p:column>
 					
 					<p:column style="text-align: center;" headerText="CPF">
-						<h:outputText value="#{u.cpf}" /> 
+						<h:outputText value="#{u.pessoa.cpf}" /> 
 					</p:column>
 					
 					<p:column headerText="Email">
 						<h:outputText value="#{u.login}" /> 
 					</p:column>
 										
-					<p:column headerText="Telefone">
-						<h:outputText value="#{u.telefone1}" /> 
+					<p:column style="text-align: center;" headerText="Telefone">
+						<h:outputText value="#{u.pessoa.telefone1}" /> 
 					</p:column>
 					
 					<p:column headerText="Universitário">
-						<h:outputText value="#{u.universitario}" /> 
+						<h:outputText value="#{u.pessoa.universitario}" /> 
 					</p:column>
 					
 					<p:column headerText="Local de Trabalho">
-						<h:outputText value="#{u.localTrabalho}" /> 
+						<h:outputText value="#{u.pessoa.localTrabalho}" /> 
+					</p:column>
+					
+					<p:column style="width: 40px; text-align: center; float: center;">
+					
+					<f:facet name="header">
+						<h:outputLabel style="text-align: center; float: center;" />
+					</f:facet>
+					
+					<p:commandButton ajax="false" style="text-align: center; float: center;" icon="ui-icon-search" update=":form:cpf">
+						<f:ajax render="@form" />
+						<f:setPropertyActionListener id="parametro" target="#{usuarioBean.usuario}" value="#{usuario}" />
+					</p:commandButton>
+					
 					</p:column>
 										
 			</p:dataTable>	
@@ -71,7 +75,18 @@
 			</fieldset>
 			
 			<p:messages id="msg" />
-			
+
+				<h:outputLabel value="CPF" for="cpf" styleClass="OutPut" />
+				<h:outputLabel value=": " styleClass="as" />
+				<h:outputText id="cpf" value="#{usuarioBean.usuario.login}" />
+				<br />
+				<br />
+
+				<h:outputLabel value="Nome Completo" for="nome" styleClass="OutPut" />
+				<h:outputLabel value=": " styleClass="as" />
+				<h:outputText id="nome" value="#{usuarioBean.usuario.perfil.perfil}" />
+				<br />
+				<br />
 			</h:form>
 			
 		</div>
