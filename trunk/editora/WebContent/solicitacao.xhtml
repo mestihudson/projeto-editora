@@ -25,11 +25,6 @@
 				<h:outputText value="Sistema de Vendas Editora"
 					style="color: white; font-size: 13px;" />
 
-				<div style="float: right">
-					<h:commandLink action="#{loginBean.sair}" value="SAIR"
-						styleClass="cabecalho" immediate="true"
-						style="text-align: left; color: white; font-size: 12px; margin-right: 10px; font-weight: bold;" />
-				</div>
 			</h:form>
 
 		</div>
@@ -59,6 +54,8 @@
 					<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
 					
 					<h:panelGrid id="grid" columns="5">
+					
+					<p:focus context="grid" />
 
 						<h:outputLabel value="CPF" for="cpf" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -84,7 +81,7 @@
 							styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:calendar id="nascimento" effect="slideDown" showButtonPanel="true" navigator="true" yearRange="60"
-							value="#{pessoaBean.pessoa.nascimento}" required="true"
+							value="#{pessoaBean.pessoa.nascimento}" required="true" validatorMessage="Data inválida"
 							requiredMessage="Informe a data de nascimento" locale="pt_BR" pattern="dd/MM/yyyy">
 							<f:ajax event="blur" render="error_nasc" />
 						</p:calendar>
@@ -153,7 +150,7 @@
 						<h:outputLabel value="Email" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="email" value="#{pessoaBean.usuario.login}" size="35"
-							required="true" requiredMessage="Informe seu email">
+							required="true" requiredMessage="Informe seu email" validatorMessage="Email inválido">
 							<f:ajax event="blur" render="error_email" />
 						</p:inputText>
 						<p:message id="error_email" for="email" display="icon" />

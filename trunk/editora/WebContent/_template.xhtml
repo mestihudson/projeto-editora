@@ -40,7 +40,7 @@
 	<div style="background: #C4D2EB; height: 60px; width: 95%" align="right" id="menu">
 		
 		<h:outputText value="#{loginBean.usuario.pessoa.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px " />
-			
+				
 			<p:graphicImage value="/resources/img/inicio.png" onclick="confirmation.show()" style="cursor: pointer; margin-top: 5px;" styleClass="acende" />&nbsp;
 			<p:graphicImage value="/resources/img/cadastrar.png" onclick="dlgCad.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
 			<p:graphicImage value="/resources/img/venda.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
@@ -51,7 +51,7 @@
 			<p:graphicImage value="/resources/img/usuario.png" onclick="dlgUsuario.show();" style="cursor: pointer; margin-right: 10px;" styleClass="acende" />
 		
 		<h:outputText value="UNIVERSIDADE FEDERAL DE RORAIMA" style="float: left; font-size: 13px; margin-left: 10px;" />
-		
+				
 				
 	</div>
 	
@@ -66,7 +66,7 @@
 	
 	</div>
 		
-	<p:dialog modal="true" width="500" widgetVar="dlgCad" resizable="false" showEffect="fold">
+	<p:dialog modal="true" width="550" widgetVar="dlgCad" resizable="false" showEffect="fold">
 		<h:form>
 			
 			<div align="center">
@@ -93,7 +93,7 @@
 		</h:form>		
 	</p:dialog>		
 	
-	<p:dialog modal="true" width="500" widgetVar="dlgPesquisa" resizable="false" showEffect="explode">
+	<p:dialog modal="true" width="550" widgetVar="dlgPesquisa" resizable="false" showEffect="explode">
 		<h:form id="form_pesquisa">
 			
 			<div align="center">
