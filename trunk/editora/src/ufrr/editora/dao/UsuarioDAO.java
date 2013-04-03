@@ -21,9 +21,9 @@ public class UsuarioDAO {
 		Usuario login = new Usuario();
 		if(!query.getResultList().isEmpty()){
 			login = (Usuario) query.getSingleResult();
-			if(login.isStatus()){
-				System.out.println("Usuário Logado");
-			}
+//			if(login.isStatus()){
+//				System.out.println("Usuário Logado");
+//			}
 
 		} else {
 			login = null;
