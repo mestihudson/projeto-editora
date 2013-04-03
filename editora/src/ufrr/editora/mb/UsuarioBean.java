@@ -38,6 +38,27 @@ public class UsuarioBean implements Serializable {
 		return nomes;
 	}
 	
+/** Lista Usuario **/
+	
+	public List<Usuario> getUsuarios() {
+		if (usuarios == null) {
+			System.out.println("Carregando usuarios...");
+			usuarios = new DAO<Usuario>(Usuario.class).listaTodos();
+		}
+		return usuarios;
+	}
+	
+	// Exibe uma lista com o usuarios nulos
+	public List<Usuario> getUsuariosNulls() {
+		usuariosE = new ArrayList<Usuario>();
+		for (Usuario u : this.getUsuarios()) {
+			if (u.getPerfil().getId()==5) {
+				usuariosE.add(u);
+			}
+		}
+		return usuariosE;
+	}
+	
 	
 	public LoginBean getLogin() {
 		return login;
@@ -61,10 +82,6 @@ public class UsuarioBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
 	}
 
 	public void setUsuarios(List<Usuario> usuarios) {
@@ -148,36 +165,6 @@ public class UsuarioBean implements Serializable {
 //		 this.cadastro = true;
 //	}
 //	
-	public String addUsuario() {
-		for (Usuario UsuarioLista : this.getUsuarios()) {
-			if(UsuarioLista.getLogin().equalsIgnoreCase(this.usuario.getLogin()) 
-					|| UsuarioLista.getPessoa().getCpf().equalsIgnoreCase(this.usuario.getPessoa().getCpf())){
-				this.cadastro = false;
-				break;
-			}
-		}
-		if(this.usuario.getLogin() == null){
-			this.cadastro = false;
-		}
-		if(this.cadastro == true){
-			if (this.getUsuario().getSenha().equals(this.getUsuario().getRepetirSenha())) {
-				dao.adiciona(usuario);
-				Msg.addMsgInfo("Solicitação de cadastro enviada com sucesso. Aguarde ativação!");
-				this.usuario = new Usuario();
-				return "index.xhtml";
-			} else {
-				Msg.addMsgError("Senhas diferentes. Por favor, verifique os campos e digite novamente.");
-			}
-		} else {
-			if(this.usuario.getLogin() == null){
-				Msg.addMsgError("Seu login será seu email, informe um email para proseguir com o cadastro");
-			} else {
-				Msg.addMsgError("Este cadastro já existe");
-			}
-			return "solicitacao.xhtml";
-		}
-		return null;
-	}
 //	
 //	public List<Funcionario> getFuncionarios() {
 //		if (funcionarios == null) {
@@ -196,7 +183,7 @@ public class UsuarioBean implements Serializable {
 	public List<Usuario> getUsuariosE() {
 		usuariosE = new ArrayList<Usuario>();
 		for (Usuario u : this.getUsuarios()) {
-			if(u.getStatus().equals(null)){
+			if(u.getStatus().equals(true)){
 				usuariosE.add(u);
 			}
 		}
@@ -204,7 +191,7 @@ public class UsuarioBean implements Serializable {
 	}
 	
 	// Ativar usuário (permitir acesso)
-		public String ativaUsuario(){
+		public String ativarUsuario(){
 				if(this.getUsuario().getStatus().equals(null) || this.getUsuario().getStatus().equals(false)){
 					this.getUsuario().setStatus(true);
 //					funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));

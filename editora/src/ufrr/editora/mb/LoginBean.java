@@ -41,16 +41,18 @@ public class LoginBean implements Serializable {
 		UsuarioDAO dao = new UsuarioDAO();
 		this.usuario = dao.existe(this.usuario);
 		if (this.usuario != null) {
-			if (this.getUsuario().getSenha().equalsIgnoreCase("123")) {
-				return "usuarioTrocaSenha.xhtml?faces-redirect=true";
+			if (this.getUsuario().getStatus() == null || this.getUsuario().getStatus().equals(false)) {
+				Msg.addMsgError("Acesso não permitido");
+				System.out.println("Acesso não permitido");
+				return null;
 			} else {
 				if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 1 ||
 						this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 2) {
-					Msg.addMsgInfo("Seja Bem Vindo  " + getUsuario().getPessoa().getNome() + ". Sistema de Vendas Editora");
-					return "_template.xhtml?faces-redirect=true";
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getPessoa().getNome() + ". SISTEMA DE VENDAS EDITORA");
+					return "/pages/home/home.xhtml";
 					
 				}else {
-					Msg.addMsgInfo("Seja Bem Vindo  " + getUsuario().getPessoa().getNome() + ". Sistema de Vendas Editora");
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getPessoa().getNome() + ". SISTEMA DE VENDAS EDITORA");
 					return "/pages/fornecedor/cadastrarFornecedor.xhtml?faces-redirect=true";
 				}
 			}
@@ -84,10 +86,10 @@ public class LoginBean implements Serializable {
 	// Método para redireciona o usuario para a página inicial
 		public String redirect() {
 			if (this.getUsuario().getPerfil().getId() == 1) {
-				return "/_template.xhtml?faces-redirect=true";
+				return "/pages/home/home.xhtml?faces-redirect=true";
 			}
 			if (this.getUsuario().getPerfil().getId().equals(2)) {
-				return "/home.xhtml?faces-redirect=true";
+				return "/pages/home/home.xhtml?faces-redirect=true";
 			}
 			if (this.getUsuario().getPerfil().getId().equals(3)) {
 				return "homeVenda.xhtml?faces-redirect=true";
