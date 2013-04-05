@@ -9,10 +9,22 @@
 <h:head>
 	<title>Sistema Editora</title>
 	<h:outputStylesheet name="leo.css" library="css" />
-	<h:outputScript name="mascaraTexto.js" library="js" />
-	<h:outputScript name="verifica.js" library="js" />
-	<h:outputScript name="numeros.js" library="js" />
 	<h:outputScript name="locale.js" library="js" />
+	<link rel="shortcut icon" href="resources/img/favicon.ico" />
+
+	<style>
+	.ui-growl {
+	top: 18%;
+	left: 20%;
+	width: 300px;
+	height: 250px;
+	font-size: 14px;
+	text-align: left;
+	font-family:sans-serif;
+	font-style: italic;
+	font-weight: 100;
+}
+</style>
 </h:head>
 
 <h:body styleClass="shadow">
@@ -39,7 +51,7 @@
 		
 	<div style="background: #C4D2EB; height: 60px; width: 95%" align="right" id="menu">
 		
-		<h:outputText value="#{loginBean.usuario.pessoa.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px " />
+		<h:outputText value="#{loginBean.usuario.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px " />
 				
 			<p:graphicImage value="/resources/img/inicio.png" onclick="confirmation.show()" style="cursor: pointer; margin-top: 5px;" styleClass="acende" />&nbsp;
 			<p:graphicImage value="/resources/img/cadastrar.png" onclick="dlgCad.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
@@ -136,7 +148,7 @@
 		</h:form>		
 	</p:dialog>
 	
-	<p:dialog modal="true" width="300" widgetVar="dlgUsuario" resizable="false" showEffect="fold">
+	<p:dialog modal="true" width="auto" widgetVar="dlgUsuario" resizable="false" showEffect="fold">
 		<h:form id="form_usuario">
 			
 			<div align="center">
@@ -148,6 +160,18 @@
 				
 					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
 						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" />
+					</p:commandLink>
+					
+					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==2}">
+						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+					
+					<p:commandLink action="/pages/usuario/modificarPerfil.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+						<p:graphicImage value="/resources/img/modificarperfil.png" styleClass="acende" />
+					</p:commandLink>&nbsp;&nbsp;
+					
+					<p:commandLink action="/pages/usuario/desativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+						<p:graphicImage value="/resources/img/desativaracesso.png" styleClass="acende" />
 					</p:commandLink>
 			
 			
