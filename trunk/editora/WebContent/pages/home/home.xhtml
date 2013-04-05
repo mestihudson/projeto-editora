@@ -18,6 +18,8 @@
 	</ui:define>
 	
 	<ui:define name="body">
+	
+	<p:growl life="2000" id="growl" sticky="true" />
 
 		<div class="Centralizar" style="background: white;" align="center">
 
@@ -34,11 +36,8 @@
 				</div>
 			</h:form>
 
-			<h:form id="form_cadastrar_fornecedor"
+			<h:form id="form_cadastrar_fornecedor" style="float: right;"
 				rendered="#{loginBean.usuario.perfil.id!=3}">
-
-				<h:graphicImage value="/resources/img/logoeditora.png"
-					style="float: right; width: 250px; margin-right: 30px;" />
 				
 <!-- 				troca de mensagem -->
 				<br /><br /><br />
@@ -56,8 +55,7 @@
 				
 				
 <!-- 				exibição de estoque -->
-				<div
-					style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
+				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
 					align="center">
 					<h:outputText value="ESTOQUE"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
@@ -67,11 +65,11 @@
 					Estoque Disponível
 
 				</fieldset>
-				
+								
 			</h:form>
 			
-			<p:growl life="10000" id="growl" sticky="true" />
-			
+			<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65); margin-top: 20%;" />
+						
 		</div>	
 	</ui:define>
 </ui:composition>
