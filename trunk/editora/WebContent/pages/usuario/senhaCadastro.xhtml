@@ -50,7 +50,7 @@
 									<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 									<p:password id="senha" value="#{loginBean.senhaVerifica}"
 										size="30" required="true" requiredMessage="Informe sua senha">
-										<f:ajax event="blur" render="error_senha" />
+										<f:ajax event="change" />
 									</p:password>
 
 									<br />
@@ -76,7 +76,6 @@
 								action="#{loginBean.redirect}" icon="ui-icon-close"
 								immediate="true" />
 
-
 						</div>
 						<br />
 
@@ -85,19 +84,14 @@
 							<h:graphicImage value="/resources/img/as.png" />
 							<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
 						</div>
-
-						<div align="left" style="width: 350px; margin-right: 500px;">
-							<p:message for="senha" id="error_senha" />
-						</div>
-
+						
+						<p:messages />
 
 					</h:form>
 				</div>
 			</h:form>
 		</p:dialog>
 		
-		<p:messages />
-
 
 </ui:define>
 </ui:composition>

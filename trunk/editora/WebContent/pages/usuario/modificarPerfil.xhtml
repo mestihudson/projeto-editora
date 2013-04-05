@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Usuário > Modificar Perfil" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" ></div>	
+	</div>
+	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;">
+		
+<!-- 		Acesso não permitido -->
+		<h:form rendered="#{loginBean.usuario.perfil.id!=1}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+		
+		</div>
+		</h:form>
+		
+			<h:form id="form_perfil">
+						
+			<fieldset style="border-color: #F8F8FF; border-top: white;">
+						
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="CONSULTAR USUÁRIO" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>
+			
+			<p:focus context="autocompletePesquisar" />
+			
+			<h:outputText value="Nome: " styleClass="OutPut"  />
+			<p:autoComplete value="#{usuarioBean.usuario.nome}" completeMethod="#{usuarioBean.autocompletenome}" var="u" itemValue="#{u}" itemLabel="#{u}" 
+			minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="50" />
+		
+	 		<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListaUsuariosByName}" ajax="false"  />
+	 		<br /><br />
+
+					<p:carousel id="basicCarousel" value="#{usuarioBean.usuariosD}"	var="u" rows="1"
+					styleClass="OutPut" style="height: 230px; width: 400px;" headerText="Resultado">
+
+						<h:panelGrid columns="1" cellpadding="20" cellspacing="20" style="width: 100%;">
+						
+							<h:outputText value="Nome: #{u.nome}" styleClass="OutPut" />
+
+							<h:outputText value="CPF: #{u.cpf}" styleClass="OutPut" />
+
+							<h:outputText value="Email: #{u.login}" styleClass="OutPut" />
+							
+							<h:outputText value="Perfil: #{u.perfil.perfil}" styleClass="OutPut" />
+							
+							<p:commandButton id="selectButton" icon="ui-icon-check" title="Modificar Perfil" update=":form2:display"
+							oncomplete="dlgUpdatePerfil.show()" style="float: center; text-align: center;">  
+                				<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
+            				</p:commandButton>
+														
+						</h:panelGrid>
+
+					</p:carousel>
+					
+			</fieldset>
+			
+			<p:messages id="msg" />
+			
+			</h:form>
+			
+		</div>
+		
+		<p:dialog header="Escolha o Novo perfil" modal="true" resizable="false"
+			showEffect="fade" hideEffect="fade" widgetVar="dlgUpdatePerfil" width="350">
+			<h:form id="form2">
+			
+				<h:panelGrid id="display">
+
+						<h:outputLabel value="CPF: " for="cpf" styleClass="OutPut" />
+						<h:outputText id="cpf" value="#{usuarioBean.usuario.cpf}"
+							styleClass="OutPut" />
+						<br />
+
+						<h:outputLabel value="Nome: " for="nome" styleClass="OutPut" />
+						<h:outputText id="nome" value="#{usuarioBean.usuario.nome}"
+							styleClass="OutPut" />
+						<br />
+
+						<h:outputLabel value="Perfil" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:selectOneMenu id="perfil_tipo" requiredMessage="Selecione um perfil" required="true"
+							value="#{usuarioBean.usuario.perfil}"
+							converter="genericConverter" style="width: 100px;">
+							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+							<f:selectItems value="#{perfilBean.id}" var="p"
+								itemLabel="#{p.perfil}" itemValue="#{p}" />
+							<f:ajax event="blur" render="error_perfil" />
+						</p:selectOneMenu>
+						<p:message id="error_perfil" for="perfil_tipo" />
+
+					</h:panelGrid><br />
+				
+				<p:commandButton value="OK" action="#{usuarioBean.updatePerfil}" icon="ui-icon-check" style="float: center; text-align: center;"
+					ajax="false" title="Modificar Perfil">
+						<f:ajax render="@all" />
+				</p:commandButton>
+			</h:form>	
+		</p:dialog>	
+		
+	</ui:define>		
+	
+</ui:composition>	
+</html>
