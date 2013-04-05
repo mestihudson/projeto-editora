@@ -1,5 +1,7 @@
 package ufrr.editora.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,9 @@ import ufrr.editora.converter.BaseEntity;
 
 @Entity
 @Table(name="tb_endereco")
-public class Endereco implements BaseEntity {
+public class Endereco implements Serializable, BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -39,7 +43,7 @@ public class Endereco implements BaseEntity {
 	
 	@Transient
 	@OneToOne(mappedBy="endereco", fetch=FetchType.EAGER)
-	private Pessoa pessoa;
+	private Usuario usuario;
 	
 	/** get and set **/
 	
@@ -107,12 +111,13 @@ public class Endereco implements BaseEntity {
 		this.fornecedor = fornecedor;
 	}
 	
-	public Pessoa getPessoa() {
-		return pessoa;
+	
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getMunicipio() {

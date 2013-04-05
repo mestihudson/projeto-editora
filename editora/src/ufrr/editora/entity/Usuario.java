@@ -1,29 +1,57 @@
 package ufrr.editora.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name="tb_usuario")
-public class Usuario {
+public class Usuario implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	private String nome;
+	
+	private String cpf;
+	
+	@Column(name="data_nascimento")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date nascimento;
+	
+	private String universitario; //ALUNO, PROFESSOR, SERVIDOR UFRR, OUTROS
+	
+	@Column(name="local_trabalho")
+	private String localTrabalho;
+	
+	private String telefone1;
+	
+	private String telefone2;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="fk_endereco")
+	private Endereco endereco;
 	
 	@Email
 	private String login; // login = Pessoa.email
@@ -45,10 +73,7 @@ public class Usuario {
 	@Transient
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<Produto> produtos = new ArrayList<Produto>();
-	
-	@OneToOne(mappedBy="usuario", fetch=FetchType.EAGER)
-	private Pessoa pessoa;
-	
+		
 	
 //	get and set
 
@@ -65,7 +90,7 @@ public class Usuario {
 	}
 
 	public void setLogin(String login) {
-		this.login = login;
+		this.login = login.toLowerCase();
 	}
 
 	public String getSenha() {
@@ -120,13 +145,71 @@ public class Usuario {
 		this.repetirSenha = repetirSenha;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setNome(String nome) {
+		this.nome = nome.toUpperCase();
 	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public Date getNascimento() {
+		return nascimento;
+	}
+
+	public void setNascimento(Date nascimento) {
+		this.nascimento = nascimento;
+	}
+
+	public String getUniversitario() {
+		return universitario;
+	}
+
+	public void setUniversitario(String universitario) {
+		this.universitario = universitario;
+	}
+
+	public String getLocalTrabalho() {
+		return localTrabalho;
+	}
+
+	public void setLocalTrabalho(String localTrabalho) {
+		this.localTrabalho = localTrabalho.toUpperCase();
+	}
+
+	public String getTelefone1() {
+		return telefone1;
+	}
+
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+
+	public String getTelefone2() {
+		return telefone2;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	
+
 	
 }
