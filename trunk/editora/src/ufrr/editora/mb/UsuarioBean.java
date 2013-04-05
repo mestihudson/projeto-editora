@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.Query;
 
 import ufrr.editora.dao.DAO;
+import ufrr.editora.entity.Endereco;
+import ufrr.editora.entity.Perfil;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 
@@ -22,18 +25,42 @@ public class UsuarioBean implements Serializable {
 	private String senhaCriptografada;
 	
 	private Usuario usuario = new Usuario();
+	private Perfil perfil = new Perfil();
+	private Endereco endereco = new Endereco();
+	private List<Perfil> perfis;
 	private List<Usuario> usuarios;
 	private List<Usuario> usuariosE; // Lista com Usuarios "Em Espera"
 	private List<Usuario> usuariosD; // Lista com Usuarios "Desativado"
+	
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
+	private Long usuarioId;
+	
 	public Boolean cadastro = true;
 	
-	//AutoComplete Login
+	public void carregaUsuario() {
+
+		DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
+		if (usuarioId != null && usuarioId != 0) {
+			this.usuario = dao.buscaPorId(this.usuarioId);
+		}
+	}
+	
+	// AutoComplete Login
 	public List<String> autocompletelogin(String nome) {
 		List<Usuario> array = dao.getAllByName("login", nome);
 		ArrayList<String> nomes = new ArrayList<String>();
 		for (int i = 0; i < array.size(); i++) {
 			nomes.add(array.get(i).getLogin());
+		}
+		return nomes;
+	}
+
+	// AutoComplete Nome
+	public List<String> autocompletenome(String nome) {
+		List<Usuario> array = dao.getAllByName("nome", nome);
+		ArrayList<String> nomes = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			nomes.add(array.get(i).getNome());
 		}
 		return nomes;
 	}
@@ -43,23 +70,185 @@ public class UsuarioBean implements Serializable {
 	public List<Usuario> getUsuarios() {
 		if (usuarios == null) {
 			System.out.println("Carregando usuarios...");
-			usuarios = new DAO<Usuario>(Usuario.class).listaTodos();
+			usuarios = new DAO<Usuario>(Usuario.class).getAllOrder("nome");
 		}
 		return usuarios;
 	}
 	
-	// Exibe uma lista com o usuarios nulos
-	public List<Usuario> getUsuariosNulls() {
+	// Exibe uma lista com as solicitações de acesso
+	public List<Usuario> getSolicitacoes() {
 		usuariosE = new ArrayList<Usuario>();
 		for (Usuario u : this.getUsuarios()) {
-			if (u.getPerfil().getId()==5) {
+				if (u.getStatus()!=true && u.getPerfil().getPerfil().equalsIgnoreCase("solicitação")) {
+					usuariosE.add(u);
+				}
+		}
+		return usuariosE;
+	}
+	
+	// Exibe uma lista de usuário ativados
+	public List<Usuario> getAtivados() {
+		usuariosE = new ArrayList<Usuario>();
+		for (Usuario u : this.getUsuarios()) {
+			if (u.getStatus() == true && u.getPerfil().getId() <= 4) {
 				usuariosE.add(u);
 			}
 		}
 		return usuariosE;
 	}
+		
+	// Exibe uma lista de usuário ativados != Administrador
+	public List<Usuario> getAtivados2() {
+		usuariosE = new ArrayList<Usuario>();
+		for (Usuario u : this.getUsuarios()) {
+			if (u.getStatus() == true && u.getPerfil().getId() <= 4 && u.getPerfil().getId() != 1) {
+				usuariosE.add(u);
+			}
+		}
+		return usuariosE;
+	}	
 	
+	// Exibe uma lista de perfil id=5
+		public List<Perfil> getPerfil5() {
+			perfis = new ArrayList<Perfil>();
+			for (Perfil p : this.getPerfis()) {
+				if (p.getPerfil().equalsIgnoreCase("solicitação")) {
+					perfis.add(p);
+				}
+			}
+			return perfis;
+		}
+
+		
+/** Pesquisa Usuario **/
+		@SuppressWarnings("unchecked")
+		public String getListaUsuariosByName() {
+			if (usuario.getNome().contains("'")
+					|| usuario.getNome().contains("@")
+					|| usuario.getNome().contains("/")
+					|| usuario.getNome().contains("*")
+					|| usuario.getNome().contains("<")
+					|| usuario.getNome().contains(">")
+					|| usuario.getNome().contains("#")) {
+
+				Msg.addMsgError("Contém caracter(es) inválido(s)");
+				return null;
+			}
+			if (usuario.getNome().length() <= 2) {
+				Msg.addMsgError("Informe pelo menos 3 caracteres");
+				return null;
+
+			} else {
+				usuarios = dao.getAllByName("nome", usuario.getNome());
+				if (usuarios.isEmpty()) {
+					Msg.addMsgInfo("Nenhum registro encontrado");
+					return null;
+
+				} else {
+					System.out.println("Chegou Aqui... Processando informações...");
+					try {
+						Query query = dao.query("SELECT u FROM Usuario u WHERE u.nome=?");
+						query.setParameter(1, usuario.getNome());
+						usuariosD = query.getResultList();
+						System.out.println("Usuário encontrado com sucesso...");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return null;
+				}
+			}
+		}
+		
+	// Ativar usuário (permitir acesso)
+	public String ativarUsuario() {
+		if (this.getUsuario().getPerfil().getId() != 5 && this.getUsuario().getPerfil().getId()!=null) {
+			this.getUsuario().setStatus(true);
+			// funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
+			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome()
+					+ " ATIVADO COM SUCESSO");
+			dao.atualiza(usuario);
+			System.out.println("...Usuário ativado");
+			return "/pages/usuario/autorizarAcesso.xhtml";
+		} else {
+			System.out.println("..Não foi possível ativar usuário");
+			Msg.addMsgError("USUÁRIO: " + getUsuario().getNome()
+					+ " NÃO FOI ATIVADO. TENTE NOVAMENTE");
+		}
+		return "/pages/usuario/autorizarAcesso.xhtml";
+
+	}
 	
+	// Desativar usuário
+		public String desativarUsuario() {
+			if (this.getUsuario().getPerfil().getId() != 5 && this.getUsuario().getPerfil().getId()!=null) {
+				this.getUsuario().setStatus(false);
+				// funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
+				Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome()
+						+ " DESATIVADO");
+				dao.atualiza(usuario);
+				this.usuario = new Usuario();
+				System.out.println("...Usuário desativado");
+				return "/pages/usuario/desativarAcesso.xhtml";
+			} else {
+				System.out.println("..Não foi possível desativar usuário");
+				Msg.addMsgError("USUÁRIO: " + getUsuario().getNome()
+						+ " NÃO FOI DESATIVADO. TENTE NOVAMENTE");
+			}
+			return "/pages/usuario/desativarAcesso.xhtml";
+
+		}
+		
+		//solicitacao de cadastro
+		public String addPessoa() {
+			for (Usuario usuarios : this.getUsuarios()) {
+				if (usuarios.getCpf().equalsIgnoreCase(this.getUsuario().getCpf()) ||
+						usuarios.getLogin().equalsIgnoreCase(this.getUsuario().getLogin())) {
+					this.cadastro = false;
+					break;
+				}
+			}
+
+			if (this.cadastro == true) {
+				if (getUsuario().getSenha().equalsIgnoreCase(this.getUsuario().getRepetirSenha())) {
+					usuario.setStatus(false);
+					usuario.setEndereco(endereco);
+					dao.adiciona(usuario);
+					Msg.addMsgInfo("Solicitação de acesso enviada com sucesso. Aguarde autorização!");
+					this.usuario = new Usuario();
+					System.out.println("...Solicitação enviada");
+					return "index.xhtml";
+				} else {
+					System.out.println("...Senhas diferentes");
+					Msg.addMsgError("Senhas diferentes, tente de novo");
+				}
+			} else {
+				System.out.println("...cadastro existente");
+				Msg.addMsgError("Este cadastro já existe");
+			}
+			usuarios = dao.getAllOrder("nome");
+			this.cadastro = true;
+			return null;
+		}
+		
+		// atualiza perfil
+		public String updatePerfil() {
+			if (usuario.getId()!=null) {
+				Msg.addMsgInfo("Perfil Alterado Com Sucesso");
+				dao.update(usuario);
+				this.usuario = new Usuario();
+				
+			}
+			return "/pages/usuario/modificarPefil.xhtml";
+		}
+
+
+	
+	/** Getters and Setters **/
+	
+	public List<Perfil> getPerfis() {
+			return perfis;
+		}
+
 	public LoginBean getLogin() {
 		return login;
 	}
@@ -111,6 +300,34 @@ public class UsuarioBean implements Serializable {
 	}
 	public void setCadastro(Boolean cadastro) {
 		this.cadastro = cadastro;
+	}
+	
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Long getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(Long usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 	
 	// Função para criar hash da senha informada  
@@ -178,32 +395,6 @@ public class UsuarioBean implements Serializable {
 //		return funcionario.getLogin() != null;
 //	}
 //	
-
-	// Método para Listar os usuários com status "null" (em espera)
-	public List<Usuario> getUsuariosE() {
-		usuariosE = new ArrayList<Usuario>();
-		for (Usuario u : this.getUsuarios()) {
-			if(u.getStatus().equals(true)){
-				usuariosE.add(u);
-			}
-		}
-		return usuariosE;
-	}
-	
-	// Ativar usuário (permitir acesso)
-		public String ativarUsuario(){
-				if(this.getUsuario().getStatus().equals(null) || this.getUsuario().getStatus().equals(false)){
-					this.getUsuario().setStatus(true);
-//					funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
-					Msg.addMsgInfo("Usuário: " + getUsuario().getPessoa().getNome() + " ativado com sucesso");
-					dao.atualiza(usuario);
-					System.out.println("...Usuário ativado");
-				} else {
-					System.out.println("..Não foi possível ativar funcionário");
-				}
-			return null;
-				
-		}
 //	
 //	// Método para Listar todos os Funcionários com Status "Desativado"
 //	public List<Funcionario> getFuncionariosD() {
@@ -270,7 +461,7 @@ public class UsuarioBean implements Serializable {
 	
 	
 	
-	/** Getters and Setters **/
+	
 
 	
 	

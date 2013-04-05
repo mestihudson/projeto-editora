@@ -48,11 +48,11 @@ public class LoginBean implements Serializable {
 			} else {
 				if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 1 ||
 						this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 2) {
-					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getPessoa().getNome() + ". SISTEMA DE VENDAS EDITORA");
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
 					return "/pages/home/home.xhtml";
 					
 				}else {
-					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getPessoa().getNome() + ". SISTEMA DE VENDAS EDITORA");
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
 					return "/pages/fornecedor/cadastrarFornecedor.xhtml?faces-redirect=true";
 				}
 			}
@@ -97,8 +97,22 @@ public class LoginBean implements Serializable {
 				return "cliente.xhtml?faces-redirect=true";
 			}
 		}
+		
+	// atualiza usuário
+	public String updateUsuario() {
+		dao.atualiza(usuario);
+		Msg.addMsgInfo("Cadastro atualizado com sucesso");
+		System.out.println("...Cadastro atualizado");
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext()
+				.getSession(false);
+		session.invalidate();
+		System.out.println("Saiu do Sistema");
+		return "/index.xhtml";
+	}
 	
-//	Sair do sistem
+	// Sair do sistema
 	public String sair() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
