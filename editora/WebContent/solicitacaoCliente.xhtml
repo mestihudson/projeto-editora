@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Editora UFRR</title>
+	<title>Sistema Editora</title>
 	<h:outputStylesheet name="leo.css" library="css" />
 	<h:outputScript name="locale.js" library="js" />
 	<link rel="shortcut icon" href="resources/img/favicon.ico" />
@@ -15,8 +15,8 @@
 
 <h:body styleClass="shadow">
 	<h:form id="form">
-
-	<div style="background: white;" align="center">
+	
+	<div style="background: white;"  align="center">
 
 		<div
 			style="background: #394674; width: 95%; height: 20px; line-height: 20px; text-align: left;">
@@ -31,16 +31,11 @@
 		</div>
 
 		<div id="rodape2" />
-
-			<div style="background: #C4D2EB; height: 60px; width: 95%">
-				<a href="http://cecomp.ufrr.br/" target="_blank"> <p:graphicImage
-						value="/resources/img/DTI100px.png"
-						style="float: left; text-align: left; width: 90px;" />
-				</a> <a href="http://www.ufrr.br" target="_blank"> <p:graphicImage
-						value="/resources/img/brasao.png"
-						style="float: right; text-align: right; width: 66px;" />
-				</a>
-			</div>
+		
+		<div style="background: #C4D2EB; height: 60px; width: 95%" align="right">
+			<p:graphicImage value="/resources/img/logodti2.png" style="float: left; text-align: left; width: 85px;" />
+			<p:graphicImage value="/resources/img/brasao.png" style="float: right; text-align: right; width: 66px;" />
+		</div>
 
 			<div style="background: #EFF3FA; height: 60px; width: 95%"
 				align="center">
@@ -57,16 +52,16 @@
 
 					<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
 						align="center">
-						<h:outputText value="CADASTRO DE USUÁRIO"
+						<h:outputText value="CADASTRO DE CLIENTE"
 							style="color: white; font-size: 12px;" styleClass="OutPut"/>
 					</div>
 
-					<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
+					<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">				
 					
 					<h:panelGrid id="grid" columns="5">
 					
 					<p:focus context="grid" for="cpf" />
-						
+										
 						<h:outputLabel value="CPF" for="cpf" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputMask id="cpf" value="#{usuarioBean.usuario.cpf}" style="width: 134px;"
@@ -107,21 +102,14 @@
 							requiredMessage="Informe o campo universitário"
 							styleClass="input">
 							<f:selectItem itemValue="" itemLabel="" noSelectionValue="true" />
+							<f:selectItem itemValue="ALUNO" itemLabel="ALUNO" />
+							<f:selectItem itemValue="PROFESSOR" itemLabel="PROFESSOR" />
 							<f:selectItem itemValue="SERVIDOR UFRR" itemLabel="SERVIDOR UFRR" />
 							<f:selectItem itemValue="TERCEIRIZADO" itemLabel="TERCEIRIZADO" />
+							<f:selectItem itemValue="OUTROS" itemLabel="OUTROS" />
 							<f:ajax event="blur" render="error_univ" />
 						</p:selectOneMenu>
 						<p:message id="error_univ" for="univ" />
-						<br />
-						<br />
-
-						<h:outputLabel value="Local de Trabalho" for="trab" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="trab" value="#{usuarioBean.usuario.localTrabalho}"
-							required="true" requiredMessage="Informe o local de trabalho">
-							<f:ajax event="change" render="error_trab" />
-						</p:inputText>
-						<p:message id="error_trab" for="trab" />
 						<br />
 						<br />
 
@@ -129,7 +117,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputMask id="fone1" value="#{usuarioBean.usuario.telefone1}" mask="(99)9999-9999"
 							required="true"
-							requiredMessage="Informe pelo menos um telefone para contato">
+							requiredMessage="Informe o primeiro número para contato">
 							<f:ajax event="blur" render="error_fone1" />
 						</p:inputMask>
 						<p:message id="error_fone1" for="fone1" />
@@ -137,8 +125,9 @@
 						<br />
 
 						<h:outputLabel value="Telefone 2" for="fone2" styleClass="OutPut" />
-						<h:outputLabel value="" />
-						<p:inputMask id="fone2" value="#{usuarioBean.usuario.telefone2}" mask="(99)9999-9999">
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:inputMask id="fone2" value="#{usuarioBean.usuario.telefone2}" mask="(99)9999-9999"
+						required="true" requiredMessage="Informe o segundo número para contato">
 							<f:ajax event="change" render="error_fone2" />
 						</p:inputMask>
 						<p:message id="error_fone2" for="fone2" />
@@ -149,12 +138,12 @@
 						
 						
 						<!-- 					Aqui começa as informações do login -->
-						
+												
 					<p:fieldset legend="Login" style="width: 77%; margin-left: 15px;">
-					
+										
 					<h:panelGrid id="grid2" columns="12" cellpadding="5" cellspacing="5">
 
-						<h:outputLabel value="Email" for="senha" styleClass="OutPut" />
+						<h:outputLabel value="Email" for="email" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="email" value="#{usuarioBean.usuario.login}" size="35"
 							required="true" requiredMessage="Informe seu email" validatorMessage="Email inválido">
@@ -164,15 +153,16 @@
 
 						<h:outputLabel value="Senha" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:password id="senha" value="#{usuarioBean.usuario.senha}"
-							required="true" requiredMessage="Informe sua senha">
-							<f:ajax event="blur" render="error_senha" />
+						<p:password id="senha" value="#{usuarioBean.usuario.senha}" 
+							required="true" requiredMessage="Informe sua senha" validatorMessage="Senha precisa ter no mínimo 8 caracteres">
+							<f:ajax event="blur" render="error_senha"  />
+							<f:validateLength minimum="8" />
 						</p:password>
 						<p:message id="error_senha" for="senha" display="icon" />
 						<br />
 						<br />
 
-						<h:outputLabel value="Repita a Senha" for="senha" styleClass="OutPut" />
+						<h:outputLabel value="Repita a Senha" for="rsenha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:password id="rsenha"
 							value="#{usuarioBean.usuario.repetirSenha}" required="true"
@@ -237,7 +227,7 @@
 						<h:outputLabel value="Número" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="end_numero" value="#{usuarioBean.endereco.numero}" style="width: 40px;"
-							required="true" requiredMessage="Informe o numero">
+							required="true" requiredMessage="Informe o numero" validatorMessage="Número inválido">
 							<f:ajax event="blur" render="error_numero" />
 						</p:inputText>
 						<p:message id="error_numero" for="end_numero" display="icon" />
@@ -260,30 +250,27 @@
 						<p:message id="error_cep" for="end_cep" display="icon" />
 												
 						</h:panelGrid>
-							
-					</p:fieldset><br /><br />
+											
+					</p:fieldset><br />
+										
+					<div align="center">							
+					<h:panelGrid columns="4" style="float: center;">
+						<h:outputLabel value="Seja bem vindo" styleClass="OutPut" />
+						<h:graphicImage value="" styleClass="as" />
+						<p:selectOneMenu id="perfil_tipo" requiredMessage="Selecione um perfil" required="true" value="#{usuarioBean.usuario.perfil}"
+							converter="genericConverter" style="width: 100px;">
+							<f:selectItems value="#{perfilBean.id4}" var="p" itemLabel="#{p.perfil}" itemValue="#{p}" />
+						</p:selectOneMenu>
+						<h:outputLabel value=" Faça seu cadastro para efetuar compras e ganhar descontos" styleClass="OutPut" />
+					</h:panelGrid>	
+					<br /><br />
 					
-					<div align="left">
-							<h:panelGrid columns="4" style="float: center;">
-								<h:graphicImage value="" styleClass="as" />
-								<p:selectOneMenu id="perfil_tipo"
-									requiredMessage="Selecione um perfil" required="true"
-									value="#{usuarioBean.usuario.perfil}"
-									converter="genericConverter" style="width: 100px;">
-									<f:selectItems value="#{perfilBean.id5}" var="p"
-										itemLabel="#{p.perfil}" itemValue="#{p}" />
-								</p:selectOneMenu>
-								<h:outputLabel
-									value=" de acesso ao sistema"
-									styleClass="OutPut" />
-							</h:panelGrid>
-							<br />
-						</div>	
-					
-					</fieldset>
+					</div>
+
+				</fieldset>
 					
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{usuarioBean.addPessoa}"
+				<p:commandButton action="#{usuarioBean.addCliente}"
 					value="OK" ajax="false" icon="ui-icon-check" update="@form">
 					<f:ajax render="@form" />
 				</p:commandButton>
@@ -311,10 +298,11 @@
 			<div style="width: 95%; display: block;" align="center" />
 			<div id="rodape3"
 				style="background: #394674; width: 95%; height: 20px; line-height: 20px; text-align: center;">
-				&copy; Copyright 2013 &nbsp;&nbsp; UFRR - DTI - CSI</div>
+				&copy; Copyright 2013 &nbsp;&nbsp; UFRR - DTI - CSI
+			</div>	
 
 		</div>	
-				
+			
 		</h:form>		
 
 

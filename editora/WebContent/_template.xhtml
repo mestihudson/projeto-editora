@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Sistema Editora</title>
+	<title>Editora UFRR</title>
 	<h:outputStylesheet name="leo.css" library="css" />
 	<h:outputScript name="locale.js" library="js" />
 	<link rel="shortcut icon" href="resources/img/favicon.ico" />
@@ -95,9 +95,9 @@
 						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
 					</p:commandLink>&nbsp;&nbsp;
 					
-					<p:commandLink>
+					<p:commandLink action="/pages/cliente/cadastrarCliente.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
+					</p:commandLink>
 			
 			
 			</p:panel>
@@ -105,7 +105,7 @@
 		</h:form>		
 	</p:dialog>		
 	
-	<p:dialog modal="true" width="550" widgetVar="dlgPesquisa" resizable="false" showEffect="explode">
+	<p:dialog modal="true" width="auto" widgetVar="dlgPesquisa" resizable="false" showEffect="explode">
 		<h:form id="form_pesquisa">
 			
 			<div align="center">
@@ -126,6 +126,10 @@
 					<p:commandLink>
 						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
 					</p:commandLink>&nbsp;&nbsp;
+					
+					<p:commandLink>
+						<p:graphicImage value="/resources/img/usuario2.png" styleClass="acende" />
+					</p:commandLink>
 			
 			
 			</p:panel>
@@ -153,28 +157,36 @@
 			
 			<div align="center">
 			<p:panel header="Módulo Usuário">
+			
+				<h:panelGrid columns="3" cellpadding="5" cellspacing="5" >
 				
 					<p:commandLink action="/pages/usuario/senhaCadastro.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/update.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;				
+						<p:graphicImage value="/resources/img/update.png" styleClass="acende" title="Atualiza dados do usuário" />
+					</p:commandLink>				
 				
 					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
-						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==2}">
-						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
+						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
+					</p:commandLink>
 					
 					<p:commandLink action="/pages/usuario/modificarPerfil.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
-						<p:graphicImage value="/resources/img/modificarperfil.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
+						<p:graphicImage value="/resources/img/modificarperfil.png" styleClass="acende" title="Atualização de perfil" />
+					</p:commandLink>
+					
+					</h:panelGrid>
 					
 					<p:commandLink action="/pages/usuario/desativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
-						<p:graphicImage value="/resources/img/desativaracesso.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/desativaracessos.png" styleClass="acende" title="Desativar usuário" style="float: center; text-align: center;" />
+					</p:commandLink>&nbsp;
+					
+					<p:commandLink action="/pages/usuario/reativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+						<p:graphicImage value="/resources/img/reativaracesso.png" styleClass="acende" title="Reativar usuário" style="float: center; text-align: center;" />
 					</p:commandLink>
-			
-			
+					
+							
 			</p:panel>
 			</div>	
 		</h:form>		
