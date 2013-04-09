@@ -32,6 +32,17 @@ public class PerfilBean implements Serializable {
 		return perfis;
 	}
 	
+	// Exibe uma lista com o id == 4
+		public List<Perfil> getId4() {
+			perfil5 = new ArrayList<Perfil>();
+			for (Perfil p : this.getPerfis()) {
+				if (p.getPerfil().equalsIgnoreCase("cliente")) {
+					perfil5.add(p);
+				}
+			}
+			return perfil5;
+		}
+	
 	// Exibe uma lista com o id == 5
 	public List<Perfil> getId5() {
 		perfil5 = new ArrayList<Perfil>();

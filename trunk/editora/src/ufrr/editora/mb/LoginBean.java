@@ -11,6 +11,7 @@ import ufrr.editora.dao.DAO;
 import ufrr.editora.dao.UsuarioDAO;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
+import ufrr.editora.util.TransformaStringMD5;
 
 @SessionScoped
 @ManagedBean
@@ -65,8 +66,8 @@ public class LoginBean implements Serializable {
 	
 	//autorização para alterar dados do cadastro
 	public String updateLogin() {
-		if (getSenhaVerifica().equalsIgnoreCase(LoginBean.this.usuario.getSenha())) {
-	
+		setSenhaVerifica(TransformaStringMD5.md5(getSenhaVerifica()));
+		if (getSenhaVerifica().equalsIgnoreCase(LoginBean.this.usuario.getSenha())) {	
 				if (this.getUsuario().getSenha().isEmpty()) {
 					Msg.addMsgInfo("Informe sua senha para atualizar seus dados");
 					
