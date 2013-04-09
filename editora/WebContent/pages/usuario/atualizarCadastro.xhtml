@@ -16,7 +16,7 @@
 	
 	<div style="background: #EFF3FA; height: 60px; width: 95%;" align="center"><br />
 		<h:outputText value="Atenção!" style="color: red; font-weight: bold;" /><br />
-		<h:outputText value="Após a atualização do seu cadastro será preciso fazer um novo logout" />
+		<h:outputText value="Após a atualização do seu cadastro será necessário fazer um novo logout, portanto você será direcionado ao login." />
 	</div>	
 		
 	</ui:define>
@@ -140,10 +140,11 @@
 							<f:ajax event="blur" render="error_senha" />
 						</p:password>
 						<p:message id="error_senha" for="senha" display="icon" />
-						<br />
-						<br />
 					
-					</h:panelGrid>	
+					</h:panelGrid><br />	
+					
+					<h:outputText value="Para atualizar o cadastro é preciso repetir ou inserir nova senha, caso contrário clique em cancelar."
+					style="color: red; font-weight: bold;" />
 					</p:fieldset>
 						
 				<br /><br />
