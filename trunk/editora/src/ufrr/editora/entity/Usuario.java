@@ -101,10 +101,6 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
 	public Boolean getStatus() {
 		return status;
 	}
