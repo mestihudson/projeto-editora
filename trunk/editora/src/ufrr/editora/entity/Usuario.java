@@ -22,9 +22,11 @@ import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 
+import ufrr.editora.converter.BaseEntity;
+
 @Entity
 @Table(name="tb_usuario")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -73,6 +75,9 @@ public class Usuario implements Serializable {
 	@Transient
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<Produto> produtos = new ArrayList<Produto>();
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<Mensagem> mensagens = new ArrayList<Mensagem>();
 		
 	
 //	get and set
@@ -191,6 +196,14 @@ public class Usuario implements Serializable {
 
 	public String getTelefone2() {
 		return telefone2;
+	}
+
+	public Collection<Mensagem> getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(Collection<Mensagem> mensagens) {
+		this.mensagens = mensagens;
 	}
 
 	public void setTelefone2(String telefone2) {
