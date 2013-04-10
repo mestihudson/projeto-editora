@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Usuário > Lista de Usuários" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" ></div>	
+	</div>
+	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;" >
+		
+<!-- 		Acesso não permitido -->
+		<h:form rendered="#{loginBean.usuario.perfil.id>1}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+
+		
+		</div>
+		</h:form>	
+			
+<!-- 			Apenas para acesso administrador		 -->
+			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1}">
+			
+			<fieldset style="border-color: #F8F8FF; border-top: white; border-left: white; border-bottom: white; border-right: white;">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="USUÁRIOS DO SISTEMA" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>		
+			
+			<p:dataTable id="list" value="#{usuarioBean.todosAtivados}" emptyMessage="Nenhum usuário encontrado" paginator="true" rows="10" paginatorPosition="bottom"
+					var="u" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					
+					<p:column headerText="Nome" filterBy="#{u.nome}" filterMatchMode="contains">
+						<h:outputText value="#{u.nome}" /> 
+					</p:column>
+					
+					<p:column style="text-align: center;" headerText="CPF">
+						<h:outputText value="#{u.cpf}" /> 
+					</p:column>
+					
+					<p:column headerText="Email">
+						<h:outputText value="#{u.login}" /> 
+					</p:column>
+										
+					<p:column style="text-align: center;" headerText="Perfil"
+					filterBy="#{u.perfil.perfil}" filterMatchMode="contains">
+						<h:outputText value="#{u.perfil.perfil}" /> 
+					</p:column>
+					
+					<p:column style="text-align: center;" headerText="Data de Nascimento">
+						<h:outputText value="#{u.nascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText> 
+					</p:column>
+										
+			</p:dataTable>	
+					
+			</fieldset>
+
+				<div align="left" style="width: 350px; margin-right: 500px;">
+					<p:messages autoUpdate="true" />
+				</div>
+
+			</h:form>
+		
+	</div>	
+	</ui:define>		
+	
+</ui:composition>	
+</html>

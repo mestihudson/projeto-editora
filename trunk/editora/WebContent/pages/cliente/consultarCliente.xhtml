@@ -103,7 +103,7 @@
 				<h:outputText value="SOLICITAÇÃO DE ACESSO" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>		
 			
-			<p:dataTable id="list" value="#{usuarioBean.solicitacoes}"
+			<p:dataTable id="list" value="#{usuarioBean.usuarios}"
 					var="u"  emptyMessage="Nenhuma solicitação no momento"  
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 					
@@ -174,7 +174,7 @@
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 100px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
-							<f:selectItems value="#{perfilBean.gerente}" var="p"
+							<f:selectItems value="#{perfilBean.id}" var="p"
 								itemLabel="#{p.perfil}" itemValue="#{p}" />
 							<f:ajax event="blur" render="error_perfil" />
 						</p:selectOneMenu>

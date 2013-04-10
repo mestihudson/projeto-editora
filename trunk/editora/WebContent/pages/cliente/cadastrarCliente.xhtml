@@ -115,6 +115,15 @@
 						<br />
 						<br />
 						
+						<h:outputLabel value="Telefone 2" for="fone2" styleClass="OutPut" />
+						<h:outputText value="" />
+						<p:inputMask id="fone2" value="#{usuarioBean.usuario.telefone2}" mask="(99)9999-9999">
+							<f:ajax event="blur" render="error_fone2" />
+						</p:inputMask>
+						<p:message id="error_fone2" for="fone2" />
+						<br />
+						<br />
+						
 						<h:outputLabel value="Email" for="email" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="email" value="#{usuarioBean.usuario.login}" size="35"
@@ -329,7 +338,7 @@
 			widgetVar="dlgEditaCliente" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{usuarioBean.usuarios}" var="c" id="tb_clientes">
+					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes">
 					
 						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{c.nome}" onclick="dlgEditaCliente.hide()" style="text-align: center;"
