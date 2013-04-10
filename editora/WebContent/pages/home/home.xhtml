@@ -40,16 +40,35 @@
 				rendered="#{loginBean.usuario.perfil.id!=3}">
 				
 <!-- 				troca de mensagem -->
-				<br /><br /><br />
+				<p:commandLink action="/pages/mensagem/enviarMensagem.xhtml?faces-redirect=true" style="margin-left: 90%;">
+					<p:graphicImage value="/resources/img/messages.png" title="Enviar mensagem"  />
+				</p:commandLink>
 				<div
 					style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
 					align="center">
 					<h:outputText value="MENSAGENS"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
-
+				
 				<fieldset style="border-color: #F8F8FF; border-top: white; width: 441px;">
-					Exibição de Mensagens
+					<h:dataTable value="#{mensagemBean.recebidas}" var="m" id="tb_usuarios" rows="5"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					
+						<h:column headerText="Enviada Por">
+							<h:outputLabel value="#{m.usuario.nome}" />
+						</h:column>	
+						
+						<h:column headerText="Enviado Dia">
+							<h:outputLabel value="#{m.dataEnvio.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
+							</h:outputLabel>
+						</h:column>
+						
+						<h:column headerText="Mensagem">
+							<h:outputLabel value="#{m.descricao}" />
+						</h:column>	
+											
+					</h:dataTable>
 
 				</fieldset><br /><br /><br />
 				
