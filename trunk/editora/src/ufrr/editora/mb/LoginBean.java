@@ -23,6 +23,8 @@ public class LoginBean implements Serializable {
 	private String senhaVerifica;
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
 	
+	private String senhaCriptografada;
+	
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -50,6 +52,7 @@ public class LoginBean implements Serializable {
 				if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 1 ||
 						this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 2) {
 					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
+					System.out.println("usuario: " + getUsuario().getNome() + " entrou no sistema");
 					return "/pages/home/home.xhtml";
 					
 				}else {
@@ -89,10 +92,10 @@ public class LoginBean implements Serializable {
 			if (this.getUsuario().getPerfil().getId() == 1) {
 				return "/pages/home/home.xhtml?faces-redirect=true";
 			}
-			if (this.getUsuario().getPerfil().getId().equals(2)) {
+			if (this.getUsuario().getPerfil().getId() == 2) {
 				return "/pages/home/home.xhtml?faces-redirect=true";
 			}
-			if (this.getUsuario().getPerfil().getId().equals(3)) {
+			if (this.getUsuario().getPerfil().getId() == 3) {
 				return "homeVenda.xhtml?faces-redirect=true";
 			}else {
 				return "cliente.xhtml?faces-redirect=true";
@@ -101,6 +104,7 @@ public class LoginBean implements Serializable {
 		
 	// atualiza usuário
 	public String updateUsuario() {
+		usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 		dao.atualiza(usuario);
 		Msg.addMsgInfo("Cadastro atualizado com sucesso");
 		System.out.println("...Cadastro atualizado");
@@ -120,7 +124,7 @@ public class LoginBean implements Serializable {
 		HttpSession session = (HttpSession) facesContext.getExternalContext()
 				.getSession(false);
 		session.invalidate();
-		System.out.println("Saiu do Sistema");
+		System.out.println("usuario: " + getUsuario().getNome() + " saiu do sistema");
 		return "/index.xhtml?faces-redirect=true";
 	}
 	
@@ -134,5 +138,12 @@ public class LoginBean implements Serializable {
 	public void setSenhaVerifica(String senhaVerifica) {
 		this.senhaVerifica = senhaVerifica;
 	}
+	public String getSenhaCriptografada() {
+		return senhaCriptografada;
+	}
+	public void setSenhaCriptografada(String senhaCriptografada) {
+		this.senhaCriptografada = senhaCriptografada;
+	}
+	
 	
 }

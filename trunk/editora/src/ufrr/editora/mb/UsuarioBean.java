@@ -98,7 +98,7 @@ public class UsuarioBean implements Serializable {
 	public List<Usuario> getSolicitacoes() {
 		usuariosE = new ArrayList<Usuario>();
 		for (Usuario u : this.getUsuarios()) {
-			if (u.getStatus() == false && u.getPerfil().getPerfil().equalsIgnoreCase("solicitação")) {
+			if (u.getStatus() == false & u.getPerfil().getPerfil().equalsIgnoreCase("solicitação")) {
 				System.out.println("Total de Usuários: " + getUsuarios().size());
 				usuariosE.add(u);
 			}
@@ -106,7 +106,8 @@ public class UsuarioBean implements Serializable {
 		return usuariosE;
 	}
 	
-//	public List<Usuario> getSolicitacoes() {
+//	public List<Usuario> getSolicitacoes2() {
+//		System.out.println("...entrou solicitação 2");
 //		usuariosE = new ArrayList<Usuario>();
 //		List<Usuario> usuarioss = new ArrayList<Usuario>();
 //		usuarioss = this.getUsuarios();
@@ -117,10 +118,22 @@ public class UsuarioBean implements Serializable {
 //				Msg.addMsgInfo("Nova(s) solicitação(ões) existente(s)");
 //			}	
 //		}
-//		return usuariosE;
+//		return usuarioss;
 //	}
 	
 	// Exibe uma lista de usuário ativados
+		public List<Usuario> getTodosAtivados() {
+			usuariosE = new ArrayList<Usuario>();
+			for (Usuario u : this.getUsuarios()) {
+				if (u.getStatus() == true) {
+					System.out.println(getUsuarios().size());
+					usuariosE.add(u);
+				}
+			}
+			return usuariosE;
+		}
+	
+	// Exibe uma lista de usuário ativados sem clientes
 	public List<Usuario> getAtivados() {
 		usuariosE = new ArrayList<Usuario>();
 		for (Usuario u : this.getUsuarios()) {
@@ -166,47 +179,48 @@ public class UsuarioBean implements Serializable {
 	}	
 
 		
-/** Pesquisa Usuario **/
-		@SuppressWarnings("unchecked")
-		public String getListaUsuariosByName() {
-			if (usuario.getNome().contains("'")
-					|| usuario.getNome().contains("@")
-					|| usuario.getNome().contains("/")
-					|| usuario.getNome().contains("*")
-					|| usuario.getNome().contains("<")
-					|| usuario.getNome().contains(">")
-					|| usuario.getNome().contains("#")) {
+	/** Pesquisa Usuario **/
+	@SuppressWarnings("unchecked")
+	public String getListaUsuariosByName() {
+		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
+				|| usuario.getNome().contains("/")
+				|| usuario.getNome().contains("*")
+				|| usuario.getNome().contains("<")
+				|| usuario.getNome().contains(">")
+				|| usuario.getNome().contains("#")) {
 
-				Msg.addMsgError("Contém caracter(es) inválido(s)");
-				return null;
-			}
-			if (usuario.getNome().length() <= 2) {
-				Msg.addMsgError("Informe pelo menos 3 caracteres");
+			Msg.addMsgError("Contém caracter(es) inválido(s)");
+			return null;
+		}
+		if (usuario.getNome().length() <= 2) {
+			Msg.addMsgError("Informe pelo menos 3 caracteres");
+			return null;
+
+		} else {
+			usuarios = dao.getAllByName("nome", usuario.getNome());
+			if (usuarios.isEmpty()) {
+				Msg.addMsgInfo("Nenhum registro encontrado");
 				return null;
 
 			} else {
-				usuarios = dao.getAllByName("nome", usuario.getNome());
-				if (usuarios.isEmpty()) {
-					Msg.addMsgInfo("Nenhum registro encontrado");
-					return null;
-
-				} else {
-					System.out.println("Chegou Aqui... Processando informações...");
-					try {
-						Query query = dao.query("SELECT u FROM Usuario u WHERE u.nome=?");
-						query.setParameter(1, usuario.getNome());
-						usuariosD = query.getResultList();
-						System.out.println("Usuário encontrado com sucesso...");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					return null;
+				System.out.println("Chegou Aqui... Processando informações...");
+				try {
+					Query query = dao
+							.query("SELECT u FROM Usuario u WHERE u.nome LIKE ?"); 
+					query.setParameter(1, usuario.getNome() + "%");
+					usuariosD = query.getResultList();
+					System.out.println("Usuário encontrado com sucesso...");
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+				return null;
 			}
 		}
+	}
 		
 	// Ativar usuário (permitir acesso)
 	public String ativarUsuario() {
+		System.out.println(this.getUsuario().getNome());
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(true);
@@ -229,7 +243,6 @@ public class UsuarioBean implements Serializable {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(true);
-			// funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
 			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome()
 					+ " REATIVADO COM SUCESSO");
 			dao.atualiza(usuario);
@@ -249,7 +262,6 @@ public class UsuarioBean implements Serializable {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(false);
-			// funcionario.setSenha(TransformaStringMD5.md5(funcionario.getSenha()));
 			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome() + " DESATIVADO");
 			dao.atualiza(usuario);
 			this.usuario = new Usuario();
@@ -311,8 +323,14 @@ public class UsuarioBean implements Serializable {
 		}
 
 		if (this.cadastro == true) {
+			if (getUsuario().getTelefone1().equalsIgnoreCase(this.getUsuario().getTelefone2())) {
+				Msg.addMsgError("Número de telefones não podem ser iguais, informe outro.");
+				System.out.println("...erro: número de telefones iguais");
+				return null;
+			}
 			if (getUsuario().getSenha().equalsIgnoreCase(
 					this.getUsuario().getRepetirSenha())) {
+				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 				usuario.setStatus(true);
 				usuario.setEndereco(endereco);
 				dao.adiciona(usuario);
@@ -370,14 +388,18 @@ public class UsuarioBean implements Serializable {
 
 
 	// atualiza perfil
-	public String updatePerfil() {
-		if (usuario.getId() != null) {
-			Msg.addMsgInfo("Perfil Alterado Com Sucesso");
-			dao.update(usuario);
-			this.usuario = new Usuario();
-
+	public void updatePerfil() {
+		if (this.getUsuario().getPerfil().getId() != 5
+				&& this.getUsuario().getPerfil().getId() != null) {
+			this.getUsuario().setStatus(true);
+			Msg.addMsgInfo("PERFIL DE " + getUsuario().getNome()
+					+ " FOI MODIFICADO PARA " + getUsuario().getPerfil().getPerfil());
+			dao.atualiza(usuario);
+			System.out.println("...Perfil de usuário: " + getUsuario().getNome() + " modificado");
+		} else {
+			System.out.println("...Não foi possível modificar perfil");
+			Msg.addMsgError("NÃO FOI POSSÍVEL EFETUAR OPERAÇÃO. TENTE NOVAMENTE");
 		}
-		return "/pages/usuario/modificarPefil.xhtml";
 	}
 	
 	// update Cliente
