@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="LATIN1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -11,7 +12,7 @@
 	<ui:define name="head">
 	
 	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="UsuÃ¡rio > Modificar Perfil" styleClass="title" style="line-height: 20px;" />
+		<h:outputText value="Usuário > Modificar Perfil" styleClass="title" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" ></div>	
 	</div>
 	
@@ -21,7 +22,7 @@
 
 		<div class="Centralizar" style="background: white;">
 		
-<!-- 		Acesso nÃ£o permitido -->
+<!-- 		Acesso não permitido -->
 		<h:form rendered="#{loginBean.usuario.perfil.id!=1}">
 		<div align="center">
 		
@@ -36,10 +37,10 @@
 		
 			<h:form id="form_perfil">
 						
-			<fieldset style="border-color: #F8F8FF; border-top: white;">
+			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 						
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="CONSULTAR USUÃRIO" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="USUÁRIOS CADASTRADOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>
 			
 			<p:focus context="autocompletePesquisar" />
@@ -50,29 +51,29 @@
 		
 	 		<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListaUsuariosByName}" ajax="false"  />
 	 		<br /><br />
+	 		
+	 		<p:dataGrid id="dg" var="usuario" value="#{usuarioBean.ativados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
+	 		emptyMessage="">
 
-					<p:carousel id="basicCarousel" value="#{usuarioBean.usuariosD}"	var="u" rows="1"
-					styleClass="OutPut" style="height: 230px; width: 400px;" headerText="Resultado">
+						<p:panel header="#{usuario.nome}" style="text-align:center" id="pnl">
+							<h:panelGrid columns="1" style="width:100%">
+								
+								<h:outputText value="#{usuario.login}" />
+								
+								<h:outputText value="#{usuario.cpf}" />
+								
+								<h:outputText value="#{usuario.perfil.perfil}" />
 
-						<h:panelGrid columns="1" cellpadding="20" cellspacing="20" style="width: 100%;">
+								<p:commandLink update=":form_dlg:display"
+									oncomplete="dlgUpdatePerfil.show()">
+									<h:outputText styleClass="ui-icon ui-icon-search"
+										style="margin:0 auto;" />
+									<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}" />
+								</p:commandLink>
+							</h:panelGrid>
+						</p:panel>
 						
-							<h:outputText value="Nome: #{u.nome}" styleClass="OutPut" />
-
-							<h:outputText value="CPF: #{u.cpf}" styleClass="OutPut" />
-
-							<h:outputText value="Email: #{u.login}" styleClass="OutPut" />
-							
-							<h:outputText value="Perfil: #{u.perfil.perfil}" styleClass="OutPut" />
-							
-							<p:commandButton id="selectButton" icon="ui-icon-check" title="Modificar Perfil" update=":form2:display"
-							oncomplete="dlgUpdatePerfil.show()" style="float: center; text-align: center;">  
-                				<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
-            				</p:commandButton>
-														
-						</h:panelGrid>
-
-					</p:carousel>
-					
+					</p:dataGrid> 					
 			</fieldset>
 			
 			<p:messages id="msg" />
@@ -83,7 +84,7 @@
 		
 		<p:dialog header="Escolha o Novo perfil" modal="true" resizable="false"
 			showEffect="fade" hideEffect="fade" widgetVar="dlgUpdatePerfil" width="350">
-			<h:form id="form2">
+			<h:form id="form_dlg">
 			
 				<h:panelGrid id="display">
 
@@ -111,10 +112,11 @@
 
 					</h:panelGrid><br />
 				
-				<p:commandButton value="OK" action="#{usuarioBean.updatePerfil}" icon="ui-icon-check" style="float: center; text-align: center;"
+				<p:commandButton id="ok" value="OK" action="#{usuarioBean.updatePerfil}" icon="ui-icon-check" style="float: center; text-align: center;"
 					ajax="false" title="Modificar Perfil">
-						<f:ajax render="@all" />
+					<f:ajax render="@all" />
 				</p:commandButton>
+				
 			</h:form>	
 		</p:dialog>	
 		
