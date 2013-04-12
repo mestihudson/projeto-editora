@@ -18,20 +18,7 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
-		<h:form rendered="#{loginBean.usuario.perfil.id>2}">
-		<div align="center">
-		
-			<br />		
-			<p:graphicImage value="/resources/img/noacsses.png" />
-			<br /><br /><br /><br />
-			
-			<a href="javascript:history.back(-1)">Voltar</a><br />
-
-		
-		</div>
-		</h:form>
-		
-		<h:form id="form_enviar_sms" rendered="#{loginBean.usuario.perfil.id!=3}">
+		<h:form id="form_enviar_sms" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="ENVIAR MENSAGEM" style="color: white; font-size: 12px;" styleClass="OutPut" />
@@ -78,7 +65,7 @@
 		</h:form>
 		
 		<p:dialog header="Clique para escolher destinatário" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
-		rendered="#{empty mensagemBean.mensagem.destinatario}" showEffect="fold" hideEffect="fold">
+		rendered="#{mensagemBean.mensagem.destinatario==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
 				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios">
 					
@@ -99,7 +86,25 @@
 				</p:commandLink>
 		</h:form>
 			
-		</p:dialog>			
+		</p:dialog>
+		
+		<p:dialog header="Clique para escolher destinatário" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
+		rendered="#{loginBean.usuario.perfil.id==4}" showEffect="fold" hideEffect="fold">
+		<h:form>
+					<div align="center">
+
+						<br />
+						<p:graphicImage value="/resources/img/noacsses.png" />
+						<br />
+						<br />
+						<br />
+						<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+
+					</div>
+				</h:form>
+			
+		</p:dialog>				
 		</div>
 		
 	</ui:define>		
