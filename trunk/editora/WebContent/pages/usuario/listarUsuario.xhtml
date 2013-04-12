@@ -38,39 +38,33 @@
 <!-- 			Apenas para acesso administrador		 -->
 			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1}">
 			
-			<fieldset style="border-color: #F8F8FF; border-top: white; border-left: white; border-bottom: white; border-right: white;">
+			<fieldset style="border: 1px solid #6A6A6A; border-top: white; border-left: white; border-bottom: white; border-right: white;">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="USUÁRIOS DO SISTEMA" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>		
 			
-			<p:dataTable id="list" value="#{usuarioBean.todosAtivados}" emptyMessage="Nenhum usuário encontrado" paginator="true" rows="10" paginatorPosition="bottom"
-					var="u" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+			<p:dataGrid var="usuario" value="#{usuarioBean.ativados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
+	 		emptyMessage="">
+	 		
+	 			<p:panel header="#{usuario.nome}" style="text-align:center">
+					<h:panelGrid columns="1" style="width:100%">
 					
-					<p:column headerText="Nome" filterBy="#{u.nome}" filterMatchMode="contains">
-						<h:outputText value="#{u.nome}" /> 
-					</p:column>
+					<h:outputText value="Email: #{usuario.login}" />
 					
-					<p:column style="text-align: center;" headerText="CPF">
-						<h:outputText value="#{u.cpf}" /> 
-					</p:column>
+					<h:outputText value="CPF: #{usuario.cpf}" rendered="#{loginBean.usuario.perfil.id==1}" />
 					
-					<p:column headerText="Email">
-						<h:outputText value="#{u.login}" /> 
-					</p:column>
+					<h:outputText value="Perfil: #{usuario.perfil.perfil}" />
+					
+					<h:outputText value="Nascimento" />
+					<h:outputText value="#{usuario.nascimento}">
+						<f:convertDateTime  timeZone="America/Sao_Paulo" locale="pt_BR" />
+					</h:outputText>
 										
-					<p:column style="text-align: center;" headerText="Perfil"
-					filterBy="#{u.perfil.perfil}" filterMatchMode="contains">
-						<h:outputText value="#{u.perfil.perfil}" /> 
-					</p:column>
-					
-					<p:column style="text-align: center;" headerText="Data de Nascimento">
-						<h:outputText value="#{u.nascimento}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText> 
-					</p:column>
+				</h:panelGrid>
+					</p:panel>	
 										
-			</p:dataTable>	
+			</p:dataGrid>	
 					
 			</fieldset>
 
