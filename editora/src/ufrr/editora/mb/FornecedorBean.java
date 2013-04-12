@@ -51,8 +51,10 @@ public class FornecedorBean implements Serializable {
 			}
 		}
 		if(this.cadastro == true){
-			if(this.fornecedor.getNome().isEmpty() || this.fornecedor.getCnpj().isEmpty()){
-				Msg.addMsgError("Informe corretamente os dados do fornecedor");
+			if(this.fornecedor.getAgencia().isEmpty() 
+					|| this.fornecedor.getConta().isEmpty()
+					|| this.fornecedor.getBanco().isEmpty()){
+				Msg.addMsgError("Informe corretamente os dados bancários");
 				
 			} else {
 				if (fornecedor.getId() == null) {
