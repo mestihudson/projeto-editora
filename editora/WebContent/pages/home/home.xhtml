@@ -8,6 +8,7 @@
 
 <ui:composition template="/_template.xhtml">
 	<ui:define name="head">
+	<meta http-equiv="refresh" content="90; url=/editora/pages/home/home.jsf?faces-redirect=true" />
 
 		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
 			align="left">
@@ -15,6 +16,7 @@
 				style="line-height: 20px;" />
 			<div style="background: #C4D2EB; height: 2px;"></div>
 		</div>
+		
 	</ui:define>
 	
 	<ui:define name="body">
@@ -36,37 +38,42 @@
 				</div>
 			</h:form>
 
-			<h:form id="form_cadastrar_fornecedor" style="float: right;"
+			<h:form id="form_home" style="float: right;"
 				rendered="#{loginBean.usuario.perfil.id!=3}">
 				
 <!-- 				troca de mensagem -->
 				<p:commandLink action="/pages/mensagem/enviarMensagem.xhtml?faces-redirect=true" style="margin-left: 90%;">
 					<p:graphicImage value="/resources/img/messages.png" title="Enviar mensagem"  />
 				</p:commandLink>
-				<div
-					style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
+				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 653px;"
 					align="center">
 					<h:outputText value="MENSAGENS"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 				
-				<fieldset style="border-color: #F8F8FF; border-top: white; width: 441px;">
-					<h:dataTable value="#{mensagemBean.recebidas}" var="m" id="tb_usuarios" rows="5"
-					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
-					
-						<h:column headerText="Enviada Por">
+				<fieldset style="border-color: #F8F8FF; border-top: white; width: 650px;">
+					<h:dataTable value="#{mensagemBean.recebidas}" var="m" styleClass="dados" rowClasses="impar, par" rows="6">
+
+						<f:facet name="header">  
+            				 
+        				</f:facet>
+
+						<p:column>
+							<f:facet name="header">Enviada Por</f:facet>
 							<h:outputLabel value="#{m.usuario.nome}" />
-						</h:column>	
+						</p:column>	
 						
-						<h:column headerText="Enviado Dia">
+						<p:column style="text-align: center;">
+							<f:facet name="header">Dia</f:facet>
 							<h:outputLabel value="#{m.dataEnvio.time}">
 								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
 							</h:outputLabel>
-						</h:column>
+						</p:column>
 						
-						<h:column headerText="Mensagem">
+						<p:column>
+							<f:facet name="header">Mensagem</f:facet>
 							<h:outputLabel value="#{m.descricao}" />
-						</h:column>	
+						</p:column>	
 											
 					</h:dataTable>
 
@@ -74,20 +81,18 @@
 				
 				
 <!-- 				exibição de estoque -->
-				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 444px;"
+				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 653px;"
 					align="center">
 					<h:outputText value="ESTOQUE"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 
-				<fieldset style="border-color: #F8F8FF; border-top: white; width: 441px;">
-					Estoque Disponível
+				<fieldset style="border-color: #F8F8FF; border-top: white; width: 650px;">
+					Estoque indisponível no momento
 
 				</fieldset>
 								
 			</h:form>
-			
-			<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65); margin-top: 20%;" />
 						
 		</div>	
 	</ui:define>
