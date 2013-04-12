@@ -31,6 +31,7 @@ body {
 	margin: 0;
 	padding: 0;
 	width: 1100px;
+	height: 100%;
 	float: center;
 	text-align: center;
 	margin: 0 auto;
@@ -48,7 +49,7 @@ body {
 	color: white;
 	border: 1px solid #6A6A6A;
 	border-bottom: 0;
-	margin-right: 400px; 
+	margin-right: 400px;
 }
 
 .form {
@@ -106,7 +107,7 @@ form fieldset legend {
 	color: #FFF;
 	text-align: center;
 	background: #404E82;
-	margin-top: 300px;
+	margin-top: auto;
 	
 }
 
@@ -271,7 +272,7 @@ img.acende:hover {
 	box-shadow: 0px 0px 15px #000; /* Sombra */
 }
 
-/* Tabela zebrada */
+/* Tabela zebrada Leonardo Holanda */
 
 .ui-datatable .ui-datatable-data .even-row td{  
     background-color:#EFF3FA;  
@@ -279,6 +280,42 @@ img.acende:hover {
       
 .ui-datatable .ui-datatable-data .odd-row td{  
     background-color:#FAFAFA;  
+}
+
+/* tabela zebrada Caelum */
+
+table.dados{
+	height:auto;
+	margin-bottom: 10px;
+	width:100%;
+}
+
+table.dados tr th{
+	background-color:#394674;
+	color:#fff;
+	color:1em;
+	padding:10px;
+}
+
+table.dados tr td{
+	padding:5px 10px;
+}
+
+.campos tbody tr td {
+	padding-top: 10px;
+	text-align: left;
+}
+
+.dados {
+	width: 100%;	
+}
+
+.par  {
+	background-color: #F0F9FF;
+}
+
+.impar {
+	background:none repeat scroll 0 0 #DDDDDD;
 }
 
 /* Para mensagens em growl */
