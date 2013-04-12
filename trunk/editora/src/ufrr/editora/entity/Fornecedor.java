@@ -1,6 +1,7 @@
 package ufrr.editora.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Fornecedor implements BaseEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name="cnpj_cpf")
 	private String cnpj;
 	
 	private String nome;
@@ -35,7 +37,19 @@ public class Fornecedor implements BaseEntity {
 	private String email;
 	
 	private Integer porcentagem;
-
+	
+	private Long pis;
+	
+	private String banco;
+	
+	private String agencia;
+	
+	private String conta;
+	
+	private String titularConta;
+	
+	private Integer operacao; // apenas para conta da caixa
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="fk_endereco")
 	private Endereco endereco;
@@ -117,7 +131,54 @@ public class Fornecedor implements BaseEntity {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public Long getPis() {
+		return pis;
+	}
+
+	public void setPis(Long pis) {
+		this.pis = pis;
+	}
+
+	public String getBanco() {
+		return banco;
+	}
+
+	public void setBanco(String banco) {
+		this.banco = banco.toUpperCase();
+	}
+
+	public String getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(String agencia) {
+		this.agencia = agencia.toUpperCase();
+	}
+
+	public String getConta() {
+		return conta;
+	}
+
+	public void setConta(String conta) {
+		this.conta = conta.toUpperCase();
+	}
+
+	public String getTitularConta() {
+		return titularConta;
+	}
+
+	public void setTitularConta(String titularConta) {
+		this.titularConta = titularConta.toUpperCase();
+	}
 	
+	public Integer getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(Integer operacao) {
+		this.operacao = operacao;
+	}
 	
 
 }

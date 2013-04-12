@@ -2,6 +2,7 @@ package ufrr.editora.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -67,6 +68,9 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	@ManyToOne
 	private Perfil perfil;
+	
+	@Temporal(TemporalType.DATE)
+	private Calendar data = Calendar.getInstance(); // data do dia que efetuo cadastro
 	
 	@Transient
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
@@ -218,7 +222,13 @@ public class Usuario implements Serializable, BaseEntity {
 		this.endereco = endereco;
 	}
 
-	
+	public Calendar getData() {
+		return data;
+	}
 
-	
+	public void setData(Calendar data) {
+		this.data = data;
+	}
+
+		
 }
