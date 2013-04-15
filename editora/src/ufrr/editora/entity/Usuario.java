@@ -67,6 +67,7 @@ public class Usuario implements Serializable, BaseEntity {
 	private Boolean status;
 	
 	@ManyToOne
+	@JoinColumn(name="fk_perfil", columnDefinition="bigint default 5", insertable=false, updatable=true)
 	private Perfil perfil;
 	
 	@Temporal(TemporalType.DATE)
