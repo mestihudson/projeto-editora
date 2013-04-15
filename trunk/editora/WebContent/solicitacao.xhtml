@@ -182,6 +182,20 @@
 						<p:message id="error_rsenha" for="rsenha" display="icon" />
 						
 						</h:panelGrid>
+							
+							<h:panelGrid columns="5">
+							<h:outputLabel value="Perfil" for="perfil" styleClass="OutPut" />
+								<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+								<p:selectOneMenu id="perfil_tipo"
+									requiredMessage="Selecione um perfil" required="true"
+									value="#{usuarioBean.usuario.perfil}"
+									converter="genericConverter" style="width: 100px;">
+									<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+									<f:selectItems value="#{perfilBean.solicitacaoUsuario}" var="p"
+										itemLabel="#{p.perfil}" itemValue="#{p}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+
 						<br /><br />
 												
 					</p:fieldset>
@@ -262,23 +276,6 @@
 						</h:panelGrid>
 							
 					</p:fieldset><br /><br />
-					
-					<div align="left">
-							<h:panelGrid columns="4" style="float: center;">
-								<h:graphicImage value="" styleClass="as" />
-								<p:selectOneMenu id="perfil_tipo"
-									requiredMessage="Selecione um perfil" required="true"
-									value="#{usuarioBean.usuario.perfil}"
-									converter="genericConverter" style="width: 100px;">
-									<f:selectItems value="#{perfilBean.id5}" var="p"
-										itemLabel="#{p.perfil}" itemValue="#{p}" />
-								</p:selectOneMenu>
-								<h:outputLabel
-									value=" de acesso ao sistema"
-									styleClass="OutPut" />
-							</h:panelGrid>
-							<br />
-						</div>	
 					
 					</fieldset>
 					
