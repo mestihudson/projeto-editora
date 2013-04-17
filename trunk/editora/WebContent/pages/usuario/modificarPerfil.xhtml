@@ -120,6 +120,19 @@
 			</h:form>	
 		</p:dialog>	
 		
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+		
 	</ui:define>		
 	
 </ui:composition>	
