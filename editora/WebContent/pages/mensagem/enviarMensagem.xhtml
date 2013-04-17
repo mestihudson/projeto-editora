@@ -18,6 +18,18 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+		
+		</div>
+		</h:form>
+		
 		<h:form id="form_enviar_sms" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
@@ -26,13 +38,15 @@
 			
 			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
 					
-					<br /><br />						
+					<br />						
 					<h:panelGrid id="grid" columns="3">
 										
 					<h:outputLabel value="Destinatário" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="destinatario" value="#{mensagemBean.mensagem.destinatario.nome}" onclick="dlgMsg.show();" 
-					required="true" requiredMessage="Informe o destinatário" styleClass="input" size="50" />
+					required="true" requiredMessage="Informe o destinatário" styleClass="input" size="50">
+						<f:ajax event="blur" render="msgs" />
+					</p:inputText>
 					  
 					<h:outputLabel value="Mensagem" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
@@ -41,6 +55,7 @@
 						<f:ajax event="blur" render="msgs" />
 						<f:validateLength minimum="5" maximum="250" />
 					</p:inputTextarea>
+					
 					
 					</h:panelGrid>
 					<br /><br />
@@ -64,7 +79,7 @@
 				</div>	
 		</h:form>
 		
-		<p:dialog header="Clique para escolher destinatário" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
+		<p:dialog header="Clique no nome da pessoa para escolher destinatário" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
 		rendered="#{mensagemBean.mensagem.destinatario==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
 				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios">
@@ -106,7 +121,19 @@
 			
 		</p:dialog>				
 		</div>
-		
+
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
+			resizable="false" closable="false" modal="true">
+			<div align="center">
+
+				<br />
+				<p:graphicImage value="/resources/img/noacsses.png" />
+				<br /> <br /> <br /> <br /> <a
+					href="javascript:history.back(-1)">Voltar</a><br />
+
+			</div>
+		</p:dialog>
+
 	</ui:define>		
 </ui:composition>
 </html>
