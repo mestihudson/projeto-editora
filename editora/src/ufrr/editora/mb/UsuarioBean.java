@@ -7,14 +7,21 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.Query;
+
+import org.apache.commons.mail.EmailException;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Endereco;
 import ufrr.editora.entity.Perfil;
 import ufrr.editora.entity.Usuario;
+import ufrr.editora.util.EmailUtils;
 import ufrr.editora.util.Msg;
 import ufrr.editora.util.TransformaStringMD5;
 
@@ -121,6 +128,7 @@ public class UsuarioBean implements Serializable {
 //		return usuarioss;
 //	}
 	
+	
 	// Exibe uma lista de usuário ativados
 		public List<Usuario> getTodosAtivados() {
 			usuariosE = new ArrayList<Usuario>();
@@ -150,6 +158,18 @@ public class UsuarioBean implements Serializable {
 		usuariosE = new ArrayList<Usuario>();
 		for (Usuario u : this.getUsuarios()) {
 			if (u.getPerfil().getId() == 4) {
+				usuariosE.add(u);
+			}
+		}
+		return usuariosE;
+	}
+	
+	// Exibe uma lista de clientes no geral (ativados e desativados)
+	public List<Usuario> getClienteCadastrados() {
+		usuariosE = new ArrayList<Usuario>();
+		for (Usuario u : this.getUsuarios()) {
+			if (u.getPerfil().getId() != 5) {
+				System.out.println(getUsuarios().size());
 				usuariosE.add(u);
 			}
 		}
@@ -199,7 +219,7 @@ public class UsuarioBean implements Serializable {
 		} else {
 			usuarios = dao.getAllByName("nome", usuario.getNome());
 			if (usuarios.isEmpty()) {
-				Msg.addMsgInfo("Nenhum registro encontrado");
+				Msg.addMsgError("Nenhum registro encontrado");
 				return null;
 
 			} else {
@@ -413,7 +433,17 @@ public class UsuarioBean implements Serializable {
 		return "/pages/cliente/cadastrarCliente.xhtml";
 	}
 
-
+//	recuperar acesso no sistema
+	public String recuperaSenha() {
+		try {
+			EmailUtils.recuperaSenha(usuario);
+			return "index.xhtml";
+		} catch (EmailException ex) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro! Occoreu um erro ao tentar enviar a mensagem.", "Erro"));
+			Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
+		}
+		return null;
+	}
 	
 	/** Getters and Setters **/
 	

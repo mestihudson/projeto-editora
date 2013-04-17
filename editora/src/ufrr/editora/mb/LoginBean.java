@@ -57,7 +57,7 @@ public class LoginBean implements Serializable {
 					
 				}else {
 					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
-					return "/pages/fornecedor/cadastrarFornecedor.xhtml?faces-redirect=true";
+					return "/pages/home/home.xhtml";
 				}
 			}
 		} else {
@@ -66,6 +66,35 @@ public class LoginBean implements Serializable {
 			return null;
 		}
 	}
+	
+	//solicitação de Senha
+		public String esqueceuSenha() {
+			UsuarioDAO dao = new UsuarioDAO();
+			this.usuario = dao.trocaSenha(this.usuario);
+			if (this.usuario != null) {
+				if (this.getUsuario().getId() == null || this.getUsuario().getStatus().equals(false) || 
+						this.getUsuario().getPerfil().getId() == 5) {
+					Msg.addMsgError("Usuário não encontrado");
+					System.out.println("...Usuário ainda não foi ativado para pedir troca de senha");
+					return null;
+				} else {
+					if (this.getUsuario().getStatus().equals(true)) {
+						Msg.addMsgInfo("Esqueceu sua senha? Clique no botão 'Enviar' para recupera-la");
+						System.out.println("...usuario: " + getUsuario().getNome() + " entrou para solicitação de senha");
+						return "/pages/usuario/dados.xhtml";
+						
+					}else {
+						System.out.println("...Ocorreu um erro ao tentar recuperar a senha");
+						return null;
+					}
+				}
+			} else {
+				this.usuario = new Usuario();
+				Msg.addMsgFatal("Dados inválidos");
+				return null;
+			}
+		}
+		
 	
 	//autorização para alterar dados do cadastro
 	public String updateLogin() {
@@ -125,6 +154,18 @@ public class LoginBean implements Serializable {
 				.getSession(false);
 		session.invalidate();
 		System.out.println("usuario: " + getUsuario().getNome() + " saiu do sistema");
+		return "/index.xhtml?faces-redirect=true";
+	}
+	
+	// Sair da recuperação de senha
+	public String sair2() {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext()
+				.getSession(false);
+		session.invalidate();
+		System.out.println("usuario: " + getUsuario().getNome()
+				+ " desistiu de recuperar a senha");
 		return "/index.xhtml?faces-redirect=true";
 	}
 	
