@@ -36,7 +36,7 @@
 		</h:form>	
 			
 <!-- 			acesso administrador e gerente		 -->
-			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1}">
+			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 			
@@ -48,12 +48,12 @@
 			
 			<h:outputText value="Nome: " styleClass="OutPut"  />
 			<p:autoComplete value="#{usuarioBean.usuario.nome}" completeMethod="#{usuarioBean.autocompletenome}" var="u" itemValue="#{u}" itemLabel="#{u}" 
-			minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="50" />
+			minQueryLength="10" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="50" />
 			
 			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListaUsuariosByName}" ajax="false"  />
 	 		<br /><br />	
 			
-			<p:dataGrid var="usuario" value="#{usuarioBean.todosAtivados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
+			<p:dataGrid var="usuario" value="#{usuarioBean.clienteCadastrados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
 	 		emptyMessage="">
 	 		
 	 			<p:panel header="#{usuario.nome}" style="text-align:center">
@@ -72,6 +72,8 @@
 					<h:outputText value="#{usuario.data.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
+					
+					<h:outputText value="Status: #{usuario.status}" /> 
 										
 					</h:panelGrid>
 				</p:panel>
@@ -86,54 +88,18 @@
 
 			</h:form>
 			
-			<!-- 			acesso administrador e gerente		 -->
-			<h:form id="form_acesso2" rendered="#{loginBean.usuario.perfil.id==2}">
-			
-			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
-			
-			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="CLIENTES CADASTRADOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
-			</div>	
-			
-			<p:focus context="autocompletePesquisar" />
-			
-			<h:outputText value="Nome: " styleClass="OutPut"  />
-			<p:autoComplete value="#{usuarioBean.usuario.nome}" completeMethod="#{usuarioBean.autocompletenome}" var="u" itemValue="#{u}" itemLabel="#{u}" 
-			minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="50" />
-			
-			<p:commandButton value="Pesquisar" id="botaoPesquisar2" action="#{usuarioBean.getListaUsuariosByName}" ajax="false"  />
-	 		<br /><br />	
-			
-			<p:dataGrid var="usuario" value="#{usuarioBean.todosAtivados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
-	 		emptyMessage="">
-	 		
-	 			<p:panel header="#{usuario.nome}" style="text-align:center">
-					<h:panelGrid columns="1" style="width:100%">
-					
-					<h:outputText value="Email: #{usuario.login}" /> 
-					
-					<h:outputText value="Data de Nascimento" />
-					<h:outputText value="#{usuario.nascimento}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-					
-					<h:outputText value="Cliente desde" />
-					<h:outputText value="#{usuario.data.time}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-										
-					</h:panelGrid>
-				</p:panel>
-			
-			</p:dataGrid>		
-					
-			</fieldset>
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
 
-				<div align="left" style="width: 350px; margin-right: 500px;">
-					<p:messages autoUpdate="true" />
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
 				</div>
-
-			</h:form>
+			</p:dialog>
 
 		
 	</div>	
