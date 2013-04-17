@@ -42,7 +42,7 @@ public class FornecedorBean implements Serializable {
 	
 	/** actions **/
 	
-	public String addFornecedor() {
+	public void addFornecedor() {
 		for (Fornecedor fornecedores : this.getFornecedores()) {
 			if(fornecedores.getCnpj().equalsIgnoreCase(this.getFornecedor().getCnpj()) ||
 					fornecedores.getNome().equalsIgnoreCase(this.getFornecedor().getNome())) { 
@@ -61,8 +61,8 @@ public class FornecedorBean implements Serializable {
 					Msg.addMsgInfo("Fornecedor cadastrado com sucesso");
 					fornecedor.setEndereco(endereco);
 					dao.adiciona(fornecedor);
+					this.endereco = new Endereco();
 					this.fornecedor = new Fornecedor();
-					return "/pages/fornecedor/cadastrarFornecedor.xhtml";
 				} else {
 					Msg.addMsgInfo("Alteração realizada com sucesso");
 					dao.atualiza(fornecedor);
@@ -73,7 +73,6 @@ public class FornecedorBean implements Serializable {
 		}
 		fornecedores = dao.listaTodos();
 		this.cadastro = true;
-		return null;
 	}
 	
 	public void alterFornecedor() {

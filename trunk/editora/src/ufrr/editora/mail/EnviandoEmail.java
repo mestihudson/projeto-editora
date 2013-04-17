@@ -3,7 +3,7 @@ package ufrr.editora.mail;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-
+//Esta não é a classe utilizada para envio de email
 public class EnviandoEmail {  
 	  
     public void enviarEmail() {  

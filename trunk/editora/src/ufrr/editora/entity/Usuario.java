@@ -83,6 +83,9 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<Mensagem> mensagens = new ArrayList<Mensagem>();
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<EnviaEmail> emails = new ArrayList<EnviaEmail>();
 		
 	
 //	get and set
@@ -231,5 +234,12 @@ public class Usuario implements Serializable, BaseEntity {
 		this.data = data;
 	}
 
+	public Collection<EnviaEmail> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Collection<EnviaEmail> emails) {
+		this.emails = emails;
+	}
 		
 }

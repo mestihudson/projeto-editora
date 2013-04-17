@@ -43,11 +43,11 @@ public class PerfilBean implements Serializable {
 			return perfil5;
 		}
 	
-	// Exibe uma lista com o id == 5
-	public List<Perfil> getId5() {
+	// Exibe uma lista com o id != 5 e != 4
+	public List<Perfil> getSolicitacaoUsuario() {
 		perfil5 = new ArrayList<Perfil>();
 		for (Perfil p : this.getPerfis()) {
-			if (p.getPerfil().equalsIgnoreCase("solicitação")) {
+			if (p.getId()!=5 && p.getId()!=4) {
 				perfil5.add(p);
 			}
 		}
@@ -69,7 +69,7 @@ public class PerfilBean implements Serializable {
 	public List<Perfil> getGerente() {
 		perfil5 = new ArrayList<Perfil>();
 		for (Perfil p : this.getPerfis()) {
-			if (p.getId() != 5 && p.getId() != 1) {
+			if (p.getId() != 5 && p.getId() != 4 && p.getId() != 1) {
 				perfil5.add(p);
 			}
 		}
