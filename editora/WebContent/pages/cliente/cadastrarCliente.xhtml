@@ -10,8 +10,8 @@
 	<ui:define name="head">
 	
 	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Cliente > Cadastrar Cliente" styleClass="title" rendered="#{empty usuarioBean.usuario.id}" style="line-height: 20px;" />
-		<h:outputText value="Cliente > Editar Cliente" styleClass="title" rendered="#{not empty usuarioBean.usuario.id}" style="line-height: 20px;" />
+		<h:outputText value="Cliente > Cadastrar Cliente" styleClass="title" rendered="#{usuarioBean.usuario.id==null}" style="line-height: 20px;" />
+		<h:outputText value="Cliente > Editar Cliente" styleClass="title" rendered="#{usuarioBean.usuario.id!=null}" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" ></div>	
 	</div>
 	</ui:define>
@@ -35,8 +35,8 @@
 			<h:form id="form_cadastrar_cliente" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="CADASTRAR CLIENTE" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{empty usuarioBean.usuario.id}" />
-				<h:outputText value="EDITAR CLIENTE" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{not empty usuarioBean.usuario.id}" />
+				<h:outputText value="CADASTRAR CLIENTE" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{usuarioBean.usuario.id==null}" />
+				<h:outputText value="EDITAR CLIENTE" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{usuarioBean.usuario.id!=null}" />
 			</div>
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-bottom: white; border-top: white;">
@@ -97,7 +97,7 @@
 							<f:selectItem itemValue="PROFESSOR" itemLabel="PROFESSOR" />
 							<f:selectItem itemValue="SERVIDOR UFRR" itemLabel="SERVIDOR UFRR" />
 							<f:selectItem itemValue="TERCEIRIZADO" itemLabel="TERCEIRIZADO" />
-							<f:selectItem itemValue="OUTROS" itemLabel="OUTROS" />
+							<f:selectItem itemValue="NENHUM" itemLabel="NENHUM" />
 							<f:ajax event="blur" render="error_univ" />
 						</p:selectOneMenu>
 						<p:message id="error_univ" for="univ" />
@@ -140,7 +140,7 @@
 						
 												<!-- 					Aqui começa as informações do endereço para cadastro -->
 
-					<p:fieldset legend="Endereço" style="width: 77%; margin-left: 15px;" rendered="#{empty usuarioBean.usuario.id}">
+					<p:fieldset legend="Endereço" style="width: 77%; margin-left: 15px;" rendered="#{usuarioBean.usuario.id==null}">
 					
 						<h:panelGrid id="grid3" columns="8">
 						
@@ -215,7 +215,7 @@
 						
 						<!-- 					Aqui começa as informações do endereço para alteração -->
 
-					<p:fieldset legend="Endereço" style="width: 77%; margin-left: 15px;" rendered="#{not empty usuarioBean.usuario.id}">
+					<p:fieldset legend="Endereço" style="width: 77%; margin-left: 15px;" rendered="#{usuarioBean.usuario.id!=null}">
 					
 						<h:panelGrid id="grid4" columns="8">
 						
@@ -287,30 +287,17 @@
 						</h:panelGrid>
 											
 					</p:fieldset><br />
-										
-					<div align="center">							
-					<h:panelGrid columns="4" style="float: center;">
-						<h:outputLabel value="Cadastro de " styleClass="OutPut" />
-						<h:graphicImage value="" styleClass="as" />
-						<p:selectOneMenu id="perfil_tipo" requiredMessage="Selecione um perfil" required="true" value="#{usuarioBean.usuario.perfil}"
-							converter="genericConverter" style="width: 100px;">
-							<f:selectItems value="#{perfilBean.id4}" var="p" itemLabel="#{p.perfil}" itemValue="#{p}" />
-						</p:selectOneMenu>
-						<h:outputLabel value=" pode efetuar compras online e ganhar descontos." styleClass="OutPut" />
-					</h:panelGrid>	
-					<br /><br />
-					</div>
 																				
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
 				<p:commandButton action="#{usuarioBean.addClienteIn}" value="Cadastrar" ajax="false" icon="ui-icon-check"
-				update="@form" rendered="#{empty usuarioBean.usuario.id}">
+				update="@form" rendered="#{usuarioBean.usuario.id==null}">
 						<f:ajax render="@form" />
 					</p:commandButton>
 					
 				<p:commandButton action="#{usuarioBean.updateCliente}" value="Editar" ajax="false" icon="ui-icon-pencil"
-				update="@form" rendered="#{not empty usuarioBean.usuario.id}">
+				update="@form" rendered="#{usuarioBean.usuario.id!=null}">
 						<f:ajax render="@form" />
 					</p:commandButton>&nbsp;
 					
@@ -338,7 +325,7 @@
 			widgetVar="dlgEditaCliente" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes">
+					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes" emptyMessage="Nenhum cliente encontrado">
 					
 						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{c.nome}" onclick="dlgEditaCliente.hide()" style="text-align: center;"
@@ -366,6 +353,19 @@
 				
 				</h:form>
 			</p:dialog>	
+			
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>
