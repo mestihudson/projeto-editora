@@ -25,7 +25,7 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 
-			<h:form rendered="#{loginBean.usuario.perfil.id==3}">
+			<h:form rendered="#{loginBean.usuario.perfil.id>3}">
 				<div align="center">
 
 					<br />
@@ -39,12 +39,20 @@
 			</h:form>
 
 			<h:form id="form_home" style="float: right;"
-				rendered="#{loginBean.usuario.perfil.id!=3}">
+				rendered="#{loginBean.usuario.perfil.id!=3 or loginBean.usuario.id!=null}">
 				
+				<h:panelGrid columns="4" cellspacing="5" cellpadding="5" style="margin-left: 80%;">
 <!-- 				troca de mensagem -->
 				<p:commandLink action="/pages/mensagem/enviarMensagem.xhtml?faces-redirect=true" style="margin-left: 90%;">
-					<p:graphicImage value="/resources/img/messages.png" title="Enviar mensagem"  />
+					<p:graphicImage value="/resources/img/messages.png" title="Enviar mensagem"  width="35px;"  />
 				</p:commandLink>
+				
+<!-- 				Envio de email -->
+				<p:commandLink action="/pages/email/enviarEmail.xhtml?faces-redirect=true" style="margin-left: 90%;">
+					<p:graphicImage value="/resources/img/email.png" title="Enviar email" width="30px;"  />
+				</p:commandLink>
+				</h:panelGrid>
+				
 				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 653px;"
 					align="center">
 					<h:outputText value="MENSAGENS"
@@ -93,6 +101,19 @@
 				</fieldset>
 								
 			</h:form>
+			
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
 						
 		</div>	
 	</ui:define>
