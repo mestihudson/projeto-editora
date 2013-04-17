@@ -151,7 +151,8 @@
 				</div>
 
 			</h:form>
-					
+			
+<!-- 		dialog para perfil administrador -->					
 		<p:dialog header="Escolha o perfil" modal="true" resizable="false"
 			showEffect="fade" hideEffect="fade" widgetVar="dlgAtivar" width="350">
 			<h:form id="form_ativar">
@@ -174,7 +175,7 @@
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 100px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
-							<f:selectItems value="#{perfilBean.gerente}" var="p"
+							<f:selectItems value="#{perfilBean.solicitacaoUsuario}" var="p"
 								itemLabel="#{p.perfil}" itemValue="#{p}" />
 							<f:ajax event="blur" render="error_perfil" />
 						</p:selectOneMenu>
@@ -225,6 +226,18 @@
 			</h:form>	
 		</p:dialog>	
 		
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
 	</div>	
 	</ui:define>		
 	
