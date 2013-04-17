@@ -168,7 +168,7 @@
 						
 						<div align="center">
 						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="BANCO DO BRASIL" itemValue="BANCO DO BRASIL" value="#{fornecedorBean.fornecedor.banco}" />
+							<f:selectItem itemLabel="BANCO DO BRASIL" itemValue="BANCO DO BRASIL" />
 						</p:selectOneMenu>
 						
 						</div><br />
@@ -211,7 +211,7 @@
 						
 						<div align="center">
 						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;" >
-							<f:selectItem itemLabel="BRADESCO" itemValue="BRADESCO" value="#{fornecedorBean.fornecedor.banco}" />
+							<f:selectItem itemLabel="BRADESCO" itemValue="BRADESCO" />
 						</p:selectOneMenu>
 						
 						</div><br />
@@ -254,7 +254,7 @@
 						
 						<div align="center">
 						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" value="#{fornecedorBean.fornecedor.banco}" />
+							<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" />
 						</p:selectOneMenu>
 						
 						</div><br />
@@ -302,7 +302,7 @@
 						
 						<div align="center">
 						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="ITAÚ" itemValue="ITAÚ" value="#{fornecedorBean.fornecedor.banco}" />
+							<f:selectItem itemLabel="ITAÚ" itemValue="ITAÚ" />
 						</p:selectOneMenu>
 						
 						</div><br />
@@ -345,7 +345,7 @@
 						
 						<div align="center">
 						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="SANTANDER" itemValue="SANTANDER" value="#{fornecedorBean.fornecedor.banco}" />
+							<f:selectItem itemLabel="SANTANDER" itemValue="SANTANDER" />
 						</p:selectOneMenu>
 						
 						</div><br />
@@ -378,7 +378,8 @@
 						</p:fieldset>
 
 					</p:dialog>
-
+					
+<!-- 					Aqui começa as informações do endereço -->
 												
 					<p:fieldset legend="Endereço" style="width: 70%; margin-left: 15px;" rendered="#{fornecedorBean.fornecedor.id==null}">
 					
@@ -588,6 +589,19 @@
 				
 				</h:form>
 			</p:dialog>	
+			
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>
