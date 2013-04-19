@@ -100,9 +100,9 @@
 					<h:outputLabel value="Pis" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="forn_pis" value="#{fornecedorBean.fornecedor.pis}" required="true" requiredMessage="Informe o número do pis"
-					styleClass="input" validatorMessage="Número do pis inválido">
+					styleClass="input" validatorMessage="Número do pis inválido" maxlength="11">
 						<f:ajax event="blur" render="error_pis" />
-						<f:validateLength maximum="10" minimum="10" />
+						<f:validateLength maximum="11" minimum="11" />
 					</p:inputText>
 					<p:message id="error_pis" for="forn_pis" />
 					<br /><br />
@@ -357,9 +357,9 @@
 						<p:fieldset style="background-image: url(/editora/resources/img/backgroundsantander.png);">
 						
 						<div align="center">
-						<p:selectOneRadio value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
+						<p:selectOneListbox value="#{fornecedorBean.fornecedor.banco}" style="width: 200px; color: white;">
 							<f:selectItem itemLabel="SANTANDER" itemValue="SANTANDER" />
-						</p:selectOneRadio>
+						</p:selectOneListbox>
 						
 						</div><br />
 						
@@ -401,7 +401,31 @@
 						<p:selectOneMenu style="width: 50px;" id="unif_sigla" value="#{fornecedorBean.endereco.unidade}" equired="true" requiredMessage="Informe a sigla do estado" styleClass="input">
 							<f:selectItem itemLabel="RR" itemValue="RR" />
 							<f:selectItem itemLabel="AM" itemValue="AM" />
+							<f:selectItem itemLabel="AC" itemValue="AC" />
+							<f:selectItem itemLabel="AL" itemValue="AL" />
+							<f:selectItem itemLabel="AP" itemValue="AP" />
+							<f:selectItem itemLabel="BA" itemValue="BA" />
+							<f:selectItem itemLabel="CE" itemValue="CE" />
+							<f:selectItem itemLabel="DF" itemValue="DF" />
+							<f:selectItem itemLabel="ES" itemValue="ES" />
+							<f:selectItem itemLabel="GO" itemValue="GO" />
+							<f:selectItem itemLabel="MA" itemValue="MA" />
+							<f:selectItem itemLabel="MG" itemValue="MG" />
+							<f:selectItem itemLabel="MS" itemValue="MS" />
+							<f:selectItem itemLabel="MT" itemValue="MT" />
+							<f:selectItem itemLabel="PA" itemValue="PA" />
+							<f:selectItem itemLabel="PB" itemValue="PB" />
+							<f:selectItem itemLabel="PE" itemValue="PE" />
+							<f:selectItem itemLabel="PI" itemValue="PI" />
+							<f:selectItem itemLabel="PR" itemValue="PR" />
+							<f:selectItem itemLabel="RO" itemValue="RO" />
+							<f:selectItem itemLabel="RJ" itemValue="RJ" />
+							<f:selectItem itemLabel="RN" itemValue="RN" />
+							<f:selectItem itemLabel="RS" itemValue="RS" />
+							<f:selectItem itemLabel="SE" itemValue="SE" />
+							<f:selectItem itemLabel="SC" itemValue="SC" />
 							<f:selectItem itemLabel="SP" itemValue="SP" />
+							<f:selectItem itemLabel="TO" itemValue="TO" />
 							<f:ajax event="blur" render="error_nome_unif" />
 						</p:selectOneMenu>
 						<p:message id="error_nome_unif" for="unif_sigla" display="icon" />
@@ -463,8 +487,7 @@
 												
 						</h:panelGrid>
 											
-					</p:fieldset><br />
-					<br /><br />
+					</p:fieldset>
 					
 <!-- 					fieldset de endereço apenas para editar fornecedor -->
 					
@@ -538,12 +561,13 @@
 						<p:message id="error_cep2" for="end_cep2" display="icon" />
 												
 						</h:panelGrid>
+						<br /><br />
 											
 					</p:fieldset>
-										
+																									
 					<br /><br />
-										
-					</fieldset>										
+					
+					</fieldset>							
 			
 <!-- 			botões -->
 			<div style="background: #C4D2EB; height: 28px;" align="center">

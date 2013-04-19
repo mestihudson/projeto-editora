@@ -87,7 +87,7 @@
 			<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65); margin-top: 20%;" />
 			<div style="display: block;" align="center" />
 			<div id="rodape" style="background: #394674; height: 20px; line-height: 20px; text-align: center;">
-				&copy; Copyright 2013 &nbsp;&nbsp; UFRR - DTI - CSI
+				&copy; Copyright 2013 &nbsp; UFRR - Diretoria de Tecnologia da Informação &nbsp; Layout UFRN - SIG
 			</div>
 	
 	</div>
@@ -124,27 +124,26 @@
 			
 			<div align="center">
 			<p:panel header="Módulo de Consulta">
+			
+			<h:panelGrid columns="4" cellpadding="5" cellspacing="5" >
 				
 					<p:commandLink action="/pages/fornecedor/consultarFornecedor.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;				
+					</p:commandLink>	
 				
 					<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/produto.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
+					</p:commandLink>
 					
 					<p:commandLink>
 						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
+					</p:commandLink>
 					
 					<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
-					
-					<p:commandLink action="/pages/usuario/listarUsuario.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
-						<p:graphicImage value="/resources/img/usuario2.png" styleClass="acende" />
 					</p:commandLink>
-			
+					
+			</h:panelGrid>	
 			
 			</p:panel>
 			</div>	
@@ -186,20 +185,23 @@
 						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
 					</p:commandLink>
 					
-					<p:commandLink action="/pages/usuario/modificarPerfil.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+					<p:commandLink action="/pages/usuario/modificarPerfil.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 						<p:graphicImage value="/resources/img/modificarperfil.png" styleClass="acende" title="Atualização de perfil" />
 					</p:commandLink>
-					
-					</h:panelGrid>
-					
-					<p:commandLink action="/pages/usuario/desativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+										
+					<p:commandLink action="/pages/usuario/desativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 						<p:graphicImage value="/resources/img/desativaracessos.png" styleClass="acende" title="Desativar usuário" style="float: center; text-align: center;" />
-					</p:commandLink>&nbsp;
+					</p:commandLink>
 					
-					<p:commandLink action="/pages/usuario/reativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+					<p:commandLink action="/pages/usuario/reativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 						<p:graphicImage value="/resources/img/reativaracesso.png" styleClass="acende" title="Reativar usuário" style="float: center; text-align: center;" />
 					</p:commandLink>
 					
+					<p:commandLink action="/pages/usuario/listarUsuario.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id!=4}">
+						<p:graphicImage value="/resources/img/usuario2.png" styleClass="acende" />
+					</p:commandLink>
+				
+				</h:panelGrid>	
 							
 			</p:panel>
 			</div>	

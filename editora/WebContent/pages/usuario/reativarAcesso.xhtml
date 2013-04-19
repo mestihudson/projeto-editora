@@ -22,7 +22,7 @@
 		<div class="Centralizar" style="background: white;" >
 		
 <!-- 		Acesso não permitido -->
-		<h:form rendered="#{loginBean.usuario.perfil.id>=2}">
+		<h:form rendered="#{loginBean.usuario.perfil.id>=3}">
 		<div align="center">
 		
 			<br />		
@@ -36,7 +36,7 @@
 		</h:form>	
 			
 <!-- 			Apenas para acesso administrador		 -->
-			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1}">
+			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: white; border-left: white;">
 			
@@ -44,9 +44,13 @@
 				<h:outputText value="REATIVAR ACESSO DE USUÁRIO" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>		
 			
-			<p:dataTable id="list" value="#{usuarioBean.usuarios2}"
+			<p:dataTable id="list" value="#{usuarioBean.usuarios2}" rendered="#{loginBean.usuario.perfil.id==1}"
 					var="u"  emptyMessage="Nenhuma usuário desativado no momento"  
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					
+					<p:column headerText="ID">
+						<h:outputText value="#{u.id}" /> 
+					</p:column>
 					
 					<p:column headerText="Nome">
 						<h:outputText value="#{u.nome}" /> 
@@ -64,12 +68,16 @@
 						<h:outputText value="#{u.telefone1}" /> 
 					</p:column>
 					
-					<p:column headerText="Universitário">
+					<p:column headerText="Vinculo UFRR">
 						<h:outputText value="#{u.universitario}" /> 
 					</p:column>
 					
 					<p:column headerText="Local de Trabalho">
 						<h:outputText value="#{u.localTrabalho}" /> 
+					</p:column>
+					
+					<p:column headerText="Perfil">
+						<h:outputText value="#{u.perfil.perfil}" /> 
 					</p:column>
 					
 					<p:column style="float: center; text-align: center;">
@@ -84,6 +92,55 @@
 					</p:column>
 										
 			</p:dataTable>	
+			
+			<p:dataTable id="list_gerente" value="#{usuarioBean.usuarios2}" rendered="#{loginBean.usuario.perfil.id==2}"
+					var="u"  emptyMessage="Nenhuma usuário desativado no momento"  
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					
+					<p:column headerText="ID">
+						<h:outputText value="#{u.id}" /> 
+					</p:column>
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{u.nome}" /> 
+					</p:column>
+					
+					<p:column style="text-align: center;" headerText="CPF">
+						<h:outputText value="#{u.cpf}" /> 
+					</p:column>
+					
+					<p:column headerText="Email">
+						<h:outputText value="#{u.login}" /> 
+					</p:column>
+										
+					<p:column style="text-align: center;" headerText="Telefone">
+						<h:outputText value="#{u.telefone1}" /> 
+					</p:column>
+					
+					<p:column headerText="Vinculo UFRR">
+						<h:outputText value="#{u.universitario}" /> 
+					</p:column>
+					
+					<p:column headerText="Local de Trabalho">
+						<h:outputText value="#{u.localTrabalho}" /> 
+					</p:column>
+					
+					<p:column headerText="Perfil">
+						<h:outputText value="#{u.perfil.perfil}" /> 
+					</p:column>
+					
+					<p:column style="float: center; text-align: center;">
+						<f:facet name="header">
+							<h:outputText value="" />
+						</f:facet>
+						<p:commandButton value="Ativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
+						style="float: center; text-align: center;" icon="ui-icon-check"
+						title="Desativar acesso">
+							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
+						</p:commandButton>
+					</p:column>
+										
+			</p:dataTable>
 					
 			</fieldset>
 
@@ -94,14 +151,20 @@
 			</h:form>
 		
 <!-- 		dialog sem a opção de perfil administrador -->
-		<p:dialog header="Deseja reativar usuário?" modal="true" resizable="false"
+		<p:dialog footer="Deseja reativar usuário?" modal="true" resizable="false"
 			showEffect="fade" hideEffect="fade" widgetVar="dlgAtivar2" width="300">
 			<h:form id="form_ativar_gerente">
 			
 			<div align="center">
 				<h:panelGrid id="display2" columns="2" cellspacing="10" cellpadding="10">
 
-						<p:commandButton value="Sim" onclick="dlgAtivar2.hide()" action="#{usuarioBean.reativarUsuario}" icon="ui-icon-check" update=":form_acesso1:list">
+						<p:commandButton value="Sim" onclick="dlgAtivar2.hide()" action="#{usuarioBean.reativarUsuario}" icon="ui-icon-check" update=":form_acesso1:list"
+						rendered="#{loginBean.usuario.perfil.id==1}">
+							<f:ajax render="@all" />
+						</p:commandButton>  
+						
+						<p:commandButton value="Sim" onclick="dlgAtivar2.hide()" action="#{usuarioBean.reativarUsuario}" icon="ui-icon-check" update=":form_acesso1:list_gerente"
+						rendered="#{loginBean.usuario.perfil.id==2}">
 							<f:ajax render="@all" />
 						</p:commandButton>  
                     

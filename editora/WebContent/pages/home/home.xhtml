@@ -25,21 +25,8 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 
-			<h:form rendered="#{loginBean.usuario.perfil.id>3}">
-				<div align="center">
-
-					<br />
-					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
-
-				</div>
-			</h:form>
-
 			<h:form id="form_home" style="float: right;"
-				rendered="#{loginBean.usuario.perfil.id!=3 or loginBean.usuario.id!=null}">
+				rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 				
 				<h:panelGrid columns="4" cellspacing="5" cellpadding="5" style="margin-left: 80%;">
 <!-- 				troca de mensagem -->
@@ -102,7 +89,7 @@
 								
 			</h:form>
 			
-			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+			<p:dialog rendered="#{loginBean.usuario.id==null or loginBean.usuario.perfil.id>=3}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />

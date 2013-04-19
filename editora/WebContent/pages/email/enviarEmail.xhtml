@@ -111,6 +111,17 @@
 				<div align="left" style="width: 350px; margin-right: 500px;">
 					<p:messages autoUpdate="true" id="msgs" />
 				</div>
+				
+				<p:ajaxStatus>
+				<f:facet name="start">
+					<h:graphicImage value="/resources/img/aguarde.gif" width="150"  />
+				</f:facet>
+
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+			
 			</h:form>
 			
 <!-- 			Dialog para destinatário -->
