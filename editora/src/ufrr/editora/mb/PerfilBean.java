@@ -43,33 +43,34 @@ public class PerfilBean implements Serializable {
 			return perfil5;
 		}
 	
-	// Exibe uma lista com o id != 5 e != 4
+	// Exibe uma lista com o id != 4
 	public List<Perfil> getSolicitacaoUsuario() {
 		perfil5 = new ArrayList<Perfil>();
 		for (Perfil p : this.getPerfis()) {
-			if (p.getId()!=5 && p.getId()!=4) {
+			if (p.getId()!=4) {
 				perfil5.add(p);
 			}
 		}
 		return perfil5;
 	}
 	
-	// Exibe uma lista com o id != 5
-		public List<Perfil> getId() {
-			perfil5 = new ArrayList<Perfil>();
-			for (Perfil p : this.getPerfis()) {
-				if (p.getId()!=5) {
-					perfil5.add(p);
-				}
+	// Exibe uma lista de usuário != de cliente
+	public List<Perfil> getListPerfis() {
+		perfil5 = new ArrayList<Perfil>();
+		for (Perfil p : this.getPerfis()) {
+			if (p.getId() != 4) {
+				perfil5.add(p);
 			}
-			return perfil5;
 		}
+		return perfil5;
+	}
+	
 		
-	// Exibe uma lista com o id != 5 e sem o id administrador
+	// Exibe uma lista com o id != 4 e sem o id administrador
 	public List<Perfil> getGerente() {
 		perfil5 = new ArrayList<Perfil>();
 		for (Perfil p : this.getPerfis()) {
-			if (p.getId() != 5 && p.getId() != 4 && p.getId() != 1) {
+			if (p.getId() != 4 && p.getId() != 1) {
 				perfil5.add(p);
 			}
 		}

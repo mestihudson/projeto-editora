@@ -52,8 +52,14 @@ public class LoginBean implements Serializable {
 				if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 1 ||
 						this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 2) {
 					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
-					System.out.println("usuario: " + getUsuario().getNome() + " entrou no sistema");
+					System.out.println("usuario: " + getUsuario().getNome() + "\n" + " entrou no sistema");
 					return "/pages/home/home.xhtml";
+				}
+					
+					if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 3) {
+						Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
+						System.out.println("usuario: " + getUsuario().getNome() + "\n" + " entrou no sistema");
+						return "/pages/usuario/listarUsuario.xhtml";
 					
 				}else {
 					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
@@ -67,33 +73,57 @@ public class LoginBean implements Serializable {
 		}
 	}
 	
-	//solicitação de Senha
-		public String esqueceuSenha() {
-			UsuarioDAO dao = new UsuarioDAO();
-			this.usuario = dao.trocaSenha(this.usuario);
-			if (this.usuario != null) {
-				if (this.getUsuario().getId() == null || this.getUsuario().getStatus().equals(false) || 
-						this.getUsuario().getPerfil().getId() == 5) {
-					Msg.addMsgError("Usuário não encontrado");
-					System.out.println("...Usuário ainda não foi ativado para pedir troca de senha");
-					return null;
-				} else {
-					if (this.getUsuario().getStatus().equals(true)) {
-						Msg.addMsgInfo("Esqueceu sua senha? Clique no botão 'Enviar' para recupera-la");
-						System.out.println("...usuario: " + getUsuario().getNome() + " entrou para solicitação de senha");
-						return "/pages/usuario/dados.xhtml";
-						
-					}else {
-						System.out.println("...Ocorreu um erro ao tentar recuperar a senha");
-						return null;
-					}
-				}
+	// solicitação de Senha
+	public String esqueceuSenha() {
+		UsuarioDAO dao = new UsuarioDAO();
+		this.usuario = dao.trocaSenha(this.usuario);
+		if (this.usuario != null) {
+			if (this.getUsuario().getId() == null
+					|| this.getUsuario().getStatus().equals(false)) {
+				Msg.addMsgError("Usuário não encontrado");
+				System.out
+						.println("...Usuário não existe ou ainda não foi ativado para pedir solicitação de senha");
+				return null;
 			} else {
-				this.usuario = new Usuario();
-				Msg.addMsgFatal("Dados inválidos");
+				if (this.getUsuario().getStatus().equals(true)) {
+					System.out.println("...usuario: " + getUsuario().getNome()
+							+ " entrou para solicitação de senha");
+					return "/pages/usuario/dados.xhtml?faces-redirect=true";
+
+				} else {
+					System.out.println("...Ocorreu um erro ao tentar recuperar a senha");
+					return null;
+				}
+			}
+		} else {
+			System.out.println("...Digite corretamente as informações para recuperar seu acesso");
+			Msg.addMsgFatal("Registro não encontrado."
+					+ " Digite seu CPF corretamente"
+					+ " caso persistir o erro, entre em contato com a Editora UFRR");
+			this.usuario = new Usuario();
+			return null;
+		}
+	}
+		
+	// acesso após solicitação do esqueceuSenha
+	public String esqueceuSenha2() {
+		UsuarioDAO dao = new UsuarioDAO();
+		this.usuario = dao.senhaCriptografada(this.usuario);
+		if (this.usuario != null) {
+			if (this.getUsuario().getStatus().equals(true)) {
+				System.out.println("...Troca de senha");
+				return "/pages/usuario/trocarSenha.xhtml";
+			} else {
+				System.out.println("...Ocorreu um erro ao tentar trocar a senha");
 				return null;
 			}
+		} else {
+			System.out.println("...Digite corretamente as informações para recuperar seu acesso");
+			Msg.addMsgFatal("Digite a senha correta conforme enviada para seu email");
+			this.usuario = new Usuario();
+			return null;
 		}
+	}
 		
 	
 	//autorização para alterar dados do cadastro
@@ -115,6 +145,26 @@ public class LoginBean implements Serializable {
 			}
 		return null;
 		}
+	
+	//autorização para alterar dados do cadastro
+		public String trocaSenha() {
+			if (this.usuario.getSenha().equalsIgnoreCase(this.usuario.getRepetirSenha())) {
+				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
+				dao.atualiza(usuario);
+				Msg.addMsgInfo("Senha alterada com sucesso");
+				System.out.println("...Senha alterada depois de solicita-la por email");
+				
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				HttpSession session = (HttpSession) facesContext.getExternalContext()
+						.getSession(false);
+				session.invalidate();
+				System.out.println("Saiu do Sistema para atualizar senha");
+				return "/index.xhtml";	
+			}else {
+				Msg.addMsgError("Senha incorreta"); 
+			}
+			return null;
+			}
 	
 	// Método para redireciona o usuario para a página inicial
 		public String redirect() {
