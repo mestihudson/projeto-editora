@@ -19,69 +19,148 @@
 	</ui:define>
 	
 	<ui:define name="body">
+	
+		<!-- 		Acesso não permitido -->
+		<h:form rendered="#{loginBean.usuario.perfil.id>3}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+
+		
+		</div>
+		</h:form>
 
 		<div class="Centralizar" style="background: white;">
 		
 			<h:form id="form_consultar_fornecedor">
 			
-			<fieldset style="border-color: #F8F8FF; border-top: white;">
+			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="CONSULTAR FORNECEDOR" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>
 			
-			<h:outputText value="Nome do Fornecedor: " />
+			<p:focus context="autocompletePesquisar" />
+			
+			<h:outputText value="Nome do Fornecedor: " styleClass="OutPut" />
 				<p:autoComplete value="#{fornecedorBean.fornecedor.nome}" completeMethod="#{fornecedorBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" 
-				minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar"/>
+				minQueryLength="5" maxResults="5" queryDelay="30" id="autocompletePesquisar"/>
 		
-	 			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{fornecedorBean.getListaFornecedoresByName}" ajax="false"  />
+	 			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{fornecedorBean.getListaFornecedorByName}" ajax="false"  />
 	 			<br /><br />
 	 			
 			
-			<p:dataTable id="list" value="#{fornecedorBean.fornecedores}"
-					var="f"  emptyMessage="" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
-					
-<!-- 					o display é o h:panelGrid com os dados do fornecedor -->
-					
-<!-- 					<p:column style="text-align: center; float: center;"> -->
-<!-- 						<p:commandButton id="selectButton" update=":form2:display"  -->
-<!-- 						icon="ui-icon-search" title="Detalhar">   -->
-<!--                 			<f:setPropertyActionListener -->
-<!-- 											target="#{fornecedorBean.fornecedor}" value="#{fornecedor}" /> -->
-<!--             			</p:commandButton> -->
-<!-- 					</p:column> -->
-					
-					<p:column style="text-align: center;" headerText="CNPJ">
-						<h:outputText value="#{f.cnpj}" /> 
-					</p:column>
-					
-					<p:column headerText="Razão Social / Nome Fantasia">
-						<h:outputText value="#{f.nome}" /> 
-					</p:column>
-					
-					<p:column style="text-align: center;" headerText="Porcent. Pagamento" width="10">
-						<h:outputText value="#{f.porcentagem}%" /> 
-					</p:column>
-					
-					<p:column headerText="Telefone 1">
-						<h:outputText value="#{f.telefone1}" /> 
-					</p:column>
-					
-					<p:column headerText="Telefone 2">
-						<h:outputText value="#{f.telefone2}" /> 
-					</p:column>
-					
-					<p:column headerText="Email">
-						<h:outputText value="#{f.email}" /> 
-					</p:column>
-					
-			</p:dataTable>	
+				<p:dataGrid id="dg" var="fornecedor" value="#{fornecedorBean.listaFornecedores}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
+	 			emptyMessage="">
+
+						<p:panel header="#{fornecedor.nome}" style="text-align:center" id="pnl">
+							<h:panelGrid columns="1" style="width:100%">
+								
+								<h:outputText value="CPF / CNPJ: #{fornecedor.cnpj}" />
+								
+								<h:outputText value="e-mail: #{fornecedor.email}" />
+								
+								<h:outputText value="Telefone 1: #{fornecedor.telefone1}" />
+								
+								<h:outputText value="Telefone 2: #{fornecedor.telefone2}" />
+								
+								<h:outputText value="Porcent. de Pagto: #{fornecedor.porcentagem}%" />
+
+								<p:commandLink update=":form_dlg:display"
+									oncomplete="dlgEnd.show()">
+									<h:outputText styleClass="ui-icon ui-icon-search"
+										style="margin:0 auto;" />
+									<f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorBean.fornecedor}" />
+								</p:commandLink>
+							</h:panelGrid>
+						</p:panel>
+						
+					</p:dataGrid>	
 					
 			</fieldset>
 			
 			<p:messages id="msg" />
 			
 			</h:form>
+			
+			<p:dialog header="Informações do Fornecedor" modal="true" resizable="false"
+			showEffect="fade" hideEffect="fade" widgetVar="dlgEnd">
+			<h:form id="form_dlg">
+			
+				<h:panelGrid id="display" columns="2" cellspacing="10">
+				
+				<p:panel header="Endereço" style="float: left">
+				
+					<h:outputLabel value="Estado: " for="estado" styleClass="OutPut" />
+					<h:outputText id="estado" value="#{fornecedorBean.fornecedor.endereco.unidade}"
+						styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Município: " for="muni" styleClass="OutPut" />
+					<h:outputText id="muni" value="#{fornecedorBean.fornecedor.endereco.municipio}"
+						styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Logradouro: " for="logra" styleClass="OutPut" />
+					<h:outputText id="tipologra" value="#{fornecedorBean.fornecedor.endereco.tipoLogradouro} " styleClass="OutPut" />
+					<h:outputText id="logra" value="#{fornecedorBean.fornecedor.endereco.logradouro}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Número: " for="nu" styleClass="OutPut" />
+					<h:outputText id="nu" value="#{fornecedorBean.fornecedor.endereco.numero}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Bairro: " for="bairro" styleClass="OutPut" />
+					<h:outputText id="bairro" value="#{fornecedorBean.fornecedor.endereco.bairro}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="CEP: " for="cep" styleClass="OutPut" />
+					<h:outputText id="cep" value="#{fornecedorBean.fornecedor.endereco.cep}" styleClass="OutPut" />
+				
+				</p:panel>
+				
+				<p:panel header="Dados Bancários" style="float: right">
+				<br />
+				
+					<h:outputLabel value="Banco: " for="banco" styleClass="OutPut" />
+					<h:outputText id="banco" value="#{fornecedorBean.fornecedor.banco}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Agencia: " for="ag" styleClass="OutPut" />
+					<h:outputText id="ag" value="#{fornecedorBean.fornecedor.agencia}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="C/C: " for="cc" styleClass="OutPut" />
+					<h:outputText id="cc" value="#{fornecedorBean.fornecedor.conta}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Op: " for="op" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco==CAIXA}" />
+					<h:outputText id="op" value="#{fornecedorBean.fornecedor.operacao}" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco==CAIXA}" />
+					<br />
+					
+					<h:outputLabel value="Titular: " for="titu" styleClass="OutPut" />
+					<h:outputText id="titu" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="OutPut" />
+					<br /><br /><br />
+									
+				</p:panel>
+				
+				<p:panel header="Pis" style="float: left" rendered="#{fornecedorBean.fornecedor.pis!=null}">
+				<br />
+				
+				<h:outputLabel value="Pis: " for="pis" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.pis!=null}"  />
+					<h:outputText id="pis" value="#{fornecedorBean.fornecedor.pis}" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.pis!=null}" />
+					<br /><br />
+					
+				</p:panel>	
+
+				</h:panelGrid><br />
+				
+			</h:form>	
+		</p:dialog>	
 			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">

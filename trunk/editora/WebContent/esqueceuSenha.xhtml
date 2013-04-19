@@ -10,7 +10,6 @@
 	<title>Editora UFRR</title>
 	<h:outputStylesheet name="leo.css" library="css" />
 	<link rel="shortcut icon" href="resources/img/favicon.ico" />
-	<meta http-equiv="refresh" content="90" />
 </h:head>
 
 <h:body styleClass="shadow">
@@ -40,11 +39,7 @@
 	
 	<div style="background: #EFF3FA; height: 60px; width: 95%" align="center"><br />
 		<h:outputLabel value="Atenção!" style="color: red; font-weight: bold;" /><br />
-		<h:outputLabel value="O sistema diferencia letras maiúsculas de minúsculas, portanto a senha deve ser digitada da mesma maneira do seu cadastro" />
-	</div>
-	
-	<div style="width: 95%; float: center;" align="center">
-		<p:messages id="msgs" />
+		<h:outputLabel value="Copie a senha enviada para seu email" />
 	</div>
 
 	
@@ -54,11 +49,9 @@
 	<div align="center" style="width: 95%; background: white;">
 
 	<h:outputLabel value="Esqueceu a senha? " />
-	<h:outputLink onclick="dlgCPF.show()" value="javascript:void(0)" style="float: center; text-align: center;">
-		<h:outputLabel value="Clique aqui para recuperá-la." styleClass="OutPut" style="cursor: pointer;" />
-	</h:outputLink>	
+	<h:commandLink value="Clique aqui para recuperá-la." action="/pages/usuario/recuperarSenha.xhtml?faces-redirect=true" styleClass="OutPut" style="float: center; text-align: center;" />
 	<br /><br />
-	
+		
 		<fieldset style="border-color: #C8D5EC; width: 485px; background: #C8D5EC; border: solid thick #C8D5EC; text-align: center border-top-width: 0px; border-top-right-radius: 8px; border-top-left-radius: 8px;">
 			<h:outputLabel value="Entrar no Sistema" style="color: #394674; font-weight: bold; font-size: 14px;" /><br />
 		</fieldset>
@@ -83,10 +76,9 @@
 			
 			</h:panelGrid><br />
 			
-			<p:commandButton value="Entrar" action="#{loginBean.efetuaLogin}" ajax="false">
+			<p:commandButton value="Entrar" action="#{loginBean.esqueceuSenha2}" ajax="false">
 				<p:ajax render="@all" />
-			</p:commandButton>	
-			
+			</p:commandButton>
 			
 			<br /><br />			
 		
@@ -103,7 +95,7 @@
 				</h:commandLink>
 	</div>
 	
-	<p:graphicImage value="/resources/img/logoeditora.png" style="float: left; text-align: left;" />
+	<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65);" />
 				
 	<div style="width: 95%; display: block;" align="center" />
 	<div id="rodape" style="background: #394674; width: 95%; height: 20px; line-height: 20px; text-align: center;">
@@ -112,78 +104,7 @@
 	
 	</div>
 	
-	</h:form>
-	
-	
-<!-- 	dialog para campo CPF, recuperação de senha -->
-	<p:dialog widgetVar="dlgCPF" modal="true" resizable="false" showEffect="fold">
-		
-		<h:form>
-		<div style="background: #EFF3FA; height: 60px;" align="center">
-						
-				<br />
-					<h:outputLabel value="Atenção!"	style="color: red; font-weight: bold;" />
-				<br />
-					<h:outputLabel style="font-weight: bold;"
-						value="Ao preencher os dados o sistema enviará um email com seu login e senha corretos" />
-			</div>
-			
-			<div class="Centralizar" style="text-align: center; float: center;" align="center" >
+	</h:form>	
 
-					<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
-						align="center">
-						<h:outputText value="RECUPERAR ACESSO"
-							style="color: white; font-size: 12px;" styleClass="OutPut"/>
-					</div>
-
-					<fieldset style="border: 1px solid #6A6A6A; border-bottom: white; border-top: white;">
-					<br /><br />
-					
-					<h:panelGrid id="grid" columns="5" style="margin-left: 37%;">
-					<br /><br /><br /><br /><br /><br />
-					<p:focus context="grid" for="cpf" />
-						
-						<h:outputLabel value="CPF" for="cpf" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="cpf" value="#{loginBean.usuario.cpf}" style="width: 134px;"
-							mask="999.999.999-99" styleClass="input" required="true"
-							requiredMessage="Informe o cpf corretamente" validatorMessage="CPF inválido">
-							<f:ajax event="change" />
-						</p:inputMask>
-						<br />
-						<br /><br /><br />
-												
-						</h:panelGrid>
-					
-					</fieldset>
-					
-			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{loginBean.esqueceuSenha}"
-					value="OK" ajax="false" icon="ui-icon-check" update="@form">
-					<f:ajax render="@form" />
-				</p:commandButton>
-				&nbsp;
-
-				<p:commandButton action="/index.xhtml?faces-redirect=true" immediate="true"
-					value="Cancelar" ajax="false" icon="ui-icon-close">
-						<f:ajax render="@form" />
-				</p:commandButton>		
-			</div>
-			<br />
-
-			<div align="center" style="float: center; text-align: center;">
-				<h:outputLabel value="Os Campos Com " styleClass="OutPut" />
-				<h:graphicImage value="/resources/img/as.png" />
-				<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
-			</div>
-
-			<div align="left" style="width: 350px; margin-right: 500px;">
-					<p:messages id="msg" autoUpdate="true" />
-				</div>
-			
-			</div>
-			</h:form>
-			
-	</p:dialog> 	
 	</h:body>
 </html>

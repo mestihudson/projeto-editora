@@ -22,7 +22,7 @@
 		<div class="Centralizar" style="background: white;" >
 		
 <!-- 		Acesso não permitido -->
-		<h:form rendered="#{loginBean.usuario.perfil.id>1}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -36,7 +36,7 @@
 		</h:form>	
 			
 <!-- 			Apenas para acesso administrador		 -->
-			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1}">
+			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: white; border-left: white; border-bottom: white; border-right: white;">
 			
@@ -52,7 +52,7 @@
 					
 					<h:outputText value="Email: #{usuario.login}" />
 					
-					<h:outputText value="CPF: #{usuario.cpf}" rendered="#{loginBean.usuario.perfil.id==1}" />
+					<h:outputText value="CPF: #{usuario.cpf}" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id ==2}" />
 					
 					<h:outputText value="Perfil: #{usuario.perfil.perfil}" />
 					

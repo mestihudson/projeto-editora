@@ -9,17 +9,7 @@
 <h:head>
 	<title>Editora UFRR</title>
 	<h:outputStylesheet name="leo.css" library="css" />
-	<h:outputScript name="locale.js" library="js" />
 	<link rel="shortcut icon" href="/editora/resources/img/favicon.ico" />
-	
-	<style>
-	.ui-growl{
-    position:fixed;
-    top:45%;
-    right:60%;
-    width:301px;
-}
-	</style>
 </h:head>
 
 <h:body styleClass="shadow">
@@ -55,74 +45,78 @@
 				align="center">
 						
 				<br />
-					<h:outputLabel value="Esqueceu a senha?"
+					<h:outputLabel value="Atenção!"
 						style="color: red; font-weight: bold;" />
 				<br />
 					<h:outputLabel
-						value="Clique no botão 'Enviar' para recupera-la" />
+						value="Ao informar sua senha o sistema diferencia letras maiúsculas de minúsculas" />
 			</div>
 			
 			<div class="Centralizar" style="width: 95%; text-align: left;" >
-			
-			<p:growl life="2000" id="growl" sticky="true" />
 
 					<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
 						align="center">
-						<h:outputText value="RECUPERAÇÃO DE SENHA"
+						<h:outputText value="MODIFICAR SENHA DE ACESSO"
 							style="color: white; font-size: 12px;" styleClass="OutPut"/>
 					</div>
 
 					<fieldset style="border: 1px solid #6A6A6A; border-bottom: 0; border-top: 0;">
-											
-						<br /><br />					
-						<h:outputLabel value="CPF: " for="cpf" styleClass="OutPut" style="margin-left: 20px;" />
-						<h:outputLabel id="cpf" value="#{loginBean.usuario.cpf}" />
+					<br /><br /><br /><br />
+										
+					<p:focus context="grid" for="senha" />
+						
+						
+						<!-- 					Aqui começa as informações do login -->
+						
+					
+					<h:panelGrid id="grid2" columns="12" cellpadding="5" cellspacing="5">
+					<br /><br />
+
+						<h:outputLabel value="Senha" for="senha" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:password id="senha" value="#{loginBean.usuario.senha}"
+							required="true" requiredMessage="Informe sua senha">
+							<f:ajax event="blur" render="error_senha" />
+						</p:password>
+						<p:message id="error_senha" for="senha" display="icon" />
 						<br />
 						<br />
 
-						<h:outputLabel value="Nome Completo: " for="nome"	styleClass="OutPut" style="margin-left: 20px;" />
-						<h:outputLabel id="nome" value="#{loginBean.usuario.nome}" />
-						<br />
-						<br />
+						<h:outputLabel value="Repita a Senha" for="senha" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:password id="rsenha"
+							value="#{loginBean.usuario.repetirSenha}" required="true"
+							requiredMessage="Senha inválida">
+							<f:ajax event="blur" render="error_rsenha" />
+						</p:password>
+						<p:message id="error_rsenha" for="rsenha" display="icon" />
 						
-						<h:outputLabel value="Email: " for="email"	styleClass="OutPut" style="margin-left: 20px;" />
-						<h:outputLabel id="email" value="#{loginBean.usuario.login}" />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
+						</h:panelGrid>
+						<br /><br />
+						
+				<br /><br />
 					
 					</fieldset>
 					
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{usuarioBean.recuperaSenha}"
-					value="Enviar" ajax="false" icon="ui-icon-check" update="@form">
+				<p:commandButton action="#{loginBean.trocaSenha}"
+					value="OK" ajax="false" icon="ui-icon-check" update="@form">
 					<f:ajax render="@form" />
-				</p:commandButton>
-				&nbsp;
-
-				<p:commandButton action="#{loginBean.sair2}" immediate="true"
-					value="Cancelar" ajax="false" icon="ui-icon-close">
-						<f:ajax render="@form" />
 				</p:commandButton>		
 			</div>
-			
-			<p:ajaxStatus>
-				<f:facet name="start">
-					<h:graphicImage value="/resources/img/aguarde.gif" width="150"  />
-				</f:facet>
+			<br />
 
-				<f:facet name="complete">
-					<h:outputText value="" />
-				</f:facet>
-			</p:ajaxStatus>
-			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+			<div align="center" style="float: center; text-align: center;">
+				<h:outputLabel value="Os Campos Com " styleClass="OutPut" />
+				<h:graphicImage value="/resources/img/as.png" />
+				<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
+			</div>
+
+			<div align="left" style="width: 350px; margin-right: 500px;">
+					<p:messages autoUpdate="true" />
+				</div>
 			
 			</div>
-			
-			<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65);" />
 
 			<div style="width: 95%; display: block;" align="center" />
 			<div id="rodape3"
@@ -131,20 +125,18 @@
 
 		</div>	
 				
-		</h:form>		
+		</h:form>
 
-		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" position="top" closable="false" modal="true">
-				<div align="center">
+	<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
+		resizable="false" closable="false" modal="true">
+		<div align="center">
 
-					<br />
-					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+			<br />
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /> <br /> <br /> <br /> <a href="javascript:history.back(-1)">Voltar</a><br />
 
-				</div>
-			</p:dialog>
+		</div>
+	</p:dialog>
 
 </h:body>
 
