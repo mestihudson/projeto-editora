@@ -50,7 +50,7 @@ public class Validator<T> {
 					+ " u WHERE " + field + " = ?");
 			q.setParameter(1, nome);
 			if (!q.getResultList().isEmpty()) {
-				resultNome = "Nome j√° registrado";
+				resultNome = "Nome j· registrado";
 				return false;
 			} else {
 				resultNome = "";
