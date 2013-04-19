@@ -8,6 +8,8 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
+import ufrr.editora.mb.LoginBean;
+
 public class EmailUtils {
 	 private static final String HOSTNAME = "smtp.gmail.com";
 	 private static final String USERNAME = "leoholanda23";
@@ -37,14 +39,15 @@ public class EmailUtils {
 	 }
 	 
 	 @SuppressWarnings("unused")
-		public static void recuperaSenha(ufrr.editora.entity.Usuario usuario) throws EmailException {
+		public static void recuperaSenha(LoginBean usuario) throws EmailException {
 		 Email email2 = new SimpleEmail();
 		 email2 = conectaEmail();
-		 email2.setSubject("Recuperação de acesso site Editora UFRR");
-		 email2.setMsg("Senha: " + usuario.getSenha());
-		 email2.addTo(usuario.getLogin()); //Corrigir problema aqui...
+		 email2.setSubject("Recuperação de senha Editora UFRR");
+		 email2.setMsg("Editora UFRR" + "\n" + "siga as instruções abaixa para prosseguir com a solicitação" + "\n" + "\n" + "Senha: " + usuario.getUsuario().getSenha() + "\n" + "\n"
+		 + "Clique no link e copie a senha informada: " + "http://172.22.10.110:8081/editora/esqueceuSenha.jsf?faces-redirect=true");
+		 email2.addTo(usuario.getUsuario().getLogin()); 
 		 String resposta = email2.send();
-		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getLogin(), "Informação"));
+		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getUsuario().getLogin(), "Informação"));
 		 }
 
 }
