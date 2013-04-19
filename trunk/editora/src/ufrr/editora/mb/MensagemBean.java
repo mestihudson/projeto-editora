@@ -38,8 +38,22 @@ public class MensagemBean implements Serializable {
 		return mensagens;
 	}
 	
+//	 Exibe uma lista de mensagens recebidas para o id logado
+//	public List<Mensagem> getRecebidas() {
+//		System.out.println("...entrou nas mensagens");
+//		mensagensR = new ArrayList<Mensagem>();
+//		List<Mensagem> msgs = new ArrayList<Mensagem>();
+//		msgs = this.getMensagens();
+//		for (int i = 0; i < msgs.size() - 1; i++) {
+//			if (msgs.get(i).getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
+//				mensagensR.add(msgs.get(i));
+//			}
+//		}
+//		return msgs;
+//	}
 	
-	// Exibe uma lista de mensagens recebidas pelo id logado
+	
+//	 Exibe uma lista de mensagens recebidas pelo id logado
 		public List<Mensagem> getRecebidas() {
 			mensagensR = new ArrayList<Mensagem>();
 			for (Mensagem m : this.getMensagens()) {
