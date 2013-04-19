@@ -36,7 +36,7 @@ public class Perfil implements Serializable, BaseEntity {
 	}
 
 	public void setPerfil(String perfil) {
-		this.perfil = perfil;
+		this.perfil = perfil.toUpperCase();
 	}
 	
 	
