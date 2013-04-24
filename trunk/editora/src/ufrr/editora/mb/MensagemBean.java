@@ -39,31 +39,31 @@ public class MensagemBean implements Serializable {
 	}
 	
 //	 Exibe uma lista de mensagens recebidas para o id logado
-//	public List<Mensagem> getRecebidas() {
-//		System.out.println("...entrou nas mensagens");
-//		mensagensR = new ArrayList<Mensagem>();
-//		List<Mensagem> msgs = new ArrayList<Mensagem>();
-//		msgs = this.getMensagens();
-//		for (int i = 0; i < msgs.size() - 1; i++) {
-//			if (msgs.get(i).getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
-//				mensagensR.add(msgs.get(i));
-//			}
-//		}
-//		return msgs;
-//	}
+	public List<Mensagem> getRecebidas() {
+		System.out.println("...entrou nas mensagens");
+		mensagensR = new ArrayList<Mensagem>();
+		List<Mensagem> msgs = new ArrayList<Mensagem>();
+		msgs = this.getMensagens();
+		for (int i = 0; i < msgs.size(); i++) {
+			if (msgs.get(i).getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
+				mensagensR.add(msgs.get(i));
+			}
+		}
+		return mensagensR;
+	}
 	
 	
 //	 Exibe uma lista de mensagens recebidas pelo id logado
-		public List<Mensagem> getRecebidas() {
-			mensagensR = new ArrayList<Mensagem>();
-			for (Mensagem m : this.getMensagens()) {
-				if (m.getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
-					mensagensR.add(m);
-					System.out.println("Mensagem para: " + getLoginBean().getUsuario().getNome());
-				}
-			}
-			return mensagensR;
-		}
+//		public List<Mensagem> getRecebidas() {
+//			mensagensR = new ArrayList<Mensagem>();
+//			for (Mensagem m : this.getMensagens()) {
+//				if (m.getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
+//					mensagensR.add(m);
+//					System.out.println("Mensagem para: " + getLoginBean().getUsuario().getNome());
+//				}
+//			}
+//			return mensagensR;
+//		}
 		
 	public void enviarMensagem() {
 		if (mensagem.getDescricao().isEmpty()) {
