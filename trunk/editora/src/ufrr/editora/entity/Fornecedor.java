@@ -57,7 +57,7 @@ public class Fornecedor implements BaseEntity {
 	@Transient
 	@ManyToOne
 	private Usuario usuario;
-	
+		
 	/** get and set **/
 
 	public Long getId() {
@@ -73,7 +73,7 @@ public class Fornecedor implements BaseEntity {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 
 	public String getTelefone1() {
@@ -97,7 +97,7 @@ public class Fornecedor implements BaseEntity {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.toLowerCase();
 	}
 
 	public Endereco getEndereco() {
@@ -179,6 +179,5 @@ public class Fornecedor implements BaseEntity {
 	public void setOperacao(Integer operacao) {
 		this.operacao = operacao;
 	}
-	
 
 }
