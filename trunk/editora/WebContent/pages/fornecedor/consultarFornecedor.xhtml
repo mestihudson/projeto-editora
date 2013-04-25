@@ -21,7 +21,7 @@
 	<ui:define name="body">
 	
 		<!-- 		Acesso não permitido -->
-		<h:form rendered="#{loginBean.usuario.perfil.id>3}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -36,7 +36,7 @@
 
 		<div class="Centralizar" style="background: white;">
 		
-			<h:form id="form_consultar_fornecedor">
+			<h:form id="form_consultar_fornecedor" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 			
@@ -46,22 +46,27 @@
 			
 			<p:focus context="autocompletePesquisar" />
 			
-			<h:outputText value="Nome do Fornecedor: " styleClass="OutPut" />
-				<p:autoComplete value="#{fornecedorBean.fornecedor.nome}" completeMethod="#{fornecedorBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" 
-				minQueryLength="5" maxResults="5" queryDelay="30" id="autocompletePesquisar"/>
-		
-	 			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{fornecedorBean.getListaFornecedorByName}" ajax="false"  />
-	 			<br /><br />
-	 			
+			<h:panelGrid columns="5" cellspacing="5">
 			
-				<p:dataGrid id="dg" var="fornecedor" value="#{fornecedorBean.listaFornecedores}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
-	 			emptyMessage="">
+				<p:selectOneMenu value="#{fornecedorBean.box4Search}" styleClass="OutPut" style="width: 200px;" >
+					<f:selectItem itemLabel="Nome Fantasia/Razão Social" itemValue="nome" />
+					<f:selectItem itemLabel="CNPJ/CPF" itemValue="cnpj" />
+					<f:ajax listener="#{fornecedorBean.checkBox4Search}" event="blur" />
+				</p:selectOneMenu>
+									
+				<p:autoComplete value="#{fornecedorBean.search}" completeMethod="#{fornecedorBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" 
+				minQueryLength="3" maxResults="5" queryDelay="300" id="autocompletePesquisar" size="60" />
+						
+	 			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{fornecedorBean.getListaFornecedorByName}" ajax="false" icon="ui-icon-search"  />
+	 		
+	 		</h:panelGrid><br />
+	 					
+				<p:dataGrid id="dg" var="fornecedor" value="#{fornecedorBean.listaFornecedores}" columns="3" rows="6" paginator="true" paginatorPosition="bottom" style="text-align: center;"
+	 			emptyMessage="Não encontrado" >
 
-						<p:panel header="#{fornecedor.nome}" style="text-align:center" id="pnl">
+						<p:panel header="#{fornecedor.nome}" id="pnl" footer="CNPJ / CPF: #{fornecedor.cnpj}" style="text-align:center; width: 100%;">
 							<h:panelGrid columns="1" style="width:100%">
-								
-								<h:outputText value="CPF / CNPJ: #{fornecedor.cnpj}" />
-								
+																
 								<h:outputText value="e-mail: #{fornecedor.email}" />
 								
 								<h:outputText value="Telefone 1: #{fornecedor.telefone1}" />
@@ -69,10 +74,10 @@
 								<h:outputText value="Telefone 2: #{fornecedor.telefone2}" />
 								
 								<h:outputText value="Porcent. de Pagto: #{fornecedor.porcentagem}%" />
-
+								
 								<p:commandLink update=":form_dlg:display"
 									oncomplete="dlgEnd.show()">
-									<h:outputText styleClass="ui-icon ui-icon-search"
+									<h:outputText styleClass="ui-icon ui-icon-plusthick"
 										style="margin:0 auto;" />
 									<f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorBean.fornecedor}" />
 								</p:commandLink>

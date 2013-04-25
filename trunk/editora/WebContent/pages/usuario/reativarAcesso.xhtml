@@ -44,7 +44,7 @@
 				<h:outputText value="REATIVAR ACESSO DE USUÁRIO" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>		
 			
-			<p:dataTable id="list" value="#{usuarioBean.usuarios2}" rendered="#{loginBean.usuario.perfil.id==1}"
+			<p:dataTable id="list" value="#{usuarioBean.usuariosDesativados}" rendered="#{loginBean.usuario.perfil.id==1}"
 					var="u"  emptyMessage="Nenhuma usuário desativado no momento"  
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 					
@@ -84,7 +84,7 @@
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
-						<p:commandButton value="Ativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
+						<p:commandButton value="Reativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
 						style="float: center; text-align: center;" icon="ui-icon-check"
 						title="Desativar acesso">
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
@@ -93,7 +93,7 @@
 										
 			</p:dataTable>	
 			
-			<p:dataTable id="list_gerente" value="#{usuarioBean.usuarios2}" rendered="#{loginBean.usuario.perfil.id==2}"
+			<p:dataTable id="list_gerente" value="#{usuarioBean.usuariosDesativados2}" rendered="#{loginBean.usuario.perfil.id==2}"
 					var="u"  emptyMessage="Nenhuma usuário desativado no momento"  
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 					
@@ -133,7 +133,7 @@
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
-						<p:commandButton value="Ativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
+						<p:commandButton value="Reativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
 						style="float: center; text-align: center;" icon="ui-icon-check"
 						title="Desativar acesso">
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />

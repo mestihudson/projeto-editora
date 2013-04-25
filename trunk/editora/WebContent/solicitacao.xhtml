@@ -125,29 +125,19 @@
 						<br />
 						<br />
 
-						<h:outputLabel value="Telefone 1" for="fone1" styleClass="OutPut" />
+						<h:outputLabel value="Telefone" for="fone1" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputMask id="fone1" value="#{usuarioBean.usuario.telefone1}" mask="(99)9999-9999"
 							required="true"
-							requiredMessage="Informe pelo menos um telefone para contato">
+							requiredMessage="Informe o telefone para contato">
 							<f:ajax event="blur" render="error_fone1" />
 						</p:inputMask>
 						<p:message id="error_fone1" for="fone1" />
-						<br />
-						<br />
-
-						<h:outputLabel value="Telefone 2" for="fone2" styleClass="OutPut" />
-						<h:outputLabel value="" />
-						<p:inputMask id="fone2" value="#{usuarioBean.usuario.telefone2}" mask="(99)9999-9999">
-							<f:ajax event="change" render="error_fone2" />
-						</p:inputMask>
-						<p:message id="error_fone2" for="fone2" />
 						
 						</h:panelGrid>
 						<br />
 						<br />
-						
-						
+												
 						<!-- 					Aqui começa as informações do login -->
 						
 					<p:fieldset legend="Login" style="width: 77%; margin-left: 15px;">
@@ -164,7 +154,8 @@
 
 						<h:outputLabel value="Senha" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:password id="senha" value="#{usuarioBean.usuario.senha}"
+						<p:password id="senha" value="#{usuarioBean.usuario.senha}" feedback="true" promptLabel="Digite sua senha"
+						weakLabel="senha fácil" goodLabel="senha média" strongLabel="senha segura"
 							required="true" requiredMessage="Informe sua senha">
 							<f:ajax event="blur" render="error_senha" />
 						</p:password>

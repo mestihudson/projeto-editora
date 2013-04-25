@@ -46,7 +46,7 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
-		<h:form rendered="#{loginBean.usuario.perfil.id>2}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -58,7 +58,7 @@
 		</div>
 		</h:form>
 		
-			<h:form id="form_cadastrar_fornecedor" rendered="#{loginBean.usuario.perfil.id == 1 or loginBean.usuario.perfil.id == 2}">
+			<h:form id="form_cadastrar_fornecedor" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<p:focus context="grid" for="cpf" />
 			
@@ -82,22 +82,36 @@
 					<h:outputLabel value="CPF" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputMask id="cpf" value="#{fornecedorBean.fornecedor.cnpj}" mask="999.999.999-99" styleClass="input"
-						required="true" requiredMessage="Informe o cpf">
+						required="true" requiredMessage="Informe o cpf" rendered="#{fornecedorBean.fornecedor.cnpj==null}">
 						<f:ajax event="blur" render="error_cpf" />
 					</p:inputMask>
-					<p:message id="error_cpf" for="cpf" />
+					<p:message id="error_cpf" for="cpf" rendered="#{fornecedorBean.fornecedor.cnpj==null}" />
+					
+					<p:inputMask id="cpf2" value="#{fornecedorBean.fornecedor.cnpj}" mask="999.999.999-99" styleClass="input" disabled="true" 
+					rendered="#{fornecedorBean.fornecedor.cnpj!=null}"
+						required="true" requiredMessage="Informe o cpf">
+						<f:ajax event="blur" render="error_cpf2" />
+					</p:inputMask>
+					<p:message id="error_cpf2" for="cpf2" rendered="#{fornecedorBean.fornecedor.cnpj!=null}" />
 					<br /><br />
 					  
 					<h:outputLabel value="Nome Completo" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="forn_nome" value="#{fornecedorBean.fornecedor.nome}" required="true" requiredMessage="Informe o nome do fornecedor"
+					rendered="#{fornecedorBean.fornecedor.nome==null}"
 					styleClass="input">
 						<f:ajax event="blur" render="error_nome" />
 					</p:inputText>
-					<p:message id="error_nome" for="forn_nome" />
+					<p:message id="error_nome" for="forn_nome" rendered="#{fornecedorBean.fornecedor.nome==null}" />
+					
+					<p:inputText id="forn_nome2" value="#{fornecedorBean.fornecedor.nome}" disabled="true" rendered="#{fornecedorBean.fornecedor.nome!=null}"
+					styleClass="input">
+						<f:ajax event="blur" render="error_nome2" />
+					</p:inputText>
+					<p:message id="error_nome2" for="forn_nome2" rendered="#{fornecedorBean.fornecedor.nome!=null}" />
 					<br /><br />
 					
-					<h:outputLabel value="Pis" styleClass="OutPut" />
+					<h:outputLabel value="Pis" styleClass="OutPut" onclick="dlgObsPis.show();" style="cursor: pointer;" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="forn_pis" value="#{fornecedorBean.fornecedor.pis}" required="true" requiredMessage="Informe o número do pis"
 					styleClass="input" validatorMessage="Número do pis inválido" maxlength="11">
@@ -144,7 +158,17 @@
 					
 					</h:panelGrid>
 					
-					<p:fieldset legend="Dados Bancários" style="width: 20%; margin-left: 15px; float: left;">
+<!-- 					Aqui começa os dados bancários -->
+					<p:fieldset legend="Dados Bancários" style="width: 70%; margin-left: 15px; float: left; height: 135px;">
+					
+					<div style="float: left">
+					<p:selectOneRadio value="#{fornecedorBean.fornecedor.banco}" style="width: 180px; margin-left: 8px;">
+							<f:selectItem itemLabel="" itemValue="BB" />
+							<f:selectItem itemLabel="" itemValue="BRADESCO" />
+							<f:selectItem itemLabel="" itemValue="CAIXA" />
+							<f:selectItem itemLabel="" itemValue="ITAU" />
+							<f:selectItem itemLabel="" itemValue="SANTANDER" />
+						</p:selectOneRadio>
 					
 					<h:panelGrid columns="5" cellspacing="5">
 					<h:graphicImage value="/resources/img/bb.png" style="cursor: pointer;" onclick="dlgBB.show();" title="Banco do Brasil" />
@@ -157,12 +181,32 @@
 					
 					<h:graphicImage value="/resources/img/santander.png" style="cursor: pointer;" onclick="dlgSantander.show();" title="Santander" />
 					
-					</h:panelGrid><br />
+					</h:panelGrid>
+					</div>
 					
-					<h:outputText value="Atenção: " style="color: red;" styleClass="OutPut" />
-					<h:outputText value="informe apenas 1 conta bancário" styleClass="OutPut" />
-					
+					<div style="float: left">
+					<h:panelGrid id="grid_dados_bancarios" columns="3" style="float: left">
+																
+						<h:outputLabel value="Agencia" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:inputText id="forn_agencia_caixa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" />
+												
+						<h:outputLabel value="Conta Correte" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:inputText id="forn_conta_caixa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" />
+						
+						<h:outputLabel value="Op" styleClass="OutPut" />
+						<h:graphicImage value="" styleClass="as" />
+						<p:inputMask id="forn_op_caixa" value="#{fornecedorBean.fornecedor.operacao}" styleClass="input" mask="999" />
+						
+						<h:outputLabel value="Títular" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:inputText id="forn_titular_caixa" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
+						
+					</h:panelGrid>				
+					</div>
 					</p:fieldset>
+					
 					
 					
 <!-- 					DADOS DA AGENCIA -->
@@ -173,38 +217,13 @@
 						widgetVar="dlgBB" resizable="false" modal="true" showEffect="fold">
 						
 										
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundbb.png);">
+						<p:fieldset style="background-image: url(/editora/resources/img/backgroundbb1.png);">
 						
-						<div align="center">
-						<p:selectOneRadio value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="BANCO DO BRASIL" itemValue="BANCO DO BRASIL" />
-						</p:selectOneRadio>
-						
-						</div><br />
-						
-						<p:separator />								
-						<h:panelGrid id="grid_bb" columns="4">
-												
-						<h:outputLabel value="Agencia" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_agencia_bb" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" mask="999-9" />
-						<br /><br />
-						
-						<h:outputLabel value="Conta Correte" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_conta_bb" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" />
-						<br /><br />
-						
-						<h:outputLabel value="Títular" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_bb" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
-						<br /><br />
-						
-						</h:panelGrid><p:separator /><br />
-
-						
-						<div align="center">
-							<p:commandButton id="decline" value="OK" onclick="dlgBB.hide()" type="button" icon="ui-icon-check" />
+						<div align="left" style="font-weight: bold;	color: black; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
+						Orientação das formas de digitação:<br /><br />
+						Agencia: 123-3<br />
+						Conta: -0 (obter digito e número no final)<br /><br />
+						O campo 'operação' é para somente contas da 'Caixa'.
 						</div>
 						
 						</p:fieldset>
@@ -216,40 +235,13 @@
 					<p:dialog header="Bradesco"
 						widgetVar="dlgBradesco" resizable="false" modal="true" showEffect="fold">
 						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundbradesco.png);">
+						<p:fieldset style="background-image: url(/editora/resources/img/backgroundbradesco1.png);">
 						
-						<p:focus context="grid" for="cpf" />
-						
-						<div align="center">
-						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="BRADESCO" itemValue="BRADESCO" />
-						</p:selectOneMenu>
-						
-						</div><br />
-						
-						<p:separator />
- 															
-						<h:panelGrid id="grid_bradesco" columns="4">
-												
-						<h:outputLabel value="Agencia" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_agencia_bradesco" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" mask="9999" />
-						<br /><br />
-						
-						<h:outputLabel value="Conta Correte" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_conta_bradesco" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" mask="9999999-9" />
-						<br /><br />
-						
-						<h:outputLabel value="Títular" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_bradesco" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
-						<br /><br />
-						
-						</h:panelGrid><p:separator /><br />
-						
-						<div align="center">
-							<p:commandButton id="decline_bradesco" value="OK" onclick="dlgBradesco.hide()" type="button" icon="ui-icon-check" />
+						<div align="left" style="font-weight: bold;	color: white; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
+						Orientação das formas de digitação:<br /><br />
+						Agencia: 4444<br />
+						Conta: 9999999-9<br /><br />
+						O campo 'operação' é para somente contas da 'Caixa'.
 						</div>
 						
 						</p:fieldset>
@@ -261,44 +253,13 @@
 					<p:dialog header="Caixa"
 						widgetVar="dlgCaixa" resizable="false" modal="true" showEffect="fold">
 						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundcaixa.png);">
+						<p:fieldset style="background-image: url(/editora/resources/img/backgroundcaixa1.png);">
 						
-						<div align="center">
-						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="CAIXA" itemValue="CAIXA" />
-						</p:selectOneMenu>
-						
-						</div><br />
-						
-						<p:separator />
- 															
-						<h:panelGrid id="grid_caixa" columns="4">
-												
-						<h:outputLabel value="Agencia" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_agencia_caixa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" mask="9999"
-						validatorMessage="Número da agencia caixa economica inválida" />
-						<br /><br />
-						
-						<h:outputLabel value="Op" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_op_caixa" value="#{fornecedorBean.fornecedor.operacao}" styleClass="input" validatorMessage="Número da op inválida" mask="999" />
-						<br /><br />
-						
-						<h:outputLabel value="Conta Correte" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_conta_caixa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" mask="9999999-9" />
-						<br /><br />
-						
-						<h:outputLabel value="Títular" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_caixa" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
-						<br /><br />
-						
-						</h:panelGrid><p:separator /><br />
-						
-						<div align="center">
-							<p:commandButton id="decline_caixa" value="OK" onclick="dlgCaixa.hide()" type="button" icon="ui-icon-check" />
+						<div align="left" style="font-weight: bold;	color: white; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
+						Orientação das formas de digitação:<br /><br />
+						Agencia: 4444<br />
+						Conta: 9999999-9<br />
+						Op: 333
 						</div>
 						
 						</p:fieldset>
@@ -310,39 +271,13 @@
 					<p:dialog header="Itaú"
 						widgetVar="dlgItau" resizable="false" modal="true" showEffect="fold">
 						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgrounditau.png);">
+						<p:fieldset style="background-image: url(/editora/resources/img/backgrounditau1.png);">
 						
-						<div align="center">
-						<p:selectOneMenu value="#{fornecedorBean.fornecedor.banco}" style="width: 200px;">
-							<f:selectItem itemLabel="ITAÚ" itemValue="ITAÚ" />
-						</p:selectOneMenu>
-						
-						</div><br />
-						
-						<p:separator />
- 															
-						<h:panelGrid id="grid_itau" columns="4">
-												
-						<h:outputLabel value="Agencia" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_agencia_itau" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input"
-						maxlength="4" validatorMessage="Número da agência itaú inválida" mask="9999" />
-						<br /><br />
-						
-						<h:outputLabel value="Conta Correte" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_conta_itau" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" mask="99999-9" />
-						<br /><br />
-						
-						<h:outputLabel value="Títular" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_itau" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
-						<br /><br />
-						
-						</h:panelGrid><p:separator /><br />
-						
-						<div align="center">
-							<p:commandButton id="decline_itau" value="OK" onclick="dlgItau.hide()" type="button" icon="ui-icon-check" />
+						<div align="left" style="font-weight: bold;	color: #394674; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
+						Orientação das formas de digitação:<br /><br />
+						Agencia: 4444<br />
+						Conta: 99999-9<br /><br />
+						O campo 'operação' é para somente contas da 'Caixa'.
 						</div>
 						
 						</p:fieldset>
@@ -354,45 +289,21 @@
 					<p:dialog header="Santander"
 						widgetVar="dlgSantander" resizable="false" modal="true" showEffect="fold">
 						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundsantander.png);">
+						<p:fieldset style="background-image: url(/editora/resources/img/backgroundsantander1.png);">
 						
-						<div align="center">
-						<p:selectOneListbox value="#{fornecedorBean.fornecedor.banco}" style="width: 200px; color: white;">
-							<f:selectItem itemLabel="SANTANDER" itemValue="SANTANDER" />
-						</p:selectOneListbox>
-						
-						</div><br />
-						
-						<p:separator />
- 															
-						<h:panelGrid id="grid_santander" columns="4">
-												
-						<h:outputLabel value="Agencia" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_agencia_sa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" mask="9999" />
-						<br /><br />
-						
-						<h:outputLabel value="Conta Correte" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_conta_sa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" maxlength="10" />
-						<br /><br />
-						
-						<h:outputLabel value="Títular" styleClass="OutPut" style="color: white;" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_sa" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
-						<br /><br />
-						
-						</h:panelGrid><p:separator /><br />
-						
-						<div align="center">
-							<p:commandButton id="decline_sa" value="OK" onclick="dlgSantander.hide()" type="button" icon="ui-icon-check" />
+						<div align="left" style="font-weight: bold;	color: white; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
+						Orientação das formas de digitação:<br /><br />
+						Agencia: 4444<br />
+						Conta: até 10 digitos<br /><br />
+						O campo 'operação' é para somente contas da 'Caixa'.
 						</div>
 						
 						</p:fieldset>
 
-					</p:dialog>
+					</p:dialog>		
 												
-					<p:fieldset legend="Endereço" style="width: 70%; margin-left: 15px; float: right;" rendered="#{fornecedorBean.fornecedor.id==null}">
+					<p:fieldset legend="Endereço" style="width: 70%; margin-right: 15px; margin-left: 15px; height: 135px;" 
+					rendered="#{fornecedorBean.fornecedor.id==null}">
 					
 						<h:panelGrid id="grid2" columns="8">
 						
@@ -488,10 +399,11 @@
 						</h:panelGrid>
 											
 					</p:fieldset>
-					
+															
 <!-- 					fieldset de endereço apenas para editar fornecedor -->
 					
-					<p:fieldset legend="Endereço" style="width: 70%; margin-left: 15px;" rendered="#{fornecedorBean.fornecedor.id!=null}">
+					<p:fieldset legend="Endereço" style="width: 70%; margin-right: 15px; margin-left: 15px; height: 135px;" 
+					rendered="#{fornecedorBean.fornecedor.id!=null}">
 					
 						<h:panelGrid id="grid3" columns="8">
 						
@@ -500,7 +412,31 @@
 						<p:selectOneMenu style="width: 50px;" id="unif_sigla2" value="#{fornecedorBean.fornecedor.endereco.unidade}" equired="true" requiredMessage="Informe a sigla do estado" styleClass="input">
 							<f:selectItem itemLabel="RR" itemValue="RR" />
 							<f:selectItem itemLabel="AM" itemValue="AM" />
+							<f:selectItem itemLabel="AC" itemValue="AC" />
+							<f:selectItem itemLabel="AL" itemValue="AL" />
+							<f:selectItem itemLabel="AP" itemValue="AP" />
+							<f:selectItem itemLabel="BA" itemValue="BA" />
+							<f:selectItem itemLabel="CE" itemValue="CE" />
+							<f:selectItem itemLabel="DF" itemValue="DF" />
+							<f:selectItem itemLabel="ES" itemValue="ES" />
+							<f:selectItem itemLabel="GO" itemValue="GO" />
+							<f:selectItem itemLabel="MA" itemValue="MA" />
+							<f:selectItem itemLabel="MG" itemValue="MG" />
+							<f:selectItem itemLabel="MS" itemValue="MS" />
+							<f:selectItem itemLabel="MT" itemValue="MT" />
+							<f:selectItem itemLabel="PA" itemValue="PA" />
+							<f:selectItem itemLabel="PB" itemValue="PB" />
+							<f:selectItem itemLabel="PE" itemValue="PE" />
+							<f:selectItem itemLabel="PI" itemValue="PI" />
+							<f:selectItem itemLabel="PR" itemValue="PR" />
+							<f:selectItem itemLabel="RO" itemValue="RO" />
+							<f:selectItem itemLabel="RJ" itemValue="RJ" />
+							<f:selectItem itemLabel="RN" itemValue="RN" />
+							<f:selectItem itemLabel="RS" itemValue="RS" />
+							<f:selectItem itemLabel="SE" itemValue="SE" />
+							<f:selectItem itemLabel="SC" itemValue="SC" />
 							<f:selectItem itemLabel="SP" itemValue="SP" />
+							<f:selectItem itemLabel="TO" itemValue="TO" />
 							<f:ajax event="blur" render="error_nome_unif2" />
 						</p:selectOneMenu>
 						<p:message id="error_nome_unif2" for="unif_sigla2" display="icon" />
@@ -561,9 +497,8 @@
 						<p:message id="error_cep2" for="end_cep2" display="icon" />
 												
 						</h:panelGrid>
-						<br /><br />
 											
-					</p:fieldset>
+					</p:fieldset>			
 																									
 					<br /><br />
 					
@@ -577,11 +512,11 @@
 					</p:commandButton>
 					
 				<p:commandButton action="#{fornecedorBean.alterFornecedor}" value="Editar" ajax="false" icon="ui-icon-pencil"
-				update="@form" rendered="#fornecedorBean.fornecedor.id!=null}">
+				update="@form" rendered="#{fornecedorBean.fornecedor.id!=null}">
 						<f:ajax render="@form" />
 					</p:commandButton>&nbsp;
 					
-				<p:commandButton action="cadastrarFornecedor.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />	
+				<p:commandButton action="cadastrarFFornecedor.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />	
 			</div><br />
 						
 			<div align="center" style="float: center; text-align: center;">
@@ -596,8 +531,6 @@
 			</h:form>
 			
 			</div>
-								
-					
 			
 <!-- 			Aqui começa o dialog para Editar Fornecedor -->
 			
@@ -605,7 +538,7 @@
 			widgetVar="dlgEditaFornecedor" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{fornecedorBean.fornecedores}" var="f" id="tb_fornecedores">
+					<p:dataTable value="#{fornecedorBean.cpfs}" var="f" id="tb_fornecedores" emptyMessage="Não encontrado" paginator="true" rows="10" paginatorPosition="bottom">
 					
 						<p:column headerText="Fornecedor" filterBy="#{f.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{f.nome}" onclick="dlgEditaFornecedor.hide()" style="text-align: center;"
@@ -614,7 +547,7 @@
 							</h:commandLink>
 						</p:column>
 						
-						<p:column headerText="CNPJ" filterBy="#{f.cnpj}" filterMatchMode="contains">
+						<p:column headerText="CPF" filterBy="#{f.cnpj}" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{f.cnpj}" onclick="dlgEditaFornecedor.hide()" style="text-align: center;"
 								id="link_codigo2">
 								<f:setPropertyActionListener target="#{fornecedorBean.fornecedor}" value="#{f}" />
@@ -625,9 +558,20 @@
 				
 				
 				</h:form>
-			</p:dialog>	
-			
-			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+			</p:dialog>
+
+		<p:dialog header="Dicas" widgetVar="dlgObsPis"
+			resizable="false" modal="true" showEffect="fold">
+
+			<div align="left"
+				style="font-weight: bold; color: #394674; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
+				Obs:<br /> <br /> Não digite caracters inválidos. <br /> Digite
+				somente os números do PIS.
+			</div>
+
+		</p:dialog>
+
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />
