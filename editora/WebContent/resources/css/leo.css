@@ -31,11 +31,10 @@ body {
 	margin: 0;
 	padding: 0;
 	width: 1100px;
-	height: 100%;
+	height: auto;
 	float: center;
 	text-align: center;
 	margin: 0 auto;
-	height: auto;
 	background-image: url("../resources/img/background1.png");
 
 }
@@ -133,6 +132,18 @@ form fieldset legend {
 	text-align: center;
 	background: #404E82;
 	width: 95%;
+}
+
+/** rodape **/
+#rodape4 {
+	clear: both;
+	border-top: 4px solid #D99C44;
+	position: relative;
+	line-height: 2em;
+	color: #FFF;
+	text-align: center;
+	background: #404E82;
+	width: 100%;
 }
 
 button {

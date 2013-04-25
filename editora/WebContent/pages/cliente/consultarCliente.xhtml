@@ -22,7 +22,7 @@
 		<div class="Centralizar" style="background: white;" >
 		
 <!-- 		Acesso não permitido -->
-		<h:form rendered="#{loginBean.usuario.perfil.id>2}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -36,7 +36,7 @@
 		</h:form>	
 			
 <!-- 			acesso administrador e gerente		 -->
-			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
+			<h:form id="form_acesso1" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 			
@@ -46,23 +46,30 @@
 			
 			<p:focus context="autocompletePesquisar" />
 			
-			<h:outputText value="Nome: " styleClass="OutPut"  />
-			<p:autoComplete value="#{usuarioBean.usuario.nome}" completeMethod="#{usuarioBean.autocompletenome}" var="u" itemValue="#{u}" itemLabel="#{u}" 
-			minQueryLength="10" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="50" />
+			<h:panelGrid columns="5" cellspacing="5">
 			
-			<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListaUsuariosByName}" ajax="false"  />
-	 		<br /><br />	
+				<p:selectOneMenu value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;" >
+					<f:selectItem itemLabel="Nome" itemValue="nome" />
+					<f:selectItem itemLabel="CPF" itemValue="cpf" />
+					<f:ajax listener="#{usuarioBean.checkBox4Search}" event="blur" />
+				</p:selectOneMenu>
+									
+				<p:autoComplete value="#{usuarioBean.search}" completeMethod="#{usuarioBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" 
+				minQueryLength="3" maxResults="5" queryDelay="300" id="autocompletePesquisar" size="60" />
+				
+				<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListarClientes}" ajax="false" icon="ui-icon-search" />
+				
+			</h:panelGrid>	
+			<br />	
 			
-			<p:dataGrid var="usuario" value="#{usuarioBean.clienteCadastrados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
-	 		emptyMessage="">
+			<p:dataGrid var="usuario" value="#{usuarioBean.clientesCadastrados}" columns="3" rows="6" paginator="true" paginatorPosition="bottom"
+	 		emptyMessage="Não encontrado">
 	 		
-	 			<p:panel header="#{usuario.nome}" style="text-align:center">
+	 			<p:panel header="#{usuario.nome}" style="text-align:center" footer="CPF: #{usuario.cpf}">
 					<h:panelGrid columns="1" style="width:100%">
 					
 					<h:outputText value="Email: #{usuario.login}" /> 
-										
-					<h:outputText value="CPF: #{usuario.cpf}" /> 
-					
+												
 					<h:outputText value="Data de Nascimento" />
 					<h:outputText value="#{usuario.nascimento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -73,8 +80,14 @@
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 					
-					<h:outputText value="Status: #{usuario.status}" /> 
-										
+					<p:commandLink update=":form_dlg:display"
+						oncomplete="dlgEnd.show()">
+						<h:outputText styleClass="ui-icon ui-icon-plusthick"
+							style="margin:0 auto;" />
+							<f:setPropertyActionListener value="#{usuario}"
+									target="#{usuarioBean.usuario}" />
+					</p:commandLink>
+
 					</h:panelGrid>
 				</p:panel>
 			
@@ -87,6 +100,46 @@
 				</div>
 
 			</h:form>
+			
+			<p:dialog header="Informações de Endereço do Cliente" modal="true" resizable="false"
+			showEffect="fade" hideEffect="fade" widgetVar="dlgEnd">
+			<h:form id="form_dlg">
+			
+				<h:panelGrid id="display" columns="2" cellspacing="10">
+				
+				<p:panel header="Endereço">
+				
+					<h:outputLabel value="Estado: " for="estado" styleClass="OutPut" />
+					<h:outputText id="estado" value="#{usuarioBean.usuario.endereco.unidade}"
+						styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Município: " for="muni" styleClass="OutPut" />
+					<h:outputText id="muni" value="#{usuarioBean.usuario.endereco.municipio}"
+						styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Logradouro: " for="logra" styleClass="OutPut" />
+					<h:outputText id="tipologra" value="#{usuarioBean.usuario.endereco.tipoLogradouro} " styleClass="OutPut" />
+					<h:outputText id="logra" value="#{usuarioBean.usuario.endereco.logradouro}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Número: " for="nu" styleClass="OutPut" />
+					<h:outputText id="nu" value="#{usuarioBean.usuario.endereco.numero}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="Bairro: " for="bairro" styleClass="OutPut" />
+					<h:outputText id="bairro" value="#{usuarioBean.usuario.endereco.bairro}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:outputLabel value="CEP: " for="cep" styleClass="OutPut" />
+					<h:outputText id="cep" value="#{usuarioBean.usuario.endereco.cep}" styleClass="OutPut" />
+				
+				</p:panel>
+				</h:panelGrid>
+				
+			</h:form>
+			</p:dialog>	
 			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">

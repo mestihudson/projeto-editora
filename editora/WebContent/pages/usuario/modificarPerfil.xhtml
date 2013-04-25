@@ -42,17 +42,8 @@
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="USUÁRIOS CADASTRADOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>
-			
-			<p:focus context="autocompletePesquisar" />
-			
-			<h:outputText value="Nome: " styleClass="OutPut"  />
-			<p:autoComplete value="#{usuarioBean.usuario.nome}" completeMethod="#{usuarioBean.autocompletenome}" var="u" itemValue="#{u}" itemLabel="#{u}" 
-			minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="50" />
-		
-	 		<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListaUsuariosByName}" ajax="false"  />
-	 		<br /><br />
-	 		
-	 		<p:dataGrid id="dg" var="usuario" value="#{usuarioBean.ativados}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
+						 		
+	 		<p:dataGrid id="dg" var="usuario" value="#{usuarioBean.ativados}" columns="3" rows="9" paginator="true" paginatorPosition="bottom"
 	 		emptyMessage="" rendered="#{loginBean.usuario.perfil.id==1}">
 
 						<p:panel header="#{usuario.nome}" style="text-align:center" id="pnl">
@@ -66,7 +57,7 @@
 
 								<p:commandLink update=":form_dlg:display"
 									oncomplete="dlgUpdatePerfil.show()">
-									<h:outputText styleClass="ui-icon ui-icon-search"
+									<h:outputText styleClass="ui-icon ui-icon-check" title="Modificar Peril"
 										style="margin:0 auto;" />
 									<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}" />
 								</p:commandLink>
@@ -75,7 +66,7 @@
 						
 			</p:dataGrid>
 			
-			<p:dataGrid id="dg_gerente" var="usuario" value="#{usuarioBean.ativadosSemAdministrador}" columns="3" rows="12" paginator="true" paginatorPosition="bottom"
+			<p:dataGrid id="dg_gerente" var="usuario" value="#{usuarioBean.ativadosSemAdministrador}" columns="3" rows="9" paginator="true" paginatorPosition="bottom"
 	 		emptyMessage="" rendered="#{loginBean.usuario.perfil.id==2}">
 
 						<p:panel header="#{usuario.nome}" style="text-align:center" id="pnl_gerente">
@@ -89,7 +80,7 @@
 
 								<p:commandLink update=":form_dlg:display"
 									oncomplete="dlgUpdatePerfil.show()">
-									<h:outputText styleClass="ui-icon ui-icon-search"
+									<h:outputText styleClass="ui-icon ui-icon-search" title="Modificar Peril"
 										style="margin:0 auto;" />
 									<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}" />
 								</p:commandLink>
@@ -128,7 +119,7 @@
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 100px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
-							<f:selectItems value="#{perfilBean.listPerfis}" var="p"
+							<f:selectItems value="#{perfilBean.solicitacaoUsuario}" var="p"
 								itemLabel="#{p.perfil}" itemValue="#{p}" />
 							<f:ajax event="blur" render="error_perfil" />
 						</p:selectOneMenu>

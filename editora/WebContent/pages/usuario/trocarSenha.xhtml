@@ -74,7 +74,8 @@
 
 						<h:outputLabel value="Senha" for="senha" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:password id="senha" value="#{loginBean.usuario.senha}"
+						<p:password id="senha" value="#{loginBean.usuario.senha}" feedback="true" promptLabel="Digite sua nova senha"
+						weakLabel="senha fácil" goodLabel="senha média" strongLabel="senha segura"
 							required="true" requiredMessage="Informe sua senha">
 							<f:ajax event="blur" render="error_senha" />
 						</p:password>

@@ -48,18 +48,12 @@
 
 					<br />
 					<br />
-					<h:panelGrid id="gridMail" columns="5">
-
-						<h:outputLabel value="Para" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="destinatario" value="#{emailBean.email.destino.login}" size="75"
-							required="true" validatorMessage="Informe um email válido"
-							requiredMessage="Informe um email para destinatário"
-							styleClass="input">
-								<p:ajax event="blur" render="error_dest" />
-						</p:inputText>
-						<p:message id="error_dest" for="destinatario" />
-						<br /><br />	
+					
+						<h:outputLabel value="Para: " styleClass="OutPut" />
+						<h:outputLabel id="destinatario" value="#{emailBean.email.destino.login}" styleClass="OutPut" style="margin-left: 45px;" />
+						<br /><br />
+						
+						<h:panelGrid id="gridMail" columns="5">	
 
 						<h:outputLabel value="Título" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />

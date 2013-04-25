@@ -38,20 +38,18 @@
 			
 			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
 					
-					<br />						
-					<h:panelGrid id="grid" columns="3">
-										
-					<h:outputLabel value="Destinatário" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="destinatario" value="#{mensagemBean.mensagem.destinatario.nome}" onclick="dlgMsg.show();" 
-					required="true" requiredMessage="Informe o destinatário" styleClass="input" size="50">
-						<f:ajax event="blur" render="msgs" />
-					</p:inputText>
+					<br />																
+					<h:outputLabel value="Destinatário: " styleClass="OutPut" />					
+					<h:outputLabel id="destinatario" value="#{mensagemBean.mensagem.destinatario.nome}" styleClass="OutPut" />
+					<br /><br />
+					
+					<h:panelGrid id="grid" columns="4">
+					<br /><br />
 					  
 					<h:outputLabel value="Mensagem" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputTextarea id="msg" value="#{mensagemBean.mensagem.descricao}" required="true" requiredMessage="Informe a descrição da mensagem"
-					styleClass="input" validatorMessage="Mensagem inválida" rows="7" cols="16">
+					styleClass="input" validatorMessage="Mensagem inválida" rows="7" cols="20">
 						<f:ajax event="blur" render="msgs" />
 						<f:validateLength minimum="5" maximum="250" />
 					</p:inputTextarea>
