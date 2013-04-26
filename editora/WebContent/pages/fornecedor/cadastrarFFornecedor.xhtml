@@ -71,8 +71,8 @@
 			
 			<h:panelGrid id="botton" columns="2" style="float: right;">
 			
-				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaFornecedor.show();" style="float: right; cursor: pointer;"
-					title="Editar Produto" />
+				<h:graphicImage value="/resources/img/edita_fornecedor.png" onclick="dlgEditaFornecedor.show();" style="float: right; cursor: pointer;"
+					title="Altera os dados do fornecedor cadastrado no sistema" />
 
 			
 			</h:panelGrid>
@@ -159,15 +159,16 @@
 					</h:panelGrid>
 					
 <!-- 					Aqui começa os dados bancários -->
-					<p:fieldset legend="Dados Bancários" style="width: 70%; margin-left: 15px; float: left; height: 135px;">
+					<p:fieldset legend="Dados Bancários" style="width: 70%; margin-left: 15px; float: left; height: 160px;">
 					
 					<div style="float: left">
 					<p:selectOneRadio value="#{fornecedorBean.fornecedor.banco}" style="width: 180px; margin-left: 8px;">
-							<f:selectItem itemLabel="" itemValue="BB" />
-							<f:selectItem itemLabel="" itemValue="BRADESCO" />
-							<f:selectItem itemLabel="" itemValue="CAIXA" />
-							<f:selectItem itemLabel="" itemValue="ITAU" />
-							<f:selectItem itemLabel="" itemValue="SANTANDER" />
+							<f:selectItem itemLabel="" itemValue="1" id="bb" />
+							<f:selectItem itemLabel="" itemValue="2" id="bradesco" />
+							<f:selectItem itemLabel="" itemValue="3" id="caixa" />
+							<f:selectItem itemLabel="" itemValue="4" id="itau" />
+							<f:selectItem itemLabel="" itemValue="5" id="st" />
+							<f:ajax render="grid_dados_bancarios" />
 						</p:selectOneRadio>
 					
 					<h:panelGrid columns="5" cellspacing="5">
@@ -185,23 +186,41 @@
 					</div>
 					
 					<div style="float: left">
+					
+					<p:selectOneRadio value="#{fornecedorBean.fornecedor.tipoConta}" styleClass="OutPut" style="margin-left: 60px;"
+					required="true" requiredMessage="Informe o tipo da conta" rendered="#{fornecedorBean.fornecedor.banco == null}">
+							<f:selectItem itemLabel="Conta Corrente" itemValue="Conta Corrente" />
+							<f:selectItem itemLabel="Poupança" itemValue="Poupança" />
+						</p:selectOneRadio>
+						
 					<h:panelGrid id="grid_dados_bancarios" columns="3" style="float: left">
-																
+																						
 						<h:outputLabel value="Agencia" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_agencia_caixa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" />
+						<p:inputMask id="forn_agencia_nada" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" disabled="true" rendered="#{fornecedorBean.fornecedor.banco == null}" />
+						<p:inputMask id="forn_agencia_bb" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 1}" mask="9999-*" />
+						<p:inputMask id="forn_agencia_bradesco" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 2}" mask="9999" />
+						<p:inputMask id="forn_agencia_caixa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 3}" mask="9999" />
+						<p:inputMask id="forn_agencia_itau" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 4}" mask="9999" />
+						<p:inputMask id="forn_agencia_st" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 5}" mask="9999" />
 												
-						<h:outputLabel value="Conta Correte" styleClass="OutPut" />
+						<h:outputLabel value="Nº Conta" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_conta_caixa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" />
+						<p:inputText id="forn_conta_nada" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" disabled="true" rendered="#{fornecedorBean.fornecedor.banco == null}" />
+						<p:inputMask id="forn_conta_bb" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 1}" />
+						<p:inputMask id="forn_conta_bradesco" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 2}" mask="999999-9" />
+						<p:inputMask id="forn_conta_caixa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 3}" mask="99999999-9" />
+						<p:inputMask id="forn_conta_itau" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 4}" mask="99999-9" />
+						<p:inputMask id="forn_conta_st" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 5}" maxlength="9" />
 						
-						<h:outputLabel value="Op" styleClass="OutPut" />
-						<h:graphicImage value="" styleClass="as" />
-						<p:inputMask id="forn_op_caixa" value="#{fornecedorBean.fornecedor.operacao}" styleClass="input" mask="999" />
+						<h:outputLabel value="Op" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco == 3}" />
+						<h:graphicImage value="" styleClass="as" rendered="#{fornecedorBean.fornecedor.banco == 3}" />
+						<p:inputMask id="forn_op_caixa" value="#{fornecedorBean.fornecedor.operacao}" styleClass="input" mask="999" rendered="#{fornecedorBean.fornecedor.banco == 3}" />
 						
 						<h:outputLabel value="Títular" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_caixa" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" />
+						<p:inputText id="forn_titular_null" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" disabled="true" rendered="#{fornecedorBean.fornecedor.banco == null}" />
+						<p:inputText id="forn_titular" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco != null}" />
 						
 					</h:panelGrid>				
 					</div>

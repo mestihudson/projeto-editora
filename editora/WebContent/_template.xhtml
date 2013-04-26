@@ -38,8 +38,8 @@
 		<h:outputText value="Sistema de Vendas Editora" style="color: white; font-size: 13px;" />
 		
 		<div style="float: right">
-			<h:commandLink action="#{loginBean.sair}" value="SAIR" styleClass="cabecalho" immediate="true"
-			style="text-align: left; color: white; font-size: 12px; margin-right: 10px; font-weight: bold;" />	
+			<p:outputLabel onclick="sair.show()" value="SAIR" styleClass="cabecalho" immediate="true"
+			style="text-align: left; color: white; font-size: 13px; margin-right: 10px; font-weight: bold; cursor: pointer;" />	
 		</div>	
 	</h:form>
 
@@ -212,6 +212,22 @@
         	<p:commandButton id="confirm" value="Sim" onclick="confirmation.hide()" action="#{loginBean.redirect}"  />  
                     
         	<p:commandButton id="decline" value="Não" onclick="confirmation.hide()" type="button" />
+        	
+        </div>	
+        
+        </h:form>   
+                  
+    </p:confirmDialog>
+    
+    <p:confirmDialog id="confirmSair" message="Deseja sair do sistema"  
+                severity="alert" widgetVar="sair"> 
+        <h:form id="form_sair">  
+        
+        <div align="center">       
+                  
+        	<p:commandButton id="confirm_sair" value="Sim" onclick="confirmation.hide()" action="#{loginBean.sair}"  />  
+                    
+        	<p:commandButton id="decline_sair" value="Não" onclick="confirmation.hide()" type="button" />
         	
         </div>	
         
