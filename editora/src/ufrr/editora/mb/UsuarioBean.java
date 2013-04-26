@@ -68,18 +68,8 @@ public class UsuarioBean implements Serializable {
 		box4Search = "cpf";
 		box4Search = "nome";
 	}
-
-	public void carregaUsuario() {
-
-		DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
-		if (usuarioId != null && usuarioId != 0) {
-			this.usuario = dao.buscaPorId(this.usuarioId);
-		}
-	}
-
-	/** AutoComplets **/
-
-	// Função para criar hash da senha informada
+	
+	/** Função para criar hash da senha informada **/
 	public static String md5(String senha) {
 		String sen = "";
 		MessageDigest md = null;
@@ -92,6 +82,16 @@ public class UsuarioBean implements Serializable {
 		sen = hash.toString(16);
 		return sen;
 	}
+
+	public void carregaUsuario() {
+
+		DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
+		if (usuarioId != null && usuarioId != 0) {
+			this.usuario = dao.buscaPorId(this.usuarioId);
+		}
+	}
+	
+	/** AutoComplets **/
 
 	// AutoComplete Login
 	public List<String> autocompletelogin(String nome) {
@@ -116,14 +116,14 @@ public class UsuarioBean implements Serializable {
 	// AutoComplete Nome e CPF juntos
 	public List<String> autocomplete(String nome) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		if (box4Search.equals("nome")) {
+		if (box4Search.equals("1")) {
 			if (!search.contains("'")) {
 				List<Usuario> array = dao.getAllByName("nome", nome);
 				for (int i = 0; i < array.size(); i++) {
 					nomes.add(array.get(i).getNome());
 				}
 			}
-		} else if (box4Search.equals("cpf")) {
+		} else if (box4Search.equals("2")) {
 			if (!search.contains("'")) {
 				List<Usuario> array = dao.getAllByName("cnpj_cpf", nome);
 				for (int i = 0; i < array.size(); i++) {
@@ -216,6 +216,148 @@ public class UsuarioBean implements Serializable {
 			}
 		}
 		return usuariosE;
+	}
+	
+	/** Consultas **/
+
+	// Pesquisa usuário pelo nome
+	@SuppressWarnings("unchecked")
+	public String getListaUsuariosByName() {
+		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
+				|| usuario.getNome().contains("/")
+				|| usuario.getNome().contains("*")
+				|| usuario.getNome().contains("<")
+				|| usuario.getNome().contains(">")
+				|| usuario.getNome().contains("#")) {
+
+			Msg.addMsgError("Contém caracter(es) inválido(s)");
+			return null;
+		}
+		if (usuario.getNome().length() <= 2) {
+			Msg.addMsgError("Informe pelo menos 3 caracteres");
+			return null;
+
+		} else {
+			usuarios = dao.getAllByName("nome", usuario.getNome());
+			if (usuarios.isEmpty()) {
+				Msg.addMsgError("Nenhum registro encontrado");
+				return null;
+
+			} else {
+				System.out.println("Chegou Aqui... Processando informações...");
+				try {
+					Query query = dao
+							.query("SELECT u FROM Usuario u WHERE u.nome LIKE ?");
+					query.setParameter(1, usuario.getNome() + "%");
+					usuarios = query.getResultList();
+					System.out.println("...Usuário encontrado com sucesso");
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out
+							.println("...erro: Usuário não pode ser pesquisado!");
+				}
+				return null;
+			}
+		}
+	}
+
+	// Pesquisa usuário pelo CPF
+	@SuppressWarnings("unchecked")
+	public String getListaUsuariosByCPF() {
+		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
+				|| usuario.getNome().contains("/")
+				|| usuario.getNome().contains("*")
+				|| usuario.getNome().contains("<")
+				|| usuario.getNome().contains(">")
+				|| usuario.getNome().contains("#")) {
+
+			Msg.addMsgError("Contém caracter(es) inválido(s)");
+			return null;
+		}
+		if (usuario.getCpf().length() != 14) {
+			Msg.addMsgError("Informe o CPF correto");
+			return null;
+
+		} else {
+			usuarios = dao.getAllByName("cpf", usuario.getCpf());
+			if (usuarios.isEmpty()) {
+				Msg.addMsgError("CPF não encontrado");
+				return null;
+
+			} else {
+				System.out.println("Chegou Aqui... Processando informações...");
+				try {
+					Query query = dao
+							.query("SELECT u FROM Usuario u WHERE u.cpf=? and u.perfil = 4");
+					query.setParameter(1, usuario.getCpf());
+					usuarios = query.getResultList();
+					System.out.println("...Usuário encontrado com sucesso");
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out
+							.println("...erro: Usuário não pode ser pesquisado!");
+				}
+				return null;
+			}
+		}
+	}
+
+	// Pesquisa Usuario pelo nome e cpf
+	public String getListarClientes() {
+
+		if (box4Search.equals("2")) {
+			if (search.contains("'") || search.contains("@")
+					|| search.contains("*")) {
+				init();
+				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				return null;
+			} else {
+				if (search.length() <= 4) {
+					init();
+					Msg.addMsgError("Informe pelo menos 5 caracteres");
+					System.out.println("...Informe pelo menos 5 caracteres para consultar cliente");
+					return null;
+				} else {
+					usuarios = dao.getAllByName("obj.cpf", search);
+					if (usuarios.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhum registro encontrado");
+						System.out.println("...Cliente não encontrado");
+						return null;
+					} else {
+						
+					}
+				}
+			}
+		} else if (box4Search.equals("1")) {
+			if (search.contains("'") || search.contains("@")
+					|| search.contains("*")
+					|| search.contains(".")
+					|| search.contains("/")
+					|| search.contains("-")) {
+				init();
+				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				return null;
+			} else {
+				if (search.length() <= 4) {
+					init();
+					Msg.addMsgError("Informe pelo menos 5 caracteres");
+					System.out.println("...Informe pelo menos 5 caracteres para consultar cliente");
+					return null;
+				} else {
+					usuarios = dao.getAllByName("obj.nome", search);
+					if (usuarios.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhum registro encontrado");
+						System.out.println("...Cliente não encontrado");
+						return null;
+					} else {
+						
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	/** Actions **/
@@ -456,145 +598,6 @@ public class UsuarioBean implements Serializable {
 		}
 	}
 
-	/** Consultas **/
-
-	// Pesquisa usuário pelo nome
-	@SuppressWarnings("unchecked")
-	public String getListaUsuariosByName() {
-		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
-				|| usuario.getNome().contains("/")
-				|| usuario.getNome().contains("*")
-				|| usuario.getNome().contains("<")
-				|| usuario.getNome().contains(">")
-				|| usuario.getNome().contains("#")) {
-
-			Msg.addMsgError("Contém caracter(es) inválido(s)");
-			return null;
-		}
-		if (usuario.getNome().length() <= 2) {
-			Msg.addMsgError("Informe pelo menos 3 caracteres");
-			return null;
-
-		} else {
-			usuarios = dao.getAllByName("nome", usuario.getNome());
-			if (usuarios.isEmpty()) {
-				Msg.addMsgError("Nenhum registro encontrado");
-				return null;
-
-			} else {
-				System.out.println("Chegou Aqui... Processando informações...");
-				try {
-					Query query = dao
-							.query("SELECT u FROM Usuario u WHERE u.nome LIKE ?");
-					query.setParameter(1, usuario.getNome() + "%");
-					usuarios = query.getResultList();
-					System.out.println("...Usuário encontrado com sucesso");
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out
-							.println("...erro: Usuário não pode ser pesquisado!");
-				}
-				return null;
-			}
-		}
-	}
-
-	// Pesquisa usuário pelo CPF
-	@SuppressWarnings("unchecked")
-	public String getListaUsuariosByCPF() {
-		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
-				|| usuario.getNome().contains("/")
-				|| usuario.getNome().contains("*")
-				|| usuario.getNome().contains("<")
-				|| usuario.getNome().contains(">")
-				|| usuario.getNome().contains("#")) {
-
-			Msg.addMsgError("Contém caracter(es) inválido(s)");
-			return null;
-		}
-		if (usuario.getCpf().length() != 14) {
-			Msg.addMsgError("Informe o CPF correto");
-			return null;
-
-		} else {
-			usuarios = dao.getAllByName("cpf", usuario.getCpf());
-			if (usuarios.isEmpty()) {
-				Msg.addMsgError("CPF não encontrado");
-				return null;
-
-			} else {
-				System.out.println("Chegou Aqui... Processando informações...");
-				try {
-					Query query = dao
-							.query("SELECT u FROM Usuario u WHERE u.cpf=? and u.perfil = 4");
-					query.setParameter(1, usuario.getCpf());
-					usuarios = query.getResultList();
-					System.out.println("...Usuário encontrado com sucesso");
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out
-							.println("...erro: Usuário não pode ser pesquisado!");
-				}
-				return null;
-			}
-		}
-	}
-
-	// Pesquisa Usuario pelo nome e cpf
-	public String getListarClientes() {
-
-		if (box4Search.equals("cpf")) {
-			if (search.contains("'") || search.contains("@")
-					|| search.contains("*")) {
-				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
-				return null;
-			} else {
-				if (search.length() <= 4) {
-					init();
-					Msg.addMsgError("Informe pelo menos 5 caracteres");
-					System.out.println("...Informe pelo menos 5 caracteres para consultar cliente");
-					return null;
-				} else {
-					usuarios = dao.getAllByName("obj.cpf", search);
-					if (usuarios.isEmpty()) {
-						init();
-						Msg.addMsgError("Nenhum registro encontrado");
-						System.out.println("...Cliente não encontrado");
-						return null;
-					} else {
-						return null;
-					}
-				}
-			}
-		} else if (box4Search.equals("nome")) {
-			if (search.contains("'") || search.contains("@")
-					|| search.contains("/") || search.contains("*")) {
-				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
-				System.out.println("...Contém caracteres inválidos");
-				return null;
-			} else {
-				if (search.length() <= 4) {
-					init();
-					Msg.addMsgError("Informe pelo menos 5 caracteres");
-					System.out.println("...Informe pelo menos 5 caracteres para consultar cliente");
-					return null;
-				} else {
-					usuarios = dao.getAllByName("obj.nome", search);
-					if (usuarios.isEmpty()) {
-						init();
-						Msg.addMsgError("Nenhum registro encontrado");
-						System.out.println("...Cliente não encontrado");
-						return null;
-					} else {
-						return null;
-					}
-				}
-			}
-		}
-		return null;
-	}
 
 	/** validação UK Login */
 
