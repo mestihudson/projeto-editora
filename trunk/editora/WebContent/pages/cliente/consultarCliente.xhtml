@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="LATIN1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -11,7 +12,7 @@
 	<ui:define name="head">
 	
 	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Cliente > Clientes Cadastrados" styleClass="title" style="line-height: 20px;" />
+		<h:outputText value="Pesquisar > Cliente" styleClass="title" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" ></div>	
 	</div>
 	
@@ -21,7 +22,7 @@
 
 		<div class="Centralizar" style="background: white;" >
 		
-<!-- 		Acesso nÃ£o permitido -->
+<!-- 		Acesso não permitido -->
 		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
@@ -44,26 +45,29 @@
 				<h:outputText value="CLIENTES CADASTRADOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>	
 			
-			<p:focus context="autocompletePesquisar" />
+			<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="5">
 			
-			<h:panelGrid columns="5" cellspacing="5">
-			
-				<p:selectOneMenu value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;" >
-					<f:selectItem itemLabel="Nome" itemValue="nome" />
-					<f:selectItem itemLabel="CPF" itemValue="cpf" />
+				<p:selectOneRadio value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;" required="true" requiredMessage="Informe 'Nome' ou 'CPF' para pesquisar" >
+					<f:selectItem itemLabel="Nome" itemValue="1" />
+					<f:selectItem itemLabel="CPF" itemValue="2" />
 					<f:ajax listener="#{usuarioBean.checkBox4Search}" event="blur" />
-				</p:selectOneMenu>
+					<f:ajax render="grid_pesquisa" />
+				</p:selectOneRadio>
+				
+				<p:inputText value="#{usuarioBean.search}" size="60" rendered="#{usuarioBean.box4Search !=1 and usuarioBean.box4Search != 2}" disabled="true" />
 									
-				<p:autoComplete value="#{usuarioBean.search}" completeMethod="#{usuarioBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" 
-				minQueryLength="3" maxResults="5" queryDelay="300" id="autocompletePesquisar" size="60" />
+				<p:autoComplete value="#{usuarioBean.search}" completeMethod="#{usuarioBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" required="true" requiredMessage="Nome inválido" 
+				minQueryLength="11" maxResults="5" queryDelay="300" id="autocompletePesquisar" size="60"  rendered="#{usuarioBean.box4Search == 1}"/>
+				
+				<p:inputMask mask="999.999.999-99" value="#{usuarioBean.search}" rendered="#{usuarioBean.box4Search == 2}" required="true" requiredMessage="CPF inválido" size="60" />
 				
 				<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListarClientes}" ajax="false" icon="ui-icon-search" />
 				
 			</h:panelGrid>	
 			<br />	
 			
-			<p:dataGrid var="usuario" value="#{usuarioBean.clientesCadastrados}" columns="3" rows="6" paginator="true" paginatorPosition="bottom"
-	 		emptyMessage="NÃ£o encontrado">
+			<p:dataGrid id="grid_dados" var="usuario" value="#{usuarioBean.clientesCadastrados}" columns="3" rows="6" paginator="true" paginatorPosition="bottom"
+	 		emptyMessage="Não encontrado">
 	 		
 	 			<p:panel header="#{usuario.nome}" style="text-align:center" footer="CPF: #{usuario.cpf}">
 					<h:panelGrid columns="1" style="width:100%">
@@ -101,20 +105,20 @@
 
 			</h:form>
 			
-			<p:dialog header="InformaÃ§Ãµes de EndereÃ§o do Cliente" modal="true" resizable="false"
+			<p:dialog header="Informações de Endereço do Cliente" modal="true" resizable="false"
 			showEffect="fade" hideEffect="fade" widgetVar="dlgEnd">
 			<h:form id="form_dlg">
 			
 				<h:panelGrid id="display" columns="2" cellspacing="10">
 				
-				<p:panel header="EndereÃ§o">
+				<p:panel header="Endereço">
 				
 					<h:outputLabel value="Estado: " for="estado" styleClass="OutPut" />
 					<h:outputText id="estado" value="#{usuarioBean.usuario.endereco.unidade}"
 						styleClass="OutPut" />
 					<br /><br />
 					
-					<h:outputLabel value="MunicÃ­pio: " for="muni" styleClass="OutPut" />
+					<h:outputLabel value="Município: " for="muni" styleClass="OutPut" />
 					<h:outputText id="muni" value="#{usuarioBean.usuario.endereco.municipio}"
 						styleClass="OutPut" />
 					<br /><br />
@@ -124,7 +128,7 @@
 					<h:outputText id="logra" value="#{usuarioBean.usuario.endereco.logradouro}" styleClass="OutPut" />
 					<br /><br />
 					
-					<h:outputLabel value="NÃºmero: " for="nu" styleClass="OutPut" />
+					<h:outputLabel value="Número: " for="nu" styleClass="OutPut" />
 					<h:outputText id="nu" value="#{usuarioBean.usuario.endereco.numero}" styleClass="OutPut" />
 					<br /><br />
 					

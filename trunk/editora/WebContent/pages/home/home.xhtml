@@ -28,14 +28,14 @@
 			<h:form id="form_home" style="float: right;"
 				rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 				
-				<h:panelGrid columns="4" cellspacing="5" cellpadding="5" style="margin-left: 80%;">
+				<h:panelGrid columns="4" cellspacing="5" cellpadding="5" style="margin-right: 10%;">
 <!-- 				troca de mensagem -->
-				<p:commandLink action="/pages/mensagem/enviarMensagem.xhtml?faces-redirect=true" style="margin-left: 90%;">
+				<p:commandLink action="/pages/mensagem/enviarMensagem.xhtml?faces-redirect=true">
 					<p:graphicImage value="/resources/img/messages.png" title="Enviar mensagem"  width="35px;"  />
 				</p:commandLink>
 				
 <!-- 				Envio de email -->
-				<p:commandLink action="/pages/email/enviarEmail.xhtml?faces-redirect=true" style="margin-left: 90%;">
+				<p:commandLink action="/pages/email/enviarEmail.xhtml?faces-redirect=true">
 					<p:graphicImage value="/resources/img/email.png" title="Enviar email" width="30px;"  />
 				</p:commandLink>
 				</h:panelGrid>
