@@ -34,6 +34,7 @@ public class FornecedorBean implements Serializable {
 	private Validator<Fornecedor> validator;
 	private String search;
 	private String box4Search;
+	public Boolean mostrar;
 
 	@PostConstruct
 	public void init() {
@@ -98,28 +99,7 @@ public class FornecedorBean implements Serializable {
 	// Pesquisa Fornecedor pelo nome e cnpj/cpf
 	public String getListaFornecedorByName() {
 
-		if (box4Search.equals("cnpj")) {
-			if (search.contains("'") || search.contains("@")
-					|| search.contains("*")) {
-				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
-				return null;
-			} else {
-				if (search.length() <= 4) {
-					init();
-					Msg.addMsgError("Informe pelo menos 5 caracters");
-					return null;
-				} else {
-					fornecedores = dao.getAllByName("obj.cnpj", search);
-					if (fornecedores.isEmpty()) {
-						init();
-						Msg.addMsgError("Nenhum registro encontrado");
-					} else {
-						return null;
-					}
-				}
-			}
-		} else if (box4Search.equals("nome")) {
+		if (box4Search.equals("1")) {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
@@ -141,6 +121,35 @@ public class FornecedorBean implements Serializable {
 				}
 			}
 		}
+			else if (box4Search.equals("2")) {
+				if (search.length() <= 4) {
+					init();
+					Msg.addMsgError("Informe pelo menos 5 caracters");
+					return null;
+				} else {
+					fornecedores = dao.getAllByName("obj.cnpj", search);
+					if (fornecedores.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhum registro encontrado");
+					} else {
+						return null;
+					}
+				}
+		} else {
+			if (search.length() <= 4) {
+				init();
+				Msg.addMsgError("Informe pelo menos 5 caracters");
+				return null;
+			} else {
+				fornecedores = dao.getAllByName("obj.cnpj", search);
+				if (fornecedores.isEmpty()) {
+					init();
+					Msg.addMsgError("Nenhum registro encontrado");
+				} else {
+					return null;
+				}
+			}
+		}
 		return null;
 	}
 
@@ -150,14 +159,14 @@ public class FornecedorBean implements Serializable {
 
 	public List<String> autocomplete(String nome) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		if (box4Search.equals("nome")) {
+		if (box4Search.equals("1")) {
 			if (!search.contains("'")) {
 				List<Fornecedor> array = dao.getAllByName("nome", nome);
 				for (int i = 0; i < array.size(); i++) {
 					nomes.add(array.get(i).getNome());
 				}
 			}
-		} else if (box4Search.equals("cnpj")) {
+		} else if (box4Search.equals("2")) {
 			if (!search.contains("'")) {
 				List<Fornecedor> array = dao.getAllByName("cnpj_cpf", nome);
 				for (int i = 0; i < array.size(); i++) {
@@ -182,10 +191,6 @@ public class FornecedorBean implements Serializable {
 				all = false;
 				Msg.addMsgError("CPF ou CNPJ já tem registro no sistema");
 			}
-			if (!validarNome_banco()) {
-				all = false;
-				Msg.addMsgError("Nome do banco não pode ser vazio");
-			}
 			if (!validarNome_agencia()) {
 				all = false;
 				Msg.addMsgError("Agencia não pode ser vazio");
@@ -202,15 +207,15 @@ public class FornecedorBean implements Serializable {
 				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
 				return "/pages/forncedor/cadastrarFornecedor.jsf";
 			} else {					
-				if (fornecedor.getBanco().equalsIgnoreCase("caixa") && fornecedor.getOperacao()==0
-						|| fornecedor.getBanco().equalsIgnoreCase("caixa") && fornecedor.getOperacao()==null) {
+				if (fornecedor.getBanco().equals(3) && fornecedor.getOperacao()==null
+						|| fornecedor.getBanco().equals(3) && fornecedor.getOperacao()==null) {
 					Msg.addMsgError("Campo Op não pode ser vazio");
 					return null;	
 				}	
-					if (fornecedor.getBanco().equalsIgnoreCase("bb") && fornecedor.getOperacao()>=1
-							|| fornecedor.getBanco().equalsIgnoreCase("bradesco") && fornecedor.getOperacao()>=1
-							|| fornecedor.getBanco().equalsIgnoreCase("itau") && fornecedor.getOperacao()>=1
-							|| fornecedor.getBanco().equalsIgnoreCase("santander") && fornecedor.getOperacao()>=1) {
+					if (fornecedor.getBanco().equals(1) && fornecedor.getOperacao()!=null
+							|| fornecedor.getBanco().equals(2) && fornecedor.getOperacao()!=null
+							|| fornecedor.getBanco().equals(4) && fornecedor.getOperacao()!=null
+							|| fornecedor.getBanco().equals(5) && fornecedor.getOperacao()!=null) {
 						Msg.addMsgError("Campo Op serve somente para a opção de banco Caixa");
 						return null;	
 				}else
@@ -235,10 +240,6 @@ public class FornecedorBean implements Serializable {
 	public String alterFornecedor() {
 		try {
 			boolean all = true;
-			if (!validarNome_banco()) {
-				all = false;
-				Msg.addMsgError("Nome do banco não pode ser vazio");
-			}
 			if (!validarNome_agencia()) {
 				all = false;
 				Msg.addMsgError("Agencia não pode ser vazio");
@@ -255,23 +256,26 @@ public class FornecedorBean implements Serializable {
 				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
 				return "/pages/forncedor/cadastrarFornecedor.jsf";
 			} else {					
-				if (fornecedor.getBanco().equalsIgnoreCase("caixa") && fornecedor.getOperacao()==0
-						|| fornecedor.getBanco().equalsIgnoreCase("caixa") && fornecedor.getOperacao()==null) {
+				if (fornecedor.getBanco().equals(3) && fornecedor.getOperacao().isEmpty()) {
 					Msg.addMsgError("Campo Op não pode ser vazio");
 					return null;	
-				}	
-					if (fornecedor.getBanco().equalsIgnoreCase("bb") && fornecedor.getOperacao()>=1
-							|| fornecedor.getBanco().equalsIgnoreCase("bradesco") && fornecedor.getOperacao()>=1
-							|| fornecedor.getBanco().equalsIgnoreCase("itau") && fornecedor.getOperacao()>=1
-							|| fornecedor.getBanco().equalsIgnoreCase("santander") && fornecedor.getOperacao()>=1) {
-						Msg.addMsgError("Campo Op serve somente para a opção de banco Caixa");
-						return null;	
 				}else
-				dao.atualiza(fornecedor);
-				this.fornecedor = new Fornecedor();
-				init();
-				Msg.addMsgInfo("Atualização efetuada com sucesso");
-				System.out.println("...alteração de fornecedor efetuada com sucesso!");
+					if (fornecedor.getBanco().equals(3)) {
+						dao.atualiza(fornecedor);
+						this.fornecedor = new Fornecedor();
+						init();
+						Msg.addMsgInfo("Atualização efetuada com sucesso");
+						System.out.println("...alteração de fornecedor efetuada com sucesso!");
+						
+					} else {
+						fornecedor.setOperacao("000");
+						dao.atualiza(fornecedor);
+						this.fornecedor = new Fornecedor();
+						init();
+						Msg.addMsgInfo("Atualização efetuada com sucesso");
+						System.out.println("...alteração de fornecedor efetuada com sucesso!");
+
+					}
 			}
 		} catch (Exception e) {
 			init();
@@ -403,14 +407,6 @@ public class FornecedorBean implements Serializable {
 
 	public void setBox4Search(String box4Search) {
 		this.box4Search = box4Search;
-	}
-
-	public void checkNome_banco(AjaxBehaviorEvent event) {
-		validarNome_banco();
-	}
-
-	public boolean validarNome_banco() {
-		return validator.validarNome(fornecedor.getBanco());
 	}
 
 	public void checkNome_agencia(AjaxBehaviorEvent event) {
