@@ -40,7 +40,7 @@ public class Fornecedor implements BaseEntity {
 	
 	private Long pis;
 	
-	private String banco;
+	private Integer banco;
 	
 	private String agencia;
 	
@@ -48,7 +48,9 @@ public class Fornecedor implements BaseEntity {
 	
 	private String titularConta;
 	
-	private Integer operacao; // apenas para conta da caixa
+	private String tipoConta;
+	
+	private String operacao; // apenas para conta da caixa
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="fk_endereco")
@@ -140,12 +142,12 @@ public class Fornecedor implements BaseEntity {
 		this.pis = pis;
 	}
 
-	public String getBanco() {
+	public Integer getBanco() {
 		return banco;
 	}
 
-	public void setBanco(String banco) {
-		this.banco = banco.toUpperCase();
+	public void setBanco(Integer banco) {
+		this.banco = banco;
 	}
 
 	public String getAgencia() {
@@ -171,13 +173,23 @@ public class Fornecedor implements BaseEntity {
 	public void setTitularConta(String titularConta) {
 		this.titularConta = titularConta.toUpperCase();
 	}
-	
-	public Integer getOperacao() {
+
+	public String getOperacao() {
 		return operacao;
 	}
 
-	public void setOperacao(Integer operacao) {
+	public void setOperacao(String operacao) {
 		this.operacao = operacao;
 	}
+
+	public String getTipoConta() {
+		return tipoConta;
+	}
+
+	public void setTipoConta(String tipoConta) {
+		this.tipoConta = tipoConta;
+	}
+	
+	
 
 }
