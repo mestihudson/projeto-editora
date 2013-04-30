@@ -72,7 +72,7 @@
 			<h:panelGrid id="botton" columns="2" style="float: right;">
 			
 				<h:graphicImage value="/resources/img/edita_fornecedor.png" onclick="dlgEditaFornecedor.show();" style="float: right; cursor: pointer;"
-					title="Altera os dados do fornecedor cadastrado no sistema" />
+					title="Altera os dados do fornecedor cadastrado no sistema" styleClass="acende" />
 
 			
 			</h:panelGrid>
@@ -162,25 +162,28 @@
 					<p:fieldset legend="Dados Bancários" style="width: 70%; margin-left: 15px; float: left; height: 160px;">
 					
 					<div style="float: left">
-					<p:selectOneRadio value="#{fornecedorBean.fornecedor.banco}" style="width: 180px; margin-left: 8px;">
+					<p:selectOneRadio value="#{fornecedorBean.fornecedor.banco}" style="width: 215px; margin-left: 8px;">
 							<f:selectItem itemLabel="" itemValue="1" id="bb" />
 							<f:selectItem itemLabel="" itemValue="2" id="bradesco" />
 							<f:selectItem itemLabel="" itemValue="3" id="caixa" />
+							<f:selectItem itemLabel="" itemValue="6" id="hsbc" />
 							<f:selectItem itemLabel="" itemValue="4" id="itau" />
 							<f:selectItem itemLabel="" itemValue="5" id="st" />
 							<f:ajax render="grid_dados_bancarios" />
 						</p:selectOneRadio>
 					
-					<h:panelGrid columns="5" cellspacing="5">
+					<h:panelGrid columns="6" cellspacing="5">
 					<h:graphicImage value="/resources/img/bb.png" style="cursor: pointer;" onclick="dlgBB.show();" title="Banco do Brasil" />
 					
-					<h:graphicImage value="/resources/img/bradesco.png" style="cursor: pointer;" onclick="dlgBradesco.show();" title="Bradesco" />
+					<h:graphicImage value="/resources/img/bradesco.png" title="Bradesco" />
 					
-					<h:graphicImage value="/resources/img/caixa.png" style="cursor: pointer;" onclick="dlgCaixa.show();" title="Caixa" />
+					<h:graphicImage value="/resources/img/caixa.png" title="Caixa" />
 					
-					<h:graphicImage value="/resources/img/itau.png" style="cursor: pointer;" onclick="dlgItau.show();" title="Itaú" />
+					<h:graphicImage value="/resources/img/hsbc.png" title="HSBC" />
 					
-					<h:graphicImage value="/resources/img/santander.png" style="cursor: pointer;" onclick="dlgSantander.show();" title="Santander" />
+					<h:graphicImage value="/resources/img/itau.png" title="Itaú" />
+					
+					<h:graphicImage value="/resources/img/santander.png" title="Santander" />
 					
 					</h:panelGrid>
 					</div>
@@ -203,6 +206,7 @@
 						<p:inputMask id="forn_agencia_caixa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 3}" mask="9999" />
 						<p:inputMask id="forn_agencia_itau" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 4}" mask="9999" />
 						<p:inputMask id="forn_agencia_st" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 5}" mask="9999" />
+						<p:inputMask id="forn_agencia_hsbc" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 6}" mask="9999-9" />
 												
 						<h:outputLabel value="Nº Conta" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -212,6 +216,7 @@
 						<p:inputMask id="forn_conta_caixa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 3}" mask="99999999-9" />
 						<p:inputMask id="forn_conta_itau" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 4}" mask="99999-9" />
 						<p:inputMask id="forn_conta_st" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 5}" maxlength="9" />
+						<p:inputMask id="forn_conta_hsbc" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 6}" mask="9999999-9" />
 						
 						<h:outputLabel value="Op" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco == 3}" />
 						<h:graphicImage value="" styleClass="as" rendered="#{fornecedorBean.fornecedor.banco == 3}" />

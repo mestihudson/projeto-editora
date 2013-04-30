@@ -6,21 +6,47 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/_template.xhtml">			
+<ui:composition template="/_fornecedor.xhtml">			
 	<ui:define name="head">
 	
 	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Produto > Cadastrar Outros" styleClass="title" rendered="#{empty produtoBean.produto.id}" style="line-height: 20px;" />
-		<h:outputText value="Produto > Editar Outros" styleClass="title" rendered="#{not empty produtoBean.produto.id}" style="line-height: 20px;" />
+		<h:outputText value="Produto > Cadastrar Produto" styleClass="title" rendered="#{produtoBean.produto.id==null}" style="line-height: 20px;" />
+		<h:outputText value="Produto > Editar Produto" styleClass="title" rendered="#{produtoBean.produto.id!=null}" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" />
 	</div>
+	</ui:define>
+	
+	<ui:define name="opcion">
+		<div id="livro/outros">
+		
+			<div id="livro" style="background: #EFF3FA; height: 55px; width: 50%; float: left;" >
+			<br />
+				<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
+					<h:outputText value="PRODUTO" styleClass="OutPut"/>
+					<br />
+					<h:outputText value="(LIVRO)" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+
+			<div id="outros" style="background: #FFFFE4; height: 55px; width: 50%; float: right;" >
+			<br />
+				<p:commandLink action="/pages/produto/cadastrarProdutoOutros.xhtml?faces-redirect=true">
+					<h:outputText value="PRODUTO" styleClass="OutPut" />
+					<br />
+					<h:outputText value="(OUTROS)" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+		
+		</div>
+		<br />
+
 	</ui:define>
 
 	<ui:define name="body">
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
-		<h:form rendered="#{loginBean.usuario.perfil.id==3}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -31,55 +57,31 @@
 
 		
 		</div>
-		</h:form>
+		</h:form>	
 		
-			<h:form id="form_cadastrar_produto" rendered="#{loginBean.usuario.perfil.id!=3}">
+			<h:form id="form_cadastrar_produto" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
-			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="CADASTRAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{empty produtoBean.produto.id}" />
-				<h:outputText value="EDITAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{not empty produtoBean.produto.id}" />
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 10px;" align="center" >
+				<h:outputText value="CADASTRAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id==null}" />
+				<h:outputText value="EDITAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id!=null}" />
 			</div>
 			
 			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
 			
-			<h:panelGrid id="botton" columns="2" style="float: right;">
+			<h:panelGrid id="botton" columns="3" style="float: right;">
 			
 				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaProduto.show();" style="float: right; cursor: pointer;"
-					title="Editar Produto" />
+					title="Altera os dados do livro(obra) cadastrado no sistema" styleClass="acende" />
 			
-				<h:graphicImage value="/resources/img/tipo.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
-					title="Adicionar Novo Tipo de Produto" />
+				<h:graphicImage value="/resources/img/tipo-produto.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
+					title="Adicionar novo tipo de produto" styleClass="acende" />
 			
 			</h:panelGrid>
-											
+					
+					<p:focus context="prod_isbn" for="prod_isbn" />
+					
 					<h:panelGrid id="grid" columns="5">
 					
-					<h:outputLabel value="Tipo do Produto" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{empty produtoBean.produto.id}"
-					required="true" requiredMessage="Informe o tipo" styleClass="input">
-						<f:selectItem noSelectionValue="true" itemLabel="" />
-						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
-							<f:ajax event="blur" render="error_nome_tipo" />
-					</p:selectOneMenu>
-					<p:selectOneMenu style="width: 190px;" id="prod_tipo2" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{not empty produtoBean.produto.id}" 
-					required="true" requiredMessage="Informe o tipo2" styleClass="input">
-						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
-							<f:ajax event="blur" render="error_nome_tipo2" />
-					</p:selectOneMenu>
-					<p:message id="error_nome_tipo" for="prod_tipo" rendered="#{empty produtoBean.produto.id}" />
-					<p:message id="error_nome_tipo2" for="prod_tipo2" rendered="#{not empty produtoBean.produto.id}" />
-					<br /><br />
-					  
-					<h:outputLabel value="Descrição do Produto" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe a descrição do produto"
-					styleClass="input" maxlength="70">
-						<f:ajax event="blur" render="error_nome" />
-					</p:inputTextarea>
-					<p:message id="error_nome" for="prod_nome" />
-					<br /><br />
-										
 					<h:outputLabel value="ISBN" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
@@ -88,21 +90,53 @@
 						<f:ajax event="blur" render="error_codigobarra" />
 					</p:inputText>
 					<p:message id="error_codigobarra" for="prod_isbn" />
+					<br /><br />
+															
+					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
+					required="true" requiredMessage="Informe o tipo" styleClass="input">
+						<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
+							<f:ajax event="blur" render="error_nome_tipo" />
+					</p:selectOneMenu>
+					<p:message id="error_nome_tipo" for="prod_tipo" />
+					<br /><br />
+					
+					<h:outputLabel value="Descrição" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe a descrição do produto"
+					styleClass="input">
+						<f:ajax event="blur" render="error_nome" />
+					</p:inputTextarea>
+					<p:message id="error_nome" for="prod_nome" />
+					<br /><br />
+					
+					<h:outputLabel value="Quant. mínima de estoque" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="Informe a quantidade mínima de estoque"
+					min="0" max="100" title="Quantidade Mínima de Estoque">
+						<f:ajax event="blur" render="error_min" />
+					</p:spinner>
+					<p:message id="error_min" for="prod_min" />
+					<br /><br />
 										
-					</h:panelGrid><br /><br />
+					</h:panelGrid>
+					<br /><br /><br /><br />
+					<br /><br /><br /><br />
 										
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{produtoBean.addProdutoOutros}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{empty produtoBean.produto.id}"
+				<p:commandButton action="#{produtoBean.addProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{produtoBean.produto.id==null}"
 				update="@form">
-					<f:ajax render="@form" />
-				</p:commandButton>
-				
-				<p:commandButton action="#{produtoBean.alterProduto}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{not empty produtoBean.produto.id}"
+						<f:ajax render="@form" />
+					</p:commandButton>
+					
+				<p:commandButton action="#{produtoBean.alterProduto}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{produtoBean.produto.id!=null}"
 				update="@form">
-					<f:ajax render="@form" />
-				</p:commandButton>&nbsp;
+						<f:ajax render="@form" />
+					</p:commandButton>&nbsp;
 					
 				<p:commandButton action="cadastrarProdutoOutros.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />	
 			</div><br />
@@ -116,8 +150,7 @@
 					<p:messages autoUpdate="true" />
 				</div>
 
-			</h:form>
-											
+			</h:form>								
 			
 		</div>
 		
@@ -151,21 +184,21 @@
 			
 <!-- 			Aqui começa o dialog para Editar Produto -->
 			
-			<p:dialog header="Editar Produto" 
+			<p:dialog header="Editar Livro" 
 			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos" emptyMessage="Não encontrado">
+					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos">
 					
-						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains">
-							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()" style="text-align: center; float: center;"
+						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
+							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
 								id="link_codigo">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
 							</h:commandLink>
 						</p:column>	
 						
-						<p:column headerText="Produto" filterBy="#{p.nome}" filterMatchMode="contains">
-							<h:commandLink value="#{p.nome}" onclick="dlgEditaProduto.hide()" style="text-align: center; float: center;"
+						<p:column headerText="Produto" filterBy="#{p.nome}" filterMatchMode="contains" style="text-align: center;">
+							<h:commandLink value="#{p.nome}" onclick="dlgEditaProduto.hide()"
 								id="link_codigo2">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
 							</h:commandLink>

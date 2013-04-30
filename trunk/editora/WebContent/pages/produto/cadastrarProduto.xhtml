@@ -6,21 +6,47 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/_template.xhtml">			
+<ui:composition template="/_fornecedor.xhtml">			
 	<ui:define name="head">
 	
 	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Produto > Cadastrar Livro" styleClass="title" rendered="#{empty produtoBean.produto.id}" style="line-height: 20px;" />
-		<h:outputText value="Produto > Editar Livro" styleClass="title" rendered="#{not empty produtoBean.produto.id}" style="line-height: 20px;" />
+		<h:outputText value="Produto > Cadastrar Livro" styleClass="title" rendered="#{produtoBean.produto.id==null}" style="line-height: 20px;" />
+		<h:outputText value="Produto > Editar Livro" styleClass="title" rendered="#{produtoBean.produto.id!=null}" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" />
 	</div>
+	</ui:define>
+	
+	<ui:define name="opcion">
+		<div id="livro/outros">
+		
+			<div id="livro" style="background: #FFFFE4; height: 55px; width: 50%; float: left;" >
+			<br />
+				<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
+					<h:outputText value="PRODUTO" styleClass="OutPut"/>
+					<br />
+					<h:outputText value="(LIVRO)" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+
+			<div id="outros" style="background: #EFF3FA; height: 55px; width: 50%; float: right;" >
+			<br />
+				<p:commandLink action="/pages/produto/cadastrarProdutoOutros.xhtml?faces-redirect=true">
+					<h:outputText value="PRODUTO" styleClass="OutPut" />
+					<br />
+					<h:outputText value="(OUTROS)" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+		
+		</div>
+		<br />
+
 	</ui:define>
 
 	<ui:define name="body">
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
-		<h:form rendered="#{loginBean.usuario.perfil.id==3}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -33,38 +59,58 @@
 		</div>
 		</h:form>	
 		
-			<h:form id="form_cadastrar_produto" rendered="#{loginBean.usuario.perfil.id!=3}">
+			<h:form id="form_cadastrar_produto" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
-			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="CADASTRAR LIVRO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{empty produtoBean.produto.id}" />
-				<h:outputText value="EDITAR LIVRO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{not empty produtoBean.produto.id}" />
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 10px;" align="center" >
+				<h:outputText value="CADASTRAR LIVRO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id==null}" />
+				<h:outputText value="EDITAR LIVRO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id!=null}" />
 			</div>
 			
 			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
 			
-			<h:panelGrid id="botton" columns="2" style="float: right;">
+			<h:panelGrid id="botton" columns="3" style="float: right;">
 			
 				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaProduto.show();" style="float: right; cursor: pointer;"
-					title="Editar Produto" />
+					title="Altera os dados do livro(obra) cadastrado no sistema" styleClass="acende" />
 			
-				<h:graphicImage value="/resources/img/tipo.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
-					title="Adicionar Novo Tipo de Produto" />
+				<h:graphicImage value="/resources/img/tipo-produto.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
+					title="Adicionar novo tipo de produto" styleClass="acende" />
+					
+				<h:graphicImage value="/resources/img/categoria.png" onclick="dlgCategoria.show();" style="float: right; cursor: pointer;"
+					title="Adicionar nova categoria" styleClass="acende" />	
 			
 			</h:panelGrid>
-											
-					<h:panelGrid id="grid" columns="5">
 					
-					<h:outputLabel value="Tipo do Produto" styleClass="OutPut" />
+					<p:focus context="prod_isbn" for="prod_isbn" />
+					
+					<h:panelGrid id="grid" columns="5">
+															
+					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<h:outputLabel value="#{produtoBean.produto.tipo.nome}" rendered="#{not empty produtoBean.produto.id}" />
-					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{empty produtoBean.produto.id}"
+					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
 					required="true" requiredMessage="Informe o tipo" styleClass="input">
 						<f:selectItems value="#{tipoProdutoBean.id1}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 							<f:ajax event="blur" render="error_nome_tipo" />
 					</p:selectOneMenu>
 					<p:message id="error_nome_tipo" for="prod_tipo" />
 					<br /><br />
-					  
+					
+					<h:outputLabel value="ISBN" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
+					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números">
+						<f:validateLength maximum="13" minimum="13" />
+						<f:ajax event="blur" render="error_codigobarra" />
+					</p:inputText>
+					<p:message id="error_codigobarra" for="prod_isbn" />
+					<br /><br />
+					<!-- 					onkeyup="if(document.getElementById(prod_isbn).value.length==13) document.getElementById(prod_nome).focus" -->
+					
+<!-- 					Aqui o TAB muda para outro campo: -->
+<!-- 						<input class='preto' size=14 type=text name='campo' maxlength=11 -->
+<!-- 							id='campo' onkeyup='if(document.getElementById(' -->
+<!-- 							campo').value.length==11) document.getElementById('campo2').focus();' /> -->
+
 					<h:outputLabel value="Título da Obra" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe o título da obra"
@@ -98,36 +144,38 @@
 					<br /><br />
 					
 					<h:outputLabel value="Categoria" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:autoComplete id="prod_categoria" value="#{produtoBean.produto.categoria}" styleClass="input"
-					required="true" requiredMessage="Informe a categoria do livro" completeMethod="#{produtoBean.autocompletecategoria}" size="31" minQueryLength="2" maxResults="1" queryDelay="1"
-					var="c" itemValue="#{c}" itemLabel="#{c}" validatorMessage="Informe corretamente a categoria">
-						<f:ajax event="blur" render="error_categoria" />
-						<f:validateLength minimum="5" />
-					</p:autoComplete>
-					<p:message id="error_categoria" for="prod_categoria" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:selectOneMenu style="width: 190px;" id="prod_categoria" value="#{produtoBean.produto.categoria}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
+					required="true" requiredMessage="Informe a categoria" styleClass="input">
+						<f:selectItem itemValue="" itemLabel="" />
+						<f:selectItems value="#{categoriaBean.categorias}" var="c" 
+						itemLabel="#{c.nome}" itemValue="#{c}" />
+							<f:ajax event="blur" render="error_nome_categoria" />
+					</p:selectOneMenu>
+					<p:message id="error_nome_categoria" for="prod_categoria" />
 					<br /><br />
 					
-					<h:outputLabel value="ISBN" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
-					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números">
-						<f:validateLength maximum="13" minimum="13" />
-						<f:ajax event="blur" render="error_codigobarra" />
-					</p:inputText>
-					<p:message id="error_codigobarra" for="prod_isbn" />
+					<h:outputLabel value="Quant. mínima de estoque" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="Informe a quantidade mínima de estoque"
+					min="0" max="100" title="Quantidade Mínima de Estoque">
+						<f:ajax event="blur" render="error_min" />
+					</p:spinner>
+					<p:message id="error_min" for="prod_min" />
 										
-					</h:panelGrid><br /><br />
+					</h:panelGrid>
+					<br /><br /><br /><br />
+					<br /><br /><br /><br />
 										
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{produtoBean.addProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{empty produtoBean.produto.id}"
+				<p:commandButton action="#{produtoBean.addProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{produtoBean.produto.id==null}"
 				update="@form">
 						<f:ajax render="@form" />
 					</p:commandButton>
 					
-				<p:commandButton action="#{produtoBean.alterProduto}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{not empty produtoBean.produto.id}"
+				<p:commandButton action="#{produtoBean.alterProduto}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{produtoBean.produto.id!=null}"
 				update="@form">
 						<f:ajax render="@form" />
 					</p:commandButton>&nbsp;
@@ -165,6 +213,34 @@
 					<br />
 
 					<p:commandButton action="#{tipoProdutoBean.addTipoProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check">
+						<f:ajax render="@all" />
+					</p:commandButton>&nbsp;
+					
+					<p:commandButton type="reset" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true">
+						<f:ajax render="@all" />
+					</p:commandButton>	
+							
+				</h:form>
+				
+			</p:dialog>	
+			
+			<p:dialog header="Adicionar Categoria" widgetVar="dlgCategoria" resizable="false" modal="true" closable="false" showEffect="fold">
+				<h:form id="form_dialog_categoria">
+				
+				<h:panelGrid id="grid" columns="4">
+					  
+					<h:outputLabel value="Nome" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" />
+					<p:autoComplete id="cate_nome" value="#{categoriaBean.categoria.nome}" completeMethod="#{categoriaBean.autoComplete}" itemValue="#{c}" itemLabel="#{c}"  var="c"
+					minQueryLength="1" maxResults="5" converterMessage="Nome inválido" maxlength="5" queryDelay="30" 
+					required="true" requiredMessage="Informe o nome da categoria">
+						<f:ajax event="change" />
+					</p:autoComplete>
+															
+				</h:panelGrid>
+					<br />
+
+					<p:commandButton action="#{categoriaBean.addCategoria}" value="Cadastrar" ajax="false" icon="ui-icon-check">
 						<f:ajax render="@all" />
 					</p:commandButton>&nbsp;
 					

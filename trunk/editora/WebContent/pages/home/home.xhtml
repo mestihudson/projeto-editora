@@ -55,12 +55,12 @@
 
 						<p:column>
 							<f:facet name="header">Enviada Por</f:facet>
-							<h:outputLabel value="#{m.usuario.nome}" />
+							<h:outputLabel value="#{m.usuario.nome}" style="color: #394674;" />
 						</p:column>	
 						
 						<p:column style="text-align: center;">
 							<f:facet name="header">Dia</f:facet>
-							<h:outputLabel value="#{m.dataEnvio.time}">
+							<h:outputLabel value="#{m.dataEnvio.time}" style="color: #8B0000;">
 								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
 							</h:outputLabel>
 						</p:column>
