@@ -39,6 +39,20 @@ public class Validator<T> {
 	/** END CONSTRUCTOR */
 
 	/** START VALIDATIONS */
+	
+	public boolean validarIntegerUK(String string, Long long1) {
+			dao = new GenericDAOImp<T, Integer>(persClass);
+			Query q = dao.query("SELECT u FROM " + persClass.getSimpleName()
+					+ " u WHERE " + string + " = ?");
+			q.setParameter(1, long1);
+			if (!q.getResultList().isEmpty()) {
+				resultNome = "Nome já registrado";
+				return false;
+			} else {
+				resultNome = "";
+				return true;
+			}
+		}
 
 	public boolean validarNomeUK(String field, String nome) {
 		if (nome.isEmpty()) {
