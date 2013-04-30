@@ -9,8 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity
 @Table(name="tb_produto")
 public class Produto {
@@ -19,20 +17,25 @@ public class Produto {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message="Preencha corretamente os campos")
 	private String nome; // SE O PRODUTO FOR LIVRO ESTE VAI SER O TITULO DA OBRA
 	
 	private String editora;
 	
 	private String autor;
+		
+	private Long isbn; // CODIGO DE BARRAS COM 13 DIGITOS
 	
-	private String categoria;
+	private Integer quantidadeMinima; // QUANTIDADE MÍNIMA NO ESTOQUE
 	
-	private Long isbn; // CODIGO COM 13 DIGITOS
+//	private Integer qtdMinima; // QUANTIDADE MÍNIMA DE ESTOQUE
 	
 	@ManyToOne
 	@JoinColumn(name="fk_tipo")
 	private TipoProduto tipo;
+	
+	@ManyToOne
+	@JoinColumn(name="fk_categoria")
+	private Categoria categoria;
 	
 	@Transient
 	@ManyToOne
@@ -73,12 +76,12 @@ public class Produto {
 		this.editora = editora.toUpperCase();
 	}
 
-	public String getCategoria() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria.toUpperCase();
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public String getAutor() {
@@ -97,6 +100,14 @@ public class Produto {
 		this.isbn = isbn;
 	}
 
+	public Integer getQuantidadeMinima() {
+		return quantidadeMinima;
+	}
+
+	public void setQuantidadeMinima(Integer quantidadeMinima) {
+		this.quantidadeMinima = quantidadeMinima;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -104,5 +115,5 @@ public class Produto {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 }

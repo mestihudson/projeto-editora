@@ -30,11 +30,9 @@ public class FornecedorBean implements Serializable {
 	private List<Fornecedor> fornecedores;
 	private List<Fornecedor> fornecedoresD;
 	private DAO<Fornecedor> dao = new DAO<Fornecedor>(Fornecedor.class);
-	public Boolean cadastro = true;
 	private Validator<Fornecedor> validator;
 	private String search;
 	private String box4Search;
-	public Boolean mostrar;
 
 	@PostConstruct
 	public void init() {
@@ -347,14 +345,6 @@ public class FornecedorBean implements Serializable {
 
 	public void setDao(DAO<Fornecedor> dao) {
 		this.dao = dao;
-	}
-
-	public Boolean getCadastro() {
-		return cadastro;
-	}
-
-	public void setCadastro(Boolean cadastro) {
-		this.cadastro = cadastro;
 	}
 
 	public void setFornecedores(List<Fornecedor> fornecedores) {

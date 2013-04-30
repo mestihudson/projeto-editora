@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -12,6 +13,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Produto;
 import ufrr.editora.util.Msg;
+import ufrr.editora.validator.Validator;
 
 @ManagedBean
 @ViewScoped
@@ -26,14 +28,25 @@ public class ProdutoBean implements Serializable {
 	private List<Produto> produtos;
 	private List<Produto> produtos1;
 	private DAO<Produto> dao = new DAO<Produto>(Produto.class);
-	public Boolean cadastro = true;
+	private Validator<Produto> validator;
+	private String search;
+	private String box4Search;
+	
+	@PostConstruct
+	public void init() {
+
+		produto = new Produto();
+		validator = new Validator<Produto>(Produto.class);
+		search = "";
+		box4Search = "isbn";
+	}
 	
 	/** List Products **/
 	
 	public List<Produto> getProdutos() {
 		if (produtos == null) {
 			System.out.println("Carregando produtos...");
-			produtos = new DAO<Produto>(Produto.class).listaTodos();
+			produtos = new DAO<Produto>(Produto.class).getAllOrder("nome");
 		}
 		return produtos;
 	}
@@ -63,40 +76,40 @@ public class ProdutoBean implements Serializable {
 	
 	/** actions **/
 	
-	/** add para produto do tipo livro **/
-	public String addProduto() {
-		for (Produto produtos : this.getProdutos()) {
-			if(produtos.getNome().equalsIgnoreCase(this.getProduto().getNome()) &&
-					produtos.getEditora().equalsIgnoreCase(this.getProduto().getEditora()) ||
-					produtos.getIsbn().equals(this.getProduto().getIsbn())){ //uk: nome and editora ou ISBN 
-				this.cadastro = false;
-				break;
-			}
-		}
-		if(this.cadastro == true){
-			if(produto.getNome().length() <= 4 || produto.getNome().isEmpty()){
-				Msg.addMsgError("Informe corretamente o título da obra");
-				
-			} else {
-				
-				if(produto.getAutor().isEmpty() || produto.getCategoria().isEmpty() ||
-						produto.getEditora().isEmpty()){
-				Msg.addMsgError("Informe corretamente os campos obrigatórios");
+
+		// Cadastrar livro
+		public String addProduto() {
+			try {
+				boolean all = true;
+				if (!validarNome_editora()) {
+					all = false;
+					Msg.addMsgError("Editora não pode ser vazio");
 				}
-				else {
-					Msg.addMsgInfo("Obra cadastrada com sucesso");
+				if (!validarNome_nome()) {
+					all = false;
+					Msg.addMsgError("Nome não pode ser vazio");
+				}
+				if (!validarIntegerUK_isbn()) {
+					all = false;
+					Msg.addMsgError("Este produto já existe");
+				}
+				if (!all) {
+					System.out.println("...Erro ao cadastrar produto: produto já existe");
+					return null;
+				} else {					
 					dao.adiciona(produto);
 					this.produto = new Produto();
-					return "/pages/produto/cadastrarProduto.xhtml";
+					init();
+					Msg.addMsgInfo("Cadastro efetuado com sucesso");
+					System.out.println("...cadastro de produto efetuado com sucesso!");
 				}
+			} catch (Exception e) {
+				init();
+				e.printStackTrace();
+				System.out.println("...Alguma coisa deu errada ao cadastrar produto");
 			}
-		} else {
-			Msg.addMsgError("Livro já registrado");
+			return null;
 		}
-		produtos = dao.getAllOrder("nome");
-		this.cadastro = true;
-		return null;
-	}
 	
 	public void alterProduto() {
 		if (produto.getId() != null) {
@@ -106,34 +119,72 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 	
-	/** add para produto do tipo outros **/
-	public String addProdutoOutros() {
-		for (Produto produtos : this.getProdutos()) {
-			if(produtos.getNome().equalsIgnoreCase(this.getProduto().getNome()) &&
-					produtos.getEditora().equalsIgnoreCase(this.getProduto().getEditora())){ //pk: nome and editora
-				this.cadastro = false;
-				break;
-			}
-		}
-		if(this.cadastro == true){
-			if(produto.getNome().length() <= 4 || produto.getNome().isEmpty()){
-				Msg.addMsgError("Informe corretamente a descrição do produto");
-				
-			} else {
-				
-				Msg.addMsgInfo("Produto cadastrado com sucesso");
-				dao.adiciona(produto);
-				this.produto = new Produto();
-				return "/pages/produto/cadastrarProdutoOutros.xhtml";
-								
-			}
-		} else {
-			Msg.addMsgError("Nome já registrado");
-		}
-		produtos = dao.getAllOrder("nome");
-		this.cadastro = true;
-		return null;
+	/** ajax */
+
+	public void checkBox4Search(AjaxBehaviorEvent event) {
+
 	}
+
+	public void checkEditora(AjaxBehaviorEvent event) {
+		validarEditora();
+		if (produto.getEditora().isEmpty()) {
+			validator.setResultNome("");
+		}
+	}
+
+	/** validação UK ISBN */
+
+	public boolean validarIntegerUK_isbn() {
+		return validator.validarIntegerUK("isbn", produto.getIsbn());
+	}
+
+	public void checkNomeUK_nome(AjaxBehaviorEvent event) {
+		if (validarIntegerUK_isbn()) {
+			if (produto.getEditora().isEmpty()) {
+				validator.setResultNome("");
+			}
+		}
+	}
+
+	/** validação UK */
+
+	public boolean validarNome() {
+		return validator.validarNome(produto.getNome());
+	}
+	
+	public boolean validarEditora() {
+		return validator.validarNome(produto.getEditora());
+	}
+
+	
+	/** add para produto do tipo outros **/
+//	public String addProdutoOutros() {
+//		for (Produto produtos : this.getProdutos()) {
+//			if(produtos.getNome().equalsIgnoreCase(this.getProduto().getNome()) &&
+//					produtos.getEditora().equalsIgnoreCase(this.getProduto().getEditora())){ //pk: nome and editora
+//				this.cadastro = false;
+//				break;
+//			}
+//		}
+//		if(this.cadastro == true){
+//			if(produto.getNome().length() <= 4 || produto.getNome().isEmpty()){
+//				Msg.addMsgError("Informe corretamente a descrição do produto");
+//				
+//			} else {
+//				
+//				Msg.addMsgInfo("Produto cadastrado com sucesso");
+//				dao.adiciona(produto);
+//				this.produto = new Produto();
+//				return "/pages/produto/cadastrarProdutoOutros.xhtml";
+//								
+//			}
+//		} else {
+//			Msg.addMsgError("Nome já registrado");
+//		}
+//		produtos = dao.getAllOrder("nome");
+//		this.cadastro = true;
+//		return null;
+//	}
 	
 	public List<String> autocomplete(String nome) {
 		List<Produto> array = dao.getAllByName("nome", nome);
@@ -161,16 +212,6 @@ public class ProdutoBean implements Serializable {
 		}
 		return nomes;
 	}
-	
-	public List<String> autocompletecategoria(String nome) {
-		List<Produto> array = dao.getAllByName("categoria", nome);
-		ArrayList<String> nomes = new ArrayList<String>();
-		for (int i = 0; i < array.size(); i++) {
-			nomes.add(array.get(i).getCategoria());
-		}
-		return nomes;
-	}
-	
 
 	public void check(AjaxBehaviorEvent event) {
 		if (produto.getNome().equals("")) {
@@ -221,14 +262,6 @@ public class ProdutoBean implements Serializable {
 		this.dao = dao;
 	}
 
-	public Boolean getCadastro() {
-		return cadastro;
-	}
-
-	public void setCadastro(Boolean cadastro) {
-		this.cadastro = cadastro;
-	}
-
 	public List<Produto> getProdutos1() {
 		return produtos1;
 	}
@@ -243,6 +276,46 @@ public class ProdutoBean implements Serializable {
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public Validator<Produto> getValidator() {
+		return validator;
+	}
+
+	public void setValidator(Validator<Produto> validator) {
+		this.validator = validator;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getBox4Search() {
+		return box4Search;
+	}
+
+	public void setBox4Search(String box4Search) {
+		this.box4Search = box4Search;
+	}
+	
+	public void checkNome_editora(AjaxBehaviorEvent event) {
+		validarNome_editora();
+	}
+
+	public boolean validarNome_editora() {
+		return validator.validarNome(produto.getEditora());
+	}
+	
+	public void checkNome_nome(AjaxBehaviorEvent event) {
+		validarNome_nome();
+	}
+
+	public boolean validarNome_nome() {
+		return validator.validarNome(produto.getNome());
 	}
 	
 

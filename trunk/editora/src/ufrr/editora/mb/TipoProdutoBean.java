@@ -29,32 +29,37 @@ public class TipoProdutoBean implements Serializable {
 	public List<TipoProduto> getTipos() {
 		if (tipos == null) {
 			System.out.println("Carregando tipo de produto...");
-			tipos = new DAO<TipoProduto>(TipoProduto.class).listaTodos();
+			tipos = new DAO<TipoProduto>(TipoProduto.class).getAllOrder("nome");
 		}
 		return tipos;
 	}
 	
 	// Exibe uma lista com o id == 1
-	public List<TipoProduto> getId1() {
-		tipo1 = new ArrayList<TipoProduto>();
-		for (TipoProduto e : this.getTipos()) {
-			if (e.getId() == 1) {
-				tipo1.add(e);
+		public List<TipoProduto> getId1() {
+			tipo1 = new ArrayList<TipoProduto>();
+			List<TipoProduto> tp = new ArrayList<TipoProduto>();
+			tp = this.getTipos();
+			for (int i = 0; i < tp.size(); i++) {
+				if (tp.get(i).getId()==1) {
+					tipo1.add(tp.get(i));
+				}
 			}
+			return tipo1;
 		}
-		return tipo1;
-	}
-
-	// Exibe uma lista com o id != 1
-	public List<TipoProduto> getOutros() {
-		tipo1 = new ArrayList<TipoProduto>();
-		for (TipoProduto e : this.getTipos()) {
-			if (e.getId() != 1) {
-				tipo1.add(e);
+	
+		
+		// Exibe uma lista com o id != 1
+		public List<TipoProduto> getOutros() {
+			tipo1 = new ArrayList<TipoProduto>();
+			List<TipoProduto> tp = new ArrayList<TipoProduto>();
+			tp = this.getTipos();
+			for (int i = 0; i < tp.size(); i++) {
+				if (tp.get(i).getId()!=1) {
+					tipo1.add(tp.get(i));
+				}
 			}
+			return tipo1;
 		}
-		return tipo1;
-	}
 
 		
 /** actions **/
