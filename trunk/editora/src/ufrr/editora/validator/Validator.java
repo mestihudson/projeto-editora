@@ -79,7 +79,7 @@ public class Validator<T> {
 			return false;
 		} else {
 			if (nome.contains("'") || nome.contains("*")) {
-				resultNome = "Contém caractere(s) inválido(s)";
+				resultNome = "Contem caractere(s) invalido(s)";
 				return false;
 			} else {
 				resultNome = "";

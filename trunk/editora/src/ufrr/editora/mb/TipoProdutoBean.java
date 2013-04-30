@@ -16,16 +16,15 @@ import ufrr.editora.util.Msg;
 public class TipoProdutoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private TipoProduto tipo = new TipoProduto();
 	private List<TipoProduto> tipos;
 	private List<TipoProduto> tipo1;
 	private DAO<TipoProduto> dao = new DAO<TipoProduto>(TipoProduto.class);
 	public Boolean cadastro = true;
-	
-	
+
 	/** Lista Tipos de Produto **/
-	
+
 	public List<TipoProduto> getTipos() {
 		if (tipos == null) {
 			System.out.println("Carregando tipo de produto...");
@@ -33,46 +32,44 @@ public class TipoProdutoBean implements Serializable {
 		}
 		return tipos;
 	}
-	
-	// Exibe uma lista com o id == 1
-		public List<TipoProduto> getId1() {
-			tipo1 = new ArrayList<TipoProduto>();
-			List<TipoProduto> tp = new ArrayList<TipoProduto>();
-			tp = this.getTipos();
-			for (int i = 0; i < tp.size(); i++) {
-				if (tp.get(i).getId()==1) {
-					tipo1.add(tp.get(i));
-				}
-			}
-			return tipo1;
-		}
-	
-		
-		// Exibe uma lista com o id != 1
-		public List<TipoProduto> getOutros() {
-			tipo1 = new ArrayList<TipoProduto>();
-			List<TipoProduto> tp = new ArrayList<TipoProduto>();
-			tp = this.getTipos();
-			for (int i = 0; i < tp.size(); i++) {
-				if (tp.get(i).getId()!=1) {
-					tipo1.add(tp.get(i));
-				}
-			}
-			return tipo1;
-		}
 
-		
-/** actions **/
-	
+	// Exibe uma lista com o id == 1
+	public List<TipoProduto> getId1() {
+		tipo1 = new ArrayList<TipoProduto>();
+		List<TipoProduto> tp = new ArrayList<TipoProduto>();
+		tp = this.getTipos();
+		for (int i = 0; i < tp.size(); i++) {
+			if (tp.get(i).getId() == 1) {
+				tipo1.add(tp.get(i));
+			}
+		}
+		return tipo1;
+	}
+
+	// Exibe uma lista com o id != 1
+	public List<TipoProduto> getOutros() {
+		tipo1 = new ArrayList<TipoProduto>();
+		List<TipoProduto> tp = new ArrayList<TipoProduto>();
+		tp = this.getTipos();
+		for (int i = 0; i < tp.size(); i++) {
+			if (tp.get(i).getId() != 1) {
+				tipo1.add(tp.get(i));
+			}
+		}
+		return tipo1;
+	}
+
+	/** actions **/
+
 	public void addTipoProduto() {
 		for (TipoProduto tipos : this.getTipos()) {
-			if(tipos.getNome().equalsIgnoreCase(this.getTipo().getNome())){
+			if (tipos.getNome().equalsIgnoreCase(this.getTipo().getNome())) {
 				this.cadastro = false;
 				break;
 			}
 		}
-		if(this.cadastro == true){
-			if(this.tipo.getNome().length() > 20){
+		if (this.cadastro == true) {
+			if (this.tipo.getNome().length() > 31) {
 				Msg.addMsgError("Nome extenso, retire alguns caracteres.");
 			} else {
 				if (tipo.getId() == null) {
@@ -90,28 +87,33 @@ public class TipoProdutoBean implements Serializable {
 		tipos = dao.getAllOrder("nome");
 		this.cadastro = true;
 	}
-	
+
 	/** get and set **/
-	
-	
+
 	public TipoProduto getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(TipoProduto tipo) {
 		this.tipo = tipo;
 	}
+
 	public void setTipos(List<TipoProduto> tipos) {
 		this.tipos = tipos;
 	}
+
 	public DAO<TipoProduto> getDao() {
 		return dao;
 	}
+
 	public void setDao(DAO<TipoProduto> dao) {
 		this.dao = dao;
 	}
+
 	public Boolean getCadastro() {
 		return cadastro;
 	}
+
 	public void setCadastro(Boolean cadastro) {
 		this.cadastro = cadastro;
 	}
@@ -122,6 +124,6 @@ public class TipoProdutoBean implements Serializable {
 
 	public void setTipo1(List<TipoProduto> tipo1) {
 		this.tipo1 = tipo1;
-	}	
+	}
 
 }
