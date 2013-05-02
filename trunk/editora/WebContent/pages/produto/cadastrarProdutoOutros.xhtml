@@ -106,7 +106,9 @@
 					<h:outputLabel value="Descrição" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe a descrição do produto"
+					validatorMessage="Descrição inválida"
 					styleClass="input">
+						<f:validateLength minimum="10" maximum="150" />
 						<f:ajax event="blur" render="error_nome" />
 					</p:inputTextarea>
 					<p:message id="error_nome" for="prod_nome" />
@@ -128,7 +130,7 @@
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{produtoBean.addProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{produtoBean.produto.id==null}"
+				<p:commandButton action="#{produtoBean.addOutros}" value="Cadastrar" ajax="false" icon="ui-icon-check" rendered="#{produtoBean.produto.id==null}"
 				update="@form">
 						<f:ajax render="@form" />
 					</p:commandButton>

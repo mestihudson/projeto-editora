@@ -32,6 +32,8 @@ public class Mensagem implements Serializable {
 	
 	@ManyToOne
 	private Usuario usuario;
+	
+	private Integer status;
 
 	
 	public Long getId() {
@@ -73,5 +75,14 @@ public class Mensagem implements Serializable {
 	public void setDataEnvio(Calendar dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	
 }
