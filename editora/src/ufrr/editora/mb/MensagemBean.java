@@ -40,31 +40,32 @@ public class MensagemBean implements Serializable {
 	
 //	 Exibe uma lista de mensagens recebidas para o id logado
 	public List<Mensagem> getRecebidas() {
-		System.out.println("...entrou nas mensagens");
 		mensagensR = new ArrayList<Mensagem>();
 		List<Mensagem> msgs = new ArrayList<Mensagem>();
 		msgs = this.getMensagens();
 		for (int i = 0; i < msgs.size(); i++) {
-			if (msgs.get(i).getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
+			if (msgs.get(i).getDestinatario().getId().equals(this.loginBean.getUsuario().getId())&&
+					msgs.get(i).getStatus()==1) {
 				mensagensR.add(msgs.get(i));
 			}
 		}
 		return mensagensR;
 	}
 	
-	
-//	 Exibe uma lista de mensagens recebidas pelo id logado
-//		public List<Mensagem> getRecebidas() {
-//			mensagensR = new ArrayList<Mensagem>();
-//			for (Mensagem m : this.getMensagens()) {
-//				if (m.getDestinatario().getId().equals(this.loginBean.getUsuario().getId())) {
-//					mensagensR.add(m);
-//					System.out.println("Mensagem para: " + getLoginBean().getUsuario().getNome());
-//				}
-//			}
-//			return mensagensR;
-//		}
-		
+//	 Exibe uma lista de mensagens arquivadas para o id logado
+	public List<Mensagem> getArquivadas() {
+		mensagensR = new ArrayList<Mensagem>();
+		List<Mensagem> msgs = new ArrayList<Mensagem>();
+		msgs = this.getMensagens();
+		for (int i = 0; i < msgs.size(); i++) {
+			if (msgs.get(i).getDestinatario().getId().equals(this.loginBean.getUsuario().getId()) &&
+					msgs.get(i).getStatus()==2) {
+				mensagensR.add(msgs.get(i));
+			}
+		}
+		return mensagensR;
+	}
+
 	public void enviarMensagem() {
 		if (mensagem.getDescricao().isEmpty()) {
 			Msg.addMsgError("Preencha corretamente a descrição da mensagem");
@@ -76,6 +77,7 @@ public class MensagemBean implements Serializable {
 			Usuario user = userDao.buscaPorId(this.loginBean.getUsuario().getId());
 			user.getMensagens().add(mensagem);
 			Msg.addMsgInfo("Mensagem enviada para usuário " + getMensagem().getDestinatario().getNome());
+			mensagem.setStatus(1);
 			dao.adiciona(mensagem);
 			this.mensagem = new Mensagem();
 			
@@ -84,7 +86,21 @@ public class MensagemBean implements Serializable {
 			
 		}
 		mensagens = dao.getAllDesc("id");
-	}	
+	}
+	
+	public void arquivarMensagem() {
+		if (mensagem.getId() != null) {
+			Msg.addMsgInfo("Você marcou a mensagem como lida!");
+			mensagem.setStatus(2);
+			dao.atualiza(mensagem);
+			this.mensagem = new Mensagem();
+			
+		} else {
+			Msg.addMsgError("Erro ao enviar mensagem, tente novamente");
+			
+		}
+		mensagens = dao.getAllDesc("id");
+	}
 
 	public Mensagem getMensagem() {
 		return mensagem;
