@@ -83,16 +83,16 @@
 					<h:outputText value="#{usuario.data.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
-					
-					<p:commandLink update=":form_dlg:display"
-						oncomplete="dlgEnd.show()">
-						<h:outputText styleClass="ui-icon ui-icon-plusthick"
-							style="margin:0 auto;" />
-							<f:setPropertyActionListener value="#{usuario}"
-									target="#{usuarioBean.usuario}" />
-					</p:commandLink>
 
-					</h:panelGrid>
+								<p:commandLink update=":form_dlg:display"
+									oncomplete="dlgEnd.show()">
+									<h:outputText styleClass="ui-icon ui-icon-plusthick"
+										style="margin:0 auto;" />
+									<f:setPropertyActionListener value="#{usuario}"
+										target="#{usuarioBean.usuario}" />
+								</p:commandLink>
+
+							</h:panelGrid>
 				</p:panel>
 			
 			</p:dataGrid>		

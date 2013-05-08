@@ -8,7 +8,7 @@
 
 <ui:composition template="/_home.xhtml">
 	<ui:define name="head">
-	<meta http-equiv="refresh" content="90; url=/editora/pages/home/home.jsf?faces-redirect=true" />
+	<meta http-equiv="refresh" content="60; url=/editora/pages/home/home.jsf?faces-redirect=true" />
 
 		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
 			align="left">
@@ -28,10 +28,10 @@
 			<h:form id="form_home" style="float: right;"
 				rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 				
-				<h:panelGrid columns="4" cellspacing="5" cellpadding="5" style="margin-right: 10%;">
+				<h:panelGrid columns="6" cellspacing="5" cellpadding="5" style="margin-right: 10%;">
 				
 <!-- 				visualizar todas as mensagens recebidas -->
-				<p:graphicImage value="/resources/img/messages.png" title="Listar mensagens" 
+				<p:graphicImage value="/resources/img/messages2.png" title="Mensagens arquivadas" 
 				onclick="dlgMsgs.show()" style="cursor: pointer;" width="35px;"  />
 				
 <!-- 				troca de mensagem -->
@@ -45,14 +45,16 @@
 				</p:commandLink>
 				</h:panelGrid>
 				
-				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 653px;"
+				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 702px;"
 					align="center">
 					<h:outputText value="MENSAGENS"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 				
-				<fieldset style="border-color: #F8F8FF; border-top: white; width: 650px;">
-					<h:dataTable value="#{mensagemBean.recebidas}" var="m" styleClass="dados" rowClasses="impar, par" rows="6" id="msgs">
+				<fieldset style="border-color: #F8F8FF; width: 700px; border: 1px solid #6A6A6A; border-top: 0;" >
+				<h:outputLabel style="color: red; font-size: 12px;" styleClass="OutPut" value="Não há mensagem" rendered="#{empty mensagemBean.recebidas}" />
+				
+					<h:dataTable value="#{mensagemBean.recebidas}" var="m" styleClass="dados" rowClasses="impar, par" rows="6" id="msgs" rendered="#{not empty mensagemBean.recebidas}">
 
 						<f:facet name="header">  
             				 
@@ -98,13 +100,13 @@
 				
 				
 <!-- 				exibição de estoque -->
-				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 653px;"
+				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 702x;"
 					align="center">
 					<h:outputText value="ESTOQUE"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 
-				<fieldset style="border-color: #F8F8FF; border-top: white; width: 650px;">
+				<fieldset style="border-color: #F8F8FF; width: 700px; border: 1px solid #6A6A6A; border-top: 0;">
 					Estoque indisponível no momento
 
 				</fieldset>
@@ -124,25 +126,15 @@
 				</div>
 			</p:dialog>
 			
-			<p:dialog modal="true" widgetVar="dlgMsgs">
-			
-				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 653px;"
-					align="center">
-					<h:outputText value="MENSAGENS RECEBIDAS"
-						style="color: white; font-size: 12px;" styleClass="OutPut" />
-				</div>
-				<div align="center">
+			<p:dialog modal="true" widgetVar="dlgMsgs" resizable="false" width="auto" header="Mensagens Arquivadas">
 
-					<fieldset style="border-color: #F8F8FF; border-top: white; width: 650px;">
-					<h:dataTable value="#{mensagemBean.arquivadas}" var="m" styleClass="dados" rowClasses="impar, par">
+					<p:dataTable value="#{mensagemBean.arquivadas}" var="m" styleClass="dados" rowClasses="impar, par"
+					paginator="true" rows="20" paginatorPosition="bottom" emptyMessage="Não há mensagem" style="width: 1500px;"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
+					filteredValue="#{mensagemBean.arquivadas}">
 
-						<f:facet name="header">  
-            				 
-        				</f:facet>
-
-						<p:column>
-							<f:facet name="header">Enviada Por</f:facet>
-							<h:outputLabel value="#{m.usuario.nome}" style="color: #394674;" />
+						<p:column headerText="Enviada Por">
+							<h:outputText value="#{m.usuario.nome}" style="color: #394674;" />
 						</p:column>	
 						
 						<p:column style="text-align: center;">
@@ -157,11 +149,7 @@
 							<h:outputLabel value="#{m.descricao}" />
 						</p:column>
 
-					</h:dataTable>
-
-				</fieldset>
-
-				</div>
+					</p:dataTable>
 			</p:dialog>
 						
 		</div>	
