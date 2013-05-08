@@ -27,7 +27,7 @@ public class Produto {
 	
 	private Integer quantidadeMinima; // QUANTIDADE MÍNIMA NO ESTOQUE
 	
-//	private Integer qtdMinima; // QUANTIDADE MÍNIMA DE ESTOQUE
+	private Boolean ativado;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_tipo")
@@ -115,5 +115,15 @@ public class Produto {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public Boolean getAtivado() {
+		return ativado;
+	}
+
+	public void setAtivado(Boolean ativado) {
+		this.ativado = ativado;
+	}
+	
+	
 
 }
