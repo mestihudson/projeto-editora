@@ -93,23 +93,26 @@
 			
 			<div align="center">
 			<p:panel header="Módulo Cadastro">
-					
+			
+			<h:panelGrid columns="4" cellpadding="5" cellspacing="5" >
+				
 					<p:commandLink action="/pages/fornecedor/cadastrarJFornecedor.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;			
+					</p:commandLink>	
 				
 					<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
-						<p:graphicImage styleClass="acende" value="/resources/img/produto.png" />
-					</p:commandLink>&nbsp;&nbsp;
+						<p:graphicImage value="/resources/img/produto.png" styleClass="acende" />
+					</p:commandLink>
 					
 					<p:commandLink>
 						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
-					</p:commandLink>&nbsp;&nbsp;
+					</p:commandLink>
 					
 					<p:commandLink action="/pages/cliente/cadastrarCliente.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
 					</p:commandLink>
-			
+					
+			</h:panelGrid>			
 			
 			</p:panel>
 			</div>	
@@ -128,7 +131,7 @@
 						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
 					</p:commandLink>	
 				
-					<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
+					<p:commandLink action="/pages/produto/listarProduto.xhtml?faces-redirect=true">
 						<p:graphicImage value="/resources/img/produto.png" styleClass="acende" />
 					</p:commandLink>
 					

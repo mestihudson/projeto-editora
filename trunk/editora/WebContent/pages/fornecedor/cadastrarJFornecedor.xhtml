@@ -160,7 +160,7 @@
 						</p:selectOneRadio>
 					
 					<h:panelGrid columns="6" cellspacing="5">
-					<h:graphicImage value="/resources/img/bb.png" style="cursor: pointer;" onclick="dlgBB.show();" title="Banco do Brasil" />
+					<h:graphicImage value="/resources/img/bb.png" title="Banco do Brasil" />
 					
 					<h:graphicImage value="/resources/img/bradesco.png" title="Bradesco" />
 					
@@ -217,101 +217,6 @@
 					</h:panelGrid>				
 					</div>
 					</p:fieldset>
-					
-					
-					
-<!-- 					DADOS DA AGENCIA -->
-
-<!-- 					BANCO DO BRASIL -->
-					
-					<p:dialog header="Banco do Brasil"
-						widgetVar="dlgBB" resizable="false" modal="true" showEffect="fold">
-						
-										
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundbb1.png);">
-						
-						<div align="left" style="font-weight: bold;	color: black; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
-						Orientação das formas de digitação:<br /><br />
-						Agencia: 123-3<br />
-						Conta: -0 (obter digito e número no final)<br /><br />
-						O campo 'operação' é para somente contas da 'Caixa'.
-						</div>
-						
-						</p:fieldset>
-
-					</p:dialog>
-					
-	<!-- 					BRADESCO -->
-					
-					<p:dialog header="Bradesco"
-						widgetVar="dlgBradesco" resizable="false" modal="true" showEffect="fold">
-						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundbradesco1.png);">
-						
-						<div align="left" style="font-weight: bold;	color: white; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
-						Orientação das formas de digitação:<br /><br />
-						Agencia: 4444<br />
-						Conta: 9999999-9<br /><br />
-						O campo 'operação' é para somente contas da 'Caixa'.
-						</div>
-						
-						</p:fieldset>
-
-					</p:dialog>
-					
-					<!-- 					Caixa -->
-					
-					<p:dialog header="Caixa"
-						widgetVar="dlgCaixa" resizable="false" modal="true" showEffect="fold">
-						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundcaixa1.png);">
-						
-						<div align="left" style="font-weight: bold;	color: white; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
-						Orientação das formas de digitação:<br /><br />
-						Agencia: 4444<br />
-						Conta: 9999999-9<br />
-						Op: 333
-						</div>
-						
-						</p:fieldset>
-
-					</p:dialog>
-					
-					<!-- 					ITAÚ -->
-					
-					<p:dialog header="Itaú"
-						widgetVar="dlgItau" resizable="false" modal="true" showEffect="fold">
-						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgrounditau1.png);">
-						
-						<div align="left" style="font-weight: bold;	color: #394674; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
-						Orientação das formas de digitação:<br /><br />
-						Agencia: 4444<br />
-						Conta: 99999-9<br /><br />
-						O campo 'operação' é para somente contas da 'Caixa'.
-						</div>
-						
-						</p:fieldset>
-
-					</p:dialog>
-					
-					<!-- SANTANDER -->
-					
-					<p:dialog header="Santander"
-						widgetVar="dlgSantander" resizable="false" modal="true" showEffect="fold">
-						
-						<p:fieldset style="background-image: url(/editora/resources/img/backgroundsantander1.png);">
-						
-						<div align="left" style="font-weight: bold;	color: white; width: 300px; height: 150px; letter-spacing: 2px; line-height: 15px;">
-						Orientação das formas de digitação:<br /><br />
-						Agencia: 4444<br />
-						Conta: até 10 digitos<br /><br />
-						O campo 'operação' é para somente contas da 'Caixa'.
-						</div>
-						
-						</p:fieldset>
-
-					</p:dialog>			
 												
 					<p:fieldset legend="Endereço" style="width: 70%; margin-right: 15px; margin-left: 15px; height: 135px;" 
 					rendered="#{fornecedorBean.fornecedor.id==null}">

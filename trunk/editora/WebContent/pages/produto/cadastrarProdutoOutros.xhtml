@@ -62,8 +62,8 @@
 			<h:form id="form_cadastrar_produto" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 10px;" align="center" >
-				<h:outputText value="CADASTRAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id==null}" />
-				<h:outputText value="EDITAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id!=null}" />
+				<h:outputText value="CADASTRAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{produtoBean.produto.id==null}" />
+				<h:outputText value="EDITAR PRODUTO" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{produtoBean.produto.id!=null}" />
 			</div>
 			
 			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
@@ -78,29 +78,23 @@
 			
 			</h:panelGrid>
 					
-					<p:focus context="prod_isbn" for="prod_isbn" />
-					
 					<h:panelGrid id="grid" columns="5">
-					
-					<h:outputLabel value="ISBN" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
-					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números">
-						<f:validateLength maximum="13" minimum="13" />
-						<f:ajax event="blur" render="error_codigobarra" />
-					</p:inputText>
-					<p:message id="error_codigobarra" for="prod_isbn" />
-					<br /><br />
 															
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
+					<p:selectOneListbox style="width: 185px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
 					required="true" requiredMessage="Informe o tipo" styleClass="input">
-						<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 							<f:ajax event="blur" render="error_nome_tipo" />
+					</p:selectOneListbox>
+					<p:message id="error_nome_tipo" for="prod_tipo" rendered="#{produtoBean.produto.id==null}" />
+					
+					<p:selectOneMenu style="width: 190px;" id="prod_tipo2" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id!=null}"
+					required="true" requiredMessage="Informe o tipo" styleClass="input">
+						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
+							<f:ajax event="blur" render="error_nome_tipo2" />
 					</p:selectOneMenu>
-					<p:message id="error_nome_tipo" for="prod_tipo" />
+					<p:message id="error_nome_tipo2" for="prod_tipo2" rendered="#{produtoBean.produto.id!=null}" />
 					<br /><br />
 					
 					<h:outputLabel value="Descrição" styleClass="OutPut" />
@@ -122,6 +116,23 @@
 					</p:spinner>
 					<p:message id="error_min" for="prod_min" />
 					<br /><br />
+					
+					<h:outputLabel value="ISBN" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
+					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
+					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números"
+					rendered="#{produtoBean.produto.id==null}">
+						<f:validateLength maximum="13" minimum="13" />
+						<f:ajax event="blur" render="error_codigobarra" />
+					</p:inputText>
+					<p:message id="error_codigobarra" for="prod_isbn" rendered="#{produtoBean.produto.id==null}" />
+					
+					<p:inputText id="prod_isbn2" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
+					rendered="#{produtoBean.produto.id!=null}" disabled="true">
+						<f:ajax event="blur" render="error_codigobarra2" />
+					</p:inputText>
+					<p:message id="error_codigobarra2" for="prod_isbn2" rendered="#{produtoBean.produto.id!=null}" />
+					<br /><br />
 										
 					</h:panelGrid>
 					<br /><br /><br /><br />
@@ -135,7 +146,7 @@
 						<f:ajax render="@form" />
 					</p:commandButton>
 					
-				<p:commandButton action="#{produtoBean.alterProduto}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{produtoBean.produto.id!=null}"
+				<p:commandButton action="#{produtoBean.alterOutros}" value="Editar" ajax="false" icon="ui-icon-pencil" rendered="#{produtoBean.produto.id!=null}"
 				update="@form">
 						<f:ajax render="@form" />
 					</p:commandButton>&nbsp;
@@ -190,7 +201,7 @@
 			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos">
+					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos">
 					
 						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
@@ -199,7 +210,7 @@
 							</h:commandLink>
 						</p:column>	
 						
-						<p:column headerText="Produto" filterBy="#{p.nome}" filterMatchMode="contains" style="text-align: center;">
+						<p:column headerText="Produto" filterBy="#{p.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{p.nome}" onclick="dlgEditaProduto.hide()"
 								id="link_codigo2">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
