@@ -90,7 +90,7 @@ public class MensagemBean implements Serializable {
 	
 	public void arquivarMensagem() {
 		if (mensagem.getId() != null) {
-			Msg.addMsgInfo("Você marcou a mensagem como lida!");
+			Msg.addMsgInfo("Você arquivou a mensagem. Para visualiza-la novamente clique em 'Listar Mensagens' ");
 			mensagem.setStatus(2);
 			dao.atualiza(mensagem);
 			this.mensagem = new Mensagem();
@@ -101,6 +101,7 @@ public class MensagemBean implements Serializable {
 		}
 		mensagens = dao.getAllDesc("id");
 	}
+	
 
 	public Mensagem getMensagem() {
 		return mensagem;

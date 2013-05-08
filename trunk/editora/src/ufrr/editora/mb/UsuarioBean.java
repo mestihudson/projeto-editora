@@ -206,7 +206,6 @@ public class UsuarioBean implements Serializable {
 
 	// Exibe uma lista de clientes no geral (ativados e desativados)
 	public List<Usuario> getClientesCadastrados() {
-		System.out.println("...entrou nos cliente cadastrados");
 		usuariosE = new ArrayList<Usuario>();
 		List<Usuario> us = new ArrayList<Usuario>();
 		us = this.getUsuarios();
@@ -217,6 +216,7 @@ public class UsuarioBean implements Serializable {
 		}
 		return usuariosE;
 	}
+	
 	
 	/** Consultas **/
 

@@ -46,16 +46,85 @@ public class ProdutoBean implements Serializable {
 	public List<Produto> getProdutos() {
 		if (produtos == null) {
 			System.out.println("Carregando produtos...");
-			produtos = new DAO<Produto>(Produto.class).getAllOrder("nome");
+			produtos = new DAO<Produto>(Produto.class).getAllOrder("isbn");
 		}
 		return produtos;
+	}
+
+	// lista todos os produtos ativados
+	public List<Produto> getAtivados() {
+		produtos1 = new ArrayList<Produto>();
+		List<Produto> ps = new ArrayList<Produto>();
+		ps = this.getProdutos();
+		for (int i = 0; i < ps.size(); i++) {
+			if (ps.get(i).getAtivado().equals(true)) {
+				produtos1.add(ps.get(i));
+			}
+		}
+		return produtos1;
+	}
+
+	// Lista de livros ativados
+	public List<Produto> getLivrosAtivados() {
+		produtos1 = new ArrayList<Produto>();
+		List<Produto> ps = new ArrayList<Produto>();
+		ps = this.getProdutos();
+		for (int i = 0; i < ps.size(); i++) {
+			if (ps.get(i).getAtivado().equals(true)
+					&& ps.get(i).getTipo().getId() == 1) {
+				produtos1.add(ps.get(i));
+			}
+		}
+		return produtos1;
+	}
+
+	// Lista de produtos ativados (sem livros)
+	public List<Produto> getProdutosAtivados() {
+		produtos1 = new ArrayList<Produto>();
+		List<Produto> ps = new ArrayList<Produto>();
+		ps = this.getProdutos();
+		for (int i = 0; i < ps.size(); i++) {
+			if (ps.get(i).getAtivado().equals(true)
+					&& ps.get(i).getTipo().getId() != 1) {
+				produtos1.add(ps.get(i));
+			}
+		}
+		return produtos1;
+	}
+
+	// Lista de livros desativados
+	public List<Produto> getLivrosDesativados() {
+		produtos1 = new ArrayList<Produto>();
+		List<Produto> ps = new ArrayList<Produto>();
+		ps = this.getProdutos();
+		for (int i = 0; i < ps.size(); i++) {
+			if (ps.get(i).getAtivado().equals(false)
+					&& ps.get(i).getTipo().getId() == 1) {
+				produtos1.add(ps.get(i));
+			}
+		}
+		return produtos1;
+	}
+
+	// Lista de produtos desativados (sem livros)
+	public List<Produto> getProdutosDesativados() {
+		produtos1 = new ArrayList<Produto>();
+		List<Produto> ps = new ArrayList<Produto>();
+		ps = this.getProdutos();
+		for (int i = 0; i < ps.size(); i++) {
+			if (ps.get(i).getAtivado().equals(false)
+					&& ps.get(i).getTipo().getId() != 1) {
+				produtos1.add(ps.get(i));
+			}
+		}
+		return produtos1;
 	}
 
 	// Exibe uma lista com o id tipoProduto == 1
 	public List<Produto> getTiposId1() {
 		produtos1 = new ArrayList<Produto>();
 		for (Produto p : this.getProdutos()) {
-			if (p.getTipo().getId() == 1) {
+			if (p.getTipo().getId() == 1 && p.getAtivado().equals(true)) {
 				produtos1.add(p);
 			}
 		}
@@ -66,11 +135,38 @@ public class ProdutoBean implements Serializable {
 	public List<Produto> getTipoOutros() {
 		produtos1 = new ArrayList<Produto>();
 		for (Produto p : this.getProdutos()) {
-			if (p.getTipo().getId() != 1) {
+			if (p.getTipo().getId() != 1 && p.getAtivado().equals(true)) {
 				produtos1.add(p);
 			}
 		}
 		return produtos1;
+	}
+
+	// Pesquisar
+	public void check(AjaxBehaviorEvent event) {
+		if (produto.getNome().equals("")) {
+
+		} else {
+			if (produto.getNome().contains("'")
+					|| produto.getNome().contains("@")
+					|| produto.getNome().contains("/")
+					|| produto.getNome().contains("*")) {
+				Msg.addMsgError("Contém caracter(es) inválido(s)");
+			} else {
+				if (produto.getNome().length() <= 2) {
+					Msg.addMsgError("Informe pelo menos 3 caracteres");
+
+				} else {
+					produtos = dao.getAllByName("nome", produto.getNome());
+					if (produtos.isEmpty()) {
+						Msg.addMsgError("Nenhum registro encontrado");
+					} else {
+						Integer count = produtos.size();
+						Msg.addMsgError(count + "registro(s) encontrado(s)");
+					}
+				}
+			}
+		}
 	}
 
 	/** actions **/
@@ -96,6 +192,7 @@ public class ProdutoBean implements Serializable {
 						.println("...Erro ao cadastrar produto: produto já existe");
 				return null;
 			} else {
+				produto.setAtivado(true);
 				dao.adiciona(produto);
 				this.produto = new Produto();
 				init();
@@ -136,6 +233,7 @@ public class ProdutoBean implements Serializable {
 						.println("...Erro ao cadastrar produto: produto já existe");
 				return null;
 			} else {
+				produto.setAtivado(true);
 				dao.adiciona(produto);
 				this.produto = new Produto();
 				init();
@@ -153,11 +251,78 @@ public class ProdutoBean implements Serializable {
 	}
 
 	// Edita dados do produto tipo livro
-	public void alterProduto() {
+	public String alterProduto() {
+		try {
+			boolean all = true;
+			if (!validarNome_editora()) {
+				all = false;
+				Msg.addMsgError("Editora não pode ser vazio");
+			}
+			if (!validarNome_nome()) {
+				all = false;
+				Msg.addMsgError("Nome não pode ser vazio");
+			}
+			if (!all) {
+				System.out
+						.println("...Erro ao cadastrar produto: este produto já existe");
+				return null;
+			} else {
+				dao.atualiza(produto);
+				this.produto = new Produto();
+				init();
+				Msg.addMsgInfo("Produto editado com sucesso");
+				System.out.println("...produto editado com sucesso!");
+			}
+		} catch (Exception e) {
+			init();
+			e.printStackTrace();
+			System.out.println("...Alguma coisa deu errada ao editar produto");
+		}
+		return null;
+	}
+
+	// Edita dados do produto tipo livro
+	public String alterOutros() {
+		try {
+			boolean all = true;
+			if (!validarNome_nome()) {
+				all = false;
+				Msg.addMsgError("Nome do produto não pode ser vazio");
+			}
+			if (!all) {
+				System.out
+						.println("...Erro ao cadastrar produto: nome não pode ser vazio");
+				return null;
+			} else {
+				dao.atualiza(produto);
+				this.produto = new Produto();
+				init();
+				Msg.addMsgInfo("Produto editado com sucesso");
+				System.out.println("...produto editado com sucesso!");
+			}
+		} catch (Exception e) {
+			init();
+			e.printStackTrace();
+			System.out.println("...Alguma coisa deu errada ao editar produto");
+		}
+		return null;
+	}
+
+	// Desativa qualquer tipo de produto
+	public void desativar() {
 		if (produto.getId() != null) {
-			Msg.addMsgInfo("Produto editado com sucesso");
+			Msg.addMsgInfo("Produto desativado");
+			produto.setAtivado(false);
 			dao.atualiza(produto);
-			this.produto = new Produto();
+		}
+	}
+
+	// Reativa qualquer tipo de produto
+	public void ativar() {
+		if (produto.getId() != null) {
+			Msg.addMsgInfo("Produto reativado");
+			produto.setAtivado(true);
+			dao.atualiza(produto);
 		}
 	}
 
@@ -212,7 +377,7 @@ public class ProdutoBean implements Serializable {
 		return validator.validarNome(produto.getEditora());
 	}
 
-	/** add para produto do tipo outros **/
+	/** autocomplete **/
 
 	public List<String> autocomplete(String nome) {
 		List<Produto> array = dao.getAllByName("nome", nome);
@@ -239,32 +404,6 @@ public class ProdutoBean implements Serializable {
 			nomes.add(array.get(i).getEditora());
 		}
 		return nomes;
-	}
-
-	public void check(AjaxBehaviorEvent event) {
-		if (produto.getNome().equals("")) {
-
-		} else {
-			if (produto.getNome().contains("'")
-					|| produto.getNome().contains("@")
-					|| produto.getNome().contains("/")
-					|| produto.getNome().contains("*")) {
-				Msg.addMsgError("Contém caracter(es) inválido(s)");
-			} else {
-				if (produto.getNome().length() <= 2) {
-					Msg.addMsgError("Informe pelo menos 3 caracteres");
-
-				} else {
-					produtos = dao.getAllByName("nome", produto.getNome());
-					if (produtos.isEmpty()) {
-						Msg.addMsgError("Nenhum registro encontrado");
-					} else {
-						Integer count = produtos.size();
-						Msg.addMsgError(count + "registro(s) encontrado(s)");
-					}
-				}
-			}
-		}
 	}
 
 	/** Get and Set **/
