@@ -1,5 +1,7 @@
 package ufrr.editora.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +20,10 @@ import ufrr.editora.converter.BaseEntity;
 
 @Entity
 @Table(name="tb_fornecedor")
-public class Fornecedor implements BaseEntity {
-	
+public class Fornecedor implements Serializable, BaseEntity {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

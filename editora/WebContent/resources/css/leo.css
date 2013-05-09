@@ -301,9 +301,22 @@ table.dados{
 	width:100%;
 }
 
+table.dados2{
+	height:auto;
+	margin-bottom: 10px;
+	width:100%;
+}
+
 table.dados tr th{
 	background-color:#394674;
 	color:#fff;
+	color:1em;
+	padding:10px;
+}
+
+table.dados2 tr th{
+	background-color:#A6C9E2;
+	color:#394674;
 	color:1em;
 	padding:10px;
 }

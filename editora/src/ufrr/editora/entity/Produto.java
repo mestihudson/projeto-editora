@@ -1,5 +1,7 @@
 package ufrr.editora.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,10 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import ufrr.editora.converter.BaseEntity;
+
 @Entity
 @Table(name="tb_produto")
-public class Produto {
+public class Produto implements Serializable, BaseEntity {
 		
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -22,7 +28,7 @@ public class Produto {
 	private String editora;
 	
 	private String autor;
-		
+	
 	private Long isbn; // CODIGO DE BARRAS COM 13 DIGITOS
 	
 	private Integer quantidadeMinima; // QUANTIDADE MÍNIMA NO ESTOQUE

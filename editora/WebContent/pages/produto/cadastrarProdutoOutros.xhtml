@@ -116,23 +116,6 @@
 					</p:spinner>
 					<p:message id="error_min" for="prod_min" />
 					<br /><br />
-					
-					<h:outputLabel value="ISBN" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
-					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números"
-					rendered="#{produtoBean.produto.id==null}">
-						<f:validateLength maximum="13" minimum="13" />
-						<f:ajax event="blur" render="error_codigobarra" />
-					</p:inputText>
-					<p:message id="error_codigobarra" for="prod_isbn" rendered="#{produtoBean.produto.id==null}" />
-					
-					<p:inputText id="prod_isbn2" value="#{produtoBean.produto.isbn}" styleClass="input" maxlength="13"
-					rendered="#{produtoBean.produto.id!=null}" disabled="true">
-						<f:ajax event="blur" render="error_codigobarra2" />
-					</p:inputText>
-					<p:message id="error_codigobarra2" for="prod_isbn2" rendered="#{produtoBean.produto.id!=null}" />
-					<br /><br />
 										
 					</h:panelGrid>
 					<br /><br /><br /><br />

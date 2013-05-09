@@ -82,7 +82,7 @@
 				<h:outputText value="LISTAR PRODUTOS" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id==null}" />
 			</div>
 			
-			<p:focus context="form_listar_produto" for="dt:isbn" />
+			<p:focus context="form_listar_produto" for="dt:codigo" />
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 					
@@ -90,8 +90,9 @@
 					paginator="true" rows="10" paginatorPosition="bottom" emptyMessage="Nenhum produto encontrado"
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 					
-						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" id="isbn">
-							<h:outputText value="#{p.isbn}" />
+						<p:column style="text-align: center;"
+						headerText="Código" filterBy="#{p.id}" filterMatchMode="exact" id="codigo">
+							<h:outputText value="#{p.id}" />
 						</p:column>
 
 						<p:column headerText="Descrição" filterBy="#{p.nome}" filterMatchMode="contains">

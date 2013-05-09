@@ -45,13 +45,14 @@
 				<h:outputText value="CLIENTES CADASTRADOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>	
 			
+			<p:focus context="grid_pesquisa" for="autocompletePesquisar" />
+			
 			<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="5">
 			
 				<p:selectOneRadio value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;" required="true" requiredMessage="Informe 'Nome' ou 'CPF' para pesquisar" >
 					<f:selectItem itemLabel="Nome" itemValue="1" />
 					<f:selectItem itemLabel="CPF" itemValue="2" />
 					<f:ajax listener="#{usuarioBean.checkBox4Search}" event="blur" />
-					<f:ajax render="grid_pesquisa" />
 				</p:selectOneRadio>
 				
 				<p:inputText value="#{usuarioBean.search}" size="60" rendered="#{usuarioBean.box4Search !=1 and usuarioBean.box4Search != 2}" disabled="true" />
