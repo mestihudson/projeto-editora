@@ -90,7 +90,8 @@
 					paginator="true" rows="10" paginatorPosition="bottom" emptyMessage="Nenhum livro encontrado"
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 					
-						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" id="isbn">
+						<p:column style="text-align: center;" 
+						headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" id="isbn">
 							<h:outputText value="#{p.isbn}" />
 						</p:column>
 

@@ -53,7 +53,6 @@
 					<f:selectItem itemLabel="CNPJ" itemValue="2" />
 					<f:selectItem itemLabel="CPF" itemValue="3" />
 					<f:ajax listener="#{fornecedorBean.checkBox4Search}" event="blur" />
-					<f:ajax render="grid_pesquisa" />
 				</p:selectOneRadio>
 				
 				<p:inputText value="#{fornecedorBean.search}" size="60" rendered="#{fornecedorBean.box4Search != 1 and fornecedorBean.box4Search != 2 and fornecedorBean.box4Search != 3}" disabled="true" />

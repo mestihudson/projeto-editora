@@ -46,7 +46,7 @@ public class ProdutoBean implements Serializable {
 	public List<Produto> getProdutos() {
 		if (produtos == null) {
 			System.out.println("Carregando produtos...");
-			produtos = new DAO<Produto>(Produto.class).getAllOrder("isbn");
+			produtos = new DAO<Produto>(Produto.class).getAllOrder("nome");
 		}
 		return produtos;
 	}
@@ -215,22 +215,11 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNameUK_nome()) {
 				all = false;
-				Msg.addMsgError("Descrição não pode ser vazio");
-				return null;
-			}
-			if (!validarNameUK_nome()) {
-				all = false;
 				Msg.addMsgError("Outro produto com a mesma descrição já foi registrado no sistema");
 				return null;
 			}
-			if (!validarIntegerUK_isbn()) {
-				all = false;
-				Msg.addMsgError("Este produto já existe");
-				return null;
-			}
 			if (!all) {
-				System.out
-						.println("...Erro ao cadastrar produto: produto já existe");
+				System.out.println("...Erro ao cadastrar produto: produto já existe");
 				return null;
 			} else {
 				produto.setAtivado(true);
@@ -238,8 +227,7 @@ public class ProdutoBean implements Serializable {
 				this.produto = new Produto();
 				init();
 				Msg.addMsgInfo("Cadastro efetuado com sucesso");
-				System.out
-						.println("...cadastro de produto efetuado com sucesso!");
+				System.out.println("...cadastro de produto efetuado com sucesso!");
 			}
 		} catch (Exception e) {
 			init();
