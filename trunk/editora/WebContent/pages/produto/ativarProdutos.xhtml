@@ -86,16 +86,18 @@
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 					
-					<p:dataTable id="dt" value="#{produtoBean.livrosDesativados}" var="p" styleClass="dados" rowClasses="impar, par"
-					paginator="true" rows="10" paginatorPosition="bottom" emptyMessage="Nenhum livro encontrado"
-					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					<p:dataTable id="dt" value="#{produtoBean.livrosDesativados}" var="p" emptyMessage="Nenhum livro encontrado"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
+					scrollable="true" scrollHeight="400">
 					
-						<p:column style="text-align: center;" 
+						<p:column width="100" 
+						style="text-align: center;" 
 						headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" id="isbn">
 							<h:outputText value="#{p.isbn}" />
 						</p:column>
 
-						<p:column headerText="Obra" filterBy="#{p.nome}" filterMatchMode="contains">
+						<p:column width="400" 
+						headerText="Obra" filterBy="#{p.nome}" filterMatchMode="contains">
 							<h:outputText value="#{p.nome}" />
 						</p:column>	
 						
@@ -107,7 +109,8 @@
 							<h:outputText value="#{p.autor}" />
 						</p:column>
 						
-						<p:column style="text-align: center; float: center;">
+						<p:column width="100" 
+						style="text-align: center; float: center;">
 						
 						<p:commandButton value="Ativar" icon="ui-icon-check" rendered="#{loginBean.usuario.perfil.id!=3}"
 							action="#{produtoBean.ativar}" ajax="false"

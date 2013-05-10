@@ -21,5 +21,14 @@
 			<property name="hibernate.connection.password" value="admin" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
+		
+<!-- 		<properties> -->
+<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" /> -->
+<!-- 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> -->
+<!-- 			<property name="hibernate.connection.url" value="jdbc:postgresql://172.22.10.249:5432/SIS_editora" /> -->
+<!-- 			<property name="hibernate.connection.username" value="postgres" /> -->
+<!-- 			<property name="hibernate.connection.password" value="admin" /> -->
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="update" /> -->
+<!-- 		</properties> -->
 	</persistence-unit>
 </persistence>

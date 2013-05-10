@@ -56,9 +56,9 @@
 <!-- 					<p:focus context="prod_nome" for="prod_nome" /> -->
 					
 					<br />
-					<p:fieldset legend="Dados da Nota Fiscal" style="width: 90%; margin-left: 10px;">
+					<p:panel header="Dados da Nota Fiscal" style="width: 92%; margin-left: 10px;">
 					
-					<h:panelGrid id="grid" columns="10">
+					<h:panelGrid id="grid" columns="8">
 															
 					<h:outputLabel value="Fornecedor" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -66,18 +66,16 @@
 					required="true" requiredMessage="Informe o fornecedor" styleClass="input">
 						<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
-							<f:ajax event="blur" render="error_fornecedor" />
+							<f:ajax event="blur" render="mgsg" />
 					</p:selectOneMenu>
-					<p:message id="error_fornecedor" for="fornecedor" />
 					<br /><br />
 										
 					<h:outputLabel value="Número" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="numero" value="#{notaFiscalBean.notaFiscal.numero}"
 					required="true" requiredMessage="Informe o número da nota fiscal">
-						<f:ajax event="blur" render="error_numero" />
+						<f:ajax event="blur" render="mgsg" />
 					</p:inputText>
-					<p:message id="error_numero" for="numero" />
 					<br /><br />
 					
 					<h:outputLabel value="Data de Emissão" styleClass="OutPut" />
@@ -85,9 +83,8 @@
 					<p:calendar id="emissao" effect="slideDown" showButtonPanel="true" navigator="true"
 							value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" validatorMessage="Data inválida"
 							requiredMessage="Informe a data de emissão da nota" locale="pt_BR" pattern="dd/MM/yyyy">
-							<f:ajax event="blur" render="error_emissao" />
+							<f:ajax event="blur" render="mgsg" />
 						</p:calendar>
-					<p:message id="error_emissao" for="emissao" />
 					<br /><br />
 					
 					<h:outputLabel value="Data de Entrada" styleClass="OutPut" />
@@ -95,27 +92,25 @@
 					<p:calendar id="entrada" effect="slideDown" showButtonPanel="true" navigator="true"
 							value="#{notaFiscalBean.notaFiscal.dataEntrada.time}" required="true" validatorMessage="Data inválida"
 							requiredMessage="Informe a data de emissão da nota" locale="pt_BR" pattern="dd/MM/yyyy">
-							<f:ajax event="blur" render="error_entrada" />
+							<f:ajax event="blur" render="mgsg" />
 						</p:calendar>
-					<p:message id="error_entrada" for="entrada" />
 					<br /><br />
 					
 					<h:outputLabel value="Valor Total da Nota" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="valor" value="#{notaFiscalBean.notaFiscal.valor}"
 					required="true" requiredMessage="Informe o valor total da nota fiscal">
-						<f:ajax event="blur" render="error_valor" />
+						<f:ajax event="blur" render="mgsg" />
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 					</p:inputText>
-					<p:message id="error_valor" for="valor" />
 					<br /><br />
 										
 					</h:panelGrid>
 					
-					</p:fieldset>
+					</p:panel>
 					<br />
 					
-					<p:fieldset legend="Dados do Produto" style="width: 90%; margin-left: 10px;">
+					<p:panel header="Dados do Produto" style="width: 92%; margin-left: 10px;">
 					
 					<h:panelGrid columns="6">
 					
@@ -189,8 +184,6 @@
 					</p:inputText>
 					<p:message id="error_valorVenda" for="valorCusto" />
 					<br /><br />
-				
-
 					
 					</h:panelGrid>
 					<br /><br />
@@ -199,7 +192,7 @@
 						<f:ajax render="@form" event="click" /> 
 					</p:commandButton>
 					
-					</p:fieldset>
+					</p:panel>
 					<br />
 					
 					<div style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 70px; height: 20px; line-height: 20px;" align="center">
@@ -249,10 +242,10 @@
 						<p:commandLink action="#{notaFiscalBean.removeItem}" ajax="false"
 							style="text-align: center; float: center;"
 							update=":form_cadastrar_nota:itens">
-							<p:graphicImage value="/resources/img/remove.png" title="Remover item" />
+							<p:graphicImage value="/resources/img/remover.png" title="Remover item" />
 							<f:ajax render="@all" />
 							<f:setPropertyActionListener id="parametro"
-								target="#{notaFiscalBean.notaFiscal}" value="#{item}" />
+								target="#{notaFiscalBean.item}" value="#{item}" />
 						</p:commandLink>
 
 						</p:column>
@@ -278,7 +271,7 @@
 			</div>
 
 				<div align="left" style="width: 350px; margin-right: 500px;">
-					<p:messages autoUpdate="true" />
+					<p:messages id="mgsg" autoUpdate="true" />
 				</div>
 
 			</h:form>								

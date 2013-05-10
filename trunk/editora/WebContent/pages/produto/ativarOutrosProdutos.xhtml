@@ -86,16 +86,19 @@
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 					
-					<p:dataTable id="dt" value="#{produtoBean.produtosDesativados}" var="p" styleClass="dados" rowClasses="impar, par"
+					<p:dataTable id="dt" value="#{produtoBean.produtosDesativados}" var="p"
 					paginator="true" rows="10" paginatorPosition="bottom" emptyMessage="Nenhum produto encontrado"
-					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
+					scrollable="true" scrollHeight="400">
 					
-						<p:column style="text-align: center;"
+						<p:column width="100"
+						style="text-align: center;"
 						 headerText="Código" filterBy="#{p.id}" filterMatchMode="exact" id="codigo">
 							<h:outputText value="#{p.id}" />
 						</p:column>
 
-						<p:column headerText="Descrição" filterBy="#{p.nome}" filterMatchMode="contains">
+						<p:column width="400" 
+						headerText="Descrição" filterBy="#{p.nome}" filterMatchMode="contains">
 							<h:outputText value="#{p.nome}" />
 						</p:column>	
 						
@@ -103,7 +106,8 @@
 							<h:outputText value="#{p.tipo.nome}" />
 						</p:column>
 						
-						<p:column style="text-align: center; float: center;">
+						<p:column width="100"
+						style="text-align: center; float: center;">
 						
 						<p:commandButton value="Ativar" icon="ui-icon-check" rendered="#{loginBean.usuario.perfil.id!=3}"
 							action="#{produtoBean.ativar}" ajax="false"
