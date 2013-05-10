@@ -211,14 +211,6 @@ form .campos {
 	width: 300px;
 }
 
-.ui-datatable .ui-datatable-data .even-row td{  
-    background-color:#F0F9FF;  
-}  
-      
-.ui-datatable .ui-datatable-data .odd-row td{  
-    background-color:#DDDDDD;  
-}
-
 #titulo{
 	color: #1E90FF;
 	font-weight:bold;
@@ -281,6 +273,14 @@ img.acende:hover {
 	-o-transition: all 0.5s;
 	border-radius: 5%; /* Borde redondeado */
 	box-shadow: 0px 0px 15px #000; /* Sombra */
+}
+
+.ui-datatable .ui-datatable-data .even-row td{  
+    background-color:#F0F9FF;  
+}  
+      
+.ui-datatable .ui-datatable-data .odd-row td{  
+    background-color:#DDDDDD;  
 }
 
 /* Tabela zebrada Leonardo Holanda */

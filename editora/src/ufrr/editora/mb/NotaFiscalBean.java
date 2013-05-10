@@ -22,50 +22,88 @@ public class NotaFiscalBean implements Serializable {
 	private Item item = new Item();
 	private Long idProduto;
 	private DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
-	private String search, resultValidarHCM;
+	private String search, resultValidarUK;
+	
 	
 	// método para cadastrar nota
-	public void addNota() {
+	public String addNota() {
+		boolean all = true;
+		if (!validarNota()) {
+			all = false;
+		}
+		if (notaFiscal.getValor() == null || notaFiscal.getValor() == 0) {
+			Msg.addMsgError("Informe o valor total da nota fiscal");
+		}
+		if (!all) {
+			System.out.println("...Erro ao cadastrar nota: nota fiscal já existe");
+			
+		} else {
 		DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 		Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
 		dao.adiciona(notaFiscal);
 		item = new Item();
 		notaFiscal = new NotaFiscal();
+		return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";
+		}
+		return null;
 	}
 	
 	// método para adicionar itens a nota fiscal
 	public void guardaItem() {
+		
+		boolean all = true;
+		if(item.getProduto()==null) {
+			Msg.addMsgError("Informe o produto");
+//			all = false;
+		}
+		if(item.getQuantidade()==null || item.getQuantidade()==0) {
+			Msg.addMsgError("Informe a quantidade");
+			all = false;
+		}
+		if(item.getValorCusto()==null || item.getValorCusto()==0.00) {
+			Msg.addMsgError("Informe o valor de custo");
+			all = false;
+		}
+		if(item.getValorVenda()==null || item.getValorVenda()==0.00) {
+			Msg.addMsgError("Informe o valor de venda");
+			all = false;
+		}
+		if (!all) {
+				System.out.println("...Erro ao cadastrar nota: inconsistencia nos dados do item");	
+		}else {
+			DAO<Produto> dao = new DAO<Produto>(Produto.class);
+			Produto produto = dao.buscaPorId(idProduto);
+			item.setProduto(produto);
 
-		DAO<Produto> dao = new DAO<Produto>(Produto.class);
+			notaFiscal.getItens().add(item);
+			item.setNotaFiscal(notaFiscal);
 
-		Produto produto = dao.buscaPorId(idProduto);
-		item.setProduto(produto);
-
-		notaFiscal.getItens().add(item);
-		item.setNotaFiscal(notaFiscal);
-
-		item = new Item();
+			item = new Item();
+		}
 	}
 	
 	// método para remover o item da lista de itens no cadastro de nota fiscal
 	public void removeItem() {
-		DAO<Item> dao = new DAO<Item>(Item.class);
-		dao.remove(item);
+		notaFiscal.getItens().remove(item);
+		Msg.addMsgWarn("Item removido");
+		System.out.println("Item removido...");
+		
+		item = new Item();
 	}
 	
 	/** validations **/
 
 	//validação para não cadastrar nº de nota fiscal para o mesmo fornecedor
-	public boolean validarHcmAndCecor() {
+	public boolean validarNota() {
 			Query q = dao.query("SELECT n FROM NotaFiscal n WHERE numero = ? and fornecedor = ?");
 			q.setParameter(1, notaFiscal.getNumero());
 			q.setParameter(2, notaFiscal.getFornecedor());
 
 			if (!q.getResultList().isEmpty()) {
-				resultValidarHCM = "Está nota fiscal já possui registro no sistema";
+				Msg.addMsgError("Está nota fiscal já possui registro no sistema");
 				return false;
 			} else {
-				resultValidarHCM = "";
+				resultValidarUK = "";
 				return true;
 			}
 		}
@@ -113,14 +151,11 @@ public class NotaFiscalBean implements Serializable {
 		this.search = search;
 	}
 
-	public String getResultValidarHCM() {
-		return resultValidarHCM;
+	public String getResultValidarUK() {
+		return resultValidarUK;
 	}
 
-	public void setResultValidarHCM(String resultValidarHCM) {
-		this.resultValidarHCM = resultValidarHCM;
+	public void setResultValidarUK(String resultValidarUK) {
+		this.resultValidarUK = resultValidarUK;
 	}
-	
-	
-
 }

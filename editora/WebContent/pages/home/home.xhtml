@@ -31,8 +31,9 @@
 				<h:panelGrid columns="6" cellspacing="5" cellpadding="5" style="margin-right: 10%;">
 				
 <!-- 				visualizar todas as mensagens recebidas -->
-				<p:graphicImage value="/resources/img/messages2.png" title="Mensagens arquivadas" 
-				onclick="dlgMsgs.show()" style="cursor: pointer;" width="35px;"  />
+				<p:commandLink action="/pages/mensagem/listarMensagemArquivada.xhtml?faces-redirect=true">
+					<p:graphicImage value="/resources/img/messages2.png" title="Mensagens arquivadas"  width="35px;"  />
+				</p:commandLink>
 				
 <!-- 				troca de mensagem -->
 				<p:commandLink action="/pages/mensagem/enviarMensagem.xhtml?faces-redirect=true">
@@ -47,7 +48,7 @@
 				
 				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 702px;"
 					align="center">
-					<h:outputText value="MENSAGENS"
+					<h:outputText value="CAIXA DE MENSAGENS"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 				
@@ -124,32 +125,6 @@
 					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
 
 				</div>
-			</p:dialog>
-			
-			<p:dialog modal="true" widgetVar="dlgMsgs" resizable="false" width="auto" header="Mensagens Arquivadas">
-
-					<p:dataTable value="#{mensagemBean.arquivadas}" var="m" styleClass="dados" rowClasses="impar, par"
-					paginator="true" rows="20" paginatorPosition="bottom" emptyMessage="Não há mensagem" style="width: 1500px;"
-					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
-					filteredValue="#{mensagemBean.arquivadas}">
-
-						<p:column headerText="Enviada Por">
-							<h:outputText value="#{m.usuario.nome}" style="color: #394674;" />
-						</p:column>	
-						
-						<p:column style="text-align: center;">
-							<f:facet name="header">Dia</f:facet>
-							<h:outputLabel value="#{m.dataEnvio.time}" style="color: #8B0000;">
-								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
-							</h:outputLabel>
-						</p:column>
-						
-						<p:column>
-							<f:facet name="header">Mensagem</f:facet>
-							<h:outputLabel value="#{m.descricao}" />
-						</p:column>
-
-					</p:dataTable>
 			</p:dialog>
 						
 		</div>	
