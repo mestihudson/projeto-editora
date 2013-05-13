@@ -17,12 +17,12 @@ import ufrr.editora.util.Msg;
 public class NotaFiscalBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
 	private NotaFiscal notaFiscal = new NotaFiscal();
 	private Item item = new Item();
 	private Long idProduto;
 	private DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 	private String search, resultValidarUK;
+	private Double totalValor;
 	
 	
 	// método para cadastrar nota
@@ -33,17 +33,22 @@ public class NotaFiscalBean implements Serializable {
 		}
 		if (notaFiscal.getValor() == null || notaFiscal.getValor() == 0) {
 			Msg.addMsgError("Informe o valor total da nota fiscal");
+			all = false;
+		}
+		if (notaFiscal.getItens().isEmpty()) {
+			Msg.addMsgError("Não é possível cadastrar nota fiscal sem produto");
+			all = false;
 		}
 		if (!all) {
 			System.out.println("...Erro ao cadastrar nota: nota fiscal já existe");
-			
 		} else {
-		DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
-		Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
-		dao.adiciona(notaFiscal);
-		item = new Item();
-		notaFiscal = new NotaFiscal();
-		return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";
+//			if (item.getNotaFiscal().getValor().equals(getItem().getTotalValor())) {
+				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
+				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
+				dao.adiciona(notaFiscal);
+				item = new Item();
+				notaFiscal = new NotaFiscal();
+				return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";	
 		}
 		return null;
 	}
@@ -52,19 +57,15 @@ public class NotaFiscalBean implements Serializable {
 	public void guardaItem() {
 		
 		boolean all = true;
-		if(item.getProduto()==null) {
-			Msg.addMsgError("Informe o produto");
-//			all = false;
-		}
-		if(item.getQuantidade()==null || item.getQuantidade()==0) {
+		if(item.getQuantidade() == null || item.getQuantidade() == 0) {
 			Msg.addMsgError("Informe a quantidade");
 			all = false;
 		}
-		if(item.getValorCusto()==null || item.getValorCusto()==0.00) {
+		if(item.getValorCusto() == null || item.getValorCusto() == 0.00) {
 			Msg.addMsgError("Informe o valor de custo");
 			all = false;
 		}
-		if(item.getValorVenda()==null || item.getValorVenda()==0.00) {
+		if(item.getValorVenda() == null || item.getValorVenda() == 0.00) {
 			Msg.addMsgError("Informe o valor de venda");
 			all = false;
 		}
@@ -93,21 +94,37 @@ public class NotaFiscalBean implements Serializable {
 	
 	/** validations **/
 
-	//validação para não cadastrar nº de nota fiscal para o mesmo fornecedor
+	// validação para não cadastrar nº de nota fiscal para o mesmo fornecedor
 	public boolean validarNota() {
-			Query q = dao.query("SELECT n FROM NotaFiscal n WHERE numero = ? and fornecedor = ?");
-			q.setParameter(1, notaFiscal.getNumero());
-			q.setParameter(2, notaFiscal.getFornecedor());
+		Query q = dao.query("SELECT n FROM NotaFiscal n WHERE numero = ? and fornecedor = ?");
+		q.setParameter(1, notaFiscal.getNumero());
+		q.setParameter(2, notaFiscal.getFornecedor());
 
-			if (!q.getResultList().isEmpty()) {
-				Msg.addMsgError("Está nota fiscal já possui registro no sistema");
-				return false;
-			} else {
-				resultValidarUK = "";
-				return true;
-			}
+		if (!q.getResultList().isEmpty()) {
+			Msg.addMsgError("Está nota fiscal já possui registro no sistema");
+			return false;
+		} else {
+			resultValidarUK = "";
+			return true;
 		}
-
+	}
+	
+	// variável para exibir o total R$ dos produtos
+		public Double getTotal() {
+			if (item.getQuantidade() != null && item.getValorCusto() != null)
+				return item.getQuantidade() * item.getValorCusto();
+			else
+				return null;	
+		}
+		
+		// variável para exibir a soma do total dos produtos
+			public Double getValorTotalProdutos() {
+				setTotalValor(00.00);
+				for (Item i : getNotaFiscal().getItens()) {
+					setTotalValor(getTotalValor() + i.getTotal());
+				}
+				return totalValor;
+			}
 	
 	/** get and set **/
 	
@@ -158,4 +175,15 @@ public class NotaFiscalBean implements Serializable {
 	public void setResultValidarUK(String resultValidarUK) {
 		this.resultValidarUK = resultValidarUK;
 	}
+
+	public Double getTotalValor() {
+		return totalValor;
+	}
+
+	public void setTotalValor(Double totalValor) {
+		this.totalValor = totalValor;
+	}
+	
+	
+	
 }

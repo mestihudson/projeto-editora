@@ -321,6 +321,14 @@ table.dados2 tr th{
 	padding:10px;
 }
 
+table.dados2 tfoot tr td {
+	background-color:#A6C9E2;
+	color:#394674;
+	color:1em;
+	padding:6px;
+	font-weight: bold;
+}
+
 table.dados tr td{
 	padding:5px 10px;
 }

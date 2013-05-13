@@ -119,12 +119,12 @@
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
             		<p:selectOneMenu style="width: 400px;" id="prod_categoria2" value="#{notaFiscalBean.idProduto}"
 					styleClass="input" panelStyle="width:400px"
-					effect="fade" filter="true" filterMatchMode="startsWith">
-						<f:selectItem itemValue="" itemLabel="" />
+					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Informe o produto">
+						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
 						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />
 					
 					 <p:column headerText="Descrição">  
-                		<h:outputLabel value="#{produto.nome}" />  
+                		<h:outputLabel value="#{produto.nome}" /> 
             		</p:column> 
 						
 					 <p:column headerText="Código">  
@@ -201,43 +201,50 @@
 				
 				<fieldset style="border-color: #A6C9E2; margin-left: 10px; margin-right: 70px; border: 1px solid #A6C9E2; border-top: 0;" >
 				
-					<h:dataTable value="#{notaFiscalBean.notaFiscal.itens}" var="item" styleClass="dados2" rowClasses="impar, par" id="itens">
-
-						<f:facet name="header">  
-            				 
-        				</f:facet>
-        				
-        				<p:column>
-							<f:facet name="header">Código</f:facet>
+					<p:dataTable value="#{notaFiscalBean.notaFiscal.itens}" var="item" styleClass="dados2" rowClasses="impar, par" id="itens"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
+					emptyMessage="adicione o(s) produto()">
+					        				
+        				<p:column width="50">
+							<f:facet name="header">código</f:facet>
 							<h:outputLabel value="#{item.produto.isbn}" rendered="#{item.produto.isbn!=null}" />
 							<h:outputLabel value="#{item.produto.id}" rendered="#{item.produto.isbn==null}" />
 						</p:column>
 
 						<p:column>
-							<f:facet name="header">Produto</f:facet>
+							<f:facet name="header">produto</f:facet>
+							<h:outputLabel value="#{item.produto.tipo.nome}: " rendered="#{item.produto.tipo.id eq 1}" />
 							<h:outputLabel value="#{item.produto.nome}" />
 						</p:column>
 						
-						<p:column>
-							<f:facet name="header">Quantidade</f:facet>
+						<p:column style="text-align: center;" width="15">
+							<f:facet name="header">qtd</f:facet>
 							<h:outputLabel value="#{item.quantidade}" />
 						</p:column>	
 						
-						<p:column>
-							<f:facet name="header">Valor de Custo</f:facet>
+						<p:column width="50">
+							<f:facet name="header">vl. custo</f:facet>
 							<h:outputLabel value="#{item.valorCusto}">
-								<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+								<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 							</h:outputLabel>
 						</p:column>
 						
-						<p:column>
-							<f:facet name="header">Valor de Venda</f:facet>
+						<p:column width="50">
+							<f:facet name="header">vl. venda</f:facet>
 							<h:outputLabel value="#{item.valorVenda}">
-								<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+								<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 							</h:outputLabel>
 						</p:column>
+						
+						<p:column width="50" style="text-align: center;">
+							<f:facet name="header">total</f:facet>
+							<h:outputText value="#{item.total}">
+							<f:convertNumber type="currency" currencySymbol="R$"
+								locale="pt_BR" />
+							</h:outputText>
+						</p:column>	
 												
-						<p:column style="text-align: center;">
+						<p:column style="text-align: center;" width="15">
 
 						<p:commandLink action="#{notaFiscalBean.removeItem}" ajax="false"
 							style="text-align: center; float: center;"
@@ -250,15 +257,32 @@
 
 						</p:column>
 
-					</h:dataTable>
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="5" footerText="Valor Total"
+										style="text-align:right" />
+
+									<p:column footerText="R$ #{notaFiscalBean.valorTotalProdutos}" />
+									
+									<p:column footerText="" />
+								</p:row>
+							</p:columnGroup>
+
+						</p:dataTable>
 
 				</fieldset>
+
+					<div
+						style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 70px; height: 20px; line-height: 20px;"
+						align="center">
+						<h:outputText style="color: #394674; font-size: 12px;" styleClass="OutPut" />
+					</div>
 					<br /><br />
 										
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{notaFiscalBean.addNota}" value="Cadastrar" ajax="false" icon="ui-icon-check" update="@form">
+				<p:commandButton action="#{notaFiscalBean.addNota}" value="Cadastrar" ajax="false" icon="ui-icon-check" update=":form_cadastrar_nota:grid">
 						<f:ajax render="@form" />
 					</p:commandButton>&nbsp;
 					

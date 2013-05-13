@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_item")
@@ -30,6 +31,9 @@ public class Item implements Serializable {
 	
 	@ManyToOne
 	private NotaFiscal notaFiscal;
+	
+	@Transient
+	private Double totalValor;
 	
 	//get and set
 
@@ -81,13 +85,28 @@ public class Item implements Serializable {
 		this.notaFiscal = notaFiscal;
 	}
 	
+	public Double getTotalValor() {
+		return totalValor;
+	}
+
+	public void setTotalValor(Double totalValor) {
+		this.totalValor = totalValor;
+	}
+
 	// variável para exibir o total R$ dos produtos
 	public Double getTotal() {
 		if (quantidade != null && valorCusto != null)
 			return quantidade * valorCusto;
 		else
-			return null;
-	
+			return null;	
 	}
 	
+	// variável para exibir a soma do total dos produtos
+		public Double getValorTotalProdutos() {
+			setTotalValor(00.00);
+			for (Item i : getNotaFiscal().getItens()) {
+				setTotalValor(getTotalValor() + i.getTotal());
+			}
+			return totalValor;
+		}
 }
