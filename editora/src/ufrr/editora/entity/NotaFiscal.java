@@ -44,6 +44,8 @@ public class NotaFiscal implements Serializable {
 	private List<Item> itens = new ArrayList<Item>();
 	
 	
+	
+	
 	//get and set
 
 	public Long getId() {
@@ -101,7 +103,5 @@ public class NotaFiscal implements Serializable {
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
-	
-	
 
 }
