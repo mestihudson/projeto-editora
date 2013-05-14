@@ -186,8 +186,8 @@
 					
 					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos">
 					
-						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
-							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
+						<p:column headerText="Código" filterBy="#{p.id}" filterMatchMode="contains" style="text-align: center;">
+							<h:commandLink value="#{p.id}" onclick="dlgEditaProduto.hide()"
 								id="link_codigo">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
 							</h:commandLink>
@@ -198,6 +198,10 @@
 								id="link_codigo2">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
 							</h:commandLink>
+						</p:column>	
+						
+						<p:column headerText="Tipo" filterBy="#{p.tipo.nome}" filterMatchMode="contains">
+							<h:outputLabel value="#{p.tipo.nome}" />
 						</p:column>			
 					
 					</p:dataTable>

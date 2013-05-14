@@ -179,7 +179,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:selectOneMenu id="perfil_tipo" requiredMessage="Selecione um perfil" required="true"
 							value="#{usuarioBean.usuario.perfil}"
-							converter="genericConverter" style="width: 100px;">
+							converter="genericConverter" style="width: 150px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
 							<f:selectItems value="#{perfilBean.solicitacaoUsuario}" var="p"
 								itemLabel="#{p.perfil}" itemValue="#{p}" />

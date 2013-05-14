@@ -51,7 +51,7 @@ public class UsuarioBean implements Serializable {
 	private List<Usuario> usuariosE; // Lista em branco
 	private Validator<Usuario> validator;
 	private String search;
-	private String box4Search;
+	private Integer box4Search;
 
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
 	private Long usuarioId;
@@ -65,8 +65,8 @@ public class UsuarioBean implements Serializable {
 		endereco = new Endereco();
 		validator = new Validator<Usuario>(Usuario.class);
 		search = "";
-		box4Search = "cpf";
-		box4Search = "nome";
+		box4Search = 1;
+		box4Search = 2;
 	}
 	
 	/** Função para criar hash da senha informada **/
@@ -113,21 +113,25 @@ public class UsuarioBean implements Serializable {
 		return nomes;
 	}
 
-	// AutoComplete Nome e CPF juntos
+	// AutoComplete Nome e CPF juntos (somente para Cliente)
 	public List<String> autocomplete(String nome) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		if (box4Search.equals("1")) {
+		if (box4Search.equals(1)) {
 			if (!search.contains("'")) {
 				List<Usuario> array = dao.getAllByName("nome", nome);
 				for (int i = 0; i < array.size(); i++) {
-					nomes.add(array.get(i).getNome());
+					if (array.get(i).getPerfil().getId() == 4) {
+						nomes.add(array.get(i).getNome());
+					}
 				}
 			}
-		} else if (box4Search.equals("2")) {
+		} else if (box4Search.equals(2)) {
 			if (!search.contains("'")) {
-				List<Usuario> array = dao.getAllByName("cnpj_cpf", nome);
+				List<Usuario> array = dao.getAllByName("cpf", nome);
 				for (int i = 0; i < array.size(); i++) {
+					if (array.get(i).getPerfil().getId() == 4) {
 					nomes.add(array.get(i).getCpf());
+					}
 				}
 			}
 		}
@@ -197,8 +201,7 @@ public class UsuarioBean implements Serializable {
 	// Exibe uma lista de clientes ativados
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getClientes() {
-		Query query = dao
-				.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil = 4 ORDER BY u.nome");
+		Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil = 4 ORDER BY u.nome");
 		usuarios = query.getResultList();
 		System.out.println("Total de Clientes: " + getUsuarios().size());
 		return query.getResultList();
@@ -305,21 +308,21 @@ public class UsuarioBean implements Serializable {
 	// Pesquisa Usuario pelo nome e cpf
 	public String getListarClientes() {
 
-		if (box4Search.equals("2")) {
+		if (box4Search.equals(2)) {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("*")) {
 				init();
 				Msg.addMsgError("Contém caractér(es) inválido(s)");
 				return null;
 			} else {
-				if (search.length() <= 4) {
+				if (search.length() <= 10) {
 					init();
-					Msg.addMsgError("Informe pelo menos 5 caracteres");
-					System.out.println("...Informe pelo menos 5 caracteres para consultar cliente");
+					Msg.addMsgError("Informe o CPF corretamente");
+					System.out.println("...Informe o CPF corretamente para consultar cliente");
 					return null;
 				} else {
 					usuarios = dao.getAllByName("obj.cpf", search);
-					if (usuarios.isEmpty()) {
+					if (getClientesCadastrados().isEmpty()) {
 						init();
 						Msg.addMsgError("Nenhum registro encontrado");
 						System.out.println("...Cliente não encontrado");
@@ -329,7 +332,7 @@ public class UsuarioBean implements Serializable {
 					}
 				}
 			}
-		} else if (box4Search.equals("1")) {
+		} else if (box4Search.equals(1)) {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("*")
 					|| search.contains(".")
@@ -346,7 +349,7 @@ public class UsuarioBean implements Serializable {
 					return null;
 				} else {
 					usuarios = dao.getAllByName("obj.nome", search);
-					if (usuarios.isEmpty()) {
+					if (getClientesCadastrados().isEmpty()) {
 						init();
 						Msg.addMsgError("Nenhum registro encontrado");
 						System.out.println("...Cliente não encontrado");
@@ -710,11 +713,11 @@ public class UsuarioBean implements Serializable {
 		this.search = search;
 	}
 
-	public String getBox4Search() {
+	public Integer getBox4Search() {
 		return box4Search;
 	}
 
-	public void setBox4Search(String box4Search) {
+	public void setBox4Search(Integer box4Search) {
 		this.box4Search = box4Search;
 	}
 

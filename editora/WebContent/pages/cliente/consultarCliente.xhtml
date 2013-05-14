@@ -45,22 +45,23 @@
 				<h:outputText value="CLIENTES CADASTRADOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>	
 			
-			<p:focus context="grid_pesquisa" for="autocompletePesquisar" />
+			<p:focus context="autocompletePesquisar" for="autocompletePesquisar" />
+			<p:focus context="maskcpf" for="maskcpf" />
 			
-			<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="5">
+			<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="15">
 			
-				<p:selectOneRadio value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;" required="true" requiredMessage="Informe 'Nome' ou 'CPF' para pesquisar" >
-					<f:selectItem itemLabel="Nome" itemValue="1" />
-					<f:selectItem itemLabel="CPF" itemValue="2" />
-					<f:ajax listener="#{usuarioBean.checkBox4Search}" event="blur" />
+				<p:selectOneRadio value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;">
+					<f:selectItem itemLabel="CPF" itemValue="2"  id="cpf" />
+					<f:selectItem itemLabel="Nome" itemValue="1" id="nome" />
+					<f:ajax render="form_acesso1" />
 				</p:selectOneRadio>
 				
-				<p:inputText value="#{usuarioBean.search}" size="60" rendered="#{usuarioBean.box4Search !=1 and usuarioBean.box4Search != 2}" disabled="true" />
+				<p:inputText value="#{usuarioBean.search}" size="60" rendered="#{usuarioBean.box4Search != 1 and usuarioBean.box4Search != 2}" disabled="true" />
 									
-				<p:autoComplete value="#{usuarioBean.search}" completeMethod="#{usuarioBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" required="true" requiredMessage="Nome inválido" 
-				minQueryLength="11" maxResults="5" queryDelay="300" id="autocompletePesquisar" size="60"  rendered="#{usuarioBean.box4Search == 1}"/>
+				<p:autoComplete value="#{usuarioBean.search}" completeMethod="#{usuarioBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}"
+				minQueryLength="11" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="60"  rendered="#{usuarioBean.box4Search == 1}" />
 				
-				<p:inputMask mask="999.999.999-99" value="#{usuarioBean.search}" rendered="#{usuarioBean.box4Search == 2}" required="true" requiredMessage="CPF inválido" size="60" />
+				<p:inputMask mask="999.999.999-99" value="#{usuarioBean.search}" rendered="#{usuarioBean.box4Search == 2}" size="60" id="maskcpf" />
 				
 				<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListarClientes}" ajax="false" icon="ui-icon-search" />
 				
@@ -106,13 +107,13 @@
 
 			</h:form>
 			
-			<p:dialog header="Informações de Endereço do Cliente" modal="true" resizable="false"
+			<p:dialog header="Endereço" modal="true" resizable="false"
 			showEffect="fade" hideEffect="fade" widgetVar="dlgEnd">
 			<h:form id="form_dlg">
 			
 				<h:panelGrid id="display" columns="2" cellspacing="10">
 				
-				<p:panel header="Endereço">
+				<p:panel header="Cliente: #{usuarioBean.usuario.nome}"><br />
 				
 					<h:outputLabel value="Estado: " for="estado" styleClass="OutPut" />
 					<h:outputText id="estado" value="#{usuarioBean.usuario.endereco.unidade}"
