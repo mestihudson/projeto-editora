@@ -90,16 +90,20 @@
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
 					scrollable="true" scrollHeight="400">
 					
-						<p:column width="100" 
+						<p:column width="100"  
 						style="text-align: center;" 
-						headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" id="isbn">
-							<h:outputText value="#{p.isbn}" />
+						headerText="ISBN" filterBy="#{p.isbn}" filterMaxLength="13" filterMatchMode="contains" id="isbn">
+							<p:commandLink value="#{p.isbn}" onclick="dlgD.show();" update=":form_dialog:display">
+								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+							</p:commandLink>
 						</p:column>
 
 						<p:column width="400" 
 						headerText="Obra" filterBy="#{p.nome}" filterMatchMode="contains">
-							<h:outputText value="#{p.nome}" />
-						</p:column>	
+							<p:commandLink value="#{p.nome}" onclick="dlgD.show();" update=":form_dialog:display">
+								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+							</p:commandLink>
+						</p:column>
 						
 						<p:column headerText="Editora" filterBy="#{p.editora}" filterMatchMode="contains">
 							<h:outputText value="#{p.editora}" />
@@ -141,8 +145,31 @@
 			
 			</h:form>	
 			
-		</div>		
+		</div>	
+		
+		<!-- 			Aqui começa o dialog para detalhar o produto -->
 			
+			<p:dialog 
+			widgetVar="dlgD" resizable="false" modal="true" showEffect="fold">
+				<h:form id="form_dialog">
+				
+				<h:panelGrid id="display">
+					
+					<h:outputLabel value="ISBN: #{produtoBean.produto.isbn}" styleClass="OutPut" /><br />
+					
+					<h:outputLabel value="Descrição: #{produtoBean.produto.nome}" styleClass="OutPut" /><br />
+
+					<h:outputLabel value="Categoria: #{produtoBean.produto.categoria.nome}" styleClass="OutPut" /><br />
+					
+					<h:outputLabel value="Estoque Mínimo: #{produtoBean.produto.quantidadeMinima}" styleClass="OutPut" /><br />
+				
+				</h:panelGrid>	
+											
+				</h:form>
+				
+			</p:dialog>	
+			
+<!-- 			restrição de acesso -->			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 

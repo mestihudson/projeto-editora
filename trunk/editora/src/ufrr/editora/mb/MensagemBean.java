@@ -90,7 +90,7 @@ public class MensagemBean implements Serializable {
 	
 	public void arquivarMensagem() {
 		if (mensagem.getId() != null) {
-			Msg.addMsgInfo("Você arquivou a mensagem. Para visualiza-la novamente clique em 'Listar Mensagens' ");
+			Msg.addMsgInfo("Você arquivou a mensagem. Para exibir novamente clique no ícone ao lado 'Mensagens arquivadas' ");
 			mensagem.setStatus(2);
 			dao.atualiza(mensagem);
 			this.mensagem = new Mensagem();

@@ -94,12 +94,16 @@
 						<p:column width="100" 
 						style="text-align: center;"
 						headerText="Código" filterBy="#{p.id}" filterMatchMode="exact" id="codigo">
-							<h:outputText value="#{p.id}" />
+							<p:commandLink value="#{p.id}" onclick="dlgD.show();" update=":form_dialog:display">
+								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+							</p:commandLink>
 						</p:column>
 
 						<p:column width="400" 
 						headerText="Descrição" filterBy="#{p.nome}" filterMatchMode="contains">
-							<h:outputText value="#{p.nome}" />
+							<p:commandLink value="#{p.nome}" onclick="dlgD.show();" update=":form_dialog:display">
+								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+							</p:commandLink>
 						</p:column>	
 						
 						<p:column headerText="Tipo de Produto" filterBy="#{p.tipo.nome}" filterMatchMode="contains">
@@ -139,6 +143,28 @@
 			</h:form>	
 			
 		</div>		
+		
+			<!-- 			Aqui começa o dialog para detalhar o produto -->
+			
+			<p:dialog 
+			widgetVar="dlgD" resizable="false" modal="true" showEffect="fold">
+				<h:form id="form_dialog">
+				
+				<h:panelGrid id="display">
+					
+					<h:outputLabel value="Código: #{produtoBean.produto.id}" styleClass="OutPut" /><br />
+					
+					<h:outputLabel value="Tipo: #{produtoBean.produto.tipo.nome}" styleClass="OutPut" /><br />
+					
+					<h:outputLabel value="Descrição: #{produtoBean.produto.nome}" styleClass="OutPut" /><br />
+				
+				</h:panelGrid>	
+											
+				</h:form>
+				
+			</p:dialog>	
+			
+<!-- 			restrição de acesso -->	
 			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">

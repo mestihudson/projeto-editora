@@ -32,7 +32,7 @@ public class FornecedorBean implements Serializable {
 	private DAO<Fornecedor> dao = new DAO<Fornecedor>(Fornecedor.class);
 	private Validator<Fornecedor> validator;
 	private String search;
-	private String box4Search;
+	private Integer box4Search;
 
 	@PostConstruct
 	public void init() {
@@ -41,8 +41,8 @@ public class FornecedorBean implements Serializable {
 		endereco = new Endereco();
 		validator = new Validator<Fornecedor>(Fornecedor.class);
 		search = "";
-		box4Search = "cnpj";
-		box4Search = "nome";
+		box4Search = 1;
+		box4Search = 2;
 	}
 
 	/** Lista de Fornecedores **/
@@ -97,7 +97,7 @@ public class FornecedorBean implements Serializable {
 	// Pesquisa Fornecedor pelo nome e cnpj/cpf
 	public String getListaFornecedorByName() {
 
-		if (box4Search.equals("1")) {
+		if (box4Search.equals(1)) {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
@@ -119,10 +119,10 @@ public class FornecedorBean implements Serializable {
 				}
 			}
 		}
-			else if (box4Search.equals("2")) {
-				if (search.length() <= 4) {
+			else if (box4Search.equals(2)) {
+				if (search.length() != 18) {
 					init();
-					Msg.addMsgError("Informe pelo menos 5 caracters");
+					Msg.addMsgError("Informe o CNPJ correto");
 					return null;
 				} else {
 					fornecedores = dao.getAllByName("obj.cnpj", search);
@@ -134,9 +134,9 @@ public class FornecedorBean implements Serializable {
 					}
 				}
 		} else {
-			if (search.length() <= 4) {
+			if (search.length() != 14) {
 				init();
-				Msg.addMsgError("Informe pelo menos 5 caracters");
+				Msg.addMsgError("Informe o CPF correto");
 				return null;
 			} else {
 				fornecedores = dao.getAllByName("obj.cnpj", search);
@@ -157,14 +157,14 @@ public class FornecedorBean implements Serializable {
 
 	public List<String> autocomplete(String nome) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		if (box4Search.equals("1")) {
+		if (box4Search.equals(1)) {
 			if (!search.contains("'")) {
 				List<Fornecedor> array = dao.getAllByName("nome", nome);
 				for (int i = 0; i < array.size(); i++) {
 					nomes.add(array.get(i).getNome());
 				}
 			}
-		} else if (box4Search.equals("2")) {
+		} else if (box4Search.equals(2)) {
 			if (!search.contains("'")) {
 				List<Fornecedor> array = dao.getAllByName("cnpj_cpf", nome);
 				for (int i = 0; i < array.size(); i++) {
@@ -391,11 +391,11 @@ public class FornecedorBean implements Serializable {
 		this.search = search;
 	}
 
-	public String getBox4Search() {
+	public Integer getBox4Search() {
 		return box4Search;
 	}
 
-	public void setBox4Search(String box4Search) {
+	public void setBox4Search(Integer box4Search) {
 		this.box4Search = box4Search;
 	}
 
