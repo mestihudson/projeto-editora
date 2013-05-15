@@ -596,8 +596,8 @@ public class UsuarioBean implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Erro! Occoreu um erro ao tentar enviar o email",
 							"Erro"));
-			Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null,
-					ex);
+			System.out.println("...Erro ao tentar enviar o email para solicitacao esqueci minha senha");
+			Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
 		}
 	}
 

@@ -63,14 +63,9 @@
 		<p:focus context="grid" />
 		
 			<h:panelGrid id="grid" columns="2" cellpadding="10" cellspacing="10">			
-					
-					<h:outputLabel value="Email: " />
-					<p:inputText id="email" value="#{loginBean.usuario.login}" size="30" validatorMessage="Email inválido">
-							<f:ajax event="change" />
-					</p:inputText>
-					
-					<h:outputLabel value="Senha: " />
-					<p:password value="#{loginBean.usuario.senha}" size="30" feedback="true">
+								
+					<h:outputLabel value="Código: " />
+					<p:password value="#{loginBean.usuario.senha}" size="60">
 						<f:ajax event="change" />
 					</p:password>	
 			

@@ -52,7 +52,7 @@ public class CategoriaBean implements Serializable {
 			List<Categoria> c = new ArrayList<Categoria>();
 			c = this.getCategorias();
 			for (int i = 0; i < c.size(); i++) {
-				if (c.get(i).getId()!=null) {
+				if (c.get(i).getNome()!=null) {
 					categoriasD.add(c.get(i));
 				}
 			}

@@ -471,5 +471,5 @@ public class ProdutoBean implements Serializable {
 	public boolean validarNome_nome() {
 		return validator.validarNome(produto.getNome());
 	}
-
+	
 }

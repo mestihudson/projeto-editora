@@ -121,17 +121,7 @@
 					styleClass="input" panelStyle="width:400px"
 					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Informe o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />
-					
-					 <p:column headerText="Descrição">  
-                		<h:outputLabel value="#{produto.nome}" /> 
-            		</p:column> 
-						
-					 <p:column headerText="Código">  
-                		<h:outputLabel value="#{produto.isbn}" rendered="#{produto.isbn!=null}" />  
-                		<h:outputLabel value="#{produto.id}" rendered="#{produto.isbn==null}" />
-            		</p:column>
-            		
+						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />            		
             		</p:selectOneMenu>
 					
 <!-- 					aqui esta certinho					 -->
@@ -206,7 +196,7 @@
 					emptyMessage="adicione o(s) produto()">
 					        				
         				<p:column width="50">
-							<f:facet name="header">código</f:facet>
+							<f:facet name="header">isbn/código</f:facet>
 							<h:outputLabel value="#{item.produto.isbn}" rendered="#{item.produto.isbn!=null}" />
 							<h:outputLabel value="#{item.produto.id}" rendered="#{item.produto.isbn==null}" />
 						</p:column>
@@ -248,7 +238,7 @@
 
 						<p:commandLink action="#{notaFiscalBean.removeItem}" ajax="false"
 							style="text-align: center; float: center;"
-							update=":form_cadastrar_nota:itens">
+							update=":form_cadastrar_nota:itens" immediate="true">
 							<p:graphicImage value="/resources/img/remover.png" title="Remover item" />
 							<f:ajax render="@all" />
 							<f:setPropertyActionListener id="parametro"

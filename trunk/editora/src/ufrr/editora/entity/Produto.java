@@ -129,6 +129,82 @@ public class Produto implements Serializable, BaseEntity {
 	public void setAtivado(Boolean ativado) {
 		this.ativado = ativado;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ativado == null) ? 0 : ativado.hashCode());
+		result = prime * result + ((autor == null) ? 0 : autor.hashCode());
+		result = prime * result
+				+ ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((editora == null) ? 0 : editora.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime
+				* result
+				+ ((quantidadeMinima == null) ? 0 : quantidadeMinima.hashCode());
+		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Produto other = (Produto) obj;
+		if (ativado == null) {
+			if (other.ativado != null)
+				return false;
+		} else if (!ativado.equals(other.ativado))
+			return false;
+		if (autor == null) {
+			if (other.autor != null)
+				return false;
+		} else if (!autor.equals(other.autor))
+			return false;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
+		if (editora == null) {
+			if (other.editora != null)
+				return false;
+		} else if (!editora.equals(other.editora))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (isbn == null) {
+			if (other.isbn != null)
+				return false;
+		} else if (!isbn.equals(other.isbn))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (quantidadeMinima == null) {
+			if (other.quantidadeMinima != null)
+				return false;
+		} else if (!quantidadeMinima.equals(other.quantidadeMinima))
+			return false;
+		if (tipo == null) {
+			if (other.tipo != null)
+				return false;
+		} else if (!tipo.equals(other.tipo))
+			return false;
+		return true;
+	}
 	
 	
 
