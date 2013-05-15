@@ -139,7 +139,7 @@
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:selectOneMenu style="width: 190px;" id="prod_categoria" value="#{produtoBean.produto.categoria}" converter="genericConverter"
 					required="true" requiredMessage="Informe a categoria" styleClass="input" rendered="#{produtoBean.produto.id==null}">
-						<f:selectItem itemValue="" itemLabel="" />
+						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
 						<f:selectItems value="#{categoriaBean.categorias}" var="c" 
 						itemLabel="#{c.nome}" itemValue="#{c}" />
 							<f:ajax event="blur" render="error_nome_categoria" />
@@ -148,8 +148,8 @@
 					
 					<p:selectOneMenu style="width: 190px;" id="prod_categoria2" value="#{produtoBean.produto.categoria}" converter="genericConverter"
 					required="true" requiredMessage="Informe a categoria" styleClass="input" rendered="#{produtoBean.produto.id!=null}">
-						<f:selectItems value="#{categoriaBean.categorias}" var="c" 
-						itemLabel="#{c.nome}" itemValue="#{c}" />
+						<f:selectItems value="#{categoriaBean.categorias}" var="categoria" 
+						itemLabel="#{categoria.nome}" itemValue="#{categoria}" />
 							<f:ajax event="blur" render="error_nome_categoria2" />
 					</p:selectOneMenu>
 					<p:message id="error_nome_categoria2" for="prod_categoria2" rendered="#{produtoBean.produto.id!=null}" />
@@ -275,7 +275,8 @@
 			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos">
+					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos" paginator="true" rows="20" 
+					paginatorPosition="bottom">
 					
 						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"

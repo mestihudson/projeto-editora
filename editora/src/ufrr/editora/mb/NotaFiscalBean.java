@@ -23,7 +23,7 @@ public class NotaFiscalBean implements Serializable {
 	private DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 	private String search, resultValidarUK;
 	private Double totalValor;
-	
+	public Boolean cadastro = true;
 	
 	// método para cadastrar nota
 	public String addNota() {
@@ -42,20 +42,25 @@ public class NotaFiscalBean implements Serializable {
 		if (!all) {
 			System.out.println("...Erro ao cadastrar nota: nota fiscal já existe");
 		} else {
-//			if (item.getNotaFiscal().getValor().equals(getItem().getTotalValor())) {
+			if (notaFiscal.getValor().equals(getValorTotalProdutos())) {
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
 				dao.adiciona(notaFiscal);
 				item = new Item();
 				notaFiscal = new NotaFiscal();
 				return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";	
+		} else {
+			System.out.println("...Erro: o valor da nota fiscal deve ser o mesmo ao total de itens");
+			Msg.addMsgError("O valor total da nota fiscal deve ser igual ao valor dos produtos somados");
+			return null;
+			}
 		}
 		return null;
 	}
 	
 	// método para adicionar itens a nota fiscal
 	public void guardaItem() {
-		
+	
 		boolean all = true;
 		if(item.getQuantidade() == null || item.getQuantidade() == 0) {
 			Msg.addMsgError("Informe a quantidade");
@@ -71,7 +76,8 @@ public class NotaFiscalBean implements Serializable {
 		}
 		if (!all) {
 				System.out.println("...Erro ao cadastrar nota: inconsistencia nos dados do item");	
-		}else {
+		} else {
+
 			DAO<Produto> dao = new DAO<Produto>(Produto.class);
 			Produto produto = dao.buscaPorId(idProduto);
 			item.setProduto(produto);

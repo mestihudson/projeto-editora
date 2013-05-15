@@ -151,7 +151,7 @@ public class LoginBean implements Serializable {
 			if (this.usuario.getSenha().equalsIgnoreCase(this.usuario.getRepetirSenha())) {
 				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 				dao.atualiza(usuario);
-				Msg.addMsgInfo("Senha alterada com sucesso");
+				Msg.addMsgInfo("Operação executada com sucesso");
 				System.out.println("...Senha alterada depois de solicita-la por email");
 				
 				FacesContext facesContext = FacesContext.getCurrentInstance();

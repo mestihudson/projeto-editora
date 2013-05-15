@@ -82,19 +82,12 @@
 															
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:selectOneListbox style="width: 185px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
+					<p:selectOneListbox style="width: 185px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter"
 					required="true" requiredMessage="Informe o tipo" styleClass="input">
 						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 							<f:ajax event="blur" render="error_nome_tipo" />
 					</p:selectOneListbox>
-					<p:message id="error_nome_tipo" for="prod_tipo" rendered="#{produtoBean.produto.id==null}" />
-					
-					<p:selectOneMenu style="width: 190px;" id="prod_tipo2" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id!=null}"
-					required="true" requiredMessage="Informe o tipo" styleClass="input">
-						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
-							<f:ajax event="blur" render="error_nome_tipo2" />
-					</p:selectOneMenu>
-					<p:message id="error_nome_tipo2" for="prod_tipo2" rendered="#{produtoBean.produto.id!=null}" />
+					<p:message id="error_nome_tipo" for="prod_tipo" />
 					<br /><br />
 					
 					<h:outputLabel value="Descrição" styleClass="OutPut" />
@@ -184,7 +177,8 @@
 			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos">
+					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos" paginator="true" rows="20"
+					paginatorPosition="bottom">
 					
 						<p:column headerText="Código" filterBy="#{p.id}" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{p.id}" onclick="dlgEditaProduto.hide()"

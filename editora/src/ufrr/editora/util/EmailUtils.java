@@ -12,6 +12,7 @@ import ufrr.editora.mb.LoginBean;
 
 public class EmailUtils {
 	 private static final String HOSTNAME = "smtp.gmail.com";
+//	 private static final String HOSTNAME = "amajari.ufrr.br";
 	 private static final String USERNAME = "leoholanda23";
 	 private static final String PASSWORD = "holandaarruda04";
 	 private static final String EMAILORIGEM = "leoholanda23@gmail.com";
@@ -20,6 +21,7 @@ public class EmailUtils {
 	public static Email conectaEmail() throws EmailException {
 	 Email email2 = new SimpleEmail();
 	 email2.setHostName(HOSTNAME);
+//	 email2.setSmtpPort(25);
 	 email2.setSmtpPort(587);
 	 email2.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
 	 email2.setTLS(true);
@@ -43,9 +45,10 @@ public class EmailUtils {
 		 Email email2 = new SimpleEmail();
 		 email2 = conectaEmail();
 		 email2.setSubject("Recuperação de senha Editora UFRR");
-		 email2.setMsg("Editora UFRR" + "\n" + "siga as instruções abaixa para prosseguir com a solicitação" + "\n" + "\n" + "Código: " + usuario.getUsuario().getSenha() + "\n" + "\n"
-		 + "Clique no link e copie a senha informada: " + "http://172.22.10.110:8081/editora/esqueceuSenha.jsf?faces-redirect=true");
-		 email2.addTo(usuario.getUsuario().getLogin()); 
+		 email2.setMsg("Editora UFRR" + "\n" + "siga as instruções abaixa para prosseguir com a solicitação" + "\n" + "\n" + "Clique no link e informe o código abaixo: " 
+		 + "http://172.22.10.110:8082/editora/esqueceuSenha.jsf?faces-redirect=true" 
+		 + "\n" + "\n" + "Código: " + usuario.getUsuario().getSenha());
+		 email2.addTo(usuario.getUsuario().getLogin());
 		 String resposta = email2.send();
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getUsuario().getLogin(), "Informação"));
 		 }

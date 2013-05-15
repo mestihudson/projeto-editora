@@ -97,7 +97,7 @@
 			<h:outputLabel value="caso ainda não possua cadastro no sistema," style="float: center;" /><br />
 			<h:outputLabel value="clique no link abaixo." style="float: center;" /><br /><br />
 							
-				<h:commandLink action="solicitacao.xhtml?faces-redirect=true">
+				<h:commandLink action="solicitacao.xhtml?faces-redirect=true" immediate="true">
 					<p:graphicImage value="/resources/img/adduser.png" /><br />
 					<h:outputText value="Cadastre-se" styleClass="OutPut" />
 				</h:commandLink>
@@ -128,7 +128,7 @@
 					<h:outputLabel value="Atenção!"	style="color: red; font-weight: bold;" />
 				<br />
 					<h:outputLabel style="font-weight: bold;"
-						value="Ao preencher os dados o sistema enviará um email com seu login e senha corretos" />
+						value="Ao efetuar está solicitação o sistema irá enviar um email com o novo código." />
 			</div>
 			
 			<div class="Centralizar" style="text-align: center; float: center;" align="center" >
