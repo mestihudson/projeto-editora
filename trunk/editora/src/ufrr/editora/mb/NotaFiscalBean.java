@@ -1,6 +1,8 @@
 package ufrr.editora.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,10 +22,35 @@ public class NotaFiscalBean implements Serializable {
 	private NotaFiscal notaFiscal = new NotaFiscal();
 	private Item item = new Item();
 	private Long idProduto;
+	private List<NotaFiscal> notasFiscais;
+	private List<NotaFiscal> notasFiscais1;
 	private DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 	private String search, resultValidarUK;
 	private Double totalValor;
 	public Boolean cadastro = true;
+	
+	/** List NF **/
+
+	public List<NotaFiscal> getNotasFiscais() {
+		if (notasFiscais == null) {
+			System.out.println("Carregando notas fiscais...");
+			notasFiscais = new DAO<NotaFiscal>(NotaFiscal.class).getAllOrder("fornecedor.nome");
+		}
+		return notasFiscais;
+	}
+	
+	// lista as notas ativadas
+		public List<NotaFiscal> getAtivados() {
+			notasFiscais1 = new ArrayList<NotaFiscal>();
+			List<NotaFiscal> ps = new ArrayList<NotaFiscal>();
+			ps = this.getNotasFiscais();
+			for (int i = 0; i < ps.size(); i++) {
+				if (ps.get(i).getStatus().equals(true)) {
+					notasFiscais1.add(ps.get(i));
+				}
+			}
+			return notasFiscais1;
+		}
 	
 	// método para cadastrar nota
 	public String addNota() {
@@ -45,6 +72,7 @@ public class NotaFiscalBean implements Serializable {
 			if (notaFiscal.getValor().equals(getValorTotalProdutos())) {
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
+				notaFiscal.setStatus(true);
 				dao.adiciona(notaFiscal);
 				item = new Item();
 				notaFiscal = new NotaFiscal();
@@ -89,6 +117,35 @@ public class NotaFiscalBean implements Serializable {
 		}
 	}
 	
+	// método para editar/alterar nota
+		public String alterNota() {
+			boolean all = true;
+			if (notaFiscal.getValor() == null || notaFiscal.getValor() == 0) {
+				Msg.addMsgError("Informe o valor total da nota fiscal");
+				all = false;
+			}
+			if (notaFiscal.getItens().isEmpty()) {
+				Msg.addMsgError("Não é possível cadastrar nota fiscal sem produto");
+				all = false;
+			}
+			if (!all) {
+				System.out.println("...Erro ao cadastrar nota: nota fiscal já existe");
+			} else {
+				if (notaFiscal.getValor().equals(getValorTotalProdutos())) {
+					DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
+					Msg.addMsgInfo("Nota Fiscal alterada com sucesso");
+					dao.atualiza(notaFiscal);
+					notaFiscal = new NotaFiscal();
+					return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";	
+			} else {
+				System.out.println("...Erro: o valor da nota fiscal deve ser o mesmo ao total de itens");
+				Msg.addMsgError("O valor total da nota fiscal deve ser igual ao valor dos produtos somados");
+				return null;
+				}
+			}
+			return null;
+		}
+	
 	// método para remover o item da lista de itens no cadastro de nota fiscal
 	public void removeItem() {
 		notaFiscal.getItens().remove(item);
@@ -102,7 +159,7 @@ public class NotaFiscalBean implements Serializable {
 
 	// validação para não cadastrar nº de nota fiscal para o mesmo fornecedor
 	public boolean validarNota() {
-		Query q = dao.query("SELECT n FROM NotaFiscal n WHERE numero = ? and fornecedor = ?");
+		Query q = dao.query("SELECT n FROM NotaFiscal n WHERE numero = ? and fornecedor = ? and status = true");
 		q.setParameter(1, notaFiscal.getNumero());
 		q.setParameter(2, notaFiscal.getFornecedor());
 
@@ -188,6 +245,18 @@ public class NotaFiscalBean implements Serializable {
 
 	public void setTotalValor(Double totalValor) {
 		this.totalValor = totalValor;
+	}
+
+	public void setNotasFiscais(List<NotaFiscal> notasFiscais) {
+		this.notasFiscais = notasFiscais;
+	}
+
+	public List<NotaFiscal> getNotasFiscais1() {
+		return notasFiscais1;
+	}
+
+	public void setNotasFiscais1(List<NotaFiscal> notasFiscais1) {
+		this.notasFiscais1 = notasFiscais1;
 	}
 	
 	

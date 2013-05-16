@@ -106,6 +106,7 @@
 					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="Informe a quantidade mínima de estoque"
 					min="0" max="100" title="Quantidade Mínima de Estoque">
 						<f:ajax event="blur" render="error_min" />
+						<f:validateLongRange minimum="0" />
 					</p:spinner>
 					<p:message id="error_min" for="prod_min" />
 					<br /><br />
@@ -178,7 +179,7 @@
 				<h:form id="form_dialog_edita">
 					
 					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos" paginator="true" rows="20"
-					paginatorPosition="bottom">
+					paginatorPosition="bottom" emptyMessage="Não encontrado">
 					
 						<p:column headerText="Código" filterBy="#{p.id}" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{p.id}" onclick="dlgEditaProduto.hide()"

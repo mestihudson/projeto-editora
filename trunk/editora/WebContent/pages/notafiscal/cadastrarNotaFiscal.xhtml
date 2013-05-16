@@ -11,6 +11,7 @@
 	
 	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
 		<h:outputText value="Nota Fiscal > Cadastrar Nota Fiscal" styleClass="title" rendered="#{notaFiscalBean.notaFiscal.id==null}" style="line-height: 20px;" />
+		<h:outputText value="Nota Fiscal > Editar Nota Fiscal" styleClass="title" rendered="#{notaFiscalBean.notaFiscal.id!=null}" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" />
 	</div>
 	</ui:define>
@@ -35,27 +36,20 @@
 			<h:form id="form_cadastrar_nota" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="CADASTRAR NOTA FISCAL" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="CADASTRAR NOTA FISCAL" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{notaFiscalBean.notaFiscal.id==null}" />
+				<h:outputText value="EDITAR NOTA FISCAL" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{notaFiscalBean.notaFiscal.id!=null}" />
 			</div>	
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
 			
-<!-- 			<h:panelGrid id="botton" columns="3" style="float: right;"> -->
+			<div align="right">
 			
-<!-- 				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaProduto.show();" style="float: right; cursor: pointer;" -->
-<!-- 					title="Altera os dados do livro(obra) cadastrado no sistema" styleClass="acende" /> -->
-			
-<!-- 				<h:graphicImage value="/resources/img/tipo-produto.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;" -->
-<!-- 					title="Adicionar novo tipo de produto" styleClass="acende" /> -->
-					
-<!-- 				<h:graphicImage value="/resources/img/categoria.png" onclick="dlgCategoria.show();" style="float: right; cursor: pointer;" -->
-<!-- 					title="Adicionar nova categoria" styleClass="acende" />	 -->
-			
-<!-- 			</h:panelGrid> -->
-					
-<!-- 					<p:focus context="prod_nome" for="prod_nome" /> -->
-					
-					<br />
+				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaNota.show();" style="float: right; cursor: pointer;"
+					title="Altera os dados da nota fiscal" styleClass="acende" />
+								
+			</div>
+			<br /><br />
+										
 					<p:panel header="Dados da Nota Fiscal" style="width: 92%; margin-left: 10px;">
 					
 					<h:panelGrid id="grid" columns="8">
@@ -63,8 +57,14 @@
 					<h:outputLabel value="Fornecedor" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" converter="genericConverter"
-					required="true" requiredMessage="Informe o fornecedor" styleClass="input">
+					required="true" requiredMessage="Informe o fornecedor" styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id==null}">
 						<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
+							<f:ajax event="blur" render="mgsg" />
+					</p:selectOneMenu>
+					
+					<p:selectOneMenu id="fornecedor2" value="#{notaFiscalBean.notaFiscal.fornecedor}" converter="genericConverter" disabled="true"
+					styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id!=null}">
 						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
 							<f:ajax event="blur" render="mgsg" />
 					</p:selectOneMenu>
@@ -72,13 +72,17 @@
 										
 					<h:outputLabel value="Número" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="numero" value="#{notaFiscalBean.notaFiscal.numero}"
+					<p:inputText id="numero" value="#{notaFiscalBean.notaFiscal.numero}" rendered="#{notaFiscalBean.notaFiscal.id==null}"
 					required="true" requiredMessage="Informe o número da nota fiscal">
+						<f:ajax event="blur" render="mgsg" />
+					</p:inputText>
+					
+					<p:inputText id="numero2" value="#{notaFiscalBean.notaFiscal.numero}" disabled="true" rendered="#{notaFiscalBean.notaFiscal.id!=null}">
 						<f:ajax event="blur" render="mgsg" />
 					</p:inputText>
 					<br /><br />
 					
-					<h:outputLabel value="Data de Emissão" styleClass="OutPut" />
+					<h:outputLabel value="Data de emissão" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:calendar id="emissao" effect="slideDown" showButtonPanel="true" navigator="true"
 							value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" validatorMessage="Data inválida"
@@ -87,7 +91,7 @@
 						</p:calendar>
 					<br /><br />
 					
-					<h:outputLabel value="Data de Entrada" styleClass="OutPut" />
+					<h:outputLabel value="Data de entrada" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:calendar id="entrada" effect="slideDown" showButtonPanel="true" navigator="true"
 							value="#{notaFiscalBean.notaFiscal.dataEntrada.time}" required="true" validatorMessage="Data inválida"
@@ -96,7 +100,7 @@
 						</p:calendar>
 					<br /><br />
 					
-					<h:outputLabel value="Valor Total da Nota" styleClass="OutPut" />
+					<h:outputLabel value="Valor total da nota" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="valor" value="#{notaFiscalBean.notaFiscal.valor}"
 					required="true" requiredMessage="Informe o valor total da nota fiscal">
@@ -110,7 +114,7 @@
 					</p:panel>
 					<br />
 					
-					<p:panel header="Dados do Produto" style="width: 92%; margin-left: 10px;">
+					<p:panel header="Dados do Produto" style="width: 92%; margin-left: 10px;" rendered="#{notaFiscalBean.notaFiscal.id==null}">
 					
 					<h:panelGrid columns="6">
 					
@@ -157,7 +161,7 @@
 					<p:message id="error_qtd" for="qtd" />
 					<br /><br />
             		
-            		<h:outputLabel value="Valor de Custo" styleClass="OutPut" />
+            		<h:outputLabel value="Valor de custo" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="valorCusto" value="#{notaFiscalBean.item.valorCusto}">
 						<f:ajax event="blur" render="error_valorCusto" />
@@ -166,7 +170,7 @@
 					<p:message id="error_valorCusto" for="valorCusto" />
 					<br /><br />
 					
-					<h:outputLabel value="Valor de Venda" styleClass="OutPut" />
+					<h:outputLabel value="Valor de venda" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="valorVenda" value="#{notaFiscalBean.item.valorVenda}">
 						<f:ajax event="blur" render="error_valorVenda" />
@@ -236,7 +240,7 @@
 												
 						<p:column style="text-align: center;" width="15">
 
-						<p:commandLink action="#{notaFiscalBean.removeItem}" ajax="false"
+						<p:commandLink action="#{notaFiscalBean.removeItem}" ajax="false" rendered="#{notaFiscalBean.notaFiscal.id==null}"
 							style="text-align: center; float: center;"
 							update=":form_cadastrar_nota:itens" immediate="true">
 							<p:graphicImage value="/resources/img/remover.png" title="Remover item" />
@@ -272,9 +276,13 @@
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{notaFiscalBean.addNota}" value="Cadastrar" ajax="false" icon="ui-icon-check" update=":form_cadastrar_nota:grid">
-						<f:ajax render="@form" />
-					</p:commandButton>&nbsp;
+				<p:commandButton action="#{notaFiscalBean.addNota}" value="Cadastrar" ajax="false" icon="ui-icon-check" update=":form_cadastrar_nota:grid" rendered="#{notaFiscalBean.notaFiscal.id==null}">
+					<f:ajax render="@form" />
+				</p:commandButton>
+				
+				<p:commandButton action="#{notaFiscalBean.alterNota}" value="Editar" ajax="false" icon="ui-icon-pencil" update=":form_cadastrar_nota:grid" rendered="#{notaFiscalBean.notaFiscal.id!=null}">
+					<f:ajax render="@form" />
+				</p:commandButton>&nbsp;
 					
 				<p:commandButton action="cadastrarNotaFiscal.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />	
 			</div><br />
@@ -350,23 +358,24 @@
 			
 <!-- 			Aqui começa o dialog para Editar Produto -->
 			
-			<p:dialog header="Editar Livro" 
-			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
+			<p:dialog header="Editar Nota Fiscal" 
+			widgetVar="dlgEditaNota" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
-					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos">
+					<p:dataTable value="#{notaFiscalBean.ativados}" var="n" id="tb_notas" paginator="true" rows="20" paginatorPosition="bottom"
+					emptyMessage="Não encontrado">
 					
-						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
-							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
+						<p:column headerText="Número" filterBy="#{n.numero}" filterMatchMode="exact" style="text-align: center;">
+							<h:commandLink value="#{n.numero}" onclick="dlgEditaNota.hide()"
 								id="link_codigo">
-								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{n}" />
 							</h:commandLink>
 						</p:column>	
 						
-						<p:column headerText="Produto" filterBy="#{p.nome}" filterMatchMode="contains">
-							<h:commandLink value="#{p.nome}" onclick="dlgEditaProduto.hide()"
+						<p:column headerText="Fornecedor" filterBy="#{n.fornecedor.nome}" filterMatchMode="contains">
+							<h:commandLink value="#{n.fornecedor.nome}" onclick="dlgEditaNota.hide()"
 								id="link_codigo2">
-								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
+								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{n}" />
 							</h:commandLink>
 						</p:column>			
 					

@@ -19,7 +19,7 @@
 	<ui:define name="opcion">
 		<div id="livro/outros">
 		
-			<div id="livro" style="background: #FFFFE4; height: 55px; width: 50%; float: left;" >
+			<div id="livro" style="background: #FFFFE4; height: 55px; width: 50%; float: left; text-align: center;" >
 			<br />
 				<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
 					<h:outputText value="PRODUTO" styleClass="OutPut"/>
@@ -28,7 +28,7 @@
 				</p:commandLink>
 			</div>
 
-			<div id="outros" style="background: #EFF3FA; height: 55px; width: 50%; float: right;" >
+			<div id="outros" style="background: #EFF3FA; height: 55px; width: 50%; float: right; text-align: center;" >
 			<br />
 				<p:commandLink action="/pages/produto/cadastrarProdutoOutros.xhtml?faces-redirect=true">
 					<h:outputText value="PRODUTO" styleClass="OutPut" />
@@ -158,8 +158,9 @@
 					<h:outputLabel value="Quant. mínima de estoque" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="Informe a quantidade mínima de estoque"
-					min="0" max="100" title="Quantidade Mínima de Estoque">
+					min="0" max="100" title="Quantidade Mínima de Estoque" validatorMessage="Quantidade mínima de estoque inválida">
 						<f:ajax event="blur" render="error_min" />
+						<f:validateLongRange minimum="0" />
 					</p:spinner>
 					<p:message id="error_min" for="prod_min" />
 					<br /><br />
@@ -276,9 +277,9 @@
 				<h:form id="form_dialog_edita">
 					
 					<p:dataTable value="#{produtoBean.tiposId1}" var="p" id="tb_produtos" paginator="true" rows="20" 
-					paginatorPosition="bottom">
+					paginatorPosition="bottom" emptyMessage="Nenhuma obra encontrada">
 					
-						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
+						<p:column headerText="ISBN" filterBy="#{p.isbn}" filterMaxLength="13" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
 								id="link_codigo">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />

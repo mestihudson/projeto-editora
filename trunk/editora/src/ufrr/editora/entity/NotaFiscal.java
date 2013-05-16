@@ -39,11 +39,11 @@ public class NotaFiscal implements Serializable {
 	
 	@ManyToOne
 	private Fornecedor fornecedor;
+	
+	private Boolean status;
 
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="notaFiscal")
 	private List<Item> itens = new ArrayList<Item>();
-	
-	
 	
 	
 	//get and set
@@ -103,5 +103,79 @@ public class NotaFiscal implements Serializable {
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataEmissao == null) ? 0 : dataEmissao.hashCode());
+		result = prime * result
+				+ ((dataEntrada == null) ? 0 : dataEntrada.hashCode());
+		result = prime * result
+				+ ((fornecedor == null) ? 0 : fornecedor.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
+		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NotaFiscal other = (NotaFiscal) obj;
+		if (dataEmissao == null) {
+			if (other.dataEmissao != null)
+				return false;
+		} else if (!dataEmissao.equals(other.dataEmissao))
+			return false;
+		if (dataEntrada == null) {
+			if (other.dataEntrada != null)
+				return false;
+		} else if (!dataEntrada.equals(other.dataEntrada))
+			return false;
+		if (fornecedor == null) {
+			if (other.fornecedor != null)
+				return false;
+		} else if (!fornecedor.equals(other.fornecedor))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (itens == null) {
+			if (other.itens != null)
+				return false;
+		} else if (!itens.equals(other.itens))
+			return false;
+		if (numero == null) {
+			if (other.numero != null)
+				return false;
+		} else if (!numero.equals(other.numero))
+			return false;
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
+			return false;
+		return true;
+	}
+	
+	
 
 }
