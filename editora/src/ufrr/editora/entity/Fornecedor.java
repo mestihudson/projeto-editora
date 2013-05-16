@@ -193,7 +193,129 @@ public class Fornecedor implements Serializable, BaseEntity {
 	public void setTipoConta(String tipoConta) {
 		this.tipoConta = tipoConta;
 	}
-	
-	
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agencia == null) ? 0 : agencia.hashCode());
+		result = prime * result + ((banco == null) ? 0 : banco.hashCode());
+		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
+		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result
+				+ ((operacao == null) ? 0 : operacao.hashCode());
+		result = prime * result + ((pis == null) ? 0 : pis.hashCode());
+		result = prime * result
+				+ ((porcentagem == null) ? 0 : porcentagem.hashCode());
+		result = prime * result
+				+ ((telefone1 == null) ? 0 : telefone1.hashCode());
+		result = prime * result
+				+ ((telefone2 == null) ? 0 : telefone2.hashCode());
+		result = prime * result
+				+ ((tipoConta == null) ? 0 : tipoConta.hashCode());
+		result = prime * result
+				+ ((titularConta == null) ? 0 : titularConta.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fornecedor other = (Fornecedor) obj;
+		if (agencia == null) {
+			if (other.agencia != null)
+				return false;
+		} else if (!agencia.equals(other.agencia))
+			return false;
+		if (banco == null) {
+			if (other.banco != null)
+				return false;
+		} else if (!banco.equals(other.banco))
+			return false;
+		if (cnpj == null) {
+			if (other.cnpj != null)
+				return false;
+		} else if (!cnpj.equals(other.cnpj))
+			return false;
+		if (conta == null) {
+			if (other.conta != null)
+				return false;
+		} else if (!conta.equals(other.conta))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (endereco == null) {
+			if (other.endereco != null)
+				return false;
+		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (operacao == null) {
+			if (other.operacao != null)
+				return false;
+		} else if (!operacao.equals(other.operacao))
+			return false;
+		if (pis == null) {
+			if (other.pis != null)
+				return false;
+		} else if (!pis.equals(other.pis))
+			return false;
+		if (porcentagem == null) {
+			if (other.porcentagem != null)
+				return false;
+		} else if (!porcentagem.equals(other.porcentagem))
+			return false;
+		if (telefone1 == null) {
+			if (other.telefone1 != null)
+				return false;
+		} else if (!telefone1.equals(other.telefone1))
+			return false;
+		if (telefone2 == null) {
+			if (other.telefone2 != null)
+				return false;
+		} else if (!telefone2.equals(other.telefone2))
+			return false;
+		if (tipoConta == null) {
+			if (other.tipoConta != null)
+				return false;
+		} else if (!tipoConta.equals(other.tipoConta))
+			return false;
+		if (titularConta == null) {
+			if (other.titularConta != null)
+				return false;
+		} else if (!titularConta.equals(other.titularConta))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
+	
+	
+	
 }

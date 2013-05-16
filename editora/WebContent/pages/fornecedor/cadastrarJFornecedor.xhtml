@@ -138,8 +138,9 @@
 					<h:outputLabel value="Porcentagem de Pagamento" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:spinner id="forn_porcento" value="#{fornecedorBean.fornecedor.porcentagem}" size="5" required="true" requiredMessage="Informe a porcentagem de pagamento"
-					min="0" max="100">
+					min="0" max="100" validatorMessage="Valor inválido">
 						<f:ajax event="blur" render="error_porcento" />
+						<f:validateLongRange minimum="0" />
 					</p:spinner>
 					<p:message id="error_porcento" for="forn_porcento" />
 					<br /><br />
