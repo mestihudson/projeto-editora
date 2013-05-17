@@ -157,7 +157,7 @@
 					<p:spinner id="qtd" value="#{notaFiscalBean.item.quantidade}" size="5"
 					min="0" max="100" validatorMessage="Quantidade inválida">
 						<f:ajax event="blur" render="error_qtd" />
-						<f:validateLongRange minimum="1" />
+						<f:validateLongRange minimum="0" />
 					</p:spinner>
 					<p:message id="error_qtd" for="qtd" />
 					<br /><br />
