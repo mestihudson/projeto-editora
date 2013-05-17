@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_nota_fiscal")
@@ -45,6 +46,9 @@ public class NotaFiscal implements Serializable {
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="notaFiscal")
 	private List<Item> itens = new ArrayList<Item>();
 	
+	@Transient
+	@ManyToOne
+	private Usuario usuario;
 	
 	//get and set
 
@@ -110,6 +114,14 @@ public class NotaFiscal implements Serializable {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

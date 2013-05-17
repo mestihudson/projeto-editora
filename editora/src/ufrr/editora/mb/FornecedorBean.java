@@ -174,6 +174,16 @@ public class FornecedorBean implements Serializable {
 		}
 		return nomes;
 	}
+	
+	// AutoComplete de nome
+	public List<String> autocompleteFornecedor(String nome) {
+		List<Fornecedor> array = dao.getAllByName("nome", nome);
+		ArrayList<String> nomes = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			nomes.add(array.get(i).getNome());
+		}
+		return nomes;
+	}
 
 	/** actions **/
 

@@ -25,6 +25,7 @@ public class DAO<T> implements Serializable, GenericDAO<T, ID> {
 		return this.classe;
 	}
 	
+//	para String
 	@SuppressWarnings("unchecked")
 	public List<T> getAllByName(String field, String name) {
 		String querySelect = "SELECT obj FROM " + classe.getSimpleName() + " obj WHERE upper(" + field + ") like upper('%" + name + "%')";
