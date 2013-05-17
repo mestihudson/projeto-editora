@@ -155,28 +155,31 @@
             		<h:outputLabel value="Quantidade" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:spinner id="qtd" value="#{notaFiscalBean.item.quantidade}" size="5"
-					min="0" max="100">
+					min="0" max="100" validatorMessage="Quantidade inválida">
 						<f:ajax event="blur" render="error_qtd" />
+						<f:validateLongRange minimum="1" />
 					</p:spinner>
 					<p:message id="error_qtd" for="qtd" />
 					<br /><br />
             		
             		<h:outputLabel value="Valor de custo" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="valorCusto" value="#{notaFiscalBean.item.valorCusto}">
+					<p:inputText id="valorCusto" value="#{notaFiscalBean.item.valorCusto}" validatorMessage="Valor de custo inválido">
 						<f:ajax event="blur" render="error_valorCusto" />
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+						<f:validateDoubleRange minimum="0" />
 					</p:inputText>
 					<p:message id="error_valorCusto" for="valorCusto" />
 					<br /><br />
 					
 					<h:outputLabel value="Valor de venda" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="valorVenda" value="#{notaFiscalBean.item.valorVenda}">
+					<p:inputText id="valorVenda" value="#{notaFiscalBean.item.valorVenda}" validatorMessage="Valor de venda inválido">
 						<f:ajax event="blur" render="error_valorVenda" />
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
+						<f:validateDoubleRange minimum="0" />
 					</p:inputText>
-					<p:message id="error_valorVenda" for="valorCusto" />
+					<p:message id="error_valorVenda" for="valorVenda" />
 					<br /><br />
 					
 					</h:panelGrid>
