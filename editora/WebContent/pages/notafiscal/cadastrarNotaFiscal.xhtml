@@ -63,11 +63,10 @@
 							<f:ajax event="blur" render="mgsg" />
 					</p:selectOneMenu>
 					
-					<p:selectOneMenu id="fornecedor2" value="#{notaFiscalBean.notaFiscal.fornecedor}" converter="genericConverter" disabled="true"
+					<p:inputText id="fornecedor2" value="#{notaFiscalBean.notaFiscal.fornecedor.nome}" disabled="true"
 					styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id!=null}">
-						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
-							<f:ajax event="blur" render="mgsg" />
-					</p:selectOneMenu>
+						<f:ajax event="blur" render="mgsg" />
+					</p:inputText>
 					<br /><br />
 										
 					<h:outputLabel value="Número" styleClass="OutPut" />

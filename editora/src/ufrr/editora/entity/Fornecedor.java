@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -60,7 +59,6 @@ public class Fornecedor implements Serializable, BaseEntity {
 	@JoinColumn(name="fk_endereco")
 	private Endereco endereco;
 	
-	@Transient
 	@ManyToOne
 	private Usuario usuario;
 		

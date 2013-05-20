@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_nota_fiscal")
@@ -46,7 +45,6 @@ public class NotaFiscal implements Serializable {
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="notaFiscal")
 	private List<Item> itens = new ArrayList<Item>();
 	
-	@Transient
 	@ManyToOne
 	private Usuario usuario;
 	
@@ -137,6 +135,8 @@ public class NotaFiscal implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
 	}
@@ -180,6 +180,16 @@ public class NotaFiscal implements Serializable {
 				return false;
 		} else if (!numero.equals(other.numero))
 			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
 		if (valor == null) {
 			if (other.valor != null)
 				return false;
@@ -187,7 +197,6 @@ public class NotaFiscal implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
+	
 }

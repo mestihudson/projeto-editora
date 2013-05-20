@@ -27,21 +27,21 @@
 				</p:commandLink>
 			</div>
 			
-			<div id="outros" style="background: #EFF3FA; height: 55px; width: 25%; float: left;" >
-			<br />
-				<p:commandLink action="/pages/produto/listarOutrosProdutos.xhtml?faces-redirect=true">
-					<h:outputText value="CONSULTAR" styleClass="OutPut" />
-					<br />
-					<h:outputText value="OUTROS PRODUTOS" styleClass="OutPut" />
-				</p:commandLink>
-			</div>
-			
 			<div id="ativarL" style="background: #EFF3FA; height: 55px; width: 25%; float: left;" >
 			<br />
 				<p:commandLink action="/pages/produto/ativarProdutos.xhtml?faces-redirect=true">
 					<h:outputText value="LIVROS" styleClass="OutPut" />
 					<br />
 					<h:outputText value="DESATIVADOS" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+			
+			<div id="outros" style="background: #EFF3FA; height: 55px; width: 25%; float: left;" >
+			<br />
+				<p:commandLink action="/pages/produto/listarOutrosProdutos.xhtml?faces-redirect=true">
+					<h:outputText value="CONSULTAR" styleClass="OutPut" />
+					<br />
+					<h:outputText value="OUTROS PRODUTOS" styleClass="OutPut" />
 				</p:commandLink>
 			</div>
 			
@@ -82,64 +82,35 @@
 				<h:outputText value="LISTAR PRODUTOS" style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.id==null}" />
 			</div>
 			
-			<p:focus context="form_listar_produto" for="dt:codigo" />
+<!-- 			<p:focus context="form_listar_produto" for="dt:codigo" /> -->
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
-					
-					<p:dataTable id="dt" value="#{produtoBean.produtosDesativados}" var="p"
-					paginator="true" rows="10" paginatorPosition="bottom" emptyMessage="Nenhum produto encontrado"
-					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
-					scrollable="true" scrollHeight="400">
-					
-						<p:column width="100" 
-						style="text-align: center;"
-						headerText="Código" filterBy="#{p.id}" filterMatchMode="exact" id="codigo">
-							<p:commandLink value="#{p.id}" onclick="dlgD.show();" update=":form_dialog:display">
-								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
-							</p:commandLink>
-						</p:column>
 
-						<p:column width="400" 
-						headerText="Descrição" filterBy="#{p.nome}" filterMatchMode="contains">
-							<p:commandLink value="#{p.nome}" onclick="dlgD.show();" update=":form_dialog:display">
-								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
-							</p:commandLink>
-						</p:column>	
-						
-						<p:column headerText="Tipo de Produto" filterBy="#{p.tipo.nome}" filterMatchMode="contains">
-							<h:outputText value="#{p.tipo.nome}" />
-						</p:column>
-						
-						<p:column width="100"
-						style="text-align: center; float: center;">
-						
-						<p:commandButton value="Ativar" icon="ui-icon-check" rendered="#{loginBean.usuario.perfil.id!=3}"
-							action="#{produtoBean.ativar}" ajax="false"
-							style="text-align: center; float: center;"
-							update=":form_listar_produto:dt">
-							<f:ajax render="@all" />
-							<f:setPropertyActionListener id="parametro"
-								target="#{produtoBean.produto}" value="#{p}" />
-						</p:commandButton>
-						
-						<p:commandButton value="Ativar" icon="ui-icon-check" rendered="#{loginBean.usuario.perfil.id==3}"
-							action="#{produtoBean.ativar}" ajax="false" disabled="true"
-							style="text-align: center; float: center;"
-							update=":form_listar_produto:dt">
-							<f:ajax render="@all" />
-							<f:setPropertyActionListener id="parametro"
-								target="#{produtoBean.produto}" value="#{p}" />
-						</p:commandButton>
-						</p:column>
+					<p:dataGrid id="dt" value="#{produtoBean.produtosDesativados}"
+						var="p" columns="3" rows="12" paginator="true"
+						paginatorPosition="bottom">
 
-					</p:dataTable>
-			
+						<p:panel header="#{p.tipo.nome}" footer="Código: #{p.id}"
+							style="text-align:center">
+							<h:panelGrid columns="1" style="width:100%">
+							
+								<h:outputText value="Descrição: #{p.nome}" />
+								
+								<h:outputText value="Status" />
+								<h:outputText value="Ativado" rendered="#{p.ativado==true}" style="color: blue;" />
+								<h:outputText value="Desativado" rendered="#{p.ativado==false}" style="color: red;" />
+
+							</h:panelGrid>
+						</p:panel>
+
+					</p:dataGrid>
+
 			</fieldset><br />
-			
-			<div align="left" style="width: 350px; margin-right: 500px;">
+
+				<div align="left" style="width: 350px; margin-right: 500px;">
 					<p:messages autoUpdate="true" />
 				</div>
-			
+
 			</h:form>	
 			
 		</div>		
