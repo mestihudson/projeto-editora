@@ -86,6 +86,18 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<EnviaEmail> emails = new ArrayList<EnviaEmail>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<TipoProduto> tipos = new ArrayList<TipoProduto>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<Categoria> categorias = new ArrayList<Categoria>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<NotaFiscal> notasFiscais = new ArrayList<NotaFiscal>();
 		
 	
 //	get and set
@@ -241,5 +253,29 @@ public class Usuario implements Serializable, BaseEntity {
 	public void setEmails(Collection<EnviaEmail> emails) {
 		this.emails = emails;
 	}
-		
+
+	public Collection<TipoProduto> getTipos() {
+		return tipos;
+	}
+
+	public void setTipos(Collection<TipoProduto> tipos) {
+		this.tipos = tipos;
+	}
+
+	public Collection<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(Collection<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public Collection<NotaFiscal> getNotasFiscais() {
+		return notasFiscais;
+	}
+
+	public void setNotasFiscais(Collection<NotaFiscal> notasFiscais) {
+		this.notasFiscais = notasFiscais;
+	}
+			
 }

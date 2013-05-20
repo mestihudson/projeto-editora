@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import ufrr.editora.converter.BaseEntity;
 
@@ -43,7 +42,6 @@ public class Produto implements Serializable, BaseEntity {
 	@JoinColumn(name="fk_categoria")
 	private Categoria categoria;
 	
-	@Transient
 	@ManyToOne
 	private Usuario usuario;
 
@@ -146,6 +144,7 @@ public class Produto implements Serializable, BaseEntity {
 				* result
 				+ ((quantidadeMinima == null) ? 0 : quantidadeMinima.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -203,8 +202,15 @@ public class Produto implements Serializable, BaseEntity {
 				return false;
 		} else if (!tipo.equals(other.tipo))
 			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
 		return true;
 	}
+
+	
 	
 	
 

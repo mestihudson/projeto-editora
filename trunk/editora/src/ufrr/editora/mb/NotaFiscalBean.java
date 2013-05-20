@@ -14,6 +14,7 @@ import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Item;
 import ufrr.editora.entity.NotaFiscal;
 import ufrr.editora.entity.Produto;
+import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 import ufrr.editora.validator.Validator;
 
@@ -91,6 +92,7 @@ public class NotaFiscalBean implements Serializable {
 			return null;
 		}
 		
+		
 		/** Autocompletes **/
 
 		
@@ -100,7 +102,7 @@ public class NotaFiscalBean implements Serializable {
 	public List<NotaFiscal> getNotasFiscais() {
 		if (notasFiscais == null) {
 			System.out.println("Carregando notas fiscais...");
-			notasFiscais = new DAO<NotaFiscal>(NotaFiscal.class).getAllOrder("fornecedor.nome, numero");
+			notasFiscais = new DAO<NotaFiscal>(NotaFiscal.class).getAllOrder("fornecedor.nome, numero, status");
 		}
 		return notasFiscais;
 	}
@@ -136,6 +138,10 @@ public class NotaFiscalBean implements Serializable {
 			System.out.println("...Erro ao cadastrar nota: nota fiscal já existe");
 		} else {
 			if (notaFiscal.getValor().equals(getValorTotalProdutos())) {
+				this.getNotaFiscal().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getNotasFiscais().add(notaFiscal);
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
 				notaFiscal.setStatus(true);

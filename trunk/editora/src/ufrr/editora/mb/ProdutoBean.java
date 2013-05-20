@@ -9,9 +9,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.persistence.Query;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Produto;
+import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 import ufrr.editora.validator.Validator;
 
@@ -30,7 +32,7 @@ public class ProdutoBean implements Serializable {
 	private DAO<Produto> dao = new DAO<Produto>(Produto.class);
 	private Validator<Produto> validator;
 	private String search;
-	private String box4Search;
+	private Integer box4Search;
 
 	@PostConstruct
 	public void init() {
@@ -38,7 +40,7 @@ public class ProdutoBean implements Serializable {
 		produto = new Produto();
 		validator = new Validator<Produto>(Produto.class);
 		search = "";
-		box4Search = "isbn";
+		box4Search = 1;
 	}
 
 	/** List Products **/
@@ -46,7 +48,7 @@ public class ProdutoBean implements Serializable {
 	public List<Produto> getProdutos() {
 		if (produtos == null) {
 			System.out.println("Carregando produtos...");
-			produtos = new DAO<Produto>(Produto.class).getAllOrder("nome");
+			produtos = new DAO<Produto>(Produto.class).getAllOrder("tipo.nome, nome, ativado");
 		}
 		return produtos;
 	}
@@ -141,32 +143,71 @@ public class ProdutoBean implements Serializable {
 		}
 		return produtos1;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public String getProdutoByIsbn() {
 
-	// Pesquisar
-	public void check(AjaxBehaviorEvent event) {
-		if (produto.getNome().equals("")) {
+		try {
+			Query query = dao.query("SELECT p FROM Produto p WHERE p.isbn=?");
+			query.setParameter(1, produto.getIsbn());
+			produtos = query.getResultList();
+			if (produtos.isEmpty()) {
+				init();
+				Msg.addMsgError("Nenhum registro encontrado");
+				produtos = query.getResultList();
+			}
 
-		} else {
-			if (produto.getNome().contains("'")
-					|| produto.getNome().contains("@")
-					|| produto.getNome().contains("/")
-					|| produto.getNome().contains("*")) {
-				Msg.addMsgError("Contém caracter(es) inválido(s)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String getProdutoById() {
+
+		try {
+			Query query = dao.query("SELECT p FROM Produto p WHERE p.id=? and p.isbn is null");
+			query.setParameter(1, produto.getId());
+			produtos = query.getResultList();
+			if (produtos.isEmpty()) {
+				init();
+				Msg.addMsgError("Nenhum registro encontrado");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// Pesquisa produtos pela descrição e isbn
+	public String getListaProdutos() {
+
+		if (box4Search.equals(1)) {
+			if (search.contains("'") || search.contains("@")
+					|| search.contains("/") || search.contains("*")) {
+				init();
+				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				return null;
 			} else {
-				if (produto.getNome().length() <= 2) {
-					Msg.addMsgError("Informe pelo menos 3 caracteres");
-
+				if (search.length() <= 4) {
+					init();
+					Msg.addMsgError("Informe pelo menos 5 caracteres");
+					return null;
 				} else {
-					produtos = dao.getAllByName("nome", produto.getNome());
-					if (produtos.isEmpty()) {
+					produtos = dao.getAllByName("obj.nome", search);
+					if (getAtivados().isEmpty()) {
+						init();
 						Msg.addMsgError("Nenhum registro encontrado");
 					} else {
-						Integer count = produtos.size();
-						Msg.addMsgError(count + "registro(s) encontrado(s)");
+						return null;
 					}
 				}
 			}
+
 		}
+		return null;
 	}
 
 	/** actions **/
@@ -192,6 +233,10 @@ public class ProdutoBean implements Serializable {
 						.println("...Erro ao cadastrar produto: produto já existe");
 				return null;
 			} else {
+				this.getProduto().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getProdutos().add(produto);
 				produto.setAtivado(true);
 				dao.adiciona(produto);
 				this.produto = new Produto();
@@ -222,6 +267,10 @@ public class ProdutoBean implements Serializable {
 				System.out.println("...Erro ao cadastrar produto: produto já existe");
 				return null;
 			} else {
+				this.getProduto().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getProdutos().add(produto);
 				produto.setAtivado(true);
 				dao.adiciona(produto);
 				this.produto = new Produto();
@@ -296,18 +345,13 @@ public class ProdutoBean implements Serializable {
 		return null;
 	}
 
-	// Desativa qualquer tipo de produto
-	public void desativar() {
-		if (produto.getId() != null) {
+	// ativar/desativar produto
+	public void alterStatus() {
+		if (produto.getAtivado()==true) {
 			Msg.addMsgInfo("Produto desativado");
 			produto.setAtivado(false);
 			dao.atualiza(produto);
-		}
-	}
-
-	// Reativa qualquer tipo de produto
-	public void ativar() {
-		if (produto.getId() != null) {
+		}else {
 			Msg.addMsgInfo("Produto reativado");
 			produto.setAtivado(true);
 			dao.atualiza(produto);
@@ -393,6 +437,28 @@ public class ProdutoBean implements Serializable {
 		}
 		return nomes;
 	}
+	
+	// AutoComplete de nome e isbn
+
+		public List<String> autocompleteNome(String nome) {
+			ArrayList<String> nomes = new ArrayList<String>();
+			if (box4Search.equals(2)) {
+				if (!search.contains("'")) {
+					List<Produto> array = dao.getAllByName("nome", nome);
+					for (int i = 0; i < array.size(); i++) {
+						nomes.add(array.get(i).getNome());
+					}
+				}
+			} else if (box4Search.equals(1)) {
+				if (!search.contains("'")) {
+					List<Produto> array = dao.getAllByName("editora", nome);
+					for (int i = 0; i < array.size(); i++) {
+						nomes.add(array.get(i).getEditora());
+					}
+				}
+			}
+			return nomes;
+		}
 
 	/** Get and Set **/
 
@@ -448,11 +514,11 @@ public class ProdutoBean implements Serializable {
 		this.search = search;
 	}
 
-	public String getBox4Search() {
+	public Integer getBox4Search() {
 		return box4Search;
 	}
 
-	public void setBox4Search(String box4Search) {
+	public void setBox4Search(Integer box4Search) {
 		this.box4Search = box4Search;
 	}
 
@@ -471,5 +537,5 @@ public class ProdutoBean implements Serializable {
 	public boolean validarNome_nome() {
 		return validator.validarNome(produto.getNome());
 	}
-	
+
 }

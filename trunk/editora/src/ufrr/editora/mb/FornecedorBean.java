@@ -13,6 +13,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Endereco;
 import ufrr.editora.entity.Fornecedor;
+import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 import ufrr.editora.validator.Validator;
 
@@ -227,6 +228,10 @@ public class FornecedorBean implements Serializable {
 						Msg.addMsgError("Campo Op serve somente para a opção de banco Caixa");
 						return null;	
 				}else
+				this.getFornecedor().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getFornecedores().add(fornecedor);
 				fornecedor.setEndereco(endereco);
 				dao.adiciona(fornecedor);
 				this.endereco = new Endereco();

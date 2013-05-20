@@ -105,17 +105,17 @@
 				<div align="left" style="width: 350px; margin-right: 500px;">
 					<p:messages autoUpdate="true" id="msgs" />
 				</div>
-				
-				<p:ajaxStatus>
-				<f:facet name="start">
-					<h:graphicImage value="/resources/img/aguarde.gif" width="150"  />
-				</f:facet>
 
-				<f:facet name="complete">
-					<h:outputText value="" />
-				</f:facet>
-			</p:ajaxStatus>
-			
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<h:graphicImage value="/resources/img/aguarde.gif" width="150" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
 			</h:form>
 			
 <!-- 			Dialog para destinatário -->
@@ -123,7 +123,8 @@
 			<p:dialog header="Clique no email para identificar o destino" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
 		rendered="#{emailBean.email.destino==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
-				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios">
+				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios" paginator="true"
+				rows="15" paginatorPosition="bottom">
 					
 						<p:column headerText="Nome" filterBy="#{usuario.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()" id="link_nome">

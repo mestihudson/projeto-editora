@@ -60,7 +60,7 @@
 				<p:inputText value="#{fornecedorBean.search}" size="60" rendered="#{fornecedorBean.box4Search != 1 and fornecedorBean.box4Search != 2 and fornecedorBean.box4Search != 3}" disabled="true" />
 									
 				<p:autoComplete value="#{fornecedorBean.search}" completeMethod="#{fornecedorBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}" rendered="#{fornecedorBean.box4Search == 1}" 
-				minQueryLength="3" maxResults="5" queryDelay="300" id="autocompletePesquisar" size="60" />
+				minQueryLength="3" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="60" />
 				
 				<p:inputMask mask="99.999.999/9999-99" value="#{fornecedorBean.search}" rendered="#{fornecedorBean.box4Search == 2}" size="60" id="maskcnpj" />
 				

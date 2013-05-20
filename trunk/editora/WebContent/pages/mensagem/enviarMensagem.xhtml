@@ -90,7 +90,8 @@
 		<p:dialog header="Clique no nome da pessoa para escolher destinatário" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
 		rendered="#{mensagemBean.mensagem.destinatario==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
-				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios">
+				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios" paginator="true"
+				rows="15" paginatorPosition="bottom">
 					
 						<p:column headerText="Nome" filterBy="#{usuario.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()" id="link_nome">

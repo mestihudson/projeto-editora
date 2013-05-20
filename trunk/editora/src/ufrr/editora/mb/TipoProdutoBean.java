@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.TipoProduto;
+import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 
 @ManagedBean
@@ -16,6 +18,9 @@ import ufrr.editora.util.Msg;
 public class TipoProdutoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 
 	private TipoProduto tipo = new TipoProduto();
 	private List<TipoProduto> tipos;
@@ -73,6 +78,10 @@ public class TipoProdutoBean implements Serializable {
 				Msg.addMsgError("Nome extenso, retire alguns caracteres.");
 			} else {
 				if (tipo.getId() == null) {
+					this.getTipo().setUsuario(this.loginBean.getUsuario());
+					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+					u.getTipos().add(tipo);
 					Msg.addMsgInfo("Cadastro realizado com sucesso");
 					dao.adiciona(tipo);
 					this.tipo = new TipoProduto();
@@ -125,5 +134,14 @@ public class TipoProdutoBean implements Serializable {
 	public void setTipo1(List<TipoProduto> tipo1) {
 		this.tipo1 = tipo1;
 	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
+	}
+	
 
 }

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import ufrr.editora.converter.BaseEntity;
@@ -22,7 +23,11 @@ public class Categoria implements Serializable, BaseEntity {
 	
 	private String nome;
 	
-
+	@ManyToOne
+	private Usuario usuario;
+	
+	//get and set
+	
 	public Long getId() {
 		return id;
 	}
@@ -38,7 +43,18 @@ public class Categoria implements Serializable, BaseEntity {
 	public void setNome(String nome) {
 		this.nome = nome.toUpperCase();
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	//hash
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

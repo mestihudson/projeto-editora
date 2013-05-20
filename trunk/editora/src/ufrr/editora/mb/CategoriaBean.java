@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Categoria;
+import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 import ufrr.editora.validator.Validator;
 
@@ -19,6 +21,9 @@ import ufrr.editora.validator.Validator;
 public class CategoriaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 	
 	private Categoria categoria = new Categoria();
 	private List<Categoria> categorias;
@@ -34,7 +39,7 @@ public class CategoriaBean implements Serializable {
 		validator = new Validator<Categoria>(Categoria.class);
 		box4Search = "nome";
 	}
-	
+
 
 	/** Lista de categorias **/
 	
@@ -72,7 +77,11 @@ public class CategoriaBean implements Serializable {
 			if (!all) {
 				System.out.println("...Erro ao cadastrar categoria: nome já existe");
 				return null;
-			} else {					
+			} else {	
+				this.getCategoria().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getCategorias().add(categoria);
 				dao.adiciona(categoria);
 				this.categoria = new Categoria();
 				init();
@@ -159,6 +168,13 @@ public class CategoriaBean implements Serializable {
 		this.box4Search = box4Search;
 	}
 	
-	
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
+	}
 
 }
