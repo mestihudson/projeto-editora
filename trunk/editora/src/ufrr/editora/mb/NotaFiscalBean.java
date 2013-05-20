@@ -48,6 +48,26 @@ public class NotaFiscalBean implements Serializable {
 		box4Search = 2;
 	}
 	
+	// pesquisa nota pelo número
+	@SuppressWarnings("unchecked")
+	public String getNotaFiscalByNumero() {
+
+		try {
+			Query query = dao.query("SELECT n FROM NotaFiscal n WHERE n.numero=?");
+			query.setParameter(1, notaFiscal.getNumero());
+			notasFiscais = query.getResultList();
+			if (notasFiscais.isEmpty()) {
+				init();
+				Msg.addMsgError("Nenhum registro encontrado");
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	// Pesquisa nota fiscal pelo numero e fornecedor
 		public String getListaNotaFiscalByNumero() {
 
