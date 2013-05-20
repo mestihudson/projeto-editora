@@ -10,7 +10,7 @@
 	<ui:define name="head">
 	
 	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Listar > Livros" styleClass="title" style="line-height: 20px;" />
+		<h:outputText value="Pesquisar > Produtos" styleClass="title" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" />
 	</div>
 	</ui:define>
@@ -107,7 +107,7 @@
 									style="color: red;" />
 									
 								<p:commandLink update=":form_listar_produto" action="#{produtoBean.alterStatus}"
-									title="Reativar produto" rendered="#{p.ativado==false}">
+									title="Reativar produto" rendered="#{p.ativado==false and loginBean.usuario.perfil.id==1 or p.ativado==false and loginBean.usuario.perfil.id==2}">
 									<h:outputText styleClass="ui-icon ui-icon-circle-check"
 										title="Reativar produto" style="margin:0 auto;" />
 									<f:setPropertyActionListener value="#{p}"
@@ -115,7 +115,7 @@
 								</p:commandLink>
 								
 								<p:commandLink update=":form_listar_produto" action="#{produtoBean.alterStatus}"
-									title="Desativar produto" rendered="#{p.ativado==true}">
+									title="Desativar produto" rendered="#{p.ativado==true and loginBean.usuario.perfil.id==1 or p.ativado==true and loginBean.usuario.perfil.id==2}">
 									<h:outputText styleClass="ui-icon ui-icon-circle-close"
 										title="Desativar produto" style="margin:0 auto;" />
 									<f:setPropertyActionListener value="#{p}"

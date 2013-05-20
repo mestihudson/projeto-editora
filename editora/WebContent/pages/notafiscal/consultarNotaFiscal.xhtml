@@ -60,7 +60,7 @@
 							<f:ajax render="form_pesquisa_nota" />
 						</p:selectOneRadio>
 						
-						<p:inputText value="#{notaFiscalBean.search}" 
+						<p:inputText value="#{notaFiscalBean.notaFiscal.numero}" 
 							rendered="#{notaFiscalBean.box4Search == 1}" size="45"
 							id="numero" />	
 
@@ -71,9 +71,13 @@
 							maxResults="5" queryDelay="60" id="autocompletePesquisar"
 							size="45" />
 
-						<p:commandButton value="Pesquisar" id="botaoPesquisar" 
+						<p:commandButton value="Pesquisar" id="botaoPesquisar" rendered="#{notaFiscalBean.box4Search == 2}"
 							action="#{notaFiscalBean.getListaNotaFiscalByNumero}" ajax="false"
 							icon="ui-icon-search" />
+							
+						<p:commandButton value="Pesquisar" id="botaoPesquisar2" rendered="#{notaFiscalBean.box4Search == 1}"
+							action="#{notaFiscalBean.getNotaFiscalByNumero}" ajax="false"
+							icon="ui-icon-search" />	
 
 					</h:panelGrid>
 					<br />
