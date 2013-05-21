@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Estoque" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" />
+	</div>
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;" align="center">
+		
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+
+		
+		</div>
+		</h:form>	
+		
+			<h:form id="form_itens" rendered="#{loginBean.usuario.perfil.id!=4}">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 10px;" align="center" >
+				<h:outputText value="PRODUTOS" style="color: white; line-height: 20px;" styleClass="OutPut" />
+			</div>
+
+			<fieldset style="border: 1px solid #A6C9E2; border-top: 0;">
+			
+			<p:dataTable id="dt" value="#{itemBean.itens}" var="item" emptyMessage="Não encontrado"
+					scrollable="true" scrollHeight="400"
+					rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'highlight1' : 'highlight2'}" rowIndexVar="rowIndex">
+<!-- 					 rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"> -->
+
+						<p:column headerText="Produto" width="500" filterBy="#{item.produto.nome}" filterMatchMode="contains">
+							<h:outputText value="#{item.produto.tipo.nome} - " rendered="#{item.produto.tipo.id eq 1}" />
+							<h:outputText value="#{item.produto.nome}" />
+						</p:column>	
+						
+						<p:column headerText="qdt Entrada" style="color: #1874CD">
+							<h:outputText value="#{item.quantidadeEntrada}" />
+						</p:column>	
+						
+						<p:column headerText="qdt Saida" style="color: #A52A2A">
+							<h:outputText value="#{item.quantidadeSaida}" />
+						</p:column>
+						
+						<p:column headerText="Estoque mínimo" style="color: #006400">
+							<h:outputText value="#{item.produto.quantidadeMinima}" />
+						</p:column>	
+												
+						<p:column headerText="qdt Atual" style="color: blue;">
+							<h:outputText value="#{item.quantidadeAtual}" rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
+							<h:outputText value="#{item.quantidadeAtual2}" style="color: red;" />
+						</p:column>
+												
+					</p:dataTable>
+				
+			</fieldset>	
+
+			</h:form>								
+			
+		</div>
+
+
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
+			resizable="false" closable="false" modal="true">
+			<div align="center">
+
+				<br />
+				<p:graphicImage value="/resources/img/noacsses.png" />
+				<br /> <br /> <br /> <br /> <a
+					href="javascript:history.back(-1)">Voltar</a><br />
+
+			</div>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>
+</html>

@@ -62,7 +62,7 @@
 						
 						<p:inputText value="#{notaFiscalBean.notaFiscal.numero}" 
 							rendered="#{notaFiscalBean.box4Search == 1}" size="45"
-							id="numero" />	
+							id="numero" validatorMessage="Somente numeros" converterMessage="Informe apenas numeros" />
 
 						<p:autoComplete value="#{notaFiscalBean.search}"
 							completeMethod="#{fornecedorBean.autocompleteFornecedor}" var="f"
@@ -212,7 +212,7 @@
 
 								<p:column style="text-align: center;" width="15">
 									<f:facet name="header">qtd</f:facet>
-									<h:outputLabel value="#{item.quantidade}" />
+									<h:outputLabel value="#{item.quantidadeEntrada}" />
 								</p:column>
 
 								<p:column width="50">

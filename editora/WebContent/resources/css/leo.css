@@ -370,4 +370,8 @@ table.dados tr td{
 {
 color:blue;
 
-} 
+}
+
+.highlight {
+    background: red  !important ;
+}

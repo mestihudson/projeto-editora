@@ -53,7 +53,13 @@
 								
 								<h:outputText value="#{usuario.cpf}" />
 								
-								<h:outputText value="#{usuario.perfil.perfil}" />
+								<h:outputText value="#{usuario.localTrabalho}" />
+								
+								<h:outputText value="#{usuario.universitario}" />
+								
+								<h:outputText value="#{usuario.perfil.perfil}" rendered="#{usuario.perfil.id==1}" style="color: #1E90FF;" />
+								<h:outputText value="#{usuario.perfil.perfil}" rendered="#{usuario.perfil.id==2}" style="color: #006400;" />
+								<h:outputText value="#{usuario.perfil.perfil}" rendered="#{usuario.perfil.id==3}" style="color: #B22222;" />
 
 								<p:commandLink update=":form_dlg:display"
 									oncomplete="dlgUpdatePerfil.show()">
@@ -91,7 +97,7 @@
 			 					
 			</fieldset>
 			
-			<p:messages id="msg" />
+			<p:messages id="msg" autoUpdate=":form_perfil" />
 			
 			</h:form>
 			
@@ -117,8 +123,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:selectOneMenu id="perfil_tipo" requiredMessage="Selecione um perfil" required="true" rendered="#{loginBean.usuario.perfil.id==1}"
 							value="#{usuarioBean.usuario.perfil}"
-							converter="genericConverter" style="width: 100px;">
-							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
+							converter="genericConverter" style="width: 120px;">
 							<f:selectItems value="#{perfilBean.solicitacaoUsuario}" var="p"
 								itemLabel="#{p.perfil}" itemValue="#{p}" />
 							<f:ajax event="blur" render="error_perfil" />
@@ -137,7 +142,7 @@
 					</h:panelGrid><br />
 				
 				<p:commandButton id="ok" value="OK" action="#{usuarioBean.updatePerfil}" icon="ui-icon-check" style="float: center; text-align: center;"
-					ajax="false" title="Modificar Perfil">
+					ajax="false" title="Modificar Perfil" update=":form_perfil">
 					<f:ajax render="@all" />
 				</p:commandButton>
 				

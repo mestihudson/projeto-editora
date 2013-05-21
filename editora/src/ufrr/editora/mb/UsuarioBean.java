@@ -143,7 +143,7 @@ public class UsuarioBean implements Serializable {
 	public List<Usuario> getUsuarios() {
 		if (usuarios == null) {
 			System.out.println("Carregando usuarios...");
-			usuarios = new DAO<Usuario>(Usuario.class).getAllOrder("nome");
+			usuarios = new DAO<Usuario>(Usuario.class).getAllOrder("nome, id");
 		}
 		return usuarios;
 	}
