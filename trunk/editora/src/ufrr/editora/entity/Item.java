@@ -11,31 +11,33 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="tb_item")
+@Table(name = "tb_item")
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Integer quantidade;
-	
+	private Integer quantidadeEntrada;
+
+	private Integer quantidadeSaida;
+
 	private Double valorCusto;
-	
+
 	private Double valorVenda;
-	
+
 	@ManyToOne
 	private Produto produto;
-	
+
 	@ManyToOne
 	private NotaFiscal notaFiscal;
-	
+
 	@Transient
 	private Double totalValor;
-	
-	//get and set
+
+	// get and set
 
 	public Long getId() {
 		return id;
@@ -53,12 +55,20 @@ public class Item implements Serializable {
 		this.produto = produto;
 	}
 
-	public Integer getQuantidade() {
-		return quantidade;
+	public Integer getQuantidadeEntrada() {
+		return quantidadeEntrada;
 	}
 
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
+	public void setQuantidadeEntrada(Integer quantidadeEntrada) {
+		this.quantidadeEntrada = quantidadeEntrada;
+	}
+
+	public Integer getQuantidadeSaida() {
+		return quantidadeSaida;
+	}
+
+	public void setQuantidadeSaida(Integer quantidadeSaida) {
+		this.quantidadeSaida = quantidadeSaida;
 	}
 
 	public Double getValorCusto() {
@@ -84,7 +94,7 @@ public class Item implements Serializable {
 	public void setNotaFiscal(NotaFiscal notaFiscal) {
 		this.notaFiscal = notaFiscal;
 	}
-	
+
 	public Double getTotalValor() {
 		return totalValor;
 	}
@@ -93,20 +103,35 @@ public class Item implements Serializable {
 		this.totalValor = totalValor;
 	}
 
-	// variável para exibir o total R$ dos produtos
+	// variável para exibir o total de quantidade atual
 	public Double getTotal() {
-		if (quantidade != null && valorCusto != null)
-			return quantidade * valorCusto;
+		if (quantidadeEntrada != null && valorCusto != null)
+			return quantidadeEntrada * valorCusto;
 		else
-			return null;	
+			return null;
+	}
+
+	// variável para exibir a soma do total dos produtos
+	public Double getValorTotalProdutos() {
+		setTotalValor(00.00);
+		for (Item i : getNotaFiscal().getItens()) {
+			setTotalValor(getTotalValor() + i.getTotal());
+		}
+		return totalValor;
 	}
 	
-	// variável para exibir a soma do total dos produtos
-		public Double getValorTotalProdutos() {
-			setTotalValor(00.00);
-			for (Item i : getNotaFiscal().getItens()) {
-				setTotalValor(getTotalValor() + i.getTotal());
-			}
-			return totalValor;
-		}
+	// variável para exibir o total de quantidade atual
+	public Integer getQuantidadeAtual() {
+		if (quantidadeEntrada != null && quantidadeSaida != null)
+			return quantidadeEntrada - quantidadeSaida;
+		else
+			return null;
+	}
+	
+	public Integer getQuantidadeAtual2() {
+		if (getQuantidadeAtual() <= getProduto().getQuantidadeMinima())
+			return getQuantidadeAtual();
+		else
+			return null;
+	}
 }

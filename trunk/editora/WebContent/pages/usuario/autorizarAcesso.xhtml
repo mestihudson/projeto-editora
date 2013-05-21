@@ -48,7 +48,8 @@
 			
 			<p:dataTable id="list" value="#{usuarioBean.solicitacoes}"
 					var="u"  emptyMessage="Nenhuma solicitação no momento"  
-					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
+					paginator="true" rows="15" paginatorPosition="bottom">
 					
 					<p:column headerText="ID">
 						<h:outputText value="#{u.id}" /> 
@@ -58,27 +59,23 @@
 						<h:outputText value="#{u.nome}" /> 
 					</p:column>
 					
-					<p:column style="text-align: center;" headerText="CPF">
-						<h:outputText value="#{u.cpf}" /> 
-					</p:column>
-					
 					<p:column headerText="Email">
 						<h:outputText value="#{u.login}" /> 
 					</p:column>
 										
-					<p:column style="text-align: center;" headerText="Telefone">
+					<p:column style="text-align: center;" headerText="Telefone" width="70">
 						<h:outputText value="#{u.telefone1}" /> 
 					</p:column>
 					
-					<p:column headerText="Universitário">
+					<p:column headerText="Vínculo">
 						<h:outputText value="#{u.universitario}" /> 
 					</p:column>
 					
-					<p:column headerText="Local de Trabalho">
+					<p:column headerText="Local de Trabalho" width="80">
 						<h:outputText value="#{u.localTrabalho}" /> 
 					</p:column>
 					
-					<p:column style="float: center; text-align: center;">
+					<p:column style="float: center; text-align: center;" width="30">
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
@@ -117,27 +114,23 @@
 						<h:outputText value="#{u.nome}" /> 
 					</p:column>
 					
-					<p:column style="text-align: center;" headerText="CPF">
-						<h:outputText value="#{u.cpf}" /> 
-					</p:column>
-					
 					<p:column headerText="Email">
 						<h:outputText value="#{u.login}" /> 
 					</p:column>
 										
-					<p:column style="text-align: center;" headerText="Telefone">
+					<p:column style="text-align: center;" headerText="Telefone" width="70">
 						<h:outputText value="#{u.telefone1}" /> 
 					</p:column>
 					
-					<p:column headerText="Universitário">
+					<p:column headerText="Vínculo">
 						<h:outputText value="#{u.universitario}" /> 
 					</p:column>
 					
-					<p:column headerText="Local de Trabalho">
+					<p:column headerText="Local de Trabalho" width="80">
 						<h:outputText value="#{u.localTrabalho}" /> 
 					</p:column>
 					
-					<p:column style="float: center; text-align: center;">
+					<p:column style="float: center; text-align: center;" width="30">
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>

@@ -277,5 +277,171 @@ public class Usuario implements Serializable, BaseEntity {
 	public void setNotasFiscais(Collection<NotaFiscal> notasFiscais) {
 		this.notasFiscais = notasFiscais;
 	}
+	
+	//hashCode
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((categorias == null) ? 0 : categorias.hashCode());
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((emails == null) ? 0 : emails.hashCode());
+		result = prime * result
+				+ ((endereco == null) ? 0 : endereco.hashCode());
+		result = prime * result
+				+ ((fornecedores == null) ? 0 : fornecedores.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((localTrabalho == null) ? 0 : localTrabalho.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result
+				+ ((mensagens == null) ? 0 : mensagens.hashCode());
+		result = prime * result
+				+ ((nascimento == null) ? 0 : nascimento.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result
+				+ ((notasFiscais == null) ? 0 : notasFiscais.hashCode());
+		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
+		result = prime * result
+				+ ((produtos == null) ? 0 : produtos.hashCode());
+		result = prime * result
+				+ ((repetirSenha == null) ? 0 : repetirSenha.hashCode());
+		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result
+				+ ((telefone1 == null) ? 0 : telefone1.hashCode());
+		result = prime * result
+				+ ((telefone2 == null) ? 0 : telefone2.hashCode());
+		result = prime * result + ((tipos == null) ? 0 : tipos.hashCode());
+		result = prime * result
+				+ ((universitario == null) ? 0 : universitario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (categorias == null) {
+			if (other.categorias != null)
+				return false;
+		} else if (!categorias.equals(other.categorias))
+			return false;
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		if (emails == null) {
+			if (other.emails != null)
+				return false;
+		} else if (!emails.equals(other.emails))
+			return false;
+		if (endereco == null) {
+			if (other.endereco != null)
+				return false;
+		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (fornecedores == null) {
+			if (other.fornecedores != null)
+				return false;
+		} else if (!fornecedores.equals(other.fornecedores))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (localTrabalho == null) {
+			if (other.localTrabalho != null)
+				return false;
+		} else if (!localTrabalho.equals(other.localTrabalho))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (mensagens == null) {
+			if (other.mensagens != null)
+				return false;
+		} else if (!mensagens.equals(other.mensagens))
+			return false;
+		if (nascimento == null) {
+			if (other.nascimento != null)
+				return false;
+		} else if (!nascimento.equals(other.nascimento))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (notasFiscais == null) {
+			if (other.notasFiscais != null)
+				return false;
+		} else if (!notasFiscais.equals(other.notasFiscais))
+			return false;
+		if (perfil == null) {
+			if (other.perfil != null)
+				return false;
+		} else if (!perfil.equals(other.perfil))
+			return false;
+		if (produtos == null) {
+			if (other.produtos != null)
+				return false;
+		} else if (!produtos.equals(other.produtos))
+			return false;
+		if (repetirSenha == null) {
+			if (other.repetirSenha != null)
+				return false;
+		} else if (!repetirSenha.equals(other.repetirSenha))
+			return false;
+		if (senha == null) {
+			if (other.senha != null)
+				return false;
+		} else if (!senha.equals(other.senha))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (telefone1 == null) {
+			if (other.telefone1 != null)
+				return false;
+		} else if (!telefone1.equals(other.telefone1))
+			return false;
+		if (telefone2 == null) {
+			if (other.telefone2 != null)
+				return false;
+		} else if (!telefone2.equals(other.telefone2))
+			return false;
+		if (tipos == null) {
+			if (other.tipos != null)
+				return false;
+		} else if (!tipos.equals(other.tipos))
+			return false;
+		if (universitario == null) {
+			if (other.universitario != null)
+				return false;
+		} else if (!universitario.equals(other.universitario))
+			return false;
+		return true;
+	}
+	
+	
 			
 }

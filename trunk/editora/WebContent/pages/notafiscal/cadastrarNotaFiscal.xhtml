@@ -56,8 +56,9 @@
 															
 					<h:outputLabel value="Fornecedor" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" converter="genericConverter"
-					required="true" requiredMessage="Informe o fornecedor" styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id==null}">
+					<p:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" converter="genericConverter" style="width: 210px;"
+					required="true" requiredMessage="Informe o fornecedor" styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id==null}"
+					effect="fade" filter="true" filterMatchMode="contains">
 						<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
 							<f:ajax event="blur" render="mgsg" />
@@ -124,27 +125,8 @@
 					styleClass="input" panelStyle="width:400px"
 					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Informe o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />            		
+						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />            			            		
             		</p:selectOneMenu>
-					
-<!-- 					aqui esta certinho					 -->
-
-<!-- 					<p:selectOneMenu style="width: 400px;" id="prod_categoria" value="#{produtoBean.produto.nome}" converter="genericConverter" -->
-<!-- 					required="true" requiredMessage="Informe a categoria" styleClass="input" panelStyle="width:400px" -->
-<!-- 					effect="fade" var="c" filter="true" filterMatchMode="startsWith"> -->
-<!-- 						<f:selectItem itemValue="" itemLabel="" /> -->
-<!-- 						<f:selectItems value="#{produtoBean.ativados}" var="c" itemLabel="#{c.nome}" itemValue="#{c}" /> -->
-					
-<!-- 					 <p:column headerText="Descrição">   -->
-<!--                 		<h:outputLabel value="#{c.nome}" />   -->
-<!--             		</p:column>  -->
-						
-<!-- 					 <p:column headerText="Código">   -->
-<!--                 		<h:outputLabel value="#{c.isbn}" rendered="#{c.isbn!=null}" />   -->
-<!--                 		<h:outputLabel value="#{c.id}" rendered="#{c.isbn==null}" /> -->
-<!--             		</p:column> -->
-            		
-<!--             		</p:selectOneMenu> -->
             		
             		</h:panelGrid>
             		<br />
@@ -153,7 +135,7 @@
             		
             		<h:outputLabel value="Quantidade" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:spinner id="qtd" value="#{notaFiscalBean.item.quantidade}" size="5"
+					<p:spinner id="qtd" value="#{notaFiscalBean.item.quantidadeEntrada}" size="5"
 					min="0" max="100" validatorMessage="Quantidade inválida">
 						<f:ajax event="blur" render="error_qtd" />
 						<f:validateLongRange minimum="0" />
@@ -215,7 +197,7 @@
 						
 						<p:column style="text-align: center;" width="15">
 							<f:facet name="header">qtd</f:facet>
-							<h:outputLabel value="#{item.quantidade}" />
+							<h:outputLabel value="#{item.quantidadeEntrada}" />
 						</p:column>	
 						
 						<p:column width="50">
@@ -286,7 +268,13 @@
 					<f:ajax render="@form" />
 				</p:commandButton>&nbsp;
 					
-				<p:commandButton action="cadastrarNotaFiscal.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" />	
+				<p:commandButton action="#{notaFiscalBean.cancelarNotaFiscal}" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" rendered="#{notaFiscalBean.notaFiscal.id==null}">
+					<f:ajax render="@form" />
+				</p:commandButton>
+				
+				<p:commandButton action="cadastrarNotaFiscal.xhtml?faces-redirect=true" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true" rendered="#{notaFiscalBean.notaFiscal.id!=null}">
+					<f:ajax render="@form" />
+				</p:commandButton>	
 			</div><br />
 						
 			<div align="center" style="float: center; text-align: center;">
