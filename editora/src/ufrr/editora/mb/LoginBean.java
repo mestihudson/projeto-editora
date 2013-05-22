@@ -219,6 +219,10 @@ public class LoginBean implements Serializable {
 		return "/index.xhtml?faces-redirect=true";
 	}
 	
+	public String solicitacaoCadastro() {
+		return "/solicitacao.xhtml?faces-redirect=true";
+	}
+	
 	
 	public boolean isLogado() {
 		return usuario.getLogin() != null;

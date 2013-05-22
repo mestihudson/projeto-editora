@@ -1,6 +1,7 @@
 package ufrr.editora.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -22,25 +23,26 @@ public class ItemBean implements Serializable {
 	
 	private Item item = new Item();
 	private List<Item> itens;
+	private List<Item> itens1;
 	private DAO<Item> dao = new DAO<Item>(Item.class);
 	
 	public List<Item> getItens() {
 		if (itens == null) {
 			System.out.println("Carregando itens...");
-			itens = new DAO<Item>(Item.class).getAllOrder("notaFiscal.numero, id");
+			itens = new DAO<Item>(Item.class).getAllOrder("produto.nome");
 		}
 		return itens;
 	}
 	
 	// Exibe uma lista de itens
 		@SuppressWarnings("unchecked")
-		public List<Item> getItensProduto() {
+		public List<Item> getItens2() {
 			Query query = dao.query("SELECT i count(item.produto) FROM Item i");
 			itens = query.getResultList();
 			System.out.println("Total de Itens: " + getItens().size());
 			return query.getResultList();
 		}
-		
+	
 //		sql
 //		select count(item.produto_id) as "Registros",
 //	     produto.nome as "Descricao",
@@ -52,6 +54,20 @@ public class ItemBean implements Serializable {
 //
 //		group by item.produto_id,
 //		produto.nome
+		
+		// Lista de produtos desativados (sem livros)
+		public List<Item> getEstoqueCritico() {
+			itens1 = new ArrayList<Item>();
+			List<Item> item = new ArrayList<Item>();
+			item = this.getItens();
+			for (int i = 0; i < item.size(); i++) {
+				if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual()) {
+					itens1.add(item.get(i));
+				}
+			}
+			return itens1;
+		}		
+		
 
 	public LoginBean getLoginBean() {
 		return loginBean;

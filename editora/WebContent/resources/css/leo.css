@@ -277,6 +277,10 @@ img.acende:hover {
 
 .ui-datatable .ui-datatable-data .even-row td{  
     background-color:#F0F9FF;  
+}
+
+.ui-datatable .ui-datatable-data .even-row2 td{  
+    background-color:#EEDD82;  
 }  
       
 .ui-datatable .ui-datatable-data .odd-row td{  
