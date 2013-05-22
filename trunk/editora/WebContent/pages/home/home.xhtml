@@ -101,14 +101,38 @@
 				
 				
 <!-- 				exibição de estoque -->
-				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 702x;"
+				<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: 702px;"
 					align="center">
-					<h:outputText value="ESTOQUE"
+					<h:outputText value="ESTOQUE CRÍTICO"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 
-				<fieldset style="border-color: #F8F8FF; width: 700px; border: 1px solid #6A6A6A; border-top: 0;">
-					Estoque indisponível no momento
+				<fieldset style="border-color: #F8F8FF; width: 700px; border: 1px solid #6A6A6A; border-top: 0;" >
+					
+				<h:outputLabel style="color: red; font-size: 12px;" styleClass="OutPut" value="Não há produto em estoque crítico" rendered="#{empty itemBean.estoqueCritico}" />
+				
+					<h:dataTable value="#{itemBean.estoqueCritico}" var="item" styleClass="dados" rowClasses="impar, par" id="estoque" rows="8" rendered="#{not empty itemBean.estoqueCritico}">
+
+						<f:facet name="header">  
+            				 
+        				</f:facet>
+
+						<p:column>
+							<f:facet name="header">Produto</f:facet>
+							<h:outputLabel value="#{item.produto.nome}" style="color: #394674;" />
+						</p:column>	
+						
+						<p:column>
+							<f:facet name="header">Estoque mínimo</f:facet>
+							<h:outputLabel value="#{item.produto.quantidadeMinima}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">qtd Atual</f:facet>
+							<h:outputLabel value="#{item.quantidadeAtual}" style="color: red;" />
+						</p:column>
+
+					</h:dataTable>
 
 				</fieldset>
 								

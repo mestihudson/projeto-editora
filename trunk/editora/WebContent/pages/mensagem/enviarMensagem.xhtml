@@ -36,6 +36,8 @@
 				<h:outputText value="ENVIAR MENSAGEM" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>
 			
+			<p:focus context="msg" for="msg" rendered="#{mensagemBean.mensagem.destinatario.id != null}" />
+			
 			<fieldset style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
 					
 					<br />																
