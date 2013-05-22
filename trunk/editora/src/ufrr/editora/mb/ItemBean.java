@@ -37,11 +37,48 @@ public class ItemBean implements Serializable {
 	// Exibe uma lista de itens
 		@SuppressWarnings("unchecked")
 		public List<Item> getItens2() {
-			Query query = dao.query("SELECT i count(item.produto) FROM Item i");
+			Query query = dao.query("SELECT i FROM Item i ORDER BY i.produto.nome");
 			itens = query.getResultList();
 			System.out.println("Total de Itens: " + getItens().size());
 			return query.getResultList();
 		}
+		
+//		public void countLetters(String str) {
+//	        
+//	        if (str == null)
+//	            return;
+//	        
+//	        int counter = 0;
+//	        
+//	        for (int i = 0; i < str.length(); i++) {
+//
+//	            if (Character.isLetter(str.charAt(i)))
+//	                counter++;
+//	        }
+//	        
+//	        System.out.println("The input parameter contained " + counter + " letters.");
+//	    }
+		
+//		public boolean twoE(String str) {
+//			  int count = 0;
+//			  for (int i=0; i<str.length(); i++) {
+//			    String sub = str.substring(i, i+1);
+//			    if (sub.equals("e")) count++;
+//			  }
+//			  if (count == 2) return true;
+//			  return false;
+//			  // last 2 lines can be written simply as "return (count == 2);"
+//			}
+		
+//		public boolean twoE(String str) {
+//			  int count = 0;
+//			  for (int i=0; i<str.length(); i++) {
+//			    if (str.charAt(i) == 'e') count++;
+//			  }
+//			  if (count == 2) return true;
+//			  return false;
+			  // this last if/else can be written simply as "return (count == 2);"
+//			}
 	
 //		sql
 //		select count(item.produto_id) as "Registros",
@@ -61,12 +98,26 @@ public class ItemBean implements Serializable {
 			List<Item> item = new ArrayList<Item>();
 			item = this.getItens();
 			for (int i = 0; i < item.size(); i++) {
-				if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual()) {
+				if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual() 
+						&& item.get(i).getNotaFiscal().getStatus().equals(true)) {
 					itens1.add(item.get(i));
 				}
 			}
 			return itens1;
-		}		
+		}	
+		
+	// Lista de produtos desativados (sem livros)
+	public List<Item> getEstoque() {
+		itens1 = new ArrayList<Item>();
+		List<Item> item = new ArrayList<Item>();
+		item = this.getItens();
+		for (int i = 0; i < item.size(); i++) {
+			if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
+				itens1.add(item.get(i));
+			}
+		}
+		return itens1;
+	}
 		
 
 	public LoginBean getLoginBean() {

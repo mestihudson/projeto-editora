@@ -14,7 +14,7 @@ public class UsuarioDAO {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 		
-		Query query = em.createQuery("from Usuario u where u.login = " + ":pLogin and u.senha = MD5(:pSenha)");
+		Query query = em.createQuery("from Usuario u where u.login = " + ":pLogin and u.senha = MD5(:pSenha) or u.login = " + ":pLogin and u.senha = :pSenha ");
 		query.setParameter("pLogin", usuario.getLogin());
 		query.setParameter("pSenha", usuario.getSenha());
 				
