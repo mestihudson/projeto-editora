@@ -22,7 +22,7 @@
 			<br />
 				<h:outputText value="Atenção!" styleClass="OutPut" style="color: red" />
 				<br />
-				<h:outputText value="As linhas destacadas de amarelo mostra que a quantidade do produto está em nível crítico" styleClass="OutPut" />
+				<h:outputText value="As linhas destacadas de amarelo mostra a quantidade em nível crítico" styleClass="OutPut" />
 			</div>
 		
 		</div>
@@ -50,21 +50,26 @@
 			<h:form id="form_itens" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 10px;" align="center" >
-				<h:outputText value="PRODUTOS" style="color: white;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>
 
 			<fieldset style="border: 1px solid #A6C9E2; border-top: 0;">
 					
-					<p:dataTable id="dt" value="#{itemBean.itens}" var="item"
+					<p:dataTable id="dt" value="#{itemBean.estoque}" var="item"
 						emptyMessage="Não encontrado" scrollable="true" scrollHeight="400"
 						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
 						rowIndexVar="rowIx">
+						
+						<p:column headerText="isbn/código">
+							<h:outputText value="#{item.produto.id}" rendered="#{item.produto.isbn==null}" />
+							<h:outputText value="#{item.produto.isbn}" rendered="#{item.produto.isbn!=null}" />
+						</p:column>
 
 						<p:column headerText="Produto" width="500"
 							filterBy="#{item.produto.nome}" filterMatchMode="contains">
-							<h:outputText value="#{item.produto.tipo.nome} - "
-								rendered="#{item.produto.tipo.id eq 1}" />
 							<h:outputText value="#{item.produto.nome}" />
+							<h:outputText value=" - #{item.produto.tipo.nome}"
+								rendered="#{item.produto.tipo.id eq 1}" />
 						</p:column>
 
 						<p:column headerText="qdt Entrada" style="color: #1874CD">
@@ -83,7 +88,7 @@
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"
-								style="color: red;"
+								style="color: #CD0000;"
 								rendered="#{item.produto.quantidadeMinima >= item.quantidadeAtual}" />
 						</p:column>
 

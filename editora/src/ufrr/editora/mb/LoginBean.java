@@ -39,32 +39,43 @@ public class LoginBean implements Serializable {
 		this.dao = dao;
 	}
 	
-	//efetua login
+	// efetua login
 	public String efetuaLogin() {
 		UsuarioDAO dao = new UsuarioDAO();
 		this.usuario = dao.existe(this.usuario);
 		if (this.usuario != null) {
-			if (this.getUsuario().getStatus() == null || this.getUsuario().getStatus().equals(false)) {
+			if (this.getUsuario().getStatus() == null
+					|| this.getUsuario().getStatus().equals(false)) {
 				Msg.addMsgError("Acesso não permitido");
 				System.out.println("Acesso não permitido");
 				return null;
 			} else {
-				if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 1 ||
-						this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 2) {
-					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
-					System.out.println("usuario: " + getUsuario().getNome() + "\n" + " entrou no sistema");
+
+				if (this.getUsuario().getStatus().equals(true)
+						&& this.getUsuario().getPerfil().getId() == 1
+						|| this.getUsuario().getStatus().equals(true)
+						&& this.getUsuario().getPerfil().getId() == 2) {
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome()
+							+ ". SISTEMA DE VENDAS EDITORA");
+					System.out.println("usuario: " + getUsuario().getNome()
+							+ "\n" + " entrou no sistema");
 					return "/pages/home/home.xhtml";
 				}
-					
-					if (this.getUsuario().getStatus().equals(true) && this.getUsuario().getPerfil().getId() == 3) {
-						Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
-						System.out.println("usuario: " + getUsuario().getNome() + "\n" + " entrou no sistema");
-						return "/pages/usuario/listarUsuario.xhtml";
-					
-				}else {
-					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome() + ". SISTEMA DE VENDAS EDITORA");
+
+				if (this.getUsuario().getStatus().equals(true)
+						&& this.getUsuario().getPerfil().getId() == 3) {
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome()
+							+ ". SISTEMA DE VENDAS EDITORA");
+					System.out.println("usuario: " + getUsuario().getNome()
+							+ "\n" + " entrou no sistema");
+					return "/pages/usuario/listarUsuario.xhtml";
+
+				} else {
+					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome()
+							+ ". SISTEMA DE VENDAS EDITORA");
 					return "/pages/home/home.xhtml";
 				}
+
 			}
 		} else {
 			this.usuario = new Usuario();

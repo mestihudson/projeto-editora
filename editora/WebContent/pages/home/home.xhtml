@@ -109,7 +109,7 @@
 
 				<fieldset style="border-color: #F8F8FF; width: 700px; border: 1px solid #6A6A6A; border-top: 0;" >
 					
-				<h:outputLabel style="color: red; font-size: 12px;" styleClass="OutPut" value="Não há produto em estoque crítico" rendered="#{empty itemBean.estoqueCritico}" />
+				<h:outputLabel style="color: red; font-size: 12px;" styleClass="OutPut" value="Não há produto com estoque crítico" rendered="#{empty itemBean.estoqueCritico}" />
 				
 					<h:dataTable value="#{itemBean.estoqueCritico}" var="item" styleClass="dados" rowClasses="impar, par" id="estoque" rows="8" rendered="#{not empty itemBean.estoqueCritico}">
 
@@ -123,13 +123,13 @@
 						</p:column>	
 						
 						<p:column>
-							<f:facet name="header">Estoque mínimo</f:facet>
-							<h:outputLabel value="#{item.produto.quantidadeMinima}" />
+							<f:facet name="header">Estoque min.</f:facet>
+							<h:outputLabel value="#{item.produto.quantidadeMinima}" style="color: blue;" />
 						</p:column>
 						
 						<p:column>
 							<f:facet name="header">qtd Atual</f:facet>
-							<h:outputLabel value="#{item.quantidadeAtual}" style="color: red;" />
+							<h:outputLabel value="(#{item.quantidadeAtual})" style="color: red;" />
 						</p:column>
 
 					</h:dataTable>

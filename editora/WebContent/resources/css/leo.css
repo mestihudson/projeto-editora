@@ -280,7 +280,8 @@ img.acende:hover {
 }
 
 .ui-datatable .ui-datatable-data .even-row2 td{  
-    background-color:#EEDD82;  
+   background-image: url("../resources/img/degrade.png");
+   background-repeat: no-repeat;     
 }  
       
 .ui-datatable .ui-datatable-data .odd-row td{  
