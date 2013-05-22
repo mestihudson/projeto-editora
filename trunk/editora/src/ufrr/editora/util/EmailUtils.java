@@ -17,6 +17,11 @@ public class EmailUtils {
 	 private static final String PASSWORD = "holandaarruda04";
 	 private static final String EMAILORIGEM = "leoholanda23@gmail.com";
 	 
+//	 private static final String HOSTNAME = "smtp.gmail.com";
+//	 private static final String USERNAME = "ufrreditora";
+//	 private static final String PASSWORD = "sistemaeditora";
+//	 private static final String EMAILORIGEM = "ufrreditora@gmail.com";
+	 
 	 @SuppressWarnings("deprecation")
 	public static Email conectaEmail() throws EmailException {
 	 Email email2 = new SimpleEmail();
