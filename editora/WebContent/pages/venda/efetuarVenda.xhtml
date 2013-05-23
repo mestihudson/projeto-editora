@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Venda > Efetuar Venda" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" />
+	</div>
+	</ui:define>
+
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;" align="center">
+		
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+
+		
+		</div>
+		</h:form>	
+		
+			<h:form id="form_efetuar_venda" rendered="#{loginBean.usuario.perfil.id!=4}">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="EFETUAR VENDA" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>	
+			
+			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
+
+			<br />
+				
+					<div style="float: left; margin-left: 10px">					
+					<p:panel header="Dados da Venda" style="height: 130px; width: 450px;">
+					
+					<br />
+										
+					<h:panelGrid id="grid" columns="5" cellspacing="5" cellpadding="5">
+															
+					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome}" />
+					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome}" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome}" />
+					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome}"
+					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente.show();" readonly="true">
+							<f:ajax event="change" />
+					</p:inputText>
+					
+					<h:outputLabel id="cliente1" value="#{vendaBean.venda.cliente.id} - " rendered="#{not empty vendaBean.venda.cliente.nome}"
+					styleClass="OutPut" style="color: #8B0000;">
+					</h:outputLabel>
+					
+					<h:outputLabel id="cliente2" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome}"
+					styleClass="OutPut" style="color: #8B0000;">
+					</h:outputLabel>
+					
+					</h:panelGrid>
+					<br /><br />
+														
+					<h:outputLabel id="datavenda" value="#{vendaBean.venda.dataVenda.time}" locale="pt_BR" pattern="dd/MM/yyyy" 
+					style="float: right; text-align: right;" styleClass="OutPut">
+						<f:convertDateTime dateStyle="long" timeZone="America/Sao_Paulo" locale="pt_BR" type="date" />
+					</h:outputLabel>
+					<br /><br />
+					
+					</p:panel>
+					</div>
+					
+					<div style="float: right; margin-right: 10px">
+					<p:panel header="Produto" style="height: 130px; width: 550px;">
+					
+					<h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+					
+<!-- 					            		aqui a lista retorna o primeiro id depois que muda o value -->
+					<h:outputLabel value="Produto" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
+            		<p:selectOneMenu style="width: 400px;" id="prod" value="#{vendaBean.idItem}"
+					styleClass="input" panelStyle="width:400px"
+					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Adicione o produto">
+						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+						<f:selectItems value="#{itemBean.itens}" var="i" itemLabel="#{i.produto.nome}" itemValue="#{i.id}" />            			            		
+            		</p:selectOneMenu>
+            		
+            		<br /><br />
+            		
+            		<h:outputLabel value="Quantidade" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:spinner id="qtd" value="#{vendaBean.itemVenda.quantidade}" size="5"
+					min="0" max="100" validatorMessage="Quantidade inválida">
+						<f:ajax event="blur" render="error_qtd" />
+						<f:validateLongRange minimum="0" />
+					</p:spinner>
+					<p:message id="error_qtd" for="qtd" />
+					
+					</h:panelGrid>
+            		
+            		<div>					
+					<p:commandButton value="Adicionar" action="#{vendaBean.guardaItem}" ajax="false">
+						<f:ajax render="@form" event="click" /> 
+					</p:commandButton>
+					</div>
+					
+					</p:panel>
+					</div>
+				
+<!-- 				aqui começa a tabela de produtos -->
+				<br />
+				<div style="float: center">
+				<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+					<div style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 10px; height: 20px; line-height: 20px;" align="center">
+					<h:outputText value="PRODUTOS" style="color: #394674; font-size: 12px;" styleClass="OutPut" />
+					</div>
+				
+				<fieldset style="border-color: #A6C9E2; margin-left: 10px; margin-right: 10px; border: 1px solid #A6C9E2; border-top: 0;" >
+				
+					<p:dataTable value="#{vendaBean.venda.itensVendas}" var="i" styleClass="dados2" rowClasses="impar, par" id="itens"
+					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
+					emptyMessage="adicione o(s) produto()">
+					        				
+        				<p:column width="50">
+							<f:facet name="header">isbn/código</f:facet>
+							<h:outputLabel value="#{i.item.produto.isbn}" rendered="#{i.item.produto.isbn!=null}" />
+							<h:outputLabel value="#{i.item.produto.id}" rendered="#{i.item.produto.isbn==null}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">produto</f:facet>
+							<h:outputLabel value="#{i.item.produto.tipo.nome}: " rendered="#{i.item.produto.tipo.id eq 1}" />
+							<h:outputLabel value="#{i.item.produto.nome}" />
+						</p:column>
+						
+						<p:column style="text-align: center;" width="15">
+							<f:facet name="header">qtd</f:facet>
+							<h:outputLabel value="#{i.quantidade}" />
+						</p:column>	
+						
+						<p:column width="50">
+							<f:facet name="header">valor</f:facet>
+							<h:outputLabel value="#{i.item.valorVenda}">
+								<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+							</h:outputLabel>
+						</p:column>
+						
+						<p:column width="50" style="text-align: center;">
+							<f:facet name="header">total</f:facet>
+							<h:outputText value="#{i.total}">
+							<f:convertNumber type="currency" currencySymbol="R$"
+								locale="pt_BR" />
+							</h:outputText>
+						</p:column>	
+												
+						<p:column style="text-align: center;" width="15">
+
+						<p:commandLink action="#{vendaBean.removeItemVenda}" ajax="false"
+							style="text-align: center; float: center;"
+							update=":form_efetuar_venda:itens" immediate="true">
+							<p:graphicImage value="/resources/img/remover.png" title="Remover item" />
+							<f:ajax render="@all" />
+							<f:setPropertyActionListener id="parametro"
+								target="#{vendaBean.itemVenda}" value="#{i}" />
+						</p:commandLink>
+
+						</p:column>
+
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="4" footerText="Valor Total"
+										style="text-align:right; font-size: 14px;" />
+
+									<p:column footerText="R$ #{vendaBean.valorTotalProdutos}" style="font-size: 14px;" />
+									
+									<p:column footerText="" />
+								</p:row>
+							</p:columnGroup>
+
+						</p:dataTable>
+						
+						</fieldset>
+						
+						<div style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 10px; height: 20px; line-height: 20px;"
+							align="center">
+							<h:outputText style="color: #394674; font-size: 12px;"
+								styleClass="OutPut" />
+						</div>
+						</div>
+						<br />
+						
+<!-- 						aqui termina a tabela de produtos -->
+					
+					<div style="float: left;">	
+					<p:panel style="margin-right: 10px; margin-left: 10px; width: 630px; height: 190px;">
+					
+					<h:panelGrid columns="8">
+					
+					<h:outputLabel value="Forma de pagamento" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
+            		<p:selectOneMenu style="width: 150px;" id="forma" value="#{vendaBean.venda.formaPagamento}"
+					styleClass="input" effect="fade">
+						<f:selectItem itemLabel="à vista" itemValue="1" />
+						<f:selectItem itemLabel="cartão(crédito)" itemValue="2" />
+						<f:selectItem itemLabel="cartão(débito)" itemValue="3" />
+						<f:selectItem itemLabel="cheque" itemValue="4" />            			            		
+            		</p:selectOneMenu>
+            		
+            		<h:outputLabel value="Parcelas" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:spinner id="parcela" value="#{vendaBean.venda.formaPagamento}" size="5"
+					min="0" max="100" validatorMessage="Parcelas inválida">
+						<f:ajax event="blur" />
+						<f:validateLongRange minimum="0" />
+					</p:spinner>
+					
+					</h:panelGrid>
+					
+					<h:outputLabel value="Gerar cupom? " styleClass="OutPut" style="mergin-left: 30px;" />
+            		<p:selectBooleanCheckbox id="cupom" value="#{vendaBean.venda.imprimeCupom}" />            			            		
+            		
+                    		
+					<h:panelGrid columns="1">
+
+					<h:outputLabel value="OBS" styleClass="OutPut" style="mergin-left: 30px;" />
+					<p:selectOneMenu style="width: 190px;" id="tituloobs" value="#{vendaBean.venda.tituloObs}"
+					styleClass="input" effect="fade">
+						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+						<f:selectItem itemLabel="Devolução" itemValue="1" />
+						<f:selectItem itemLabel="Defeito" itemValue="2" />
+						<f:selectItem itemLabel="Doação" itemValue="3" />
+						<f:selectItem itemLabel="Roubo" itemValue="4" />
+						<f:selectItem itemLabel="Troca" itemValue="5" />
+						<f:selectItem itemLabel="Venda com desconto" itemValue="6" />
+						<f:selectItem itemLabel="Venda com valor de custo" itemValue="7" />            			            		
+            		</p:selectOneMenu>					
+					<p:inputTextarea id="obs" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="80" />
+					<br /><br />
+					
+					</h:panelGrid>
+					
+					</p:panel>
+					</div>
+					
+					<div style="float: right; margin-right: 10px">
+					<p:panel style="margin-right: 10px; margin-left: 10px; text-align: right; width: 350px; height: 190px;">
+					
+					<h:outputLabel value="desconto % : " styleClass="OutPut" style="font-size: 14px; color: #8B0000" />
+					<p:spinner id="desconto" value="#{vendaBean.desconto}" size="5"
+					min="0" max="100" validatorMessage="Quantidade inválida">
+						<f:ajax event="blur" render="error_qtd" />
+						<f:validateLongRange minimum="0" />
+					</p:spinner>
+					<br /><br />
+					
+					<p:separator width="450" />
+					
+					<br />				
+					<h:outputLabel value="Valor à pagar: " styleClass="OutPut" style="font-size: 14px; color: #8B0000" />
+					<h:outputLabel value="#{vendaBean.valorTotalComDesconto}" style="font-size: 18px; color: #8B0000">
+						<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+					</h:outputLabel>
+					<br /><br />
+					
+					<p:separator width="450" />
+					<br /><br />
+					
+					<h:outputLabel value="Vendedor: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" />
+            		
+            		</p:panel>
+            		
+            		<br /><br />
+            		</div>
+					
+										
+					</fieldset>										
+			
+			<div style="background: #C4D2EB; height: 28px;" align="center">
+				<p:commandButton action="#{vendaBean.addVenda}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid">
+					<f:ajax render="@form" />
+				</p:commandButton>&nbsp;
+					
+				<p:commandButton action="#{vendaBean.cancelarVenda}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
+				rendered="#{vendaBean.venda.cliente.id!=null}">
+					<f:ajax render="@form" />
+				</p:commandButton>
+				
+				<p:commandButton action="efetuarVenda.xhtml?faces-redirect=true" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
+				rendered="#{vendaBean.venda.cliente.id==null}">
+					<f:ajax render="@form" />
+				</p:commandButton>
+				
+			</div><br />
+						
+			<div align="center" style="float: center; text-align: center;">
+				<h:outputLabel value="Os Campos Com " styleClass="OutPut" /><h:graphicImage value="/resources/img/as.png" />
+				<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
+			</div>
+
+				<div align="left" style="width: 350px; margin-right: 500px;">
+					<p:messages id="mgsg" autoUpdate="true" />
+				</div>
+
+			</h:form>								
+			
+		</div>
+		
+		<!-- 			Aqui começa o dialog Add Tipo -->
+			
+			<p:dialog header="Adicionar Tipo de Produto" widgetVar="dlgTipoProduto" resizable="false" modal="true" closable="false" showEffect="fold">
+				<h:form id="form_dialog_tipo">
+				
+				<h:panelGrid id="grid" columns="4">
+					  
+					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" />
+					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="Informe o nome do tipo de produto">
+						<f:ajax event="change" />
+					</p:inputText>
+															
+				</h:panelGrid>
+					<br />
+
+					<p:commandButton action="#{tipoProdutoBean.addTipoProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check">
+						<f:ajax render="@all" />
+					</p:commandButton>&nbsp;
+					
+					<p:commandButton type="reset" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true">
+						<f:ajax render="@all" />
+					</p:commandButton>	
+							
+				</h:form>
+				
+			</p:dialog>	
+			
+			<p:dialog header="Adicionar Categoria" widgetVar="dlgCategoria" resizable="false" modal="true" closable="false" showEffect="fold">
+				<h:form id="form_dialog_categoria">
+				
+				<h:panelGrid id="grid" columns="4">
+					  
+					<h:outputLabel value="Nome" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" />
+					<p:autoComplete id="cate_nome" value="#{categoriaBean.categoria.nome}" completeMethod="#{categoriaBean.autoComplete}" itemValue="#{c}" itemLabel="#{c}"  var="c"
+					minQueryLength="1" maxResults="5" converterMessage="Nome inválido" queryDelay="30" 
+					required="true" requiredMessage="Informe o nome da categoria">
+						<f:ajax event="change" />
+					</p:autoComplete>
+															
+				</h:panelGrid>
+					<br />
+
+					<p:commandButton action="#{categoriaBean.addCategoria}" value="Cadastrar" ajax="false" icon="ui-icon-check">
+						<f:ajax render="@all" />
+					</p:commandButton>&nbsp;
+					
+					<p:commandButton type="reset" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true">
+						<f:ajax render="@all" />
+					</p:commandButton>	
+							
+				</h:form>
+				
+			</p:dialog>	
+			
+<!-- 			Aqui começa o dialog para Editar Produto -->
+			
+			<p:dialog header="Clientes" 
+			widgetVar="dlgCliente" resizable="false" modal="true" showEffect="fold">
+				<h:form id="form_dialog_cliente">
+					
+					<p:dataTable value="#{usuarioBean.clientesCadastrados}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
+					emptyMessage="Não encontrado">
+					
+						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
+							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()"
+								id="link_codigo">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+						</p:column>	
+						
+						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
+								id="link_codigo2">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+						</p:column>			
+					
+					</p:dataTable>
+				
+				
+				</h:form>
+			</p:dialog>	
+			
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

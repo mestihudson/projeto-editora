@@ -118,6 +118,9 @@ public class ItemBean implements Serializable {
 		}
 		return itens1;
 	}
+	
+	//criar outra array lista dentro do método getEstoque
+	
 		
 
 	public LoginBean getLoginBean() {

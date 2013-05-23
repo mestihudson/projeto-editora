@@ -2,16 +2,13 @@ package ufrr.editora.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import ufrr.editora.converter.BaseEntity;
 
@@ -47,11 +44,6 @@ public class Produto implements Serializable, BaseEntity {
 	
 	@ManyToOne
 	private Usuario usuario;
-	
-	@Transient
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="produto")
-	private Item item;
-//	private Collection<Item> itens = new ArrayList<Item>();
 
 	
 	 /** Get and Set **/
@@ -130,14 +122,6 @@ public class Produto implements Serializable, BaseEntity {
 
 	public Boolean getAtivado() {
 		return ativado;
-	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
 	}
 
 	public void setAtivado(Boolean ativado) {
