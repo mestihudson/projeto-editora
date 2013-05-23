@@ -98,6 +98,10 @@ public class Usuario implements Serializable, BaseEntity {
 	@Transient
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<NotaFiscal> notasFiscais = new ArrayList<NotaFiscal>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<Venda> vendas = new ArrayList<Venda>();
 		
 	
 //	get and set
@@ -277,7 +281,15 @@ public class Usuario implements Serializable, BaseEntity {
 	public void setNotasFiscais(Collection<NotaFiscal> notasFiscais) {
 		this.notasFiscais = notasFiscais;
 	}
-	
+		
+	public Collection<Venda> getVendas() {
+		return vendas;
+	}
+
+	public void setVendas(Collection<Venda> vendas) {
+		this.vendas = vendas;
+	}
+
 	//hashCode
 	@Override
 	public int hashCode() {
