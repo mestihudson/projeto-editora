@@ -68,7 +68,7 @@ public class LoginBean implements Serializable {
 							+ ". SISTEMA DE VENDAS EDITORA");
 					System.out.println("usuario: " + getUsuario().getNome()
 							+ "\n" + " entrou no sistema");
-					return "/pages/usuario/listarUsuario.xhtml";
+					return "/pages/home/home.xhtml";
 
 				} else {
 					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome()
@@ -186,7 +186,7 @@ public class LoginBean implements Serializable {
 				return "/pages/home/home.xhtml?faces-redirect=true";
 			}
 			if (this.getUsuario().getPerfil().getId() == 3) {
-				return "homeVenda.xhtml?faces-redirect=true";
+				return "/pages/home/home.xhtml?faces-redirect=true";
 			}else {
 				return "cliente.xhtml?faces-redirect=true";
 			}

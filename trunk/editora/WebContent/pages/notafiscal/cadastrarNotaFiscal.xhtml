@@ -240,7 +240,13 @@
 									<p:column colspan="5" footerText="Valor Total"
 										style="text-align:right" />
 
-									<p:column footerText="R$ #{notaFiscalBean.valorTotalProdutos}" />
+									<p:column>
+										<f:facet name="footer">
+										<h:outputText value="#{notaFiscalBean.valorTotalProdutos}">
+											<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+										</h:outputText>
+										</f:facet>
+									</p:column>
 									
 									<p:column footerText="" />
 								</p:row>
