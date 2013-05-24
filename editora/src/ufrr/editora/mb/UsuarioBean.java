@@ -120,7 +120,7 @@ public class UsuarioBean implements Serializable {
 			if (!search.contains("'")) {
 				List<Usuario> array = dao.getAllByName("nome", nome);
 				for (int i = 0; i < array.size(); i++) {
-					if (array.get(i).getPerfil().getId() == 4) {
+					if (array.get(i).getPerfil().getId() == 4 && array.get(i).getId() != 1) {
 						nomes.add(array.get(i).getNome());
 					}
 				}
@@ -129,7 +129,7 @@ public class UsuarioBean implements Serializable {
 			if (!search.contains("'")) {
 				List<Usuario> array = dao.getAllByName("cpf", nome);
 				for (int i = 0; i < array.size(); i++) {
-					if (array.get(i).getPerfil().getId() == 4) {
+					if (array.get(i).getPerfil().getId() == 4 && array.get(i).getId() != 1) {
 					nomes.add(array.get(i).getCpf());
 					}
 				}
@@ -201,7 +201,7 @@ public class UsuarioBean implements Serializable {
 	// Exibe uma lista de clientes ativados
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getClientes() {
-		Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil = 4 ORDER BY u.nome");
+		Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil = 4 AND u.id <> 1 ORDER BY u.nome");
 		usuarios = query.getResultList();
 		System.out.println("Total de Clientes: " + getUsuarios().size());
 		return query.getResultList();
@@ -209,6 +209,19 @@ public class UsuarioBean implements Serializable {
 
 	// Exibe uma lista de clientes no geral (ativados e desativados)
 	public List<Usuario> getClientesCadastrados() {
+		usuariosE = new ArrayList<Usuario>();
+		List<Usuario> us = new ArrayList<Usuario>();
+		us = this.getUsuarios();
+		for (int i = 0; i < us.size(); i++) {
+			if (us.get(i).getPerfil().getId() == 4 && us.get(i).getId() != 1) {
+				usuariosE.add(us.get(i));
+			}
+		}
+		return usuariosE;
+	}
+	
+	// Exibe uma lista de clientes no geral (ativados e desativados) sem o id = 1
+	public List<Usuario> getClientesCadastrados2() {
 		usuariosE = new ArrayList<Usuario>();
 		List<Usuario> us = new ArrayList<Usuario>();
 		us = this.getUsuarios();

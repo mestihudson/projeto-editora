@@ -161,11 +161,13 @@ public class VendaBean implements Serializable {
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getVendas().add(venda);
 				DAO<Venda> dao = new DAO<Venda>(Venda.class);
-				Msg.addMsgInfo("Venda efetuada com sucesso");
+				Msg.addMsgInfo("Venda efetuada com sucesso");					
+				venda.setValorTotalDesconto(getValorTotalComDesconto());
+				venda.setValorTotal(getValorTotalProdutos());
 				dao.adiciona(venda);
 				itemVenda = new ItemVenda();
 				venda = new Venda();
-				return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";
+				return "/pages/venda/efetuarVenda.xhtml";
 			
 		}
 		return null;
@@ -187,13 +189,6 @@ public class VendaBean implements Serializable {
 					break;
 				}
 			}
-			
-//			for (Item i : this.getNotaFiscal().getItens()) {
-//				if (getIdProduto().equals(i.getProduto().getId())) {
-//					this.cadastro = false;
-//					break;
-//				}
-//			}
 			if (this.cadastro == true) {
 
 				DAO<Item> dao = new DAO<Item>(Item.class);
@@ -216,15 +211,27 @@ public class VendaBean implements Serializable {
 	}
 	
 	// cancelar cadastro de nota fiscal
-		public String cancelarVenda() {
-			if (venda.getCliente().getNome() != null) {
-				Msg.addMsgFatal("Venda cancelada");
-				return "efetuarVenda.xhtml";
-			}else {
-				return "efetuarVenda.xhtml?faces-redirect=true";
-			}
-			
+	public String cancelarVenda() {
+		if (venda.getCliente().getNome() != null
+				|| !venda.getItensVendas().isEmpty()) {
+			Msg.addMsgFatal("Venda cancelada");
+			return "efetuarVenda.xhtml";
+		} else {
+			return "efetuarVenda.xhtml?faces-redirect=true";
 		}
+
+	}
+
+	// cancelar cadastro de nota fiscal
+	public String cancelarVenda2() {
+		if (!venda.getItensVendas().isEmpty()) {
+			Msg.addMsgFatal("Venda cancelada");
+			return "efetuarVenda.xhtml";
+		} else {
+			return "efetuarVenda.xhtml?faces-redirect=true";
+		}
+
+	}
 
 	// método para editar/alterar nota
 //	public String alterNota() {
@@ -326,19 +333,25 @@ public class VendaBean implements Serializable {
 	
 	public Double getValorTotalComDesconto() {
 		setTotalValor(00.00);
-		for (ItemVenda i : getVenda().getItensVendas()) {
-			setTotalValor(getTotalValor() + i.getTotal() - getDesconto1() );
-		}
-		return totalValor;
+		if (getValorTotalProdutos() != null && getDesconto1() != null)
+			return getValorTotalProdutos() - getDesconto1();
+		else
+			return null;
 	}
 	
-	// variável para exibir o desconto
-		public Double getDesconto1() {
-			setDesconto(00.00);
-				return getTotalValor() * getDesconto() / 100;
-		}
-		
-		// aqui precisa terminar o método para gerar desconto
+	public Double getDesconto1() {
+		if (totalValor != null && desconto != null)
+			return totalValor * desconto / 100;
+		else
+			return null;
+	}
+	
+	// método para adicionar itens a nota fiscal
+	public void gerarDesconto() {
+
+		itemVenda = new ItemVenda();
+
+	}
 		
 
 	/** get and set **/
