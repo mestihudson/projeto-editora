@@ -1,17 +1,26 @@
 package ufrr.editora.mb;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.apache.commons.mail.EmailException;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Item;
 import ufrr.editora.entity.ItemVenda;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.entity.Venda;
+import ufrr.editora.report.Report;
+import ufrr.editora.util.EmailUtils;
 import ufrr.editora.util.Msg;
 import ufrr.editora.validator.Validator;
 
@@ -209,6 +218,28 @@ public class VendaBean implements Serializable {
 			}
 		}
 	}
+	
+	// relatório
+	public void relatorio() {
+		  HashMap<String, Object> params = new HashMap<String, Object>();
+		  Report report = new Report("report1", params);
+		  report.pdfReport();
+	}
+	
+	// enviar por email comprovante de compra
+		public void enviaComprovante() {
+			try {
+				EmailUtils.enviaComprovante(venda);
+			} catch (EmailException ex) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Erro! Occoreu um erro ao tentar enviar o email",
+								"Erro"));
+				System.out.println("...Erro ao tentar enviar o email de comprovante");
+				Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
+			}
+		}
 	
 	// cancelar cadastro de nota fiscal
 	public String cancelarVenda() {
