@@ -52,6 +52,10 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	private String telefone2;
 	
+	@ManyToOne
+	@JoinColumn(name="fk_preferencia")
+	private Categoria preferencia;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="fk_endereco")
 	private Endereco endereco;
@@ -288,6 +292,14 @@ public class Usuario implements Serializable, BaseEntity {
 
 	public void setVendas(Collection<Venda> vendas) {
 		this.vendas = vendas;
+	}
+	
+	public Categoria getPreferencia() {
+		return preferencia;
+	}
+
+	public void setPreferencia(Categoria preferencia) {
+		this.preferencia = preferencia;
 	}
 
 	//hashCode

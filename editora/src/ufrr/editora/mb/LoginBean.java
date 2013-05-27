@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import ufrr.editora.dao.DAO;
 import ufrr.editora.dao.UsuarioDAO;
 import ufrr.editora.entity.Usuario;
+import ufrr.editora.entity.Venda;
 import ufrr.editora.util.Msg;
 import ufrr.editora.util.TransformaStringMD5;
 
@@ -18,7 +19,8 @@ import ufrr.editora.util.TransformaStringMD5;
 public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private Venda venda = new Venda();
 	private Usuario usuario = new Usuario();
 	private String senhaVerifica;
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
@@ -250,6 +252,14 @@ public class LoginBean implements Serializable {
 	public void setSenhaCriptografada(String senhaCriptografada) {
 		this.senhaCriptografada = senhaCriptografada;
 	}
+	public Venda getVenda() {
+		return venda;
+	}
+	public void setVenda(Venda venda) {
+		this.venda = venda;
+	}
+	
+	
 	
 	
 }
