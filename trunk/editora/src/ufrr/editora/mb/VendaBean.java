@@ -165,6 +165,32 @@ public class VendaBean implements Serializable {
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
+			if (venda.getImprimeCupom().equals(true)) {
+								
+				this.getVenda().setVendedor(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getVendas().add(venda);
+				DAO<Venda> dao = new DAO<Venda>(Venda.class);
+				venda.setValorTotalDesconto(getValorTotalComDesconto());
+				venda.setValorTotal(getValorTotalProdutos());
+									
+				HashMap<String, Object> params = new HashMap<String, Object>();
+				Report report = new Report("report2", params);
+				report.pdfReport();
+				report = new Report(); 
+				
+				Msg.addMsgInfo("Venda efetuada com sucesso");
+				System.out.println("...venda efetuada com sucesso!!");
+				dao.adiciona(venda);
+				itemVenda = new ItemVenda();
+				venda = new Venda();
+												
+				return "/pages/venda/efetuarVenda.xhtml";
+				
+					
+				
+			}else {
 				this.getVenda().setVendedor(this.loginBean.getUsuario());
 				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
@@ -177,6 +203,7 @@ public class VendaBean implements Serializable {
 				itemVenda = new ItemVenda();
 				venda = new Venda();
 				return "/pages/venda/efetuarVenda.xhtml";
+			}
 			
 		}
 		return null;
@@ -220,9 +247,9 @@ public class VendaBean implements Serializable {
 	}
 	
 	// relatório
-	public void relatorio() {
+	public void imprimeCupom() {
 		  HashMap<String, Object> params = new HashMap<String, Object>();
-		  Report report = new Report("report1", params);
+		  Report report = new Report("report2", params);
 		  report.pdfReport();
 	}
 	

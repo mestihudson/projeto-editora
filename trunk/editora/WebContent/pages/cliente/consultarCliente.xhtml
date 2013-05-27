@@ -85,6 +85,12 @@
 					<h:outputText value="#{usuario.data.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
+					
+					<h:outputText value="Vinculo com UFRR: #{usuario.universitario}" />
+					
+					<h:outputText value="Contatos: #{usuario.telefone1}, #{usuario.telefone1} " />
+					
+					<h:outputText value="Preferencia por categoria: #{usuario.preferencia.nome}" />
 
 								<p:commandLink update=":form_dlg:display"
 									oncomplete="dlgEnd.show()">

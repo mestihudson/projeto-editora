@@ -314,9 +314,7 @@
 				<p:commandButton action="#{vendaBean.addVenda}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid">
 					<f:ajax render="@form" />
 				</p:commandButton>&nbsp;
-				
-				<p:commandButton action="#{vendaBean.relatorio}" value="Relatorio" ajax="false" icon="ui-icon-check" immediate="true" />
-					
+									
 				<p:commandButton action="#{vendaBean.cancelarVenda}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
 				rendered="#{vendaBean.venda.cliente.id!=null}">
 					<f:ajax render="@form" />

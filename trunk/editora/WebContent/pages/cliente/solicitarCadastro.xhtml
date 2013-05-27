@@ -62,7 +62,7 @@
 										
 						<h:outputLabel value="CPF" for="cpf" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="cpf" value="#{usuarioBean.usuario.cpf}" style="width: 150px;"
+						<p:inputMask id="cpf" value="#{usuarioBean.usuario.cpf}" style="width: 200px;"
 							mask="999.999.999-99" styleClass="input" required="true"
 							requiredMessage="Informe o cpf corretamente" validatorMessage="CPF inválido">
 							<f:ajax event="blur" render="error_cpf" />
@@ -108,6 +108,19 @@
 							<f:ajax event="blur" render="error_univ" />
 						</p:selectOneMenu>
 						<p:message id="error_univ" for="univ" />
+						<br />
+						<br />
+						
+						<h:outputLabel value="Preferencia de categoria" styleClass="OutPut" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+						<p:selectOneMenu style="width: 134px;" id="categoria" value="#{usuarioBean.usuario.preferencia}" converter="genericConverter"
+							required="true" requiredMessage="Informe a preferencia" styleClass="input">
+							<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{categoriaBean.categorias}" var="c" 
+							itemLabel="#{c.nome}" itemValue="#{c}" />
+								<f:ajax event="blur" render="error_nome_categoria" />
+						</p:selectOneMenu>
+						<p:message id="error_nome_categoria" for="categoria"/>
 						<br />
 						<br />
 

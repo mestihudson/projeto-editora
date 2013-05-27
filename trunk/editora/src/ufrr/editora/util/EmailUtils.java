@@ -8,6 +8,7 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
+import ufrr.editora.entity.Venda;
 import ufrr.editora.mb.LoginBean;
 
 public class EmailUtils {
@@ -56,6 +57,17 @@ public class EmailUtils {
 		 email2.addTo(usuario.getUsuario().getLogin());
 		 String resposta = email2.send();
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getUsuario().getLogin(), "Informação"));
+		 }
+	 
+	 // envia confirmação de compra para emissão de nota
+	 @SuppressWarnings("unused")
+		public static void enviaComprovante(Venda venda) throws EmailException {
+		 Email email2 = new SimpleEmail();
+		 email2 = conectaEmail();
+		 email2.setSubject("Editora UFRR");
+		 email2.setMsg("Emissão de Nota Fiscal para cliente: " + venda.getCliente().getNome() + "\n" + "CPF: " + venda.getCliente().getCpf());
+		 email2.addTo("leonardo.holanda@ufrr.br");
+		 String resposta = email2.send();
 		 }
 
 }
