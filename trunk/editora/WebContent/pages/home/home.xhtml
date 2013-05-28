@@ -138,6 +138,43 @@
 								
 			</h:form>
 			
+			<div align="center">
+			<p:dialog rendered="#{!empty usuarioBean.solicitacoes and loginBean.usuario.perfil.id==1 or !empty usuarioBean.solicitacoes and loginBean.usuario.perfil.id==2}" 
+			visible="true" resizable="false" modal="true" header="Solicitações de acesso"
+			footer="Atenção: você recebeu nova(s) solicitação(ões) de acesso ao sistema" style="background: #EEDD82;">
+				
+
+					<p:dataTable id="list" value="#{usuarioBean.solicitacoes}" var="u"
+						emptyMessage="Nenhuma solicitação no momento"
+						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+						rowIndexVar="rowIx" paginator="true" rows="15"
+						paginatorPosition="bottom">
+
+						<p:column headerText="ID">
+							<h:outputText value="#{u.id}" />
+						</p:column>
+
+						<p:column headerText="Nome">
+							<h:outputText value="#{u.nome}" />
+						</p:column>
+						
+						<p:column headerText="Solicitação enviada dia" style="text-align: center;">
+							<h:outputText value="#{u.data.time}">
+								<f:convertDateTime pattern="dd/MM/yy" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+					
+					<br />
+					
+					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" title="Mostra página de solicitações">
+						<h:outputLabel value="Detalhar" style="color: blue; cursor: pointer; font-size: 12px;" />
+					</p:commandLink>
+
+			</p:dialog>
+			</div>
+			
 			<p:dialog rendered="#{loginBean.usuario.id==null or loginBean.usuario.perfil.id>=4}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 

@@ -50,7 +50,9 @@ public class Venda implements Serializable {
 	
 	private String obs;
 	
-	private String tituloObs;
+	private Integer tituloObs;
+	
+	private Integer operacao; // 1=entrada, 2=saida
 	
 	//get and set
 
@@ -142,12 +144,20 @@ public class Venda implements Serializable {
 		this.obs = obs;
 	}
 
-	public String getTituloObs() {
+	public Integer getTituloObs() {
 		return tituloObs;
 	}
 
-	public void setTituloObs(String tituloObs) {
+	public void setTituloObs(Integer tituloObs) {
 		this.tituloObs = tituloObs;
+	}
+
+	public Integer getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(Integer operacao) {
+		this.operacao = operacao;
 	}
 
 	@Override
