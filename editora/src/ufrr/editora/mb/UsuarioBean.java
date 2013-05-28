@@ -152,7 +152,7 @@ public class UsuarioBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getSolicitacoes() {
 		Query query = dao
-				.query("SELECT u FROM Usuario u WHERE u.status = false AND u.perfil = 4");
+				.query("SELECT u FROM Usuario u WHERE u.status = false AND u.aceitaSolicitacao = true AND u.perfil = 4");
 		usuarios = query.getResultList();
 		System.out.println("Total de Usuários: " + getUsuarios().size());
 		return query.getResultList();
@@ -397,6 +397,7 @@ public class UsuarioBean implements Serializable {
 			} else {
 				usuario.setEndereco(endereco);
 				usuario.setStatus(true);
+				usuario.setAceitaSolicitacao(true);
 				usuario.setEndereco(endereco);
 				usuario.setSenha("[{(UFRR000DTI-CSI001EDITORA002SISTEMA003)}]");
 				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
@@ -440,6 +441,7 @@ public class UsuarioBean implements Serializable {
 						this.getUsuario().getRepetirSenha())) {
 					usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 					usuario.setStatus(true);
+					usuario.setAceitaSolicitacao(true);
 					usuario.setEndereco(endereco);
 					dao.adiciona(usuario);
 					init();
@@ -481,6 +483,7 @@ public class UsuarioBean implements Serializable {
 				if (getUsuario().getSenha().equalsIgnoreCase(
 						this.getUsuario().getRepetirSenha())) {
 					usuario.setStatus(false);
+					usuario.setAceitaSolicitacao(true);
 					usuario.setEndereco(endereco);
 					usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 					dao.adiciona(usuario);
@@ -501,6 +504,23 @@ public class UsuarioBean implements Serializable {
 					.println("...Alguma coisa deu errada ao cadastrar cliente");
 		}
 		return null;
+	}
+	
+	// Não aceira solicitacao de usuario
+	public String naoAceitar() {
+		System.out.println(this.getUsuario().getNome());
+		if (this.getUsuario().getPerfil().getId() != 5
+				&& this.getUsuario().getPerfil().getId() != null) {
+			this.getUsuario().setStatus(false);
+			this.getUsuario().setAceitaSolicitacao(false);
+			Msg.addMsgFatal("USUÁRIO: " + getUsuario().getNome()
+					+ " SOLICITAÇÃO NÃO ACEITA");
+			dao.atualiza(usuario);
+			System.out.println("...Usuário ativado");
+			return "/pages/usuario/autorizarAcesso.xhtml";
+		}
+		return "/pages/usuario/autorizarAcesso.xhtml";
+
 	}
 
 	// Ativar usuário (permitir acesso)

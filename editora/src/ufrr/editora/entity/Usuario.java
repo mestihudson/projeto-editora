@@ -68,7 +68,9 @@ public class Usuario implements Serializable, BaseEntity {
 	@Transient
 	private String repetirSenha;
 	
-	private Boolean status;
+	private Boolean status; // ativa
+	
+	private Boolean aceitaSolicitacao; // não aceita solicitação
 	
 	@ManyToOne
 	@JoinColumn(name="fk_perfil", columnDefinition="bigint default 5", insertable=false, updatable=true)
@@ -300,6 +302,14 @@ public class Usuario implements Serializable, BaseEntity {
 
 	public void setPreferencia(Categoria preferencia) {
 		this.preferencia = preferencia;
+	}
+
+	public Boolean getAceitaSolicitacao() {
+		return aceitaSolicitacao;
+	}
+
+	public void setAceitaSolicitacao(Boolean aceitaSolicitacao) {
+		this.aceitaSolicitacao = aceitaSolicitacao;
 	}
 
 	//hashCode

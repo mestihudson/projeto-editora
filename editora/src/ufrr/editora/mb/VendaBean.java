@@ -1,6 +1,8 @@
 package ufrr.editora.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +11,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.Query;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Level;
@@ -46,11 +51,17 @@ public class VendaBean implements Serializable {
 	private Integer box4Search;
 	private Validator<Venda> validator;
 
+	@Temporal(TemporalType.DATE)
+	private Calendar dataInicial = Calendar.getInstance();
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dataFinal = Calendar.getInstance();
+
 //	@PostConstruct
 //	public void init() {
 //
-//		notaFiscal = new NotaFiscal();
-//		validator = new Validator<NotaFiscal>(NotaFiscal.class);
+//		venda = new Venda();
+//		validator = new Validator<Venda>(Venda.class);
 //		search = "";
 //		box4Search = 1;
 //		box4Search = 2;
@@ -122,35 +133,85 @@ public class VendaBean implements Serializable {
 //		return null;
 //	}
 
-	/** Autocompletes **/
 
 	/** List NF **/
 
-//	public List<NotaFiscal> getNotasFiscais() {
-//		if (notasFiscais == null) {
-//			System.out.println("Carregando notas fiscais...");
-//			notasFiscais = new DAO<NotaFiscal>(NotaFiscal.class)
-//					.getAllOrder("fornecedor.nome, numero, status");
-//		}
-//		return notasFiscais;
-//	}
+	public List<Venda> getVendas() {
+		if (vendas == null) {
+			System.out.println("Carregando caixa...");
+			vendas = new DAO<Venda>(Venda.class).getAllOrder("id");
+		}
+		return vendas;
+	}
 //
-//	// lista as notas ativadas
-//	public List<NotaFiscal> getAtivados() {
-//		notasFiscais1 = new ArrayList<NotaFiscal>();
-//		List<NotaFiscal> ps = new ArrayList<NotaFiscal>();
-//		ps = this.getNotasFiscais();
-//		for (int i = 0; i < ps.size(); i++) {
-//			if (ps.get(i).getStatus().equals(true)) {
-//				notasFiscais1.add(ps.get(i));
-//			}
-//		}
-//		return notasFiscais1;
-//	}
+	// entrada de dinheiro no caixa
+	public List<Venda> getCaixaEntrada() {
+		vendas1 = new ArrayList<Venda>();
+		List<Venda> vs = new ArrayList<Venda>();
+		vs = this.getVendas();
+		for (int i = 0; i < vs.size(); i++) {
+			if (vs.get(i).getOperacao()==1) {
+				vendas1.add(vs.get(i));
+			}
+		}
+		return vendas1;
+	}
+	
+	// saída de dinheiro no caixa
+	public List<Venda> getCaixaSaida() {
+		vendas1 = new ArrayList<Venda>();
+		List<Venda> vs = new ArrayList<Venda>();
+		vs = this.getVendas();
+		for (int i = 0; i < vs.size(); i++) {
+			if (vs.get(i).getOperacao()==2) {
+				vendas1.add(vs.get(i));
+			}
+		}
+		return vendas1;
+	}
 	
 	/** Actions **/
+	
+	// saída de dinheiro
+	public String addSaida() {
+		boolean all = true;
+		
+		if (venda.getCliente() != null) {
+			Msg.addMsgFatal("Erro: operação cancelada. Não identifique o cliente ao retirar dinheiro.");
+			all = false;
+			return "/pages/venda/efetuarVendaAdmin.xhtml";
+		}
+		if (!all) {
+			System.out.println("...Erro ao efetuar a saida: retire o nome do cliente");
+		} else {
+			
+			if (loginBean.getUsuario().getPerfil().getId()==1) {
+				
+			this.getVenda().setVendedor(this.loginBean.getUsuario());
+			DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+			Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+			u.getVendas().add(venda);
+			DAO<Venda> dao = new DAO<Venda>(Venda.class);
+			venda.setOperacao(2);
+			venda.setTituloObs(1);
+			venda.setValorTotalDesconto(getVenda().getValorTotal());
 
-	// método para cadastrar nota
+			Msg.addMsgInfo("Saída efetuada com sucesso");
+			System.out.println("...saida efetuada com sucesso!!");
+			dao.adiciona(venda);
+			venda = new Venda();
+
+			return "/pages/venda/efetuarVendaAdmin.xhtml";
+			
+			}else {
+				Msg.addMsgFatal("Retirada não permitida");
+			}			
+			
+		}
+		return null;
+	}
+
+	// método para adicionar venda (entrada de dinheiro)
 	public String addVenda() {
 		boolean all = true;
 		
@@ -172,13 +233,15 @@ public class VendaBean implements Serializable {
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getVendas().add(venda);
 				DAO<Venda> dao = new DAO<Venda>(Venda.class);
+				venda.setOperacao(1);
 				venda.setValorTotalDesconto(getValorTotalComDesconto());
 				venda.setValorTotal(getValorTotalProdutos());
-									
-				HashMap<String, Object> params = new HashMap<String, Object>();
-				Report report = new Report("report2", params);
-				report.pdfReport();
-				report = new Report(); 
+				
+				// para gerar relatorio
+//				HashMap<String, Object> params = new HashMap<String, Object>();
+//				Report report = new Report("report2", params);
+//				report.pdfReport();
+//				report = new Report(); 
 				
 				Msg.addMsgInfo("Venda efetuada com sucesso");
 				System.out.println("...venda efetuada com sucesso!!");
@@ -290,6 +353,24 @@ public class VendaBean implements Serializable {
 		}
 
 	}
+	
+	// cancelar cadastro de nota fiscal
+		public String cancelarVenda3() {
+			if (venda.getCliente().getNome() != null
+					|| !venda.getItensVendas().isEmpty()) {
+				Msg.addMsgFatal("Operacao cancelada");
+				return "efetuarVendaAdmin.xhtml";
+			} else {
+				return "efetuarVendaAdmin.xhtml?faces-redirect=true";
+			}
+
+		}
+
+	// cancelar venda/saida
+	public String cancelarVenda4() {
+			Msg.addMsgFatal("Operacao cancelada");
+			return "efetuarVendaAdmin.xhtml";
+		}
 
 	// método para editar/alterar nota
 //	public String alterNota() {
@@ -410,7 +491,58 @@ public class VendaBean implements Serializable {
 		itemVenda = new ItemVenda();
 
 	}
+	
+	// Fluxo de caixa
+	public Double getValorTotalEntrada() {
+		setTotalValor(00.00);
+		for (Venda v : getCaixaEntrada()) {
+			setTotalValor(getTotalValor() + v.getValorTotalDesconto());
+		}
+		return totalValor;
+	}
+	
+	public Double getValorTotalSaida() {
+		setTotalValor(00.00);
+		for (Venda v : getCaixaSaida()) {
+			setTotalValor(getTotalValor() + v.getValorTotalDesconto());
+		}
+		return totalValor;
+	}
+	
+	public Double getLucro() {
+		setTotalValor(00.00);
+		if (getValorTotalSaida() != null && getValorTotalEntrada() != null)
+			return getValorTotalEntrada() - getValorTotalSaida();
+		else
+			return null;
+	}
+	
+	public Boolean getResult() {
+		if (getLucro() >= 0.00)
+			return true;
+		else
+			return false;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String getCaixaByDate() {
 		
+		try {
+			Query query = dao.query("SELECT v FROM Venda v WHERE v.dataVenda between ? and ?");
+			query.setParameter(1, getDataInicial());
+			query.setParameter(2, getDataFinal());
+			vendas = query.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("... erro na consulta do caixa");
+		}
+		return null;
+	}
+	
+//	select * from tb_venda v
+//	where v.datavenda between '24-05-2013' and '27-05-2013' 
+//	order by v.id
 
 	/** get and set **/
 
@@ -445,10 +577,6 @@ public class VendaBean implements Serializable {
 
 	public void setIdItem(Long idItem) {
 		this.idItem = idItem;
-	}
-
-	public List<Venda> getVendas() {
-		return vendas;
 	}
 
 	public void setVendas(List<Venda> vendas) {
@@ -534,7 +662,18 @@ public class VendaBean implements Serializable {
 	public Double getDesconto() {
 		return desconto;
 	}
-
+	public Calendar getDataInicial() {
+		return dataInicial;
+	}
+	public void setDataInicial(Calendar dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+	public Calendar getDataFinal() {
+		return dataFinal;
+	}
+	public void setDataFinal(Calendar dataFinal) {
+		this.dataFinal = dataFinal;
+	}
 	
-
+		
 }

@@ -58,11 +58,16 @@
 			</p:commandLink>&nbsp;
 			<p:graphicImage value="/resources/img/cadastrar.png" onclick="dlgCad.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
 			
-			<p:commandLink action="/pages/venda/efetuarVenda.xhtml?faces-redirect=true">
+			<p:commandLink action="/pages/venda/efetuarVendaAdmin.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+				<p:graphicImage value="/resources/img/venda.png" style="cursor: pointer;" styleClass="acende" />
+			</p:commandLink>
+			<p:commandLink action="/pages/venda/efetuarVenda.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id!=1}">
 				<p:graphicImage value="/resources/img/venda.png" style="cursor: pointer;" styleClass="acende" />
 			</p:commandLink>&nbsp;
 			
-			<p:graphicImage value="/resources/img/caixabt.png" style="cursor: pointer; margin-right: 10px; " styleClass="acende" /><br />
+			<p:commandLink action="/pages/caixa/consultarCaixa.xhtml?faces-redirect=true">
+			<p:graphicImage value="/resources/img/caixabt.png" style="cursor: pointer; margin-right: 10px; " styleClass="acende" />
+			</p:commandLink><br />
 			
 			<p:commandLink action="/pages/estoque/listarEstoque.xhtml?faces-redirect=true">
 				<p:graphicImage value="/resources/img/estoque.png" style="cursor: pointer;" styleClass="acende" />

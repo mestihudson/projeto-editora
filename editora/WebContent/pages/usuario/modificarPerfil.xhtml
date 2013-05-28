@@ -82,7 +82,13 @@
 								
 								<h:outputText value="#{usuario.cpf}" />
 								
-								<h:outputText value="#{usuario.perfil.perfil}" />
+								<h:outputText value="#{usuario.localTrabalho}" />
+								
+								<h:outputText value="#{usuario.universitario}" />
+								
+								<h:outputText value="#{usuario.perfil.perfil}" rendered="#{usuario.perfil.id==1}" style="color: #1E90FF;" />
+								<h:outputText value="#{usuario.perfil.perfil}" rendered="#{usuario.perfil.id==2}" style="color: #006400;" />
+								<h:outputText value="#{usuario.perfil.perfil}" rendered="#{usuario.perfil.id==3}" style="color: #B22222;" />
 
 								<p:commandLink update=":form_dlg:display"
 									oncomplete="dlgUpdatePerfil.show()">

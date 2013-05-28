@@ -84,6 +84,12 @@
 						title="Autorizar acesso">
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
 						</p:commandButton>&nbsp;&nbsp;
+						
+						<p:commandButton value="Não aceitar" action="#{usuarioBean.naoAceitar}" update=":form_acesso1:list"
+						style="float: center; text-align: center; color: red;" icon="ui-icon-check"
+						title="Autorizar acesso">
+							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
+						</p:commandButton>
 					</p:column>
 										
 			</p:dataTable>	
@@ -136,6 +142,12 @@
 						</f:facet>
 						<p:commandButton value="Ativar" oncomplete="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
 						style="float: center; text-align: center;" icon="ui-icon-check"
+						title="Autorizar acesso">
+							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
+						</p:commandButton>&nbsp;&nbsp;
+						
+						<p:commandButton value="Não aceitar" action="#{usuarioBean.naoAceitar}" update=":form_acesso2:list"
+						style="float: center; text-align: center; color: red;" icon="ui-icon-check"
 						title="Autorizar acesso">
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
 						</p:commandButton>
