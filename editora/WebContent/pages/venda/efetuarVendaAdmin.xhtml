@@ -358,7 +358,7 @@
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{vendaBean.addVenda}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao != 2}">
+				<p:commandButton action="#{vendaBean.addVendaAdmin}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao != 2}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				

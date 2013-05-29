@@ -28,7 +28,7 @@ public class Venda implements Serializable {
 		
 	@Temporal(TemporalType.DATE)
 	private Calendar dataVenda = Calendar.getInstance();
-	
+				
 	private Integer formaPagamento;
 	
 	private Integer quantidadeParcela;
