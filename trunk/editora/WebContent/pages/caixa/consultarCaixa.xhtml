@@ -10,7 +10,7 @@
 	<ui:define name="head">
 	
 	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Caixa > Consultar Caixa" styleClass="title" style="line-height: 20px;" />
+		<h:outputText value="Caixa > Controle do Caixa" styleClass="title" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" />
 	</div>
 	</ui:define>
@@ -42,17 +42,16 @@
 			
 			<h:panelGrid columns="6" cellpadding="5" cellspacing="5">
 						
-				<h:outputLabel value="Período" styleClass="OutPut" />					
+				<h:outputLabel value="Período " styleClass="OutPut" />					
 					<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true"
 						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida"
-						requiredMessage="Informe a data inicial" locale="pt_BR" pattern="dd/MM/yyyy">
-						<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" for="inicial" />
+						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
-					
+				
+				<h:outputLabel value=" à " styleClass="OutPut" />	
 					<p:calendar id="final" effect="slideDown" showButtonPanel="true" navigator="true"
 						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida"
-						requiredMessage="Informe a data final" locale="pt_BR" pattern="dd/MM/yyyy">
-						<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" for="final" />
+						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 							
 			<p:commandButton value="OK" id="botaoPesquisar" action="#{vendaBean.getCaixaByDate}" ajax="false" icon="ui-icon-check">
@@ -72,12 +71,12 @@
 						</div>
 						
 							<fieldset
-								style="border-color: #A6C9E2; border: 1px solid #A6C9E2; border-top: 0; height: 300px;">
+								style="border-color: #A6C9E2; border: 1px solid #A6C9E2; border-top: 0; height: 335px;">
 
-								<p:dataTable value="#{vendaBean.vendas}" var="v"
+								<p:dataTable value="#{vendaBean.caixaEntrada}" var="v"
 									styleClass="dados2" rowClasses="impar, par" id="entradas"
 									rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
-									rowIndexVar="rowIx" paginator="true" rows="10" paginatorPosition="top" emptyMessage="Nenhuma entrada">
+									rowIndexVar="rowIx" paginator="true" rows="13" paginatorPosition="top" emptyMessage="Nenhuma entrada">
 
 									<p:column style="text-align: center;" width="15">
 										<f:facet name="header">Forma de pagamento</f:facet>
@@ -91,18 +90,11 @@
 											rendered="#{v.formaPagamento==4}" />
 									</p:column>
 									
-									<p:column>
+									<p:column width="90">
 										<f:facet name="header">Valor</f:facet>
-										<h:outputLabel value="#{v.valorTotalDesconto}">
+										<h:outputLabel value="#{v.valorTotalDesconto}" style="color: blue;">
 											<f:convertNumber type="currency" currencySymbol="R$"
 												locale="pt_BR" />
-										</h:outputLabel>
-									</p:column>
-									
-									<p:column>
-										<f:facet name="header">Data</f:facet>
-										<h:outputLabel value="#{v.dataVenda.time}">
-											<f:convertDateTime for="pt_BR" pattern="dd/MM/yyyy" />
 										</h:outputLabel>
 									</p:column>
 									
@@ -129,12 +121,12 @@
 						</div>
 						
 							<fieldset
-								style="border-color: #8B0000; border: 1px solid #8B0000; border-top: 0; height: 300px;">
+								style="border-color: #8B0000; border: 1px solid #8B0000; border-top: 0; height: 335px;">
 
-								<p:dataTable value="#{vendaBean.vendas}" var="v"
+								<p:dataTable value="#{vendaBean.caixaSaida}" var="v"
 									styleClass="dados2" rowClasses="impar, par" id="saidas"
 									rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
-									rowIndexVar="rowIx" paginator="true" rows="10" paginatorPosition="top" emptyMessage="Nenhuma saída">
+									rowIndexVar="rowIx" paginator="true" rows="13" paginatorPosition="top" emptyMessage="Nenhuma saída">
 									
 									<p:column>
 										<f:facet name="header">Obs</f:facet>
@@ -142,18 +134,11 @@
 										</h:outputLabel>
 									</p:column>
 									
-									<p:column style="width: 10%">
+									<p:column style="width: 25%">
 										<f:facet name="header">Valor</f:facet>
-										<h:outputLabel value="#{v.valorTotalDesconto}">
+										<h:outputLabel value="#{v.valorTotalDesconto}" style="color: #8B0000;">
 											<f:convertNumber type="currency" currencySymbol="R$"
 												locale="pt_BR" />
-										</h:outputLabel>
-									</p:column>
-									
-									<p:column>
-										<f:facet name="header">Data</f:facet>
-										<h:outputLabel value="#{v.dataVenda.time}">
-											<f:convertDateTime for="pt_BR" pattern="dd/MM/yyyy" />
 										</h:outputLabel>
 									</p:column>
 
@@ -172,13 +157,13 @@
 					
 					</p:panel>
 					
-					<br /><br />
+					<br />
 					</div>
-					
-				<br /><br /><br /><br />
+
 			</fieldset>
 			
-			<div style="background: #C4D2EB; height: 30px; line-height: 30px;" align="center">
+			<div style="background: #C4D2EB; height: 30px; line-height: 25px;" align="center">
+					<h:outputText value="-" style="color: black; font-size: 15px;" />&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:outputText value="R$ " rendered="#{vendaBean.result != true}"
 						style="color: red; font-size: 14px;" styleClass="OutPut" />
 					<h:outputText value="#{vendaBean.lucro}" rendered="#{vendaBean.result != true}"
@@ -192,16 +177,18 @@
 						style="color: #394674; font-size: 14px;" styleClass="OutPut">
 						<f:convertNumber pattern="#,##0.00" />
 					</h:outputText>
+					&nbsp;&nbsp;&nbsp;
+					<h:outputText value="-" style="color: black; font-size: 15px;" />
 				</div>
 			
 			</h:form>
 			</div>
-			
-			<div align="left" style="width: 350px; margin-right: 500px;">
-					<p:messages id="mgsg" autoUpdate="true" />
-				</div>
-			
-			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+
+		<div align="left" style="width: 350px; margin-right: 600px;">
+			<p:messages id="mgsg" autoUpdate="true" />
+		</div>
+
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />
