@@ -36,25 +36,43 @@
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="FLUXO DE CAIXA" style="color: white; font-size: 12px;" styleClass="OutPut" />
-			</div>	
-			
+				
+				<p:selectOneRadio value="#{vendaBean.box4Search}" styleClass="OutPut"
+					required="true" requiredMessage="Informe a operação">
+						<f:selectItem itemLabel="Todos" itemValue="1" />
+						<f:selectItem itemLabel="Filtrar" itemValue="2" />
+						<f:ajax render="form_caixa" />
+					</p:selectOneRadio>	
+			</div>
+						
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
 			
-			<h:panelGrid columns="6" cellpadding="5" cellspacing="5">
-						
-				<h:outputLabel value="Período " styleClass="OutPut" />					
-					<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true"
+			<h:panelGrid columns="7" cellpadding="5" cellspacing="5">
+													
+					<h:outputLabel value="Período " styleClass="OutPut" />
+									
+					<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=1}"
 						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida"
 						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
+					
+					<p:calendar id="inicial2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==1}"
+						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida" disabled="true"
+						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
+					</p:calendar>		
 				
 				<h:outputLabel value=" à " styleClass="OutPut" />	
-					<p:calendar id="final" effect="slideDown" showButtonPanel="true" navigator="true"
+					<p:calendar id="final" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=1}"
 						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida"
 						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
+					
+					<p:calendar id="final2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==1}"
+						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida" disabled="true"
+						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
+					</p:calendar>
 							
-			<p:commandButton value="OK" id="botaoPesquisar" action="#{vendaBean.getCaixaByDate}" ajax="false" icon="ui-icon-check">
+			<p:commandButton value="OK" id="botaoPesquisar" action="#{vendaBean.getCaixaByDate}" ajax="false" icon="ui-icon-check" rendered="#{vendaBean.box4Search!=1}">
 				<f:ajax render="@form" />
 			</p:commandButton>
 			</h:panelGrid>	
