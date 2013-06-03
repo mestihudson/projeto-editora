@@ -410,6 +410,15 @@ public class ProdutoBean implements Serializable {
 	}
 
 	/** autocomplete **/
+	
+//	public List<String> autocompleteIsbn(String nome) {
+//		List<Produto> array = dao.getAllByName("isbn", nome);
+//		ArrayList<String> nomes = new ArrayList<String>();
+//		for (int i = 0; i < array.size(); i++) {
+//			nomes.add(array.get(i).getIsbn());
+//		}
+//		return nomes;
+//	}
 
 	public List<String> autocomplete(String nome) {
 		List<Produto> array = dao.getAllByName("nome", nome);

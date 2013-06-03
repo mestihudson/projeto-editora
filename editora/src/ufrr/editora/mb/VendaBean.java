@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -59,15 +60,14 @@ public class VendaBean implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Calendar dataFinal = Calendar.getInstance();
 
-//	@PostConstruct
-//	public void init() {
-//
-//		venda = new Venda();
-//		validator = new Validator<Venda>(Venda.class);
-//		search = "";
-//		box4Search = 1;
-//		box4Search = 2;
-//	}
+	@PostConstruct
+	public void init() {
+
+		venda = new Venda();
+		validator = new Validator<Venda>(Venda.class);
+		search = "";
+		box4Search = 1;
+	}
 
 
 	/** List NF **/
@@ -270,10 +270,6 @@ public class VendaBean implements Serializable {
 	// método para adicionar itens a nota fiscal
 	public void guardaItem() {
 		boolean all = true;
-		if (itemVenda.getQuantidade() == null || itemVenda.getQuantidade() == 0) {
-			Msg.addMsgError("Informe a quantidade");
-			all = false;
-		}
 		if (!all) {
 			System.out.println("...Erro ao efetuar venda: inconsistencia nos dados do item");
 		} else {
@@ -284,16 +280,31 @@ public class VendaBean implements Serializable {
 				}
 			}
 			if (this.cadastro == true) {
+				if (itemVenda.getQuantidade() == null || itemVenda.getQuantidade() == 0) {
+					
+					DAO<Item> dao = new DAO<Item>(Item.class);
+					Item item = dao.buscaPorId(idItem);
+					itemVenda.setItem(item);
+					itemVenda.setQuantidade(1);
+					
+					venda.getItensVendas().add(itemVenda);
+					itemVenda.setVenda(venda);
 
-				DAO<Item> dao = new DAO<Item>(Item.class);
-				Item item = dao.buscaPorId(idItem);
-				itemVenda.setItem(item);
-				
-				venda.getItensVendas().add(itemVenda);
-				itemVenda.setVenda(venda);
+					itemVenda = new ItemVenda();
+					System.out.println("...Produto adicionado a venda com qtd não informada !! (ok)");
+					
+				} else {
+					DAO<Item> dao = new DAO<Item>(Item.class);
+					Item item = dao.buscaPorId(idItem);
+					itemVenda.setItem(item);
+					
+					venda.getItensVendas().add(itemVenda);
+					itemVenda.setVenda(venda);
 
-				itemVenda = new ItemVenda();
-				System.out.println("...Produto adicionado a venda!! (ok)");
+					itemVenda = new ItemVenda();
+					System.out.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
+				}
+
 
 			} else {
 				Msg.addMsgError("Produto não pode ser adicionado novamente");
@@ -645,13 +656,16 @@ public class VendaBean implements Serializable {
 		this.cadastro = cadastro;
 	}
 
+
 	public Integer getBox4Search() {
 		return box4Search;
 	}
 
+
 	public void setBox4Search(Integer box4Search) {
 		this.box4Search = box4Search;
 	}
+
 
 	public Validator<Venda> getValidator() {
 		return validator;

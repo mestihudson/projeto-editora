@@ -168,10 +168,10 @@
 					<h:outputLabel value="ISBN" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" 
-					required="true" requiredMessage="Informe o número do ISBN" validatorMessage="ISBN inválido" converterMessage="Apenas números"
-					rendered="#{produtoBean.produto.id==null}">
-						<f:validateLength maximum="13" minimum="10" />
+					required="true" requiredMessage="Informe o número do ISBN" rendered="#{produtoBean.produto.id==null}" converterMessage="Somente números"
+					maxlength="13" validatorMessage="ISBN inválido">
 						<f:ajax event="blur" render="error_codigobarra" />
+						<f:validateLength minimum="10" maximum="13" />
 					</p:inputText>
 					<p:message id="error_codigobarra" for="prod_isbn" rendered="#{produtoBean.produto.id==null}" />
 

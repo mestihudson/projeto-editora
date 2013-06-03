@@ -243,7 +243,7 @@
 									<p:column>
 										<f:facet name="footer">
 										<h:outputText value="#{notaFiscalBean.valorTotalProdutos}">
-											<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+											<f:convertNumber pattern="#,##0.00" locale="pt_BR" />
 										</h:outputText>
 										</f:facet>
 									</p:column>

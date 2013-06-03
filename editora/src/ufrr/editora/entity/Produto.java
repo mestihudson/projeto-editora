@@ -27,7 +27,7 @@ public class Produto implements Serializable, BaseEntity {
 	private String editora;
 	
 	private String autor;
-	
+
 	private Long isbn; // CODIGO DE BARRAS COM 13 DIGITOS
 	
 	private Integer quantidadeMinima; // QUANTIDADE MÍNIMA NO ESTOQUE
