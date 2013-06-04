@@ -17,6 +17,8 @@ import ufrr.editora.entity.Item;
 public class ItemBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final int Row = 0;
 	
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
@@ -25,6 +27,32 @@ public class ItemBean implements Serializable {
 	private List<Item> itens;
 	private List<Item> itens1;
 	private DAO<Item> dao = new DAO<Item>(Item.class);
+	
+	private Integer totalProduto;
+	
+	// método para somar a quantidade de entrada
+	public Integer getTotalEntrada() {
+		setTotalProduto(0);
+		for (Item i : getEstoque()) {
+			setTotalProduto(getTotalProduto() + i.getQuantidadeEntrada());
+		}
+		return totalProduto;
+	}
+	
+	// método para somar a quantidade de saida
+	public Integer getTotalSaida() {
+		setTotalProduto(0);
+		for (Item i : getEstoque()) {
+			setTotalProduto(getTotalProduto() + i.getQuantidadeSaida());
+		}
+		return totalProduto;
+	}
+	
+	// quantidade atual do total
+	public Integer getTotalAtual() {
+		return getTotalEntrada() - getTotalSaida();
+		
+	}
 	
 	public List<Item> getItens() {
 		if (itens == null) {
@@ -112,12 +140,25 @@ public class ItemBean implements Serializable {
 		List<Item> item = new ArrayList<Item>();
 		item = this.getItens();
 		for (int i = 0; i < item.size(); i++) {
-			if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
+			if (item.get(i).getNotaFiscal().getStatus().equals(true)
+					&& item.get(i).getQuantidadeAtual() > 0) {
 				itens1.add(item.get(i));
 			}
 		}
 		return itens1;
 	}
+
+		public List<Item> getTeste() {
+			itens1 = new ArrayList<Item>();
+			List<Item> item = new ArrayList<Item>();
+			item = this.getEstoque();
+			for (int i = 0; i < item.size(); i++) {
+				if (item.get(i).getProduto().equals(Row>2)) {
+					itens.remove(i);
+				}
+			}
+			return itens1;
+		}
 	
 	//criar outra array lista dentro do método getEstoque
 	
@@ -149,6 +190,14 @@ public class ItemBean implements Serializable {
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
+	}
+
+	public Integer getTotalProduto() {
+		return totalProduto;
+	}
+
+	public void setTotalProduto(Integer totalProduto) {
+		this.totalProduto = totalProduto;
 	}
 	
 	

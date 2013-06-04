@@ -40,12 +40,14 @@ public class VendaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Venda venda = new Venda();
 	private ItemVenda itemVenda = new ItemVenda();
+	private Item item = new Item();
 	private Long idItem;
 	private List<Venda> vendas;
 	private List<Venda> vendas1;
 	private List<Venda> caixaEntrada;
 	private List<Venda> caixaSaida;
 	private DAO<Venda> dao = new DAO<Venda>(Venda.class);
+	private DAO<Item> dao2 = new DAO<Item>(Item.class);
 	private String search, resultValidarUK;
 	private Double totalValor;
 	private Double totalValorDesconto;
@@ -235,10 +237,10 @@ public class VendaBean implements Serializable {
 					venda.setValorTotal(getValorTotalProdutos());
 					
 					// para gerar relatorio
-					HashMap<String, Object> params = new HashMap<String, Object>();
-					Report report = new Report("report2", params);
-					report.pdfReport();
-					report = new Report();
+//					HashMap<String, Object> params = new HashMap<String, Object>();
+//					Report report = new Report("report2", params);
+//					report.pdfReport();
+//					report = new Report();
 					
 					Msg.addMsgInfo("Venda efetuada com sucesso");
 					System.out.println("...venda efetuada com sucesso!!");
@@ -268,7 +270,7 @@ public class VendaBean implements Serializable {
 		}
 
 	// método para adicionar itens a nota fiscal
-	public void guardaItem() {
+	public void guardaItem() {		
 		boolean all = true;
 		if (!all) {
 			System.out.println("...Erro ao efetuar venda: inconsistencia nos dados do item");
@@ -280,31 +282,46 @@ public class VendaBean implements Serializable {
 				}
 			}
 			if (this.cadastro == true) {
-				if (itemVenda.getQuantidade() == null || itemVenda.getQuantidade() == 0) {
+				if (!itemVenda.getQuantidade().equals(item.getQuantidadeAtual())) { // criar um método para não deixar passar os produtos maior que o nível de estoque
 					
-					DAO<Item> dao = new DAO<Item>(Item.class);
-					Item item = dao.buscaPorId(idItem);
-					itemVenda.setItem(item);
-					itemVenda.setQuantidade(1);
-					
-					venda.getItensVendas().add(itemVenda);
-					itemVenda.setVenda(venda);
+					if (itemVenda.getQuantidade() == null
+							|| itemVenda.getQuantidade() == 0) {
 
-					itemVenda = new ItemVenda();
-					System.out.println("...Produto adicionado a venda com qtd não informada !! (ok)");
-					
+						DAO<Item> dao = new DAO<Item>(Item.class);
+						Item item = dao.buscaPorId(idItem);
+						itemVenda.setItem(item);
+						itemVenda.setQuantidade(1);
+						
+						item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
+						dao2.atualiza(item);
+
+						venda.getItensVendas().add(itemVenda);
+						itemVenda.setVenda(venda);
+
+						itemVenda = new ItemVenda();
+						System.out
+								.println("...Produto adicionado a venda com qtd não informada !! (ok)");
+
+					} else {
+						DAO<Item> dao = new DAO<Item>(Item.class);
+						Item item = dao.buscaPorId(idItem);
+						itemVenda.setItem(item);
+
+						item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
+						dao2.atualiza(item);
+
+						venda.getItensVendas().add(itemVenda);
+						itemVenda.setVenda(venda);
+
+						itemVenda = new ItemVenda();
+						System.out
+								.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
+					}
+
 				} else {
-					DAO<Item> dao = new DAO<Item>(Item.class);
-					Item item = dao.buscaPorId(idItem);
-					itemVenda.setItem(item);
-					
-					venda.getItensVendas().add(itemVenda);
-					itemVenda.setVenda(venda);
-
-					itemVenda = new ItemVenda();
-					System.out.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
+					Msg.addMsgError("Não tem esta quantidade disponível no estoque");
+					System.out.println("...Quantidade não disponível no estoque");
 				}
-
 
 			} else {
 				Msg.addMsgError("Produto não pode ser adicionado novamente");
@@ -314,7 +331,7 @@ public class VendaBean implements Serializable {
 			}
 		}
 	}
-	
+		
 	// relatório
 	public void imprimeCupom() {
 		  HashMap<String, Object> params = new HashMap<String, Object>();
@@ -413,8 +430,12 @@ public class VendaBean implements Serializable {
 	public void removeItemVenda() {
 		venda.getItensVendas().remove(itemVenda);
 		Msg.addMsgWarn("Produto removido");
+		
+//		item.setQuantidadeSaida(itemVenda.getQuantidade() - item.getQuantidadeSaida());
 		System.out.println("Produto removido...");
-
+		
+//		dao2.atualiza(item);
+//		item = new Item();
 		itemVenda = new ItemVenda();
 	}
 
@@ -713,6 +734,26 @@ public class VendaBean implements Serializable {
 
 	public void setCaixaSaida(List<Venda> caixaSaida) {
 		this.caixaSaida = caixaSaida;
-	}	
-	
+	}
+
+
+	public Item getItem() {
+		return item;
+	}
+
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+
+	public DAO<Item> getDao2() {
+		return dao2;
+	}
+
+
+	public void setDao2(DAO<Item> dao2) {
+		this.dao2 = dao2;
+	}
+
 }
