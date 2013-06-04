@@ -375,6 +375,11 @@
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
+				<p:commandButton action="#{vendaBean.rollback}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: blue;"
+				rendered="#{not empty vendaBean.venda.itensVendas}">
+					<f:ajax render="@form" />
+				</p:commandButton>
+				
 				<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Saída" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
 				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao == 2}">
 					<f:ajax render="@form" />

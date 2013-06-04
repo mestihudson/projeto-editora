@@ -65,6 +65,33 @@ public class DAO<T> implements Serializable, GenericDAO<T, ID> {
 		em.getTransaction().commit();
 		em.close();
 	}
+	
+	public void rollback(T t) {
+		EntityManager em = new JPAUtil().getEntityManager();
+		em.getTransaction().begin();
+		em.getTransaction().rollback();
+		em.merge(t);
+		em.close();
+	}
+	
+//	public void rollback(Class objeto, Integer chave) {    
+//        EntityManager em = getEntityManager();    
+//        EntityTransaction etx = em.getTransaction();  
+//            
+//        try {    
+//       etx.begin();    
+//            Object x = getEntity(objeto, chave);    
+//            Object y = em.merge(x);    
+//            em.remove(y);                
+//            etx.commit;  
+//        
+//        } catch (RuntimeException e) {    
+//            etx.rollback(); //não deveria desfazer o objeto deletado aqui?!?!?!?!?!?    
+//            throw e;    
+//        } finally {    
+//            em.close();    
+//        }    
+//    }    
 
 	public List<T> listaTodos() {
 		EntityManager em = new JPAUtil().getEntityManager();
