@@ -71,7 +71,8 @@
 				<p:graphicImage value="/resources/img/estoque.png" style="cursor: pointer;" styleClass="acende" />
 			</p:commandLink>&nbsp;
 			
-			<p:graphicImage value="/resources/img/relatorio.png" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			<p:graphicImage value="/resources/img/relatorio.png" onclick="dlgRelatorio.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
+			
 			<p:graphicImage value="/resources/img/pesquisar.png" onclick="dlgPesquisa.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
 			<p:graphicImage value="/resources/img/usuario.png" onclick="dlgUsuario.show();" style="cursor: pointer; margin-right: 10px;" styleClass="acende" />
 		
@@ -97,7 +98,7 @@
 			</div>	
 	</div>
 		
-	<p:dialog modal="true" width="550" widgetVar="dlgCad" resizable="false" showEffect="fold">
+	<p:dialog modal="true" width="430" widgetVar="dlgCad" resizable="false" showEffect="fold">
 		<h:form>
 			
 			<div align="center">
@@ -106,19 +107,19 @@
 					<h:panelGrid columns="4" cellpadding="5" cellspacing="5" >
 				
 					<p:commandLink action="/pages/fornecedor/cadastrarJFornecedor.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/ifornecedor.png" styleClass="acende" />
 					</p:commandLink>	
 				
 					<p:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/produto.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/iproduto.png" styleClass="acende" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/notafiscal/cadastrarNotaFiscal.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/inotafiscal.png" styleClass="acende" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/cliente/cadastrarCliente.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/icliente.png" styleClass="acende" />
 					</p:commandLink>
 					
 			</h:panelGrid>
@@ -135,22 +136,26 @@
 			<div align="center">
 			<p:panel header="Módulo Consulta">
 				
-			<h:panelGrid columns="4" cellpadding="5" cellspacing="5" >
+			<h:panelGrid columns="5" cellpadding="5" cellspacing="5" >
 				
 					<p:commandLink action="/pages/fornecedor/consultarFornecedor.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/fornecedor.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/ifornecedor.png" styleClass="acende" />
 					</p:commandLink>	
 				
 					<p:commandLink action="/pages/produto/listarProduto.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/produto.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/iproduto.png" styleClass="acende" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/notafiscal/consultarNotaFiscal.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/notafiscal.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/inotafiscal.png" styleClass="acende" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/cliente.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/icliente.png" styleClass="acende" />
+					</p:commandLink>
+					
+					<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+						<p:graphicImage value="/resources/img/ivenda.png" styleClass="acende" />
 					</p:commandLink>
 					
 			</h:panelGrid>				
@@ -169,31 +174,31 @@
 				<h:panelGrid columns="3" cellpadding="5" cellspacing="5" >
 				
 					<p:commandLink action="/pages/usuario/senhaCadastro.xhtml?faces-redirect=true">
-						<p:graphicImage value="/resources/img/update.png" styleClass="acende" title="Atualiza dados do usuário" />
+						<p:graphicImage value="/resources/img/iupdatedados.png" styleClass="acende" title="Atualiza dados do usuário" />
 					</p:commandLink>				
 				
 					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
-						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
+						<p:graphicImage value="/resources/img/ipermissao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==2}">
-						<p:graphicImage value="/resources/img/autorizacao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
+						<p:graphicImage value="/resources/img/ipermissao.png" styleClass="acende" title="Autorização de solicitação de acesso" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/usuario/modificarPerfil.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
-						<p:graphicImage value="/resources/img/modificarperfil.png" styleClass="acende" title="Atualização de perfil" />
+						<p:graphicImage value="/resources/img/iupdateperfil.png" styleClass="acende" title="Atualização de perfil" />
 					</p:commandLink>
 										
 					<p:commandLink action="/pages/usuario/desativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
-						<p:graphicImage value="/resources/img/desativaracessos.png" styleClass="acende" title="Desativar usuário" style="float: center; text-align: center;" />
+						<p:graphicImage value="/resources/img/idesativa.png" styleClass="acende" title="Desativar usuário" style="float: center; text-align: center;" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/usuario/reativarAcesso.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
-						<p:graphicImage value="/resources/img/reativaracesso.png" styleClass="acende" title="Reativar usuário" style="float: center; text-align: center;" />
+						<p:graphicImage value="/resources/img/ireativa.png" styleClass="acende" title="Reativar usuário" style="float: center; text-align: center;" />
 					</p:commandLink>
 					
 					<p:commandLink action="/pages/usuario/listarUsuario.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id!=4}">
-						<p:graphicImage value="/resources/img/usuario2.png" styleClass="acende" />
+						<p:graphicImage value="/resources/img/iusuarios.png" styleClass="acende" />
 					</p:commandLink>
 				
 				</h:panelGrid>	
@@ -203,6 +208,135 @@
 			</div>	
 		</h:form>		
 	</p:dialog>
+	
+<!-- 	aqui começa o dialog de relatorio -->
+	<p:dialog modal="true" width="auto" widgetVar="dlgRelatorio" resizable="false" showEffect="fold" header="Módulo Relatório" 
+		style="text-align: center; float: center;">
+		
+		<h:form id="form_relatorio">
+			
+			<div align="center">
+
+					<h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+					
+						<p:panel header="Produto" style="heigth: 200px;">
+						
+						<h:panelGrid columns="1">														
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Produto por autor" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Produto por categoria" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+									
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Produto por editora" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+						</h:panelGrid>	
+						
+						</p:panel>
+
+						<p:panel header="Cliente" style="height: 115px;">
+							<h:panelGrid columns="1">
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Cliente por preferencia de categoria" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="#{reportBean.relatorioClientes}">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Todos os clientes" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							</h:panelGrid>
+
+						</p:panel>
+
+						<p:panel header="Venda">
+							<h:panelGrid columns="1">
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Vendas por cliente" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Vendas por fornecedor" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Vendas por vendedor" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Vendas por período" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Vendas por nota fiscal de entrada" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							</h:panelGrid>
+
+						</p:panel>
+						
+						<p:panel header="Estoque" style="height: 167px;">
+							<h:panelGrid columns="1">
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Estoque por produto" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Estoque por período" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+		
+							</h:panelGrid>
+
+						</p:panel>
+
+					</h:panelGrid>
+
+				</div>	
+		</h:form>		
+	</p:dialog>
+<!-- 	aqui termina o dialog de relatorio -->
 	
 	<p:confirmDialog id="confirmDialog" message="Deseja sair do sistema"  
                 severity="alert" widgetVar="confirmation"> 

@@ -55,7 +55,7 @@
 
 			<fieldset style="border: 1px solid #A6C9E2; border-top: 0;">
 					
-					<p:dataTable id="dt" value="#{itemBean.teste}" var="item"
+					<p:dataTable id="dt" value="#{itemBean.estoque}" var="item"
 						emptyMessage="Não encontrado" scrollable="true" scrollHeight="400"
 						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
 						rowIndexVar="rowIx">
@@ -73,24 +73,20 @@
 						</p:column>
 
 						<p:column headerText="qdt Entrada" style="color: #1874CD">
-							<h:outputText value="#{itemBean.totalEntrada}" />
+							<h:outputText value="#{item.quantidadeEntrada}" />
 						</p:column>
 
 						<p:column headerText="qdt Saida" style="color: #8B0000">
-							<h:outputText value="#{itemBean.totalSaida}" />
-						</p:column>
-						
-						<p:column headerText="qdt Atual" style="color: blue;">
-							<h:outputText value="#{itemBean.totalAtual}" />
+							<h:outputText value="#{item.quantidadeSaida}" />
 						</p:column>
 
-<!-- 						<p:column headerText="qdt Atual" style="color: blue;"> -->
-<!-- 							<h:outputText value="#{item.quantidadeAtual}" -->
-<!-- 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" /> -->
-<!-- 							<h:outputText value="(#{item.quantidadeAtual2})" -->
-<!-- 								style="color: #CD0000;" -->
-<!-- 								rendered="#{item.produto.quantidadeMinima >= item.quantidadeAtual}" /> -->
-<!-- 						</p:column> -->
+						<p:column headerText="qdt Atual" style="color: blue;">
+							<h:outputText value="#{item.quantidadeAtual}"
+								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
+							<h:outputText value="(#{item.quantidadeAtual2})"
+								style="color: #CD0000;"
+								rendered="#{item.produto.quantidadeMinima >= item.quantidadeAtual}" />
+						</p:column>
 						
 						<p:column headerText="Estoque mínimo">
 							<h:outputText value="#{item.produto.quantidadeMinima}" />
