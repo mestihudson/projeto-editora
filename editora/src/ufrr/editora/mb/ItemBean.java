@@ -17,8 +17,6 @@ import ufrr.editora.entity.Item;
 public class ItemBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final int Row = 0;
 	
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
@@ -126,10 +124,16 @@ public class ItemBean implements Serializable {
 			List<Item> item = new ArrayList<Item>();
 			item = this.getItens();
 			for (int i = 0; i < item.size(); i++) {
-				if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual() 
-						&& item.get(i).getNotaFiscal().getStatus().equals(true)) {
-					itens1.add(item.get(i));
+				if (item.get(i).getQuantidadeEntrada() == item.get(i).getQuantidadeSaida()) {
+					item.get(i).setVenda(false);
+				}else {
+					if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual() 
+							&& item.get(i).getNotaFiscal().getStatus().equals(true)
+							&& item.get(i).getVenda().equals(true)) {
+						itens1.add(item.get(i));
+					}	
 				}
+				
 			}
 			return itens1;
 		}	
@@ -140,9 +144,13 @@ public class ItemBean implements Serializable {
 		List<Item> item = new ArrayList<Item>();
 		item = this.getItens();
 		for (int i = 0; i < item.size(); i++) {
-			if (item.get(i).getNotaFiscal().getStatus().equals(true)
-					&& item.get(i).getQuantidadeAtual() > 0) {
-				itens1.add(item.get(i));
+			if (item.get(i).getQuantidadeEntrada() == item.get(i).getQuantidadeSaida()) {
+				item.get(i).setVenda(false);
+			}else {
+				if (item.get(i).getNotaFiscal().getStatus().equals(true) 
+						&& item.get(i).getVenda().equals(true)) {
+					itens1.add(item.get(i));
+				}
 			}
 		}
 		return itens1;
@@ -153,8 +161,13 @@ public class ItemBean implements Serializable {
 			List<Item> item = new ArrayList<Item>();
 			item = this.getEstoque();
 			for (int i = 0; i < item.size(); i++) {
-				if (item.get(i).getProduto().equals(Row>2)) {
-					itens.remove(i);
+//				if (item.get(i).getQuantidadeSaida()==1) {
+				if (item.get(i).getProduto().equals(getItem().getProduto())) {
+					if (itens.size() > i++) {
+						itens1.remove(item.get(i));
+					}else {
+						return null;
+					}
 				}
 			}
 			return itens1;

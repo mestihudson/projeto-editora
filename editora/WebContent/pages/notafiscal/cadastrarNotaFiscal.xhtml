@@ -87,7 +87,7 @@
 					<p:calendar id="emissao" effect="slideDown" showButtonPanel="true" navigator="true"
 							value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" validatorMessage="Data inválida"
 							requiredMessage="Informe a data de emissão da nota" locale="pt_BR" pattern="dd/MM/yyyy">
-							<f:ajax event="blur" render="mgsg" />
+							<f:ajax event="change" render="mgsg" />
 						</p:calendar>
 					<br /><br />
 					
@@ -96,7 +96,7 @@
 					<p:calendar id="entrada" effect="slideDown" showButtonPanel="true" navigator="true"
 							value="#{notaFiscalBean.notaFiscal.dataEntrada.time}" required="true" validatorMessage="Data inválida"
 							requiredMessage="Informe a data de emissão da nota" locale="pt_BR" pattern="dd/MM/yyyy">
-							<f:ajax event="blur" render="mgsg" />
+							<f:ajax event="change" render="mgsg" />
 						</p:calendar>
 					<br /><br />
 					

@@ -27,11 +27,14 @@ public class NotaFiscalBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private NotaFiscal notaFiscal = new NotaFiscal();
+	private Produto produto = new Produto();
 	private Item item = new Item();
 	private Long idProduto;
+	private List<Item> itens;
 	private List<NotaFiscal> notasFiscais;
 	private List<NotaFiscal> notasFiscais1;
 	private DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
+	private DAO<Produto> daoP = new DAO<Produto>(Produto.class);
 	private String search, resultValidarUK;
 	private Double totalValor;
 	public Boolean cadastro = true;
@@ -126,6 +129,14 @@ public class NotaFiscalBean implements Serializable {
 		}
 		return notasFiscais;
 	}
+	
+	public List<Item> getItens() {
+		if (itens == null) {
+			System.out.println("Carregando itens...");
+			itens = new DAO<Item>(Item.class).getAllOrder("produto.nome");
+		}
+		return itens;
+	}
 
 	// lista as notas ativadas
 	public List<NotaFiscal> getAtivados() {
@@ -198,9 +209,9 @@ public class NotaFiscalBean implements Serializable {
 			Msg.addMsgError("Informe o valor de venda");
 			all = false;
 		}
+		
 		if (!all) {
-			System.out
-					.println("...Erro ao cadastrar nota: inconsistencia nos dados do item");
+			System.out.println("...Erro ao cadastrar nota: inconsistencia nos dados do item");
 		} else {
 			for (Item i : this.getNotaFiscal().getItens()) {
 				if (getIdProduto().equals(i.getProduto().getId())) {
@@ -210,22 +221,49 @@ public class NotaFiscalBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 
-				DAO<Produto> dao = new DAO<Produto>(Produto.class);
-				Produto produto = dao.buscaPorId(idProduto);
-				item.setProduto(produto);
-				
-				item.setQuantidadeSaida(0);
-				notaFiscal.getItens().add(item);
-				item.setNotaFiscal(notaFiscal);
+					for (Item p : this.getItens()) {
+						if (getIdProduto().equals(p.getProduto().getId()) && p.getQuantidadeEntrada() > p.getQuantidadeSaida()) {
+							this.cadastro = false;
+							break;
+						}
+					}
+					if (this.cadastro == true) {
 
-				item = new Item();
-				System.out.println("...Item adicionado com sucesso");
+					DAO<Produto> dao = new DAO<Produto>(Produto.class);
+					Produto produto = dao.buscaPorId(idProduto);
+					item.setProduto(produto);
+
+					item.setQuantidadeSaida(0);
+					item.setVenda(true);
+					notaFiscal.getItens().add(item);
+					item.setNotaFiscal(notaFiscal);
+
+					item = new Item();
+					System.out.println("...Item adicionado com sucesso");
+
+				} else {
+					DAO<Produto> dao = new DAO<Produto>(Produto.class);
+					Produto produto = dao.buscaPorId(idProduto);
+					item.setProduto(produto);
+
+					item.setQuantidadeSaida(0);
+					item.setVenda(false);
+					notaFiscal.getItens().add(item);
+					item.setNotaFiscal(notaFiscal);
+
+					Msg.addMsgWarn("Produto: " + getItem().getProduto().getNome() + " encontra-se em estoque, portanto não vai ser exposto a venda");
+					System.out.println("...Este produto: " + getItem().getProduto().getId() + "encontra-se em estoque, portanto não vai ser exposto a venda");
+					item = new Item();
+					this.cadastro = true;
+
+				}
 
 			} else {
 				Msg.addMsgError("Este produto já foi adicionado");
 				System.out.println("...Este produto já foi adicionado");
 				item = new Item();
 				this.cadastro = true;
+
 			}
 		}
 	}
@@ -304,6 +342,21 @@ public class NotaFiscalBean implements Serializable {
 	}
 
 	/** validations **/
+	
+	public boolean validarAddItem() {
+		@SuppressWarnings("unused")
+		boolean var = getIdProduto()==getItem().getProduto().getId();
+			
+		Query q = dao.query("SELECT i FROM Item i WHERE produto and quantidadeEntrada = quantidadeSaida"); //achar um método certo
+				
+		if (!q.getResultList().isEmpty()) {
+			Msg.addMsgError("Este produto encontra-se em estoque, é preciso esgota-lo para nova entrada");
+			return true;
+		} else {
+			resultValidarUK = "";
+			return false;
+		}
+	}
 
 	// validação para não cadastrar nº de nota fiscal para o mesmo fornecedor
 	public boolean validarNota() {
@@ -439,5 +492,27 @@ public class NotaFiscalBean implements Serializable {
 	public void setValidator(Validator<NotaFiscal> validator) {
 		this.validator = validator;
 	}
+
+	public DAO<Produto> getDaoP() {
+		return daoP;
+	}
+
+	public void setDaoP(DAO<Produto> daoP) {
+		this.daoP = daoP;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+	
+	
 
 }

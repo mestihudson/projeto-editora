@@ -36,6 +36,8 @@ public class Item implements Serializable {
 
 	@Transient
 	private Double totalValor;
+	
+	private Boolean venda; // o item que será exposto a venda
 
 	// get and set
 
@@ -101,6 +103,14 @@ public class Item implements Serializable {
 
 	public void setTotalValor(Double totalValor) {
 		this.totalValor = totalValor;
+	}
+	
+	public Boolean getVenda() {
+		return venda;
+	}
+
+	public void setVenda(Boolean venda) {
+		this.venda = venda;
 	}
 
 	// variável para exibir o total de quantidade atual
