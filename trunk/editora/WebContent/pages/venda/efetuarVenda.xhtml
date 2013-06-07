@@ -212,11 +212,10 @@
 					<div style="float: left; margin-right: 10px; margin-left: 10px;">	
 					<p:panel style="width: 580px; height: 190px;">
 					
-					<h:panelGrid id="parcela_div" columns="8">
+					<h:panelGrid id="parcela_div" columns="10">
 					
 					<h:outputLabel value="Forma de pagamento" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
-            		<p:selectOneMenu style="width: 150px;" id="forma" value="#{vendaBean.venda.formaPagamento}"
+            		<p:selectOneMenu style="width: 150px;" id="forma" value="#{vendaBean.venda.formaPagamento}" 
 					styleClass="input" effect="fade">
 						<f:selectItem itemLabel="à vista" itemValue="1" />
 						<f:selectItem itemLabel="cartão(crédito)" itemValue="2" />
@@ -227,21 +226,21 @@
             		
             		<h:outputLabel value="Parcelas" styleClass="OutPut" rendered="#{vendaBean.venda.formaPagamento == 2}" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{vendaBean.venda.formaPagamento == 2}" />
-					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5"
-					min="0" max="100" validatorMessage="Parcelas inválida" rendered="#{vendaBean.venda.formaPagamento == 2}">
+					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5" required="true" requiredMessage="Defina a quantidade de parcelas"
+					min="0" max="12" validatorMessage="Parcelas inválida" maxlength="2" rendered="#{vendaBean.venda.formaPagamento == 2}">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
-										
-					</h:panelGrid>
 					
 					<h:outputLabel value="Gerar cupom? " styleClass="OutPut" style="mergin-left: 30px;" />
-            		<p:selectBooleanCheckbox id="cupom" value="#{vendaBean.venda.imprimeCupom}" />            			            		
+            		<p:selectBooleanCheckbox id="cupom" value="#{vendaBean.venda.imprimeCupom}" /> 
+										
+					</h:panelGrid>
             		
-                    		
-					<h:panelGrid columns="1">
+                    <h:panelGrid columns="1">
 
 					<h:outputLabel value="OBS" styleClass="OutPut" style="mergin-left: 30px;" />
+					<h:outputLabel value="Justificativa" styleClass="OutPut" style="mergin-left: 30px;" />
 					<p:selectOneMenu style="width: 190px;" id="tituloobs" value="#{vendaBean.venda.tituloObs}"
 					styleClass="input" effect="fade">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
@@ -253,7 +252,7 @@
 						<f:selectItem itemLabel="Venda com desconto" itemValue="6" />
 						<f:selectItem itemLabel="Venda com valor de custo" itemValue="7" />            			            		
             		</p:selectOneMenu>					
-					<p:inputTextarea id="obs" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="180" />
+					<p:inputTextarea id="obs2" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="66" cols="10" rows="6" />
 					<br /><br />
 					
 					</h:panelGrid>
