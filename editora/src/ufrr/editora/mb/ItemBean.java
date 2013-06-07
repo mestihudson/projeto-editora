@@ -144,7 +144,7 @@ public class ItemBean implements Serializable {
 		List<Item> item = new ArrayList<Item>();
 		item = this.getItens();
 		for (int i = 0; i < item.size(); i++) {
-			if (item.get(i).getQuantidadeEntrada() == item.get(i).getQuantidadeSaida()) {
+			if (item.get(i).getQuantidadeEntrada() <= item.get(i).getQuantidadeSaida()) {
 				item.get(i).setVenda(false);
 			}else {
 				if (item.get(i).getNotaFiscal().getStatus().equals(true) 

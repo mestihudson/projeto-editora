@@ -69,7 +69,73 @@ public class VendaBean implements Serializable {
 		validator = new Validator<Venda>(Venda.class);
 		search = "";
 		box4Search = 1;
+		box4Search = 2;
+		box4Search = 3;
 	}
+	
+	// pesquisa venda pela data
+	@SuppressWarnings("unchecked")
+	public String getVendaByData() {
+		try {
+			Query query = dao.query("SELECT v FROM Venda v WHERE v.dataVenda=?");
+			query.setParameter(1, venda.getDataVenda());
+			vendas = query.getResultList();
+			if (vendas.isEmpty()) {
+				init();
+				Msg.addMsgError("Nenhuma venda efetuada na data informada");
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	// Pesquisa venda pelo cliente, data e vendedor
+		public String getListaVendaByCDV() {
+
+			if (box4Search.equals(3)) {
+				if (search.contains("'") || search.contains("@")
+						|| search.contains("*")) {
+					init();
+					Msg.addMsgError("Contém caractér(es) inválido(s)");
+					return null;
+				} else {
+					if (search.length() <= 4) {
+						init();
+						Msg.addMsgError("Informe 5 caracteres para pesquisa");
+						return null;
+					} else {
+						vendas = dao.getAllByName("obj.vendedor.nome", search);
+						if (vendas.isEmpty()) {
+							init();
+							Msg.addMsgError("Nenhuma efetuada para este vendedor");
+							return null;
+						} else {
+							return null;
+						}
+					}
+				}
+			} else if (box4Search.equals(2)) {
+				if (search.length() <= 4) {
+					init();
+					Msg.addMsgError("Informe 5 caracteres para pesquisa");
+					return null;
+				} else {
+					vendas = dao.getAllByName("obj.cliente.nome", search);
+					if (vendas.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhuma venda efetuada para este cliente");
+						return null;
+					} else {
+						return null;
+					}
+				}
+
+			}
+			return null;
+		}
 
 
 	/** List NF **/
@@ -286,23 +352,27 @@ public class VendaBean implements Serializable {
 					
 					if (itemVenda.getQuantidade() == null
 							|| itemVenda.getQuantidade() == 0) {
-
-						DAO<Item> dao = new DAO<Item>(Item.class);
-						Item item = dao.buscaPorId(idItem);
-						itemVenda.setItem(item);
-						itemVenda.setQuantidade(1);
 						
-						item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
-						dao2.atualiza(item);
 
-						venda.getItensVendas().add(itemVenda);
-						itemVenda.setVenda(venda);
+							DAO<Item> dao = new DAO<Item>(Item.class);
+							Item item = dao.buscaPorId(idItem);
+							itemVenda.setItem(item);
+							itemVenda.setQuantidade(1);
+							
+							item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
+							dao2.atualiza(item);
 
-						itemVenda = new ItemVenda();
-						System.out
-								.println("...Produto adicionado a venda com qtd não informada !! (ok)");
+							venda.getItensVendas().add(itemVenda);
+							itemVenda.setVenda(venda);
+
+							itemVenda = new ItemVenda();
+							System.out.println("...Produto adicionado a venda com qtd não informada !! (ok)");
 
 					} else {
+						if (itemVenda.getQuantidade()>itemVenda.getItem().getQuantidadeAtual()) {
+							Msg.addMsgError("Quantidade indisponível no estoque"); // criar um método para não passar os produtos cuja quantidade de venda seja maiores que o nível de estoque
+							
+						}else {
 						DAO<Item> dao = new DAO<Item>(Item.class);
 						Item item = dao.buscaPorId(idItem);
 						itemVenda.setItem(item);
@@ -316,6 +386,7 @@ public class VendaBean implements Serializable {
 						itemVenda = new ItemVenda();
 						System.out
 								.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
+						}
 					}
 
 				} else {
@@ -335,7 +406,7 @@ public class VendaBean implements Serializable {
 	// relatório
 	public void imprimeCupom() {
 		  HashMap<String, Object> params = new HashMap<String, Object>();
-		  Report report = new Report("report2", params);
+		  Report report = new Report("clientes", params);
 		  report.pdfReport();
 	}
 	

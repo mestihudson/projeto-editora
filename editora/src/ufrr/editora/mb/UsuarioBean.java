@@ -112,6 +112,31 @@ public class UsuarioBean implements Serializable {
 		}
 		return nomes;
 	}
+	
+	// AutoComplete clientes
+	public List<String> autocompleteClientes(String nome) {
+		List<Usuario> array = dao.getAllByName("nome", nome);
+		ArrayList<String> nomes = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			if (array.get(i).getPerfil().getId() == 4) {
+				nomes.add(array.get(i).getNome());
+			}
+		}
+		return nomes;
+	}
+	
+	// AutoComplete clientes
+	public List<String> autocompleteVendedor(String nome) {
+		List<Usuario> array = dao.getAllByName("nome", nome);
+		ArrayList<String> nomes = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			if (array.get(i).getPerfil().getId() <= 3
+					&& array.get(i).getId() != 1) {
+				nomes.add(array.get(i).getNome());
+			}
+		}
+		return nomes;
+	}
 
 	// AutoComplete Nome e CPF juntos (somente para Cliente)
 	public List<String> autocomplete(String nome) {
