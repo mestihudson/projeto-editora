@@ -43,19 +43,18 @@
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 
-				<fieldset
-					style="border-color: #F8F8FF; border-bottom: white; border-top: white;">
+				<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0;">
 
 					<br />
 					<br />
 					
-						<h:outputLabel value="Para: " styleClass="OutPut" />
+						<h:outputLabel value="Para: " styleClass="OutPut" style="margin-left: 12px;" />
 						<h:outputLabel id="destinatario" value="#{emailBean.email.destino.login}" styleClass="OutPut" style="margin-left: 45px;" />
 						<br /><br />
 						
 						<h:panelGrid id="gridMail" columns="5">	
 
-						<h:outputLabel value="Título" styleClass="OutPut" />
+						<h:outputLabel value="Título" styleClass="OutPut" style="margin-left: 10px;" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="titulo" value="#{emailBean.email.titulo}" size="75"
 							required="true" requiredMessage="Informe o título"
@@ -65,7 +64,7 @@
 						<p:message id="error_titulo" for="titulo" />	
 						<br /><br />
 
-						<h:outputLabel value="Mensagem" styleClass="OutPut" />
+						<h:outputLabel value="Mensagem" styleClass="OutPut" style="margin-left: 10px;" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputTextarea id="msg" value="#{emailBean.email.mensagem}" cols="150" autoResize="true" 
 							rows="10" required="true" requiredMessage="Escreva a mensagem"
@@ -123,8 +122,14 @@
 		<p:dialog header="Clique no email para identificar o destino" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
 		rendered="#{emailBean.email.destino==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
-				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios" paginator="true"
+				<p:dataTable value="#{usuarioBean.clientes}" var="usuario" id="tb_usuarios" paginator="true"
 				rows="15" paginatorPosition="bottom" emptyMessage="Não encontrado">
+				
+						<p:column headerText="Código" filterBy="#{usuario.id}" filterMatchMode="exact">
+							<h:commandLink value="#{usuario.id}" onclick="dlgMsg.hide()" id="link_id">
+								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
+							</h:commandLink>
+						</p:column>
 					
 						<p:column headerText="Nome" filterBy="#{usuario.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()" id="link_nome">
@@ -136,13 +141,7 @@
 							<h:commandLink value="#{usuario.login}" onclick="dlgMsg.hide()" id="link_email">
 								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
 							</h:commandLink>
-						</p:column>
-						
-						<p:column headerText="Perfil" filterBy="#{usuario.perfil.perfil}" filterMatchMode="contains">
-							<h:commandLink value="#{usuario.perfil.perfil}" onclick="dlgMsg.hide()" id="link_perfil">
-								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
-							</h:commandLink>
-						</p:column>		
+						</p:column>	
 											
 				</p:dataTable>
 				
