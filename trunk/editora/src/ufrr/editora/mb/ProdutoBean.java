@@ -411,13 +411,13 @@ public class ProdutoBean implements Serializable {
 
 	/** autocomplete **/
 	
-//	public List<String> autocompleteIsbn(String nome) {
-//		List<Produto> array = dao.getAllByName("isbn", nome);
-//		ArrayList<String> nomes = new ArrayList<String>();
+//	public List<Long> autocompleteIsbn(Long numero) {
+//		List<Produto> array = dao.getAllByLong("isbn", numero);
+//		ArrayList<Long> ns = new ArrayList<Long>();
 //		for (int i = 0; i < array.size(); i++) {
-//			nomes.add(array.get(i).getIsbn());
+//			ns.add(array.get(i).getIsbn());
 //		}
-//		return nomes;
+//		return ns;
 //	}
 
 	public List<String> autocomplete(String nome) {

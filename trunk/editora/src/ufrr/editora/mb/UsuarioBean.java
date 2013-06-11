@@ -67,6 +67,7 @@ public class UsuarioBean implements Serializable {
 		search = "";
 		box4Search = 1;
 		box4Search = 2;
+		box4Search = 3;
 	}
 	
 	/** Função para criar hash da senha informada **/
@@ -260,6 +261,28 @@ public class UsuarioBean implements Serializable {
 	
 	
 	/** Consultas **/
+	
+	// pesquisa nota pelo id
+	@SuppressWarnings("unchecked")
+	public void getClienteById() {
+		if (usuario.getId() == null || usuario.getId() == 0) {
+			Msg.addMsgError("Informe corretamente o código do cliente");
+
+		} else {
+			try {
+				Query query = dao.query("SELECT u FROM Usuario u WHERE u.id=? and u.id != 1 and u.perfil = 4");
+				query.setParameter(1, usuario.getId());
+				usuarios = query.getResultList();
+				if (usuarios.isEmpty()) {
+					init();
+					Msg.addMsgError("Nenhum registro encontrado");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	// Pesquisa usuário pelo nome
 	@SuppressWarnings("unchecked")

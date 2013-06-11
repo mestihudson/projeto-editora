@@ -33,6 +33,14 @@ public class DAO<T> implements Serializable, GenericDAO<T, ID> {
 		return query.getResultList();
 	}
 	
+//	para Long
+	@SuppressWarnings("unchecked")
+	public List<T> getAllByLong(String field, Long number) {
+		String querySelect = "SELECT obj FROM " + classe.getSimpleName() + " obj WHERE" + field + "=" + number;
+		Query query = getEntityManager().createQuery(querySelect);
+		return query.getResultList();
+	}
+	
 	
 	public void adiciona(T t) {
 		//consegue a entity manager
@@ -120,7 +128,7 @@ public class DAO<T> implements Serializable, GenericDAO<T, ID> {
 		EntityManager em = new JPAUtil().getEntityManager();
 		return (T) em.find(classe, id);
 	}
-	
+		
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
 		String querySelect = "SELECT obj FROM "

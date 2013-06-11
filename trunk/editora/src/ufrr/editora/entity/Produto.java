@@ -17,7 +17,7 @@ import ufrr.editora.converter.BaseEntity;
 public class Produto implements Serializable, BaseEntity {
 		
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

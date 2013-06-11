@@ -93,7 +93,7 @@
 		rendered="#{mensagemBean.mensagem.destinatario==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
 				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios" paginator="true"
-				rows="15" paginatorPosition="bottom">
+				rows="15" paginatorPosition="bottom" emptyMessage="Não encontrado">
 					
 						<p:column headerText="Nome" filterBy="#{usuario.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()" id="link_nome">

@@ -68,7 +68,7 @@
 						<h:outputLabel value="Mensagem" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputTextarea id="msg" value="#{emailBean.email.mensagem}" cols="150" autoResize="true" 
-							rows="10" required="true" requiredMessage="Escreva a Mensagem"
+							rows="10" required="true" requiredMessage="Escreva a mensagem"
 							styleClass="input">
 								<p:ajax event="blur" render="error_msg" />
 						</p:inputTextarea>
@@ -120,11 +120,11 @@
 			
 <!-- 			Dialog para destinatário -->
 
-			<p:dialog header="Clique no email para identificar o destino" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
+		<p:dialog header="Clique no email para identificar o destino" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
 		rendered="#{emailBean.email.destino==null}" showEffect="fold" hideEffect="fold">
 		<h:form>
 				<p:dataTable value="#{usuarioBean.ativados}" var="usuario" id="tb_usuarios" paginator="true"
-				rows="15" paginatorPosition="bottom">
+				rows="15" paginatorPosition="bottom" emptyMessage="Não encontrado">
 					
 						<p:column headerText="Nome" filterBy="#{usuario.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()" id="link_nome">
@@ -134,6 +134,12 @@
 						
 						<p:column headerText="e-mail" filterBy="#{usuario.login}" filterMatchMode="contains">
 							<h:commandLink value="#{usuario.login}" onclick="dlgMsg.hide()" id="link_email">
+								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
+							</h:commandLink>
+						</p:column>
+						
+						<p:column headerText="Perfil" filterBy="#{usuario.perfil.perfil}" filterMatchMode="contains">
+							<h:commandLink value="#{usuario.perfil.perfil}" onclick="dlgMsg.hide()" id="link_perfil">
 								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
 							</h:commandLink>
 						</p:column>		

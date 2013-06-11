@@ -34,7 +34,7 @@
 		
 			<h:form id="form_efetuar_venda" rendered="#{loginBean.usuario.perfil.id==1}">
 			
-			<p:focus context="grid" for="prod" />
+			<p:focus context="pnl" for="prod" rendered="#{vendaBean.venda.operacao==1}" />
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="EFETUAR VENDA" style="color: white; font-size: 12px;" styleClass="OutPut" />
@@ -107,20 +107,27 @@
 					
 <!-- 					panel add produto -->
 					<div style="float: right; margin-right: 10px">
-					<p:panel header="Produto" style="height: 130px; width: 550px;" rendered="#{vendaBean.venda.operacao != 2}">
+					<p:panel header="Produto" style="height: 130px; width: 550px;" rendered="#{vendaBean.venda.operacao != 2}" id="pnl">
 					
 					<h:panelGrid columns="3" cellpadding="5" cellspacing="5">
 					
 <!--            		aqui a lista retorna o primeiro id depois que muda o value -->
 
-						
-					<h:outputLabel value="isbn/código" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
+					<h:outputLabel value="isbn/código" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />   
             		<p:selectOneMenu style="width: 400px;" id="prod" value="#{vendaBean.idItem}"
+            		filter="true" filterMatchMode="startsWith"
 					styleClass="input" panelStyle="width:400px" rendered="#{vendaBean.venda.operacao == 1}"
-					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Adicione o produto">
+					effect="fade" required="true" requiredMessage="Adicione o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" />             			            		
+						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" id="filter" />             			            		
             		</p:selectOneMenu>
+            		            		
+            		<!--             		<p:autoComplete style="width: 400px;" id="prod" value="#{vendaBean.idItem}" maxlength="13" -->
+<!-- 					styleClass="input" rendered="#{vendaBean.venda.operacao == 1}" -->
+<!-- 					required="true" requiredMessage="Adicione o produto" converter="genericConverter">           			            		            			            		 -->
+<!--             		</p:autoComplete> -->
+            		
+<!--             		// agora só precisa fazer a conversão! -->
             		
             		<br /><br />
             		
@@ -243,7 +250,9 @@
 						<f:selectItem itemLabel="à vista" itemValue="1" />
 						<f:selectItem itemLabel="cartão(crédito)" itemValue="2" />
 						<f:selectItem itemLabel="cartão(débito)" itemValue="3" />
-						<f:selectItem itemLabel="cheque" itemValue="4" /> 
+						<f:selectItem itemLabel="cheque(à vista)" itemValue="4" />
+						<f:selectItem itemLabel="cheque(pré datado)" itemValue="5" />
+						<f:selectItem itemLabel="depósito bancário" itemValue="6" />
 						<f:ajax render="parcela_div" />           			            		
             		</p:selectOneMenu>
             		
@@ -375,11 +384,6 @@
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
-				<p:commandButton action="#{vendaBean.rollback}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: blue;"
-				rendered="#{not empty vendaBean.venda.itensVendas}">
-					<f:ajax render="@form" />
-				</p:commandButton>
-				
 				<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Saída" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
 				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao == 2}">
 					<f:ajax render="@form" />
@@ -489,6 +493,30 @@
 				
 				</h:form>
 			</p:dialog>	
+			
+<!-- 			Aqui começa o dialog para os produtos disponíveis no estoque -->
+			<p:dialog header="" widgetVar="dlgProdutos" modal="true"
+				width="auto" resizable="false">
+				<h:form id="form_dlg_produtos">
+
+					<p:outputPanel id="prods">
+					
+						<p:dataTable value="#{itemBean.estoque}" var="e"
+							paginator="true" rows="15" dynamic="true" emptyMessage="Produto não disponível"
+							rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">									
+
+							<p:column filterBy="#{e.produto.isbn}" filterMatchMode="exact"
+								headerText="isbn" style="float: center; text-align: center;">								
+								<h:commandLink value="#{e.produto.isbn}" onclick="dlgProdutos.hide()">
+									<f:setPropertyActionListener target="#{itemBean.item}" value="#{e}" />
+								</h:commandLink>
+							</p:column>
+							
+						</p:dataTable>
+					</p:outputPanel>
+
+				</h:form>
+			</p:dialog>
 			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">

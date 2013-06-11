@@ -47,23 +47,27 @@
 			
 			<p:focus context="autocompletePesquisar" for="autocompletePesquisar" />
 			<p:focus context="maskcpf" for="maskcpf" />
+			<p:focus context="codigo" for="codigo" />
 			
 			<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="15">
 			
 				<p:selectOneRadio value="#{usuarioBean.box4Search}" styleClass="OutPut" style="width: 80px;">
+					<f:selectItem itemLabel="Código" itemValue="3" id="id" />
 					<f:selectItem itemLabel="CPF" itemValue="2"  id="cpf" />
 					<f:selectItem itemLabel="Nome" itemValue="1" id="nome" />
 					<f:ajax render="form_acesso1" />
 				</p:selectOneRadio>
-				
-				<p:inputText value="#{usuarioBean.search}" size="60" rendered="#{usuarioBean.box4Search != 1 and usuarioBean.box4Search != 2}" disabled="true" />
 									
 				<p:autoComplete value="#{usuarioBean.search}" completeMethod="#{usuarioBean.autocomplete}" var="f" itemValue="#{f}" itemLabel="#{f}"
 				minQueryLength="11" maxResults="5" queryDelay="30" id="autocompletePesquisar" size="60"  rendered="#{usuarioBean.box4Search == 1}" />
 				
 				<p:inputMask mask="999.999.999-99" value="#{usuarioBean.search}" rendered="#{usuarioBean.box4Search == 2}" size="60" id="maskcpf" />
 				
-				<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListarClientes}" ajax="false" icon="ui-icon-search" />
+				<p:inputText value="#{usuarioBean.usuario.id}" rendered="#{usuarioBean.box4Search == 3}" size="60" id="codigo" />
+				
+				<p:commandButton value="Pesquisar" id="botaoPesquisar" action="#{usuarioBean.getListarClientes}" ajax="false" icon="ui-icon-search" rendered="#{usuarioBean.box4Search != 3}" />
+				
+				<p:commandButton value="Pesquisar" id="botaoPesquisar2" action="#{usuarioBean.getClienteById}" ajax="false" icon="ui-icon-check" rendered="#{usuarioBean.box4Search == 3}" />
 				
 			</h:panelGrid>	
 			<br />	
@@ -71,7 +75,7 @@
 			<p:dataGrid id="grid_dados" var="usuario" value="#{usuarioBean.clientesCadastrados}" columns="3" rows="6" paginator="true" paginatorPosition="bottom"
 	 		emptyMessage="Não encontrado">
 	 		
-	 			<p:panel header="#{usuario.nome}" style="text-align:center" footer="CPF: #{usuario.cpf}">
+	 			<p:panel header="#{usuario.nome} - #{usuario.id}" style="text-align:center" footer="CPF: #{usuario.cpf}">
 					<h:panelGrid columns="1" style="width:100%">
 					
 					<h:outputText value="Email: #{usuario.login}" /> 
@@ -90,11 +94,11 @@
 					
 					<h:outputText value="Contatos: #{usuario.telefone1}, #{usuario.telefone1} " />
 					
-					<h:outputText value="Preferencia por categoria: #{usuario.preferencia.nome}" />
+					<h:outputText value="Preferencia por categoria: #{usuario.preferencia.nome}" rendered="#{usuario.preferencia.nome!=null}" />
 
 								<p:commandLink update=":form_dlg:display"
-									oncomplete="dlgEnd.show()">
-									<h:outputText styleClass="ui-icon ui-icon-plusthick"
+									oncomplete="dlgEnd.show()" title="Detalhar">
+									<h:outputText styleClass="ui-icon ui-icon-circle-check"
 										style="margin:0 auto;" />
 									<f:setPropertyActionListener value="#{usuario}"
 										target="#{usuarioBean.usuario}" />

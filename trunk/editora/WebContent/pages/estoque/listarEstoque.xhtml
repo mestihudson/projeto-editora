@@ -60,16 +60,17 @@
 						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
 						rowIndexVar="rowIx">
 						
-						<p:column headerText="isbn/código">
+						<p:column width="100"
+						headerText="isbn/código" filterBy="#{item.produto.isbn}" filterMatchMode="contains">
 							<h:outputText value="#{item.produto.id}" rendered="#{item.produto.isbn==null}" />
 							<h:outputText value="#{item.produto.isbn}" rendered="#{item.produto.isbn!=null}" />
 						</p:column>
 
 						<p:column headerText="Produto" width="500"
 							filterBy="#{item.produto.nome}" filterMatchMode="contains">
-							<h:outputText value="#{item.produto.nome}" />
-							<h:outputText value=" - #{item.produto.tipo.nome}"
+							<h:outputText value="#{item.produto.tipo.nome}: "
 								rendered="#{item.produto.tipo.id eq 1}" />
+							<h:outputText value="#{item.produto.nome}" />
 						</p:column>
 
 						<p:column headerText="qdt Entrada" style="color: #1874CD">
@@ -88,7 +89,7 @@
 								rendered="#{item.produto.quantidadeMinima >= item.quantidadeAtual}" />
 						</p:column>
 						
-						<p:column headerText="Estoque mínimo">
+						<p:column headerText="Estoque min.">
 							<h:outputText value="#{item.produto.quantidadeMinima}" />
 						</p:column>
 
