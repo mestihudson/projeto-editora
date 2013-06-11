@@ -11,7 +11,7 @@
 	<ui:define name="head">
 	
 	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Usuário > Desativar Acesso" styleClass="title" style="line-height: 20px;" />
+		<h:outputText value="Usuário > Reativar Acesso" styleClass="title" style="line-height: 20px;" />
 		<div style="background: #C4D2EB; height: 2px;" ></div>	
 	</div>
 	
@@ -80,11 +80,11 @@
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
-						<p:commandButton value="Reativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
-						style="float: center; text-align: center;" icon="ui-icon-check"
+						<p:commandLink onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2" icon="ui-icon-check"
 						title="Reativar acesso">
+							<h:outputText styleClass="ui-icon ui-icon-circle-check"	title="Reativar usuário" style="margin:0 auto;" />
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 										
 			</p:dataTable>	
@@ -125,11 +125,11 @@
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
-						<p:commandButton value="Reativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
-						style="float: center; text-align: center;" icon="ui-icon-check"
+						<p:commandLink value="Reativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
 						title="Reativar acesso">
+							<h:outputText styleClass="ui-icon ui-icon-circle-check"	title="Reativar usuário" style="margin:0 auto;" />
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 										
 			</p:dataTable>

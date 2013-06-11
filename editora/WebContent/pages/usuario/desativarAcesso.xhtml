@@ -81,11 +81,11 @@
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
-						<p:commandButton value="Desativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
-						style="float: center; text-align: center; color: red;" icon="ui-icon-close"
-						title="Desativar acesso">
+						<p:commandLink onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
+						style="float: center; text-align: center;" title="Desativar acesso">
+							<h:outputText styleClass="ui-icon ui-icon-circle-close"	title="Desativar usuário" style="margin:0 auto;" />
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 										
 			</p:dataTable>
@@ -128,11 +128,12 @@
 						<f:facet name="header">
 							<h:outputText value="" />
 						</f:facet>
-						<p:commandButton value="Desativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
-						style="float: center; text-align: center; color: red;" icon="ui-icon-close"
+						<p:commandLink value="Desativar" onclick="dlgAtivar2.show()" update=":form_ativar_gerente:display2"
+						style="float: center; text-align: center; color: red;" icon="ui-icon ui-icon-circle-close"
 						title="Desativar acesso">
+							<h:outputText styleClass="ui-icon ui-icon-circle-close"	title="Desativar usuário" style="margin:0 auto;" />
 							<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{u}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 										
 			</p:dataTable>	

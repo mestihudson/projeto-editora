@@ -39,8 +39,8 @@
 				
 				<p:selectOneRadio value="#{vendaBean.box4Search}" styleClass="OutPut"
 					required="true" requiredMessage="Informe a operação">
-						<f:selectItem itemLabel="Todos" itemValue="1" />
-						<f:selectItem itemLabel="Filtrar" itemValue="2" />
+						<f:selectItem itemLabel="Todos" itemValue="4" />
+						<f:selectItem itemLabel="Filtrar" itemValue="5" />
 						<f:ajax render="form_caixa" />
 					</p:selectOneRadio>	
 			</div>
@@ -51,28 +51,28 @@
 													
 					<h:outputLabel value="Período " styleClass="OutPut" />
 									
-					<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=1}"
+					<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=4}"
 						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida"
 						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 					
-					<p:calendar id="inicial2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==1}"
+					<p:calendar id="inicial2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==4}"
 						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida" disabled="true"
 						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>		
 				
 				<h:outputLabel value=" à " styleClass="OutPut" />	
-					<p:calendar id="final" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=1}"
+					<p:calendar id="final" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=4}"
 						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida"
 						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 					
-					<p:calendar id="final2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==1}"
+					<p:calendar id="final2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==4}"
 						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida" disabled="true"
 						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 							
-			<p:commandButton value="OK" id="botaoPesquisar" action="#{vendaBean.getCaixaByDate}" ajax="false" icon="ui-icon-check" rendered="#{vendaBean.box4Search!=1}">
+			<p:commandButton value="OK" id="botaoPesquisar" action="#{vendaBean.getCaixaByDate}" ajax="false" icon="ui-icon-check" rendered="#{vendaBean.box4Search!=4}">
 				<f:ajax render="@form" />
 			</p:commandButton>
 			</h:panelGrid>	
@@ -98,14 +98,12 @@
 
 									<p:column style="text-align: center;" width="15">
 										<f:facet name="header">Forma de pagamento</f:facet>
-										<h:outputLabel value="à vista"
-											rendered="#{v.formaPagamento==1}" />
-										<h:outputLabel value="crédito"
-											rendered="#{v.formaPagamento==2}" />
-										<h:outputLabel value="débito"
-											rendered="#{v.formaPagamento==3}" />
-										<h:outputLabel value="cheque"
-											rendered="#{v.formaPagamento==4}" />
+										<h:outputLabel value="à vista"	rendered="#{v.formaPagamento==1}" />
+										<h:outputLabel value="crédito"	rendered="#{v.formaPagamento==2}" />
+										<h:outputLabel value="débito"	rendered="#{v.formaPagamento==3}" />
+										<h:outputLabel value="cheque(à vista)"	rendered="#{v.formaPagamento==4}" />
+										<h:outputLabel value="cheque(pré datado)" rendered="#{v.formaPagamento==5}" />		
+										<h:outputLabel value="depósito bancário"  rendered="#{v.formaPagamento==6}" />	
 									</p:column>
 									
 									<p:column width="90">
@@ -181,7 +179,6 @@
 			</fieldset>
 			
 			<div style="background: #C4D2EB; height: 30px; line-height: 25px;" align="center">
-					<h:outputText value="-" style="color: black; font-size: 15px;" />&nbsp;&nbsp;&nbsp;&nbsp;
 					<h:outputText value="R$ " rendered="#{vendaBean.result != true}"
 						style="color: red; font-size: 14px;" styleClass="OutPut" />
 					<h:outputText value="#{vendaBean.lucro}" rendered="#{vendaBean.result != true}"
@@ -195,8 +192,6 @@
 						style="color: #394674; font-size: 14px;" styleClass="OutPut">
 						<f:convertNumber pattern="#,##0.00" />
 					</h:outputText>
-					&nbsp;&nbsp;&nbsp;
-					<h:outputText value="-" style="color: black; font-size: 15px;" />
 				</div>
 			
 			</h:form>

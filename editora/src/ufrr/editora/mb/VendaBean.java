@@ -71,6 +71,7 @@ public class VendaBean implements Serializable {
 		box4Search = 1;
 		box4Search = 2;
 		box4Search = 3;
+		box4Search = 4;
 	}
 	
 	// pesquisa venda pela data
@@ -237,10 +238,10 @@ public class VendaBean implements Serializable {
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getVendas().add(venda);
 				DAO<Venda> dao = new DAO<Venda>(Venda.class);
+				venda.setOperacao(1);
 				venda.setValorTotalDesconto(getValorTotalComDesconto());
 				venda.setValorTotal(getValorTotalProdutos());
-				venda.setOperacao(1);
-				
+								
 				// para gerar relatorio
 //				HashMap<String, Object> params = new HashMap<String, Object>();
 //				Report report = new Report("report2", params);
@@ -254,8 +255,7 @@ public class VendaBean implements Serializable {
 				venda = new Venda();
 												
 				return "/pages/venda/efetuarVenda.xhtml";
-				
-					
+									
 				
 			}else {
 				this.getVenda().setVendedor(this.loginBean.getUsuario());
@@ -263,7 +263,8 @@ public class VendaBean implements Serializable {
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getVendas().add(venda);
 				DAO<Venda> dao = new DAO<Venda>(Venda.class);
-				Msg.addMsgInfo("Venda efetuada com sucesso");					
+				Msg.addMsgInfo("Venda efetuada com sucesso");
+				venda.setOperacao(1);
 				venda.setValorTotalDesconto(getValorTotalComDesconto());
 				venda.setValorTotal(getValorTotalProdutos());
 				dao.adiciona(venda);
@@ -348,7 +349,13 @@ public class VendaBean implements Serializable {
 				}
 			}
 			if (this.cadastro == true) {
-				if (!itemVenda.getQuantidade().equals(item.getQuantidadeAtual())) { // criar um método para não deixar passar os produtos maior que o nível de estoque
+				
+				if (itemVenda.getQuantidade().equals(item.getQuantidadeAtual())) {
+					Msg.addMsgError("Quantidade indisponível no estoque"); // criar um método para não passar os produtos cuja quantidade de venda seja maiores que o nível de estoque
+					
+				}else {
+					
+//				if (!itemVenda.getQuantidade().equals(item.getQuantidadeAtual())) {
 					
 					if (itemVenda.getQuantidade() == null
 							|| itemVenda.getQuantidade() == 0) {
@@ -359,8 +366,11 @@ public class VendaBean implements Serializable {
 							itemVenda.setItem(item);
 							itemVenda.setQuantidade(1);
 							
-							item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
-							dao2.atualiza(item);
+//							item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
+//							dao2.atualiza(item); 
+							
+							// para fazer perfeito isso resolve, mas se o vendedor erra é preciso dar o rollback...
+							// resolver isso!!
 
 							venda.getItensVendas().add(itemVenda);
 							itemVenda.setVenda(venda);
@@ -369,16 +379,17 @@ public class VendaBean implements Serializable {
 							System.out.println("...Produto adicionado a venda com qtd não informada !! (ok)");
 
 					} else {
-						if (itemVenda.getQuantidade()>itemVenda.getItem().getQuantidadeAtual()) {
-							Msg.addMsgError("Quantidade indisponível no estoque"); // criar um método para não passar os produtos cuja quantidade de venda seja maiores que o nível de estoque
-							
-						}else {
 						DAO<Item> dao = new DAO<Item>(Item.class);
 						Item item = dao.buscaPorId(idItem);
 						itemVenda.setItem(item);
 
-						item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
-						dao2.atualiza(item);
+						// item.setQuantidadeSaida(itemVenda.getQuantidade() +
+						// item.getQuantidadeSaida());
+						// dao2.atualiza(item);
+
+						// para fazer perfeito isso resolve, mas se o vendedor
+						// erra é preciso dar o rollback...
+						// resolver isso!!
 
 						venda.getItensVendas().add(itemVenda);
 						itemVenda.setVenda(venda);
@@ -386,12 +397,7 @@ public class VendaBean implements Serializable {
 						itemVenda = new ItemVenda();
 						System.out
 								.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
-						}
 					}
-
-				} else {
-					Msg.addMsgError("Não tem esta quantidade disponível no estoque");
-					System.out.println("...Quantidade não disponível no estoque");
 				}
 
 			} else {
@@ -399,9 +405,9 @@ public class VendaBean implements Serializable {
 				System.out.println("...produto nao pode ser adicionado novamente");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
+					}
+				}
 			}
-		}
-	}
 		
 	// relatório
 	public void imprimeCupom() {
@@ -748,16 +754,13 @@ public class VendaBean implements Serializable {
 		this.cadastro = cadastro;
 	}
 
-
 	public Integer getBox4Search() {
 		return box4Search;
 	}
 
-
 	public void setBox4Search(Integer box4Search) {
 		this.box4Search = box4Search;
 	}
-
 
 	public Validator<Venda> getValidator() {
 		return validator;
@@ -807,21 +810,17 @@ public class VendaBean implements Serializable {
 		this.caixaSaida = caixaSaida;
 	}
 
-
 	public Item getItem() {
 		return item;
 	}
-
 
 	public void setItem(Item item) {
 		this.item = item;
 	}
 
-
 	public DAO<Item> getDao2() {
 		return dao2;
 	}
-
 
 	public void setDao2(DAO<Item> dao2) {
 		this.dao2 = dao2;

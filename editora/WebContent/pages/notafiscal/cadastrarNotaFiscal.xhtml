@@ -122,10 +122,10 @@
 					<h:outputLabel value="Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
             		<p:selectOneMenu style="width: 400px;" id="prod_categoria2" value="#{notaFiscalBean.idProduto}"
-					styleClass="input" panelStyle="width:400px"
+					styleClass="input" panelStyle="width:400px" caseSensitive="true"
 					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Informe o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />            			            		
+						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.isbn}" itemValue="#{produto.id}" />            			            		
             		</p:selectOneMenu>
             		
             		</h:panelGrid>

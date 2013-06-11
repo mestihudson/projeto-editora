@@ -116,7 +116,7 @@
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:autoComplete id="prod_autor" value="#{produtoBean.produto.autor}" size="31"
 					required="true" requiredMessage="Informe o autor do livro" completeMethod="#{produtoBean.autocompleteautor}" minQueryLength="4" maxResults="1" queryDelay="30" var="a" itemLabel="#{a}"
-					itemValue="#{a}" validatorMessage="Informe corretamente o autor" >
+					itemValue="#{a}" validatorMessage="Informe corretamente o autor">
 						<f:ajax event="blur" render="error_autor" />
 						<f:validateLength minimum="5" />
 					</p:autoComplete>

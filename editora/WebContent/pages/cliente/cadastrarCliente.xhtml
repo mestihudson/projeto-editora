@@ -386,26 +386,19 @@
 					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes" emptyMessage="Nenhum cliente encontrado"
 					paginator="true" rows="15" paginatorPosition="bottom">
 					
+						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="contains">
+							<h:commandLink value="#{c.id}" onclick="dlgEditaCliente.hide()"
+								id="link_codigo2">
+								<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{c}" />
+							</h:commandLink>
+						</p:column>	
+					
 						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{c.nome}" onclick="dlgEditaCliente.hide()" style="text-align: center;"
 								id="link_codigo">
 								<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{c}" />
 							</h:commandLink>
 						</p:column>
-						
-						<p:column headerText="Login" filterBy="#{c.login}" filterMatchMode="contains">
-							<h:commandLink value="#{c.login}" onclick="dlgEditaCliente.hide()"
-								id="link_codigo2">
-								<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{c}" />
-							</h:commandLink>
-						</p:column>	
-						
-						<p:column headerText="CPF" filterBy="#{c.cpf}" filterMatchMode="contains" style="text-align: center;">
-							<h:commandLink value="#{c.cpf}" onclick="dlgEditaCliente.hide()" 
-							id="link_codigo3">
-								<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{c}" />
-							</h:commandLink>
-						</p:column>		
 					
 					</p:dataTable>
 				
