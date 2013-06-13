@@ -78,9 +78,13 @@
 																
 								<h:outputText value="e-mail: #{fornecedor.email}" />
 								
+								<h:outputText value="e-mail 2: #{fornecedor.email2}" rendered="#{not empty fornecedor.email2}" />
+								
+								<h:outputText value="e-mail 3: #{fornecedor.email3}" rendered="#{not empty fornecedor.email3}" />
+								
 								<h:outputText value="Telefone 1: #{fornecedor.telefone1}" />
 								
-								<h:outputText value="Telefone 2: #{fornecedor.telefone2}" />
+								<h:outputText value="Telefone 2: #{fornecedor.telefone2}" rendered="#{not empty fornecedor.telefone2}" />
 								
 								<h:outputText value="Porcent. de Pagto: #{fornecedor.porcentagem}%" />
 								

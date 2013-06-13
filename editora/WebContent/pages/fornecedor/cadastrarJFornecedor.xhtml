@@ -135,6 +135,24 @@
 					<p:message id="error_email" for="forn_email" />
 					<br /><br />
 					
+					<h:outputLabel value="Email 2" styleClass="OutPut" />
+					<h:outputLabel value="" />	
+					<p:inputText id="forn_email2" value="#{fornecedorBean.fornecedor.email2}" styleClass="input"
+					validatorMessage="Email inválido">
+						<f:ajax event="blur" render="error_email2" />
+					</p:inputText>
+					<p:message id="error_email2" for="forn_email2" />
+					<br /><br />
+					
+					<h:outputLabel value="Email 3" styleClass="OutPut" />
+					<h:outputLabel value="" />	
+					<p:inputText id="forn_email3" value="#{fornecedorBean.fornecedor.email3}" styleClass="input"
+					validatorMessage="Email inválido">
+						<f:ajax event="blur" render="error_email3" />
+					</p:inputText>
+					<p:message id="error_email3" for="forn_email3" />
+					<br /><br />
+					
 					<h:outputLabel value="Porcentagem de Pagamento" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:spinner id="forn_porcento" value="#{fornecedorBean.fornecedor.porcentagem}" size="5" required="true" requiredMessage="Informe a porcentagem de pagamento"
@@ -178,13 +196,12 @@
 					
 					<div style="float: left">
 					
-					<p:selectOneRadio value="#{fornecedorBean.fornecedor.tipoConta}" styleClass="OutPut" style="margin-left: 60px;"
-					required="true" requiredMessage="Informe o tipo da conta">
+						<p:selectOneRadio value="#{fornecedorBean.fornecedor.tipoConta}" styleClass="OutPut" style="margin-left: 60px;">
 							<f:selectItem itemLabel="Conta Corrente" itemValue="Conta Corrente" />
 							<f:selectItem itemLabel="Poupança" itemValue="Poupança" />
 						</p:selectOneRadio>
 						
-					<h:panelGrid id="grid_dados_bancarios" columns="3" style="float: left">
+						<h:panelGrid id="grid_dados_bancarios" columns="3" style="float: left">
 																						
 						<h:outputLabel value="Agencia" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />

@@ -19,7 +19,7 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
-		<h:form rendered="#{loginBean.usuario.perfil.id!=1}">
+		<h:form rendered="#{loginBean.usuario.perfil.id>=3}">
 		<div align="center">
 		
 			<br />		
@@ -32,14 +32,14 @@
 		</div>
 		</h:form>	
 		
-			<h:form id="form_efetuar_venda" rendered="#{loginBean.usuario.perfil.id==1}">
+			<h:form id="form_efetuar_venda" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 			
 			<p:focus context="pnl" for="prod" rendered="#{vendaBean.venda.operacao==1}" />
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
 				<h:outputText value="EFETUAR VENDA" style="color: white; font-size: 12px;" styleClass="OutPut" />
 				
-				<p:selectOneRadio value="#{vendaBean.venda.operacao}" styleClass="OutPut" style="color: #8B0000;" rendered="#{loginBean.usuario.perfil.id==1}" 
+				<p:selectOneRadio value="#{vendaBean.venda.operacao}" styleClass="OutPut" style="color: #8B0000;" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}" 
 					required="true" requiredMessage="Informe a operação">
 						<f:selectItem itemLabel="Entrada" itemValue="1" />
 						<f:selectItem itemLabel="Saída" itemValue="2" />
