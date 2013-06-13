@@ -212,6 +212,12 @@ public class FornecedorBean implements Serializable {
 				all = false;
 				Msg.addMsgError("Titular da conta não pode ser vazio");
 			}
+			if (fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail2())
+				|| fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail3())
+				|| fornecedor.getEmail2().equalsIgnoreCase(getFornecedor().getEmail3())) {
+				all = false;
+				Msg.addMsgError("Endereço de email não pode se repetir");
+			}
 			if (!all) {
 				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
 				return "/pages/forncedor/cadastrarFornecedor.jsf";

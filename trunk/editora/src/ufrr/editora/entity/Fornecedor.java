@@ -39,6 +39,12 @@ public class Fornecedor implements Serializable, BaseEntity {
 	@Email
 	private String email;
 	
+	@Email
+	private String email2;
+	
+	@Email
+	private String email3;
+	
 	private Integer porcentagem;
 	
 	private Long pis;
@@ -102,6 +108,22 @@ public class Fornecedor implements Serializable, BaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email.toLowerCase();
+	}
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+
+	public String getEmail3() {
+		return email3;
+	}
+
+	public void setEmail3(String email3) {
+		this.email3 = email3;
 	}
 
 	public Endereco getEndereco() {

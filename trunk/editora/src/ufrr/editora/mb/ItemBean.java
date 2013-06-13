@@ -69,55 +69,6 @@ public class ItemBean implements Serializable {
 			return query.getResultList();
 		}
 		
-//		public void countLetters(String str) {
-//	        
-//	        if (str == null)
-//	            return;
-//	        
-//	        int counter = 0;
-//	        
-//	        for (int i = 0; i < str.length(); i++) {
-//
-//	            if (Character.isLetter(str.charAt(i)))
-//	                counter++;
-//	        }
-//	        
-//	        System.out.println("The input parameter contained " + counter + " letters.");
-//	    }
-		
-//		public boolean twoE(String str) {
-//			  int count = 0;
-//			  for (int i=0; i<str.length(); i++) {
-//			    String sub = str.substring(i, i+1);
-//			    if (sub.equals("e")) count++;
-//			  }
-//			  if (count == 2) return true;
-//			  return false;
-//			  // last 2 lines can be written simply as "return (count == 2);"
-//			}
-		
-//		public boolean twoE(String str) {
-//			  int count = 0;
-//			  for (int i=0; i<str.length(); i++) {
-//			    if (str.charAt(i) == 'e') count++;
-//			  }
-//			  if (count == 2) return true;
-//			  return false;
-			  // this last if/else can be written simply as "return (count == 2);"
-//			}
-	
-//		sql
-//		select count(item.produto_id) as "Registros",
-//	     produto.nome as "Descricao",
-//	     sum(item.quantidadeEntrada) as "Soma da quantidade de entrada"
-//	     from 	tb_item 	item,
-//	     tb_produto	produto
-//	     where 	item.produto_id = produto.id
-//	     and	item.produto_id in (25, 29, 30, 31, 32, 33, 34)
-//
-//		group by item.produto_id,
-//		produto.nome
-		
 		// Lista de produtos desativados (sem livros)
 		public List<Item> getEstoqueCritico() {
 			itens1 = new ArrayList<Item>();

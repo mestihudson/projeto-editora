@@ -161,7 +161,7 @@ public class Report {
 		String realPath2 = "";
 		try {
 			ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-			realPath2 = servletContext.getRealPath("/img/logo.jpg");			
+			realPath2 = servletContext.getRealPath("/img/logomarca.jpg");			
 		} catch (Exception ex) {
 			Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
 		}

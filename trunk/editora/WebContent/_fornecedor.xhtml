@@ -59,10 +59,10 @@
 			</p:commandLink>&nbsp;
 			<p:graphicImage value="/resources/img/cadastrar.png" onclick="dlgCad.show();" style="cursor: pointer;" styleClass="acende" />&nbsp;
 			
-			<p:commandLink action="/pages/venda/efetuarVendaAdmin.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1}">
+			<p:commandLink action="/pages/venda/efetuarVendaAdmin.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
 				<p:graphicImage value="/resources/img/venda.png" style="cursor: pointer;" styleClass="acende" />
 			</p:commandLink>
-			<p:commandLink action="/pages/venda/efetuarVenda.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id!=1}">
+			<p:commandLink action="/pages/venda/efetuarVenda.xhtml?faces-redirect=true" rendered="#{loginBean.usuario.perfil.id>=3}">
 				<p:graphicImage value="/resources/img/venda.png" style="cursor: pointer;" styleClass="acende" />
 			</p:commandLink>&nbsp;			
 
