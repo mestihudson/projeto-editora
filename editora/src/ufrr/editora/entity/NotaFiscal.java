@@ -27,6 +27,8 @@ public class NotaFiscal implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	private Long lote;
+	
 	private Long numero;
 	
 	private Double valor; //valor total da nota
@@ -121,6 +123,14 @@ public class NotaFiscal implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public Long getLote() {
+		return lote;
+	}
+
+	public void setLote(Long lote) {
+		this.lote = lote;
+	}
 
 	@Override
 	public int hashCode() {
@@ -134,6 +144,7 @@ public class NotaFiscal implements Serializable {
 				+ ((fornecedor == null) ? 0 : fornecedor.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
+		result = prime * result + ((lote == null) ? 0 : lote.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
@@ -174,6 +185,11 @@ public class NotaFiscal implements Serializable {
 			if (other.itens != null)
 				return false;
 		} else if (!itens.equals(other.itens))
+			return false;
+		if (lote == null) {
+			if (other.lote != null)
+				return false;
+		} else if (!lote.equals(other.lote))
 			return false;
 		if (numero == null) {
 			if (other.numero != null)

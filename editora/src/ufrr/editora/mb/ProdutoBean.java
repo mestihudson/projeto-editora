@@ -9,6 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Query;
 
 import ufrr.editora.dao.DAO;
@@ -33,6 +36,10 @@ public class ProdutoBean implements Serializable {
 	private Validator<Produto> validator;
 	private String search;
 	private Integer box4Search;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	private Long autoIncrement;
 
 	@PostConstruct
 	public void init() {
@@ -40,7 +47,6 @@ public class ProdutoBean implements Serializable {
 		produto = new Produto();
 		validator = new Validator<Produto>(Produto.class);
 		search = "";
-		box4Search = 1;
 	}
 
 	/** List Products **/
@@ -49,6 +55,7 @@ public class ProdutoBean implements Serializable {
 		if (produtos == null) {
 			System.out.println("Carregando produtos...");
 			produtos = new DAO<Produto>(Produto.class).getAllOrder("tipo.nome, nome, ativado");
+			System.out.println("Total de Produto Cadastrados: " + getProdutos().size());
 		}
 		return produtos;
 	}
@@ -207,6 +214,28 @@ public class ProdutoBean implements Serializable {
 			}
 
 		}
+		else if (box4Search.equals(4)) {
+			if (search.contains("'") || search.contains("@")
+					|| search.contains("/") || search.contains("*")) {
+				init();
+				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				return null;
+		}else {
+			if (search.length() <= 4) {
+				init();
+				Msg.addMsgError("Informe pelo menos 5 caracteres");
+				return null;
+			} else {
+				produtos = dao.getAllByName("obj.autor", search);
+				if (getAtivados().isEmpty()) {
+					init();
+					Msg.addMsgError("Nenhum registro encontrado");
+				} else {
+					return null;
+					}
+				}
+			}
+		}
 		return null;
 	}
 
@@ -269,9 +298,13 @@ public class ProdutoBean implements Serializable {
 			} else {
 				this.getProduto().setUsuario(this.loginBean.getUsuario());
 				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				List<Produto> ps = new ArrayList<Produto>();
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getProdutos().add(produto);
 				produto.setAtivado(true);
+				
+				ps = this.getProdutos();
+				produto.setIsbn((long) (ps.size()+1));
 				dao.adiciona(produto);
 				this.produto = new Produto();
 				init();
@@ -525,6 +558,14 @@ public class ProdutoBean implements Serializable {
 
 	public Integer getBox4Search() {
 		return box4Search;
+	}
+
+	public Long getAutoIncrement() {
+		return autoIncrement;
+	}
+
+	public void setAutoIncrement(Long autoIncrement) {
+		this.autoIncrement = autoIncrement;
 	}
 
 	public void setBox4Search(Integer box4Search) {

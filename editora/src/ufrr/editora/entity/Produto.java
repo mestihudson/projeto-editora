@@ -27,12 +27,16 @@ public class Produto implements Serializable, BaseEntity {
 	private String editora;
 	
 	private String autor;
-
+	
 	private Long isbn; // CODIGO DE BARRAS COM 13 DIGITOS
 	
 	private Integer quantidadeMinima; // QUANTIDADE MÍNIMA NO ESTOQUE
 	
 	private Boolean ativado;
+	
+	private Integer edicao;
+	
+	private String colecao;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_tipo")
@@ -126,6 +130,22 @@ public class Produto implements Serializable, BaseEntity {
 
 	public void setAtivado(Boolean ativado) {
 		this.ativado = ativado;
+	}
+
+	public Integer getEdicao() {
+		return edicao;
+	}
+
+	public void setEdicao(Integer edicao) {
+		this.edicao = edicao;
+	}
+
+	public String getColecao() {
+		return colecao;
+	}
+
+	public void setColecao(String colecao) {
+		this.colecao = colecao.toUpperCase();
 	}
 
 	@Override

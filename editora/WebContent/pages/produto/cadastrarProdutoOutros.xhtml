@@ -79,6 +79,12 @@
 			</h:panelGrid>
 					
 					<h:panelGrid id="grid" columns="5">
+					
+					<h:outputLabel value="" styleClass="OutPut" rendered="#{produtoBean.produto.id!=null}" />
+					<h:outputLabel value="" rendered="#{produtoBean.produto.id!=null}" />
+					<h:outputLabel id="codigo" value="Código - #{produtoBean.produto.isbn}" styleClass="OutPut" rendered="#{produtoBean.produto.id!=null}" />
+					<p:message for="codigo" rendered="#{produtoBean.produto.id!=null}" />
+					<br /><br />
 															
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -174,15 +180,15 @@
 			
 <!-- 			Aqui começa o dialog para Editar Produto -->
 			
-			<p:dialog header="Editar Livro" 
+			<p:dialog header="Editar Produto" 
 			widgetVar="dlgEditaProduto" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_edita">
 					
 					<p:dataTable value="#{produtoBean.tipoOutros}" var="p" id="tb_produtos" paginator="true" rows="20"
 					paginatorPosition="bottom" emptyMessage="Não encontrado">
 					
-						<p:column headerText="Código" filterBy="#{p.id}" filterMatchMode="contains" style="text-align: center;">
-							<h:commandLink value="#{p.id}" onclick="dlgEditaProduto.hide()"
+						<p:column headerText="Código" filterBy="#{p.isbn}" filterMatchMode="contains" style="text-align: center;">
+							<h:commandLink value="#{p.isbn}" onclick="dlgEditaProduto.hide()"
 								id="link_codigo">
 								<f:setPropertyActionListener target="#{produtoBean.produto}" value="#{p}" />
 							</h:commandLink>

@@ -46,8 +46,11 @@
 					scrollable="true" scrollHeight="400">
 
 						<p:column filterBy="#{m.usuario.nome}" id="nome" filterMatchMode="contains"
-						headerText="Enviada Por" width="210">
-							<h:outputText value="#{m.usuario.nome}" style="color: #394674;" />
+						headerText="Enviada Por" width="300">
+							<h:outputText value="#{m.usuario.nome}" style="color: #394674;">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="40" />
+							</h:outputText>
 						</p:column>	
 						
 						<p:column style="text-align: center;" width="80">
@@ -59,7 +62,10 @@
 						
 						<p:column resizable="true">
 							<f:facet name="header">Mensagem</f:facet>
-							<h:outputLabel value="#{m.descricao}" />
+							<h:outputLabel value="#{m.descricao}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="80" />
+							</h:outputLabel>
 						</p:column>
 						
 						<p:column width="40">

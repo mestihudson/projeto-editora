@@ -147,6 +147,8 @@
 									<p:column>
 										<f:facet name="header">Obs</f:facet>
 										<h:outputLabel value="#{v.obs}">
+											<f:converter converterId="stringLimiterConverter" />
+											<f:attribute name="limit" value="65" />
 										</h:outputLabel>
 									</p:column>
 									

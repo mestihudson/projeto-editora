@@ -14,12 +14,21 @@ public class ReportBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-		// relatório de clientes
+		// relatório de clientes (todos)
 		public void relatorioClientes() {
 			  HashMap<String, Object> params = new HashMap<String, Object>();
 			  Report report = new Report("Relatorio-Clientes", params);
 			  report.pdfReport();
 			  System.out.println("...solicitacao do relatorio de todos os clientes cadastrados");
 		}
+		
+		// relatório de clientes por categoria
+				public void relatorioCategoria() {
+					  HashMap<String, Object> params = new HashMap<String, Object>();
+					  Report report = new Report("Relatorio-Categoria", params);
+					  params.put("categoria", 1);
+					  report.pdfReport();
+					  System.out.println("...solicitacao do relatorio dos clientes por categoria");
+				}
 
 }

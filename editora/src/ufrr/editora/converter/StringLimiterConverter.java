@@ -3,10 +3,12 @@ package ufrr.editora.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
+@FacesConverter(value = "StringLimiterConverter")
 public class StringLimiterConverter implements Converter {
     private static final String LIMIT_PARAMETER_NAME = "limit";
-    private static final int DEFAULT_LIMIT = 15;
+    private static final int DEFAULT_LIMIT = 5;
 
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         return limit(value, getLimitAttribute(component));
@@ -30,7 +32,10 @@ public class StringLimiterConverter implements Converter {
 
     private String limit(String s, int limit) {
         String limited = s;
-       
+        if (!(s.length() <= limit)) {
+            limited = s.substring(0, limit);
+        }
         return limited;
     }
+
 }

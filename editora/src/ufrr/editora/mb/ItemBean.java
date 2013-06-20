@@ -55,7 +55,7 @@ public class ItemBean implements Serializable {
 	public List<Item> getItens() {
 		if (itens == null) {
 			System.out.println("Carregando itens...");
-			itens = new DAO<Item>(Item.class).getAllOrder("produto.nome");
+			itens = new DAO<Item>(Item.class).getAllOrder("produto.nome, notaFiscal.lote");
 		}
 		return itens;
 	}
@@ -76,11 +76,9 @@ public class ItemBean implements Serializable {
 			item = this.getItens();
 			for (int i = 0; i < item.size(); i++) {
 				if (item.get(i).getQuantidadeEntrada() == item.get(i).getQuantidadeSaida()) {
-					item.get(i).setVenda(false);
 				}else {
 					if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual() 
-							&& item.get(i).getNotaFiscal().getStatus().equals(true)
-							&& item.get(i).getVenda().equals(true)) {
+							&& item.get(i).getNotaFiscal().getStatus().equals(true)) {
 						itens1.add(item.get(i));
 					}	
 				}
@@ -96,10 +94,9 @@ public class ItemBean implements Serializable {
 		item = this.getItens();
 		for (int i = 0; i < item.size(); i++) {
 			if (item.get(i).getQuantidadeEntrada() <= item.get(i).getQuantidadeSaida()) {
-				item.get(i).setVenda(false);
+
 			}else {
-				if (item.get(i).getNotaFiscal().getStatus().equals(true) 
-						&& item.get(i).getVenda().equals(true)) {
+				if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
 					itens1.add(item.get(i));
 				}
 			}
