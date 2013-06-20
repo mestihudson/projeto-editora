@@ -13,16 +13,16 @@
 	<link rel="shortcut icon" href="/editora/resources/img/favicon.ico" />
 
 	<style>
-	.ui-growl {
-	top: 18%;
-	left: 320px;
-	width: 300px;
-	height: 250px;
-	font-size: 14px;
-	text-align: left;
-	font-family:sans-serif;
-	font-style: italic;
-	font-weight: 100;
+/* 	.ui-growl { */
+/* 	top: 18%; */
+/* 	left: 320px; */
+/* 	width: 300px; */
+/* 	height: 250px; */
+/* 	font-size: 14px; */
+/* 	text-align: left; */
+/* 	font-family:sans-serif; */
+/* 	font-style: italic; */
+/* 	font-weight: 100; */
 }
 </style>
 </h:head>
@@ -88,15 +88,20 @@
 	
 	<div style="width: 95%; background: white;">
 				
-			<ui:insert name="body" />
-			
-			<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65); margin-top: 42%;" />
-			<div style="display: block;" align="center" />
-			<div id="rodape" style="background: #394674; height: 20px; line-height: 20px; text-align: center;">
-				&copy; Copyright 2013 &nbsp; UFRR - Diretoria de Tecnologia da Informação &nbsp; | &nbsp; Layout UFRN - SIG &nbsp;| &nbsp;
-				Editora UFRR (95)3621-3111 &nbsp; editora@ufrr.br
-			</div>	
+			<ui:insert name="body" />	
 	</div>
+	
+	<div style="width: 95%; background: white;">
+				
+			<ui:insert name="footer">
+				<div style="display: block;" align="center" />
+				<div id="rodape" style="background: #394674; height: 20px; line-height: 20px; text-align: center;">
+					&copy; Copyright 2013 &nbsp; UFRR - Diretoria de Tecnologia da Informação &nbsp; | &nbsp; Layout UFRN - SIG &nbsp;| &nbsp;
+					Editora UFRR (95)3621-3111 &nbsp; editora@ufrr.br
+				</div>
+			</ui:insert>
+			
+	</div>		
 		
 	<p:dialog modal="true" width="430" widgetVar="dlgCad" resizable="false" showEffect="fold">
 		<h:form>
@@ -250,7 +255,7 @@
 						<p:panel header="Cliente" style="height: 115px;">
 							<h:panelGrid columns="1">
 							
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<p:commandLink action="#{reportBean.relatorioCategoria}" ajax="false">
 							<h:panelGrid columns="2">
 								<h:graphicImage value="/resources/img/seta1.png" />
 								<h:outputLabel value="Cliente por preferencia de categoria" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />

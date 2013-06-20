@@ -5,6 +5,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Level;
@@ -55,6 +60,16 @@ public class UsuarioBean implements Serializable {
 
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
 	private Long usuarioId;
+    
+    public Date getPegaDataAtual() {  
+        Calendar calendar = new GregorianCalendar();  
+        Date date = new Date();  
+        calendar.setTime(date);  
+        return calendar.getTime();  
+    }  
+	
+	@Temporal(TemporalType.DATE)
+	private Calendar dataAtual = Calendar.getInstance(); // data de hoje
 
 	public Boolean cadastro = true;
 
@@ -246,6 +261,33 @@ public class UsuarioBean implements Serializable {
 		return usuariosE;
 	}
 	
+//	where extract(month from u.data_nascimento) = extract(month from CURRENT_DATE)
+//	and extract(day from u.data_nascimento) = extract(day from CURRENT_DATE)
+	
+	// Exibe uma lista de clientes aniversatiantes do dia
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getAniversariantes() {
+		Query query = dao.query("SELECT u FROM Usuario u WHERE u.perfil = 4 AND u.id <> 1 " +
+				"AND extract(month from u.nascimento) = extract(month from CURRENT_DATE)" +
+				"AND extract(day from u.nascimento) = extract(day from CURRENT_DATE) ORDER BY u.nome");
+		usuarios = query.getResultList();
+		System.out.println("Total de Clientes: " + getUsuarios().size());
+		return query.getResultList();
+	}
+	
+		public List<Usuario> getAniversariantes2() {
+			usuariosE = new ArrayList<Usuario>();
+			List<Usuario> us = new ArrayList<Usuario>();
+			us = this.getUsuarios();
+			for (int i = 0; i < us.size(); i++) {
+				if (us.get(i).getPerfil().getId() == 4 && us.get(i).getId() != 1
+						&& us.get(i).getData()==dataAtual) {
+					usuariosE.add(us.get(i));
+				}
+			}
+			return usuariosE;
+		}
+	
 	// Exibe uma lista de clientes no geral (ativados e desativados) sem o id = 1
 	public List<Usuario> getClientesCadastrados2() {
 		usuariosE = new ArrayList<Usuario>();
@@ -261,6 +303,23 @@ public class UsuarioBean implements Serializable {
 	
 	
 	/** Consultas **/
+	
+	// pesquisa cliente pela categoria
+		@SuppressWarnings("unchecked")
+		public void getCategoria() {
+				try {
+					Query query = dao.query("SELECT u FROM Usuario u WHERE u.preferencia=?");
+					query.setParameter(1, usuario.getPreferencia());
+					usuarios = query.getResultList();
+					if (usuarios.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhum registro encontrado");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
 	
 	// pesquisa nota pelo id
 	@SuppressWarnings("unchecked")
@@ -589,6 +648,14 @@ public class UsuarioBean implements Serializable {
 		}
 		return "/pages/usuario/autorizarAcesso.xhtml";
 
+	}
+
+	public Calendar getDataAtual() {
+		return dataAtual;
+	}
+
+	public void setDataAtual(Calendar dataAtual) {
+		this.dataAtual = dataAtual;
 	}
 
 	// Reativar usuário (exceto solicitação)

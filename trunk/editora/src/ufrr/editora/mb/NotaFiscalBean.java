@@ -177,8 +177,11 @@ public class NotaFiscalBean implements Serializable {
 				Usuario u = UDao
 						.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getNotasFiscais().add(notaFiscal);
+				List<NotaFiscal> nfs = new ArrayList<NotaFiscal>();
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
+				nfs = this.getNotasFiscais();
+				notaFiscal.setLote((long) (nfs.size()+1));
 				notaFiscal.setStatus(true);
 				dao.adiciona(notaFiscal);
 				item = new Item();
@@ -221,52 +224,44 @@ public class NotaFiscalBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 
-					for (Item p : this.getItens()) {
-						if (getIdProduto().equals(p.getProduto().getId()) && p.getQuantidadeEntrada() > p.getQuantidadeSaida()) {
-							this.cadastro = false;
-							break;
-						}
-					}
-					if (this.cadastro == true) {
+				DAO<Produto> dao = new DAO<Produto>(Produto.class);
 
-					DAO<Produto> dao = new DAO<Produto>(Produto.class);
-					Produto produto = dao.buscaPorId(idProduto);
-					item.setProduto(produto);
+				Produto produto = dao.buscaPorId(idProduto);
+				item.setProduto(produto);
 
-					item.setQuantidadeSaida(0);
-					item.setVenda(true);
-					notaFiscal.getItens().add(item);
-					item.setNotaFiscal(notaFiscal);
+				item.setQuantidadeSaida(0);
+				notaFiscal.getItens().add(item);
+				item.setNotaFiscal(notaFiscal);
 
-					item = new Item();
-					System.out.println("...Item adicionado com sucesso");
-
-				} else {
-					DAO<Produto> dao = new DAO<Produto>(Produto.class);
-					Produto produto = dao.buscaPorId(idProduto);
-					item.setProduto(produto);
-
-					item.setQuantidadeSaida(0);
-					item.setVenda(false);
-					notaFiscal.getItens().add(item);
-					item.setNotaFiscal(notaFiscal);
-
-					Msg.addMsgWarn("Produto: " + getItem().getProduto().getNome() + " encontra-se em estoque, portanto não vai ser exposto a venda");
-					System.out.println("...Este produto: " + getItem().getProduto().getId() + "encontra-se em estoque, portanto não vai ser exposto a venda");
-					item = new Item();
-					this.cadastro = true;
-
-				}
+				item = new Item();
+				System.out.println("...Item adicionado com sucesso");
+				this.cadastro = true;
 
 			} else {
 				Msg.addMsgError("Este produto já foi adicionado");
 				System.out.println("...Este produto já foi adicionado");
 				item = new Item();
 				this.cadastro = true;
-
 			}
 		}
 	}
+
+//				} else {
+//					DAO<Produto> dao = new DAO<Produto>(Produto.class);
+//					Produto produto = dao.buscaPorId(idProduto);
+//					item.setProduto(produto);
+//
+//					item.setQuantidadeSaida(0);
+//					item.setVenda(false);
+//					notaFiscal.getItens().add(item);
+//					item.setNotaFiscal(notaFiscal);
+
+//					Msg.addMsgWarn("Produto: " + getItem().getProduto().getNome() + " encontra-se em estoque, portanto não vai ser exposto a venda");
+//					System.out.println("...Este produto: " + getItem().getProduto().getId() + "encontra-se em estoque, portanto não vai ser exposto a venda");
+//					item = new Item();
+//					this.cadastro = true;
+
+				
 	
 	// cancelar cadastro de nota fiscal
 		public String cancelarNotaFiscal() {

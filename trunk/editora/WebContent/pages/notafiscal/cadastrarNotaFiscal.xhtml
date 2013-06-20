@@ -122,11 +122,11 @@
 					<h:outputLabel value="Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
             		<p:selectOneMenu style="width: 400px;" id="prod_categoria2" value="#{notaFiscalBean.idProduto}"
-					styleClass="input" panelStyle="width:400px" caseSensitive="true"
+					styleClass="input" panelStyle="width:400px"
 					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Informe o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.isbn}" itemValue="#{produto.id}" />            			            		
-            		</p:selectOneMenu>
+						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />					
+					</p:selectOneMenu>
             		
             		</h:panelGrid>
             		<br />
@@ -138,7 +138,7 @@
 					<p:spinner id="qtd" value="#{notaFiscalBean.item.quantidadeEntrada}" size="5"
 					min="0" max="100" validatorMessage="Quantidade inválida">
 						<f:ajax event="blur" render="error_qtd" />
-						<f:validateLongRange minimum="0" />
+						<f:validateLongRange minimum="0" maximum="500" />
 					</p:spinner>
 					<p:message id="error_qtd" for="qtd" />
 					<br /><br />
@@ -192,7 +192,10 @@
 						<p:column>
 							<f:facet name="header">produto</f:facet>
 							<h:outputLabel value="#{item.produto.tipo.nome}: " rendered="#{item.produto.tipo.id eq 1}" />
-							<h:outputLabel value="#{item.produto.nome}" />
+							<h:outputLabel value="#{item.produto.nome}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="50" />
+							</h:outputLabel>
 						</p:column>
 						
 						<p:column style="text-align: center;" width="15">

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_item_venda")
@@ -26,6 +27,9 @@ public class ItemVenda implements Serializable {
 	private Venda venda;
 
 	private Integer quantidade;
+	
+	@Transient
+	private Boolean quantidadeN; // variável para não deixar cadastrar produtos com quantidade maior ao estoque
 
 	// get and set
 
@@ -59,6 +63,17 @@ public class ItemVenda implements Serializable {
 
 	public void setVenda(Venda venda) {
 		this.venda = venda;
+	}
+	
+	public Boolean getQuantidadeN() {
+		if (item.getQuantidadeEntrada() - item.getQuantidadeSaida() - quantidade <= 0) 
+			return true;
+		else 
+			return false;
+	}
+
+	public void setQuantidadeN(Boolean quantidadeN) {
+		this.quantidadeN = quantidadeN;
 	}
 
 	// variável para exibir o total valor do produto

@@ -111,11 +111,29 @@
 					</p:inputTextarea>
 					<p:message id="error_nome" for="prod_nome" />
 					<br /><br />
+					
+					<h:outputLabel value="Edição" styleClass="OutPut" />
+					<h:outputText value="" />					
+					<p:inputText id="prod_edicao" value="#{produtoBean.produto.edicao}" converterMessage="Digite apenas números"
+					styleClass="input">
+						<f:ajax event="blur" render="error_edicao" />
+					</p:inputText>
+					<p:message id="error_edicao" for="prod_edicao" />
+					<br /><br />
+					
+					<h:outputLabel value="Coleção" styleClass="OutPut" />
+					<h:outputText value="" />			
+					<p:inputText id="prod_colecao" value="#{produtoBean.produto.colecao}" 
+					styleClass="input">
+						<f:ajax event="blur" render="error_colecao" />
+					</p:inputText>
+					<p:message id="error_colecao" for="prod_colecao" />
+					<br /><br />
 										
-					<h:outputLabel value="Autor" styleClass="OutPut" />
+					<h:outputLabel value="Autor/organizador" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:autoComplete id="prod_autor" value="#{produtoBean.produto.autor}" size="31"
-					required="true" requiredMessage="Informe o autor do livro" completeMethod="#{produtoBean.autocompleteautor}" minQueryLength="4" maxResults="1" queryDelay="30" var="a" itemLabel="#{a}"
+					required="true" requiredMessage="Informe o autor e organizador do livro" completeMethod="#{produtoBean.autocompleteautor}" minQueryLength="4" maxResults="1" queryDelay="30" var="a" itemLabel="#{a}"
 					itemValue="#{a}" validatorMessage="Informe corretamente o autor">
 						<f:ajax event="blur" render="error_autor" />
 						<f:validateLength minimum="5" />

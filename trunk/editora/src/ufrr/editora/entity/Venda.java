@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_venda")
@@ -41,6 +42,10 @@ public class Venda implements Serializable {
 
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="venda")
 	private List<ItemVenda> itensVendas = new ArrayList<ItemVenda>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="venda")
+	private List<Item> itens = new ArrayList<Item>();
 	
 	@ManyToOne
 	private Usuario cliente;
@@ -154,6 +159,14 @@ public class Venda implements Serializable {
 
 	public Integer getOperacao() {
 		return operacao;
+	}
+
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
 	}
 
 	public void setOperacao(Integer operacao) {

@@ -200,21 +200,20 @@ public class FornecedorBean implements Serializable {
 				all = false;
 				Msg.addMsgError("CPF ou CNPJ já tem registro no sistema");
 			}
-			if (!validarNome_agencia()) {
-				all = false;
-				Msg.addMsgError("Agencia não pode ser vazio");
-			}
-			if (!validarNome_conta()) {
-				all = false;
-				Msg.addMsgError("Número da conta não pode ser vazio");
-			}
-			if (!validarNome_titular()) {
-				all = false;
-				Msg.addMsgError("Titular da conta não pode ser vazio");
-			}
+//			if (!validarNome_agencia()) {
+//				all = false;
+//				Msg.addMsgError("Agencia não pode ser vazio");
+//			}
+//			if (!validarNome_conta()) {
+//				all = false;
+//				Msg.addMsgError("Número da conta não pode ser vazio");
+//			}
+//			if (!validarNome_titular()) {
+//				all = false;
+//				Msg.addMsgError("Titular da conta não pode ser vazio");
+//			}
 			if (fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail2())
-				|| fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail3())
-				|| fornecedor.getEmail2().equalsIgnoreCase(getFornecedor().getEmail3())) {
+				|| fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail3())) {
 				all = false;
 				Msg.addMsgError("Endereço de email não pode se repetir");
 			}

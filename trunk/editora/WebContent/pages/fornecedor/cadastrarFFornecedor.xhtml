@@ -199,9 +199,12 @@
 						
 					<h:panelGrid id="grid_dados_bancarios" columns="3" style="float: left">
 																						
-						<h:outputLabel value="Agencia" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputMask id="forn_agencia_nada" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" disabled="true" rendered="#{fornecedorBean.fornecedor.banco == null}" />
+						<h:outputLabel value="Agencia" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
 						<p:inputMask id="forn_agencia_bb" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 1}" mask="9999-*" />
 						<p:inputMask id="forn_agencia_bradesco" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 2}" mask="9999" />
 						<p:inputMask id="forn_agencia_caixa" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 3}" mask="9999" />
@@ -209,9 +212,12 @@
 						<p:inputMask id="forn_agencia_st" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 5}" mask="9999" />
 						<p:inputMask id="forn_agencia_hsbc" value="#{fornecedorBean.fornecedor.agencia}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 6}" mask="9999-9" />
 												
-						<h:outputLabel value="Nº Conta" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_conta_nada" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" disabled="true" rendered="#{fornecedorBean.fornecedor.banco == null}" />
+						<h:outputLabel value="Nº Conta" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
 						<p:inputMask id="forn_conta_bb" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 1}" />
 						<p:inputMask id="forn_conta_bradesco" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 2}" mask="999999-9" />
 						<p:inputMask id="forn_conta_caixa" value="#{fornecedorBean.fornecedor.conta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 3}" mask="99999999-9" />
@@ -223,10 +229,15 @@
 						<h:graphicImage value="" styleClass="as" rendered="#{fornecedorBean.fornecedor.banco == 3}" />
 						<p:inputMask id="forn_op_caixa" value="#{fornecedorBean.fornecedor.operacao}" styleClass="input" mask="999" rendered="#{fornecedorBean.fornecedor.banco == 3}" />
 						
-						<h:outputLabel value="Títular" styleClass="OutPut" />
-						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="forn_titular_null" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" disabled="true" rendered="#{fornecedorBean.fornecedor.banco == null}" />
-						<p:inputText id="forn_titular" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco != null}" />
+						<h:outputLabel value="Títular" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
+						<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
+						<p:inputText id="forn_titular" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="input" rendered="#{fornecedorBean.fornecedor.banco == 1 or 
+						fornecedorBean.fornecedor.banco == 2 or fornecedorBean.fornecedor.banco == 3 or fornecedorBean.fornecedor.banco == 4 or fornecedorBean.fornecedor.banco == 5 
+						or fornecedorBean.fornecedor.banco == 6}" />
 						
 					</h:panelGrid>				
 					</div>

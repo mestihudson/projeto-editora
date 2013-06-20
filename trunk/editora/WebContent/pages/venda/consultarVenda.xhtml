@@ -53,8 +53,8 @@
 					<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="15" rendered="#{vendaBean.venda.id==null}">
 
 						<p:selectOneRadio value="#{vendaBean.box4Search}" rendered="#{vendaBean.venda.id==null}"
-							styleClass="OutPut" style="width: 100px;">
-							<f:selectItem itemLabel="Filtar por data" itemValue="1" />
+							styleClass="OutPut" style="width: 120px;">
+							<f:selectItem itemLabel="Filtrar por data" itemValue="1" />
 							<f:ajax render="form_pesquisa_venda" />
 						</p:selectOneRadio>
 						
@@ -200,10 +200,7 @@
 
 								<p:column width="50">
 									<f:facet name="header">isbn/código</f:facet>
-									<h:outputLabel value="#{v.item.produto.isbn}"
-										rendered="#{v.item.produto.isbn!=null}" />
-									<h:outputLabel value="#{item.produto.id}"
-										rendered="#{v.item.produto.isbn==null}" />
+									<h:outputLabel value="#{v.item.produto.isbn}" />
 								</p:column>
 
 								<p:column>
@@ -211,6 +208,11 @@
 									<h:outputLabel value="#{v.item.produto.tipo.nome}: "
 										rendered="#{v.item.produto.tipo.id eq 1}" />
 									<h:outputLabel value="#{v.item.produto.nome}" />
+								</p:column>
+								
+								<p:column style="text-align: center;">
+									<f:facet name="header">lote</f:facet>
+									<h:outputLabel value="#{v.item.notaFiscal.lote}" />
 								</p:column>
 
 								<p:column style="text-align: center;" width="15">
@@ -236,7 +238,7 @@
 
 								<p:columnGroup type="footer">
 									<p:row>
-										<p:column colspan="4" footerText="Valor Total"
+										<p:column colspan="5" footerText="Valor Total"
 											style="text-align:right" />
 
 										<p:column>
@@ -250,7 +252,7 @@
 									</p:row>
 									
 									<p:row>
-										<p:column colspan="4" footerText="Valor com Desconto" style="color: #8B0000; font-size: 12px; text-align:right" />
+										<p:column colspan="5" footerText="Valor com Desconto" style="color: #8B0000; font-size: 12px; text-align:right" />
 
 										<p:column>
 										<f:facet name="footer">

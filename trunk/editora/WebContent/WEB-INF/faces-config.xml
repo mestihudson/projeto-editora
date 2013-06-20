@@ -19,7 +19,6 @@
 	<converter>
 		<converter-id>stringLimiterConverter</converter-id>
 		<converter-class>ufrr.editora.converter.StringLimiterConverter</converter-class>
-	</converter>
-	
+	</converter>	
 	
 </faces-config>
