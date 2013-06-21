@@ -87,7 +87,7 @@ public class ItemBean implements Serializable {
 			return itens1;
 		}	
 		
-	// Lista de produtos desativados (sem livros)
+	
 	public List<Item> getEstoque() {
 		itens1 = new ArrayList<Item>();
 		List<Item> item = new ArrayList<Item>();
@@ -121,7 +121,19 @@ public class ItemBean implements Serializable {
 			return itens1;
 		}
 	
-	//criar outra array lista dentro do método getEstoque
+	// lista para a consulta de itens
+	
+	public List<Item> getItemNotaFiscal() {
+		itens1 = new ArrayList<Item>();
+		List<Item> item = new ArrayList<Item>();
+		item = this.getItens();
+		for (int i = 0; i < item.size(); i++) {
+				if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
+					itens1.add(item.get(i));
+			}
+		}
+		return itens1;
+	}
 	
 		
 

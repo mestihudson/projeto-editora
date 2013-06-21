@@ -71,7 +71,7 @@
 
 					<!-- 			grid com a lista de vendas			 		 -->
 					<p:dataTable id="dg" var="v" value="#{vendaBean.caixaEntrada}" 
-						paginator="true" paginatorPosition="bottom"
+						paginator="true" paginatorPosition="bottom" rows="15"
 						emptyMessage="Nenhuma venda encontrada" rendered="#{vendaBean.venda.id==null}"
 						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 

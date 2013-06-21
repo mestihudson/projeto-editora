@@ -360,8 +360,6 @@ public class VendaBean implements Serializable {
 						break;
 					}	
 					
-					System.out.println("...passou do for");
-					
 					dao.adiciona(venda);
 					itemVenda = new ItemVenda();
 					venda = new Venda();

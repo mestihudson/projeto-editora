@@ -298,18 +298,18 @@ public class ProdutoBean implements Serializable {
 			} else {
 				this.getProduto().setUsuario(this.loginBean.getUsuario());
 				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-				List<Produto> ps = new ArrayList<Produto>();
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getProdutos().add(produto);
 				produto.setAtivado(true);
 				
-				ps = this.getProdutos();
-				produto.setIsbn((long) (ps.size()+1));
+				produto.setIsbn((long)(getProdutos().size()+1));
 				dao.adiciona(produto);
 				this.produto = new Produto();
 				init();
 				Msg.addMsgInfo("Cadastro efetuado com sucesso");
 				System.out.println("...cadastro de produto efetuado com sucesso!");
+				
+				return "/pages/produto/cadastrarProdutoOutros.xhtml";
 			}
 		} catch (Exception e) {
 			init();

@@ -73,6 +73,29 @@ public class NotaFiscalBean implements Serializable {
 			}
 		}
 	}
+	
+	// pesquisa nota pelo Lote
+		@SuppressWarnings("unchecked")
+		public void getNotaFiscalByLote() {
+			if (notaFiscal.getLote().equals(null) || notaFiscal.getLote() == 0) {
+				Msg.addMsgError("Informe corretamente o lote");
+
+			} else {
+				try {
+					Query query = dao
+							.query("SELECT n FROM NotaFiscal n WHERE n.lote=?");
+					query.setParameter(1, notaFiscal.getLote());
+					notasFiscais = query.getResultList();
+					if (notasFiscais.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhum registro encontrado");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 	// Pesquisa nota fiscal pelo numero e fornecedor
 	public String getListaNotaFiscalByNumero() {
