@@ -8,7 +8,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/_template.xhtml">
+<ui:composition template="/_fornecedor.xhtml">
 	<ui:define name="head">
 
 		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
@@ -19,10 +19,36 @@
 		</div>
 
 	</ui:define>
+	
+	<ui:define name="opcion">
+		<div id="nf/item">
+		
+			<div id="nfs" style="background: #FFFFE4; height: 55px; width: 50%; float: left; text-align: center;" >
+			<br />
+				<p:commandLink action="/pages/notafiscal/consultarNotaFiscal.xhtml?faces-redirect=true">
+					<h:outputText value="CONSULTAR" styleClass="OutPut"/>
+					<br />
+					<h:outputText value="NOTA FISCAL" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+
+			<div id="itens" style="background: #EFF3FA; height: 55px; width: 50%; float: right; text-align: center;" >
+			<br />
+				<p:commandLink action="/pages/notafiscal/consultarItem.xhtml?faces-redirect=true">
+					<h:outputText value="CONSULTAR" styleClass="OutPut" />
+					<br />
+					<h:outputText value="ITEM DA NOTA FISCAL" styleClass="OutPut" />
+				</p:commandLink>
+			</div>
+		
+		</div>
+		<br />
+
+	</ui:define>
 
 	<ui:define name="body">
 
-		<div class="Centralizar" style="background: white;">
+		<div class="Centralizar" style="background: white;" align="center">
 
 			<!-- 		Acesso não permitido -->
 			<h:form rendered="#{loginBean.usuario.perfil.id>3}">
@@ -35,34 +61,40 @@
 
 				</div>
 			</h:form>
-
-			<h:form id="form_pesquisa_nota"
-				rendered="#{loginBean.usuario.perfil.id!=4}">
-
-				<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
-
-					<div
-						style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
-						align="center">
-						<h:outputText value="CONSULTAR NOTA FISCAL"
-							style="color: white; font-size: 12px;" styleClass="OutPut" />
-					</div>
+			
+			<h:form id="form_pesquisa_nota" rendered="#{loginBean.usuario.perfil.id!=4}">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 10px;" align="center" >
+				<h:outputText value="CONSULTAR NOTA FISCAL" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>
+			
+			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
+			
+			<h:panelGrid id="botton" columns="3" style="float: right;">
+						
+			</h:panelGrid>
 					
 					<p:focus context="numero" for="numero" rendered="#{notaFiscalBean.notaFiscal.id==null}" />					
 					<p:focus context="autocompletePesquisar" for="autocompletePesquisar" rendered="#{notaFiscalBean.notaFiscal.id==null}" />
+					<p:focus context="lote" for="lote" rendered="#{notaFiscalBean.notaFiscal.id==null}" />
 
 					<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="15" rendered="#{notaFiscalBean.notaFiscal.id==null}">
 
 						<p:selectOneRadio value="#{notaFiscalBean.box4Search}" rendered="#{notaFiscalBean.notaFiscal.id==null}"
-							styleClass="OutPut" style="width: 80px;">
+							styleClass="OutPut" style="width: 250px;">
 							<f:selectItem itemLabel="Fornecedor" itemValue="2" />
 							<f:selectItem itemLabel="Nota Fiscal" itemValue="1" />
+							<f:selectItem itemLabel="Lote" itemValue="3" />
 							<f:ajax render="form_pesquisa_nota" />
 						</p:selectOneRadio>
 						
 						<p:inputText value="#{notaFiscalBean.notaFiscal.numero}" 
 							rendered="#{notaFiscalBean.box4Search == 1}" size="45"
 							id="numero" validatorMessage="Somente numeros" converterMessage="Informe apenas numeros" />
+							
+						<p:inputText value="#{notaFiscalBean.notaFiscal.lote}" 
+							rendered="#{notaFiscalBean.box4Search == 3}" size="45"
+							id="lote" validatorMessage="Somente numeros" converterMessage="Informe apenas numeros" />
 
 						<p:autoComplete value="#{notaFiscalBean.search}"
 							completeMethod="#{fornecedorBean.autocompleteFornecedor}" var="f"
@@ -77,6 +109,10 @@
 							
 						<p:commandButton value="Pesquisar" id="botaoPesquisar2" rendered="#{notaFiscalBean.box4Search == 1}"
 							action="#{notaFiscalBean.getNotaFiscalByNumero}" ajax="false"
+							icon="ui-icon-search" />	
+							
+						<p:commandButton value="Pesquisar" id="botaoPesquisar3" rendered="#{notaFiscalBean.box4Search == 3}"
+							action="#{notaFiscalBean.getNotaFiscalByLote}" ajax="false"
 							icon="ui-icon-search" />	
 
 					</h:panelGrid>
@@ -97,6 +133,8 @@
 								<h:outputText value="#{n.dataEntrada.time}">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
+								
+								<h:outputText value="Lote: #{n.lote}" />
 
 								<h:outputText value="Status" />
 								<h:outputText value="Ativado" style="color: blue;"
