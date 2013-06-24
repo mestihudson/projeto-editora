@@ -83,5 +83,13 @@ public class ItemVenda implements Serializable {
 		else
 			return null;
 	}
+	
+	// variável para exibir o total valor do produto
+	public Double getTotalProdutoVenda() {
+		if (quantidade != null && item.getValorCusto() != null)
+			return quantidade * item.getValorCusto();
+		else
+			return null;
+	}	
 
 }

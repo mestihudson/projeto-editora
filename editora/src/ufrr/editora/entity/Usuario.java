@@ -53,11 +53,9 @@ public class Usuario implements Serializable, BaseEntity {
 	private String telefone2;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_preferencia")
 	private Categoria preferencia;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fk_endereco")
 	private Endereco endereco;
 	
 	@Email
@@ -73,7 +71,7 @@ public class Usuario implements Serializable, BaseEntity {
 	private Boolean aceitaSolicitacao; // não aceita solicitação
 	
 	@ManyToOne
-	@JoinColumn(name="fk_perfil", columnDefinition="bigint default 5", insertable=false, updatable=true)
+	@JoinColumn(name="perfil_id", columnDefinition="bigint default 4", insertable=false, updatable=true)
 	private Perfil perfil;
 	
 	@Temporal(TemporalType.DATE)

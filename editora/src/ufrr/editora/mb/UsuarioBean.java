@@ -294,7 +294,7 @@ public class UsuarioBean implements Serializable {
 		List<Usuario> us = new ArrayList<Usuario>();
 		us = this.getUsuarios();
 		for (int i = 0; i < us.size(); i++) {
-			if (us.get(i).getPerfil().getId() == 4) {
+			if (us.get(i).getStatus() == true) {
 				usuariosE.add(us.get(i));
 			}
 		}

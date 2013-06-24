@@ -39,11 +39,11 @@ public class Produto implements Serializable, BaseEntity {
 	private String colecao;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_tipo")
+	@JoinColumn(name="tipo_id")
 	private TipoProduto tipo;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_categoria")
+	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
 	
 	@ManyToOne

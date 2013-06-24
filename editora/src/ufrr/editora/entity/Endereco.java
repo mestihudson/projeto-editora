@@ -36,6 +36,8 @@ public class Endereco implements Serializable, BaseEntity {
 	private String municipio;
 
 	private String unidade;
+	
+	private String complemento;
 		
 	@Transient
 	@OneToOne(mappedBy="endereco", fetch=FetchType.EAGER)
@@ -128,6 +130,14 @@ public class Endereco implements Serializable, BaseEntity {
 		this.municipio = municipio.toUpperCase();
 	}
 	
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

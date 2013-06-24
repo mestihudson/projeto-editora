@@ -45,8 +45,6 @@ public class Fornecedor implements Serializable, BaseEntity {
 	@Email
 	private String email3;
 	
-	private Integer porcentagem;
-	
 	private Long pis;
 	
 	private Integer banco;
@@ -62,7 +60,7 @@ public class Fornecedor implements Serializable, BaseEntity {
 	private String operacao; // apenas para conta da caixa
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fk_endereco")
+	@JoinColumn(name="endereco_id")
 	private Endereco endereco;
 	
 	@ManyToOne
@@ -140,14 +138,6 @@ public class Fornecedor implements Serializable, BaseEntity {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
-	}
-
-	public Integer getPorcentagem() {
-		return porcentagem;
-	}
-
-	public void setPorcentagem(Integer porcentagem) {
-		this.porcentagem = porcentagem;
 	}
 
 	public Usuario getUsuario() {
@@ -231,8 +221,6 @@ public class Fornecedor implements Serializable, BaseEntity {
 				+ ((operacao == null) ? 0 : operacao.hashCode());
 		result = prime * result + ((pis == null) ? 0 : pis.hashCode());
 		result = prime * result
-				+ ((porcentagem == null) ? 0 : porcentagem.hashCode());
-		result = prime * result
 				+ ((telefone1 == null) ? 0 : telefone1.hashCode());
 		result = prime * result
 				+ ((telefone2 == null) ? 0 : telefone2.hashCode());
@@ -302,11 +290,6 @@ public class Fornecedor implements Serializable, BaseEntity {
 			if (other.pis != null)
 				return false;
 		} else if (!pis.equals(other.pis))
-			return false;
-		if (porcentagem == null) {
-			if (other.porcentagem != null)
-				return false;
-		} else if (!porcentagem.equals(other.porcentagem))
 			return false;
 		if (telefone1 == null) {
 			if (other.telefone1 != null)

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">			
+	<ui:define name="head">
+	
+	<div style="background: #EFF3FA; height: 24px; width: 95%" align="left">
+		<h:outputText value="Prestação de Conta" styleClass="title" style="line-height: 20px;" />
+		<div style="background: #C4D2EB; height: 2px;" />
+	</div>
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<div class="Centralizar" style="background: white;" align="center">
+		
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
+		<div align="center">
+		
+			<br />		
+			<p:graphicImage value="/resources/img/noacsses.png" />
+			<br /><br /><br /><br />
+			
+			<a href="javascript:history.back(-1)">Voltar</a><br />
+
+		
+		</div>
+		</h:form>	
+		
+			<h:form id="form_itens" rendered="#{loginBean.usuario.perfil.id!=4}">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
+				<h:outputText value="PRODUTOS VENDIDOS NO MÊS" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>
+			
+			<fieldset style="border: 1px solid #A6C9E2; border-top: 0;">
+			<br />
+			
+			<h:panelGrid columns="8">
+			
+			<h:outputLabel value="Fornecedor" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
+					<p:selectOneMenu id="fornecedor" value="#{itemVendaBean.itemVenda.item.notaFiscal.fornecedor.nome}" converter="genericConverter" style="width: 210px;"
+					required="true" requiredMessage="Informe o fornecedor" styleClass="input"
+					effect="fade" filter="true" filterMatchMode="contains">
+						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
+							<f:ajax event="change" />
+					</p:selectOneMenu>
+			
+			<h:outputLabel value="" styleClass="OutPut" />		
+			
+			<h:outputLabel value="Mês" styleClass="OutPut" />
+				<h:graphicImage value="/resources/img/as.png" styleClass="as" />		
+				<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true"
+						value="#{itemVendaBean.itemVenda.venda.dataVenda.time}" required="true" validatorMessage="Data inválida"
+						requiredMessage="Informe a data" pattern="MM/yyyy" locale="pt_BR">
+				</p:calendar>		
+						
+			<p:commandButton value="OK" id="botaoPesquisar" action="#{itemVendaBean.getPrestacaoByFornecedorAndData}" ajax="false"
+							icon="ui-icon-check" />
+			
+			</h:panelGrid>				
+					
+					<br />
+					
+					<p:dataTable id="dt" value="#{itemVendaBean.itensVendas}" var="i" scrollHeight="400" scrollable="true"
+						emptyMessage="Informe os dados acima" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+						rowIndexVar="rowIx">
+						
+						<p:column width="100" headerText="isbn/código">
+							<h:outputText value="#{i.item.produto.isbn}" />
+						</p:column>
+
+						<p:column headerText="Produto" width="300">
+							<h:outputText value="#{i.item.produto.tipo.nome}: "
+								rendered="#{i.item.produto.tipo.id eq 1}" />
+							<h:outputText value="#{i.item.produto.nome}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="40" />
+							</h:outputText>
+						</p:column>
+						
+<!-- 						<p:column headerText="Lote" width="100" style="text-align: center;" -->
+<!-- 							filterBy="#{item.notaFiscal.lote}" filterMatchMode="exact"> -->
+<!-- 							<h:outputText value="#{item.notaFiscal.lote}" rendered="#{item.notaFiscal.lote!=null}" /> -->
+<!-- 						</p:column> -->
+
+						<p:column width="50">
+							<f:facet name="header">valor unit.</f:facet>
+							<h:outputLabel value="#{i.item.valorCusto}">
+								<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+							</h:outputLabel>
+						</p:column>
+						
+						<p:column headerText="Quant." width="20" style="text-align: center;">
+							<h:outputText value="#{i.quantidade}" />
+						</p:column>
+						
+						<p:column width="50" style="text-align: center;">
+							<f:facet name="header">sub total</f:facet>
+							<h:outputText value="#{i.totalProdutoVenda}">
+							<f:convertNumber type="currency" currencySymbol="R$"
+								locale="pt_BR" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Nota fiscal" width="45" style="text-align: center;">
+							<h:outputText value="#{i.item.notaFiscal.numero}" />
+						</p:column>
+						
+						<p:column width="50" style="text-align: center;">
+							<f:facet name="header">data venda</f:facet>
+							<h:outputText value="#{i.venda.dataVenda.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
+							</h:outputText>
+						</p:column>
+						
+						<p:columnGroup type="footer">
+								<p:row>
+								
+<!-- 									<p:column colspan="1" footerText="Valor Total" /> -->
+									
+<!-- 									<p:column colspan="1"> -->
+<!-- 										<f:facet name="footer"> -->
+<!-- 										<h:outputText value="#{itemVendaBean.totalProdutos}" style="font-size: 12px; color: #8B0000;" /> -->
+<!-- 										</f:facet> -->
+<!-- 									</p:column> -->
+									
+									<p:column colspan="1" style="text-align: right;">
+										<f:facet name="footer">
+										<h:outputText value="TOTAL:   " style="font-size: 14px;" />
+										<h:outputText value="#{itemVendaBean.totalValor}" style="font-size: 14px; color: #8B0000;">
+											<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+										</h:outputText>
+										</f:facet>
+									</p:column>
+									
+<!-- 									<p:column colspan="2" /> -->
+
+								</p:row>
+							</p:columnGroup>
+
+					</p:dataTable>
+
+				</fieldset><br />
+						
+				<div align="center" style="float: center; text-align: center;">
+					<h:outputLabel value="Os Campos Com " styleClass="OutPut" /><h:graphicImage value="/resources/img/as.png" />
+					<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
+				</div>
+				
+				<div align="left" style="width: 350px; margin-right: 500px;">
+					<p:messages id="mgsg" autoUpdate="true" />
+				</div>
+
+			</h:form>								
+			
+		</div>
+
+
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
+			resizable="false" closable="false" modal="true">
+			<div align="center">
+
+				<br />
+				<p:graphicImage value="/resources/img/noacsses.png" />
+				<br /> <br /> <br /> <br /> <a
+					href="javascript:history.back(-1)">Voltar</a><br />
+
+			</div>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>
+</html>
