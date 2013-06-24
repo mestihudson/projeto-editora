@@ -83,7 +83,7 @@
 			
 			</h:panelGrid><br />
 			
-			<p:commandButton value="Entrar" action="#{loginBean.efetuaLogin}" ajax="false">
+			<p:commandButton value="Entrar" action="#{loginBean.efetuaLogin}" ajax="false" update=":login">
 				<p:ajax render="@all" />
 			</p:commandButton>	
 			

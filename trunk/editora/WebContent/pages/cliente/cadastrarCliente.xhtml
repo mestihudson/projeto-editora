@@ -234,6 +234,13 @@
 							<f:ajax event="blur" render="error_bairro" />
 						</p:autoComplete>
 						<p:message id="error_bairro" for="end_bairro" display="icon" />
+						
+						<h:outputLabel value="Complemento" styleClass="OutPut" />
+						<h:graphicImage value="" styleClass="as" />
+						<p:inputText id="end_compl1" value="#{usuarioBean.endereco.complemento}">
+							<f:ajax event="blur" render="error_compl1" />
+						</p:inputText>
+						<p:message id="error_compl1" for="end_compl1" display="icon" />
 																								
 						<h:outputLabel value="CEP" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -333,6 +340,13 @@
 							<f:ajax event="blur" render="error_bairro2" />
 						</p:autoComplete>
 						<p:message id="error_bairro2" for="end_bairro2" display="icon" />
+						
+						<h:outputLabel value="Complemento" styleClass="OutPut" />
+						<h:graphicImage value="" styleClass="as" />
+						<p:inputText id="end_compl" value="#{usuarioBean.usuario.endereco.complemento}">
+							<f:ajax event="blur" render="error_compl" />
+						</p:inputText>
+						<p:message id="error_compl" for="end_compl" display="icon" />
 																								
 						<h:outputLabel value="CEP" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
@@ -386,7 +400,7 @@
 					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes" emptyMessage="Nenhum cliente encontrado"
 					paginator="true" rows="15" paginatorPosition="bottom">
 					
-						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="contains">
+						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="contains" style="text-align: center;">
 							<h:commandLink value="#{c.id}" onclick="dlgEditaCliente.hide()"
 								id="link_codigo2">
 								<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{c}" />

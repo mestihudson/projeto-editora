@@ -321,15 +321,15 @@ public class VendaBean implements Serializable {
 					//aqui fazer o for (itensVendas) com o buscaId de (item)
 //					e fazer o dao.atualiza(item); dentro do for
 					
-					DAO<Item> iDAO = new DAO<Item>(Item.class);
-					Item i = iDAO.buscaPorId(this.item.getId());
+//					DAO<Item> iDAO = new DAO<Item>(Item.class);
+//					Item i = iDAO.buscaPorId(this.item.getId());
 					
-					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saída do item");
-						break;
-					}	
+//					for (ItemVenda iv : this.getVenda().getItensVendas()) {
+//						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+//						iDAO.atualiza(i);
+//						System.out.println("...atualizou quantidade de saída do item");
+//						break;
+//					}	
 					
 					System.out.println("...passou do for");
 					Msg.addMsgInfo("Venda efetuada com sucesso");
@@ -350,15 +350,15 @@ public class VendaBean implements Serializable {
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
 					
-					DAO<Item> iDAO = new DAO<Item>(Item.class);
-					Item i = iDAO.buscaPorId(this.item.getId());
-					
-					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saída do item");
-						break;
-					}	
+//					DAO<Item> iDAO = new DAO<Item>(Item.class);
+//					Item i = iDAO.buscaPorId(this.item.getId());
+//					
+//					for (ItemVenda iv : this.getVenda().getItensVendas()) {
+//						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+//						iDAO.atualiza(i);
+//						System.out.println("...atualizou quantidade de saída do item");
+//						break;
+//					}	
 					
 					dao.adiciona(venda);
 					itemVenda = new ItemVenda();

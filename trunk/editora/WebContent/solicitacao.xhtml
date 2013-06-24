@@ -265,6 +265,13 @@
 							<f:ajax event="blur" render="error_bairro" />
 						</p:autoComplete>
 						<p:message id="error_bairro" for="end_bairro" display="icon" />
+						
+						<h:outputLabel value="Complemento" styleClass="OutPut" />
+						<h:graphicImage value="" styleClass="as" />
+						<p:inputText id="end_compl" value="#{usuarioBean.endereco.complemento}">
+							<f:ajax event="blur" render="error_compl" />
+						</p:inputText>
+						<p:message id="error_compl" for="end_compl" display="icon" />
 																								
 						<h:outputLabel value="CEP" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />

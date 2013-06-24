@@ -41,6 +41,11 @@ public class LoginBean implements Serializable {
 		this.dao = dao;
 	}
 	
+	public LoginBean() {
+		@SuppressWarnings("unused")
+		Usuario usuario = new Usuario();
+	}
+	
 	// efetua login
 	public String efetuaLogin() {
 		UsuarioDAO dao = new UsuarioDAO();
@@ -48,8 +53,9 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getStatus() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("Acesso não permitido");
-				System.out.println("Acesso não permitido");
+				Msg.addMsgError("Sua solicitação foi enviada, aguarde autorização do acesso.");
+				System.out.println("...acesso não permitido, aguarde liberar o acesso");
+				this.usuario = new Usuario();
 				return null;
 			} else {
 
@@ -80,8 +86,9 @@ public class LoginBean implements Serializable {
 
 			}
 		} else {
+			Msg.addMsgFatal("Senha ou login inválido");
+			System.out.println("...senha ou login invalido");
 			this.usuario = new Usuario();
-			Msg.addMsgFatal("Senha ou Login Inválido");
 			return null;
 		}
 	}

@@ -223,35 +223,7 @@
 			<div align="center">
 
 					<h:panelGrid columns="2" cellspacing="30">
-					
-						<p:panel header="Produto" style="heigth: 200px;">
 						
-						<h:panelGrid columns="1">														
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
-							<h:panelGrid columns="2">
-								<h:graphicImage value="/resources/img/seta1.png" />
-								<h:outputLabel value="Produto por autor" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
-							</h:panelGrid>	
-							</p:commandLink>
-							
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
-							<h:panelGrid columns="2">
-								<h:graphicImage value="/resources/img/seta1.png" />
-								<h:outputLabel value="Produto por categoria" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
-							</h:panelGrid>	
-							</p:commandLink>
-									
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
-							<h:panelGrid columns="2">
-								<h:graphicImage value="/resources/img/seta1.png" />
-								<h:outputLabel value="Produto por editora" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
-							</h:panelGrid>	
-							</p:commandLink>
-							
-						</h:panelGrid>	
-						
-						</p:panel>
-
 						<p:panel header="Cliente" style="height: 115px;">
 							<h:panelGrid columns="1">
 							
@@ -271,6 +243,35 @@
 							
 							</h:panelGrid>
 
+						</p:panel>
+						
+						<p:panel header="Outros" style="height: 115px;">
+						
+						<h:panelGrid columns="1">														
+							
+							<p:commandLink action="/pages/relatorio/prestarContaFornecedor.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Prestação de conta com fornecedor" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Produtos registrados no sistema" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<h:panelGrid columns="2">
+								<h:graphicImage value="/resources/img/seta1.png" />
+								<h:outputLabel value="Fornecedores registrados no sistema" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
+							</h:panelGrid>	
+							</p:commandLink>
+							
+						</h:panelGrid>	
+						
 						</p:panel>
 
 						<p:panel header="Venda">
