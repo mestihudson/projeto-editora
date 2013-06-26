@@ -62,8 +62,7 @@
 						
 						<p:column width="100"
 						headerText="isbn/código" filterBy="#{item.produto.isbn}" filterMatchMode="exact" filterMaxLength="13">
-							<h:outputText value="#{item.produto.id}" rendered="#{item.produto.isbn==null}" />
-							<h:outputText value="#{item.produto.isbn}" rendered="#{item.produto.isbn!=null}" />
+							<h:outputText value="#{item.produto.isbn}" />
 						</p:column>
 
 						<p:column headerText="Produto" width="300"

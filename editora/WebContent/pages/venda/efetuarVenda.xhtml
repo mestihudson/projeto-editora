@@ -39,8 +39,13 @@
 			</div>	
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
+			
+			<h:panelGrid id="botton" columns="2" cellspacing="5" style="float: right;">
+				<h:graphicImage value="/resources/img/estoque.png" onclick="dlgEstoque.show();" style="float: right; cursor: pointer;"
+				styleClass="acende"	title="Verificar estoque" />
+			</h:panelGrid>		
 
-			<br />
+			<br /><br /><br />	
 				
 					<div style="float: left; margin-left: 10px">					
 					<p:panel header="Dados da Venda" style="height: 130px; width: 450px;">
@@ -95,7 +100,7 @@
 					styleClass="input" panelStyle="width:400px"
 					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Adicione o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.nome}" itemValue="#{i.id}" />             			            		
+						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" />             			            		
             		</p:selectOneMenu>
             		
             		<br /><br />
@@ -425,6 +430,72 @@
 				
 				</h:form>
 			</p:dialog>	
+			
+			<!-- 			Aqui começa o dialog para os produtos disponíveis no estoque -->
+			<p:dialog header="" widgetVar="dlgEstoque" modal="true"
+				width="auto" resizable="false">
+				<h:form id="form_itens">
+			
+			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px; width: auto" align="center" >
+				<h:outputText value="ESTOQUE" style="color: white; font-size: 12px;" styleClass="OutPut" />
+			</div>
+
+			<fieldset style="border: 1px solid #A6C9E2; border-top: 0; width: 1000px;">
+					
+					<p:dataTable id="dt" value="#{itemBean.estoque}" var="item"
+						emptyMessage="Não encontrado" paginator="true" rows="15" paginatorPosition="bottom"
+						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
+						rowIndexVar="rowIx" style="width: 1000px;">
+						
+						<p:column width="100"
+						headerText="isbn/código" filterBy="#{item.produto.isbn}" filterMatchMode="exact" filterMaxLength="13">
+							<h:outputText value="#{item.produto.id}" rendered="#{item.produto.isbn==null}" />
+							<h:outputText value="#{item.produto.isbn}" rendered="#{item.produto.isbn!=null}" />
+						</p:column>
+
+						<p:column headerText="Produto" width="300"
+							filterBy="#{item.produto.nome}" filterMatchMode="contains">
+							<h:outputText value="#{item.produto.tipo.nome}: "
+								rendered="#{item.produto.tipo.id eq 1}" />
+							<h:outputText value="#{item.produto.nome}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="40" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Lote" width="100" style="text-align: center;"
+							filterBy="#{item.notaFiscal.lote}" filterMatchMode="exact">
+							<h:outputText value="#{item.notaFiscal.lote}" rendered="#{item.notaFiscal.lote!=null}" />
+						</p:column>
+						
+						<p:column headerText="Autor" width="200"
+							filterBy="#{item.produto.autor}" filterMatchMode="contains">
+							<h:outputText value="#{item.produto.autor}" rendered="#{item.produto.autor!=null}" />
+							<h:outputText value="NENHUM" rendered="#{item.produto.autor==null}" />
+						</p:column>
+
+						<p:column headerText="qdt Entrada" style="color: #1874CD">
+							<h:outputText value="#{item.quantidadeEntrada}" />
+						</p:column>
+
+						<p:column headerText="qdt Saida" style="color: #8B0000">
+							<h:outputText value="#{item.quantidadeSaida}" />
+						</p:column>
+
+						<p:column headerText="qdt Atual" style="color: blue;">
+							<h:outputText value="#{item.quantidadeAtual}"
+								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
+							<h:outputText value="(#{item.quantidadeAtual2})"
+								style="color: #CD0000;"
+								rendered="#{item.produto.quantidadeMinima >= item.quantidadeAtual}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</fieldset>	
+
+			</h:form>
+			</p:dialog>
 			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">

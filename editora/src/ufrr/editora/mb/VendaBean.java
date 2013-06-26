@@ -230,50 +230,84 @@ public class VendaBean implements Serializable {
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
-			if (venda.getImprimeCupom().equals(true)) {
-
-				this.getVenda().setVendedor(this.loginBean.getUsuario());
-				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-				Usuario u = UDao
-						.buscaPorId(this.loginBean.getUsuario().getId());
-				u.getVendas().add(venda);
-				DAO<Venda> dao = new DAO<Venda>(Venda.class);
-				venda.setOperacao(1);
-				venda.setValorTotalDesconto(getValorTotalComDesconto());
-				venda.setValorTotal(getValorTotalProdutos());
-
-				// para gerar relatorio
-				// HashMap<String, Object> params = new HashMap<String,
-				// Object>();
-				// Report report = new Report("report2", params);
-				// report.pdfReport();
-				// report = new Report();
-
-				Msg.addMsgInfo("Venda efetuada com sucesso");
-				System.out.println("...venda efetuada com sucesso!!");
-				dao.adiciona(venda);
-				itemVenda = new ItemVenda();
-				venda = new Venda();
-
-				return "/pages/venda/efetuarVenda.xhtml";
-
-			} else {
-				this.getVenda().setVendedor(this.loginBean.getUsuario());
-				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-				Usuario u = UDao
-						.buscaPorId(this.loginBean.getUsuario().getId());
-				u.getVendas().add(venda);
-				DAO<Venda> dao = new DAO<Venda>(Venda.class);
-				Msg.addMsgInfo("Venda efetuada com sucesso");
-				venda.setOperacao(1);
-				venda.setValorTotalDesconto(getValorTotalComDesconto());
-				venda.setValorTotal(getValorTotalProdutos());
-				dao.adiciona(venda);
-				itemVenda = new ItemVenda();
-				venda = new Venda();
-				return "/pages/venda/efetuarVenda.xhtml";
+			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade de produto informado ultrapasse o disponível em estoque
+				if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
+					this.cadastro = false;
+					break;
+				}
 			}
+			if (this.cadastro == true) {
+				if (venda.getImprimeCupom().equals(true)) {
 
+					this.getVenda().setVendedor(this.loginBean.getUsuario());
+					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+					u.getVendas().add(venda);
+					DAO<Venda> dao = new DAO<Venda>(Venda.class);
+					venda.setOperacao(1);
+					venda.setValorTotalDesconto(getValorTotalComDesconto());
+					venda.setValorTotal(getValorTotalProdutos());
+
+					// para gerar o cupom
+					// HashMap<String, Object> params = new HashMap<String,
+					// Object>();
+					// Report report = new Report("report2", params);
+					// report.pdfReport();
+					// report = new Report();
+
+					// atualiza a lista de item (quantidade de saida)					
+					for (ItemVenda iv : this.getVenda().getItensVendas()) {
+						DAO<Item> iDAO = new DAO<Item>(Item.class);
+						Item i = iv.getItem();
+												
+						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+						iDAO.atualiza(i);
+						System.out.println("...atualizou quantidade de saída do item");
+					}	
+					
+					Msg.addMsgInfo("Venda efetuada com sucesso");
+					System.out.println("...venda efetuada com sucesso!!");
+					dao.adiciona(venda);
+					itemVenda = new ItemVenda();
+					venda = new Venda();
+
+					return "/pages/venda/efetuarVenda.xhtml";
+
+				} else {
+					this.getVenda().setVendedor(this.loginBean.getUsuario());
+					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+					u.getVendas().add(venda);
+					DAO<Venda> dao = new DAO<Venda>(Venda.class);
+					venda.setOperacao(1);
+					Msg.addMsgInfo("Venda efetuada com sucesso");
+					venda.setValorTotalDesconto(getValorTotalComDesconto());
+					venda.setValorTotal(getValorTotalProdutos());
+					
+					
+					// atualiza a lista de item (quantidade de saida)					
+					for (ItemVenda iv : this.getVenda().getItensVendas()) {
+						DAO<Item> iDAO = new DAO<Item>(Item.class);
+						Item i = iv.getItem();
+						
+						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+						iDAO.atualiza(i);
+						System.out.println("...atualizou quantidade de saída do item");
+					}	
+					
+					dao.adiciona(venda);
+					itemVenda = new ItemVenda();
+					venda = new Venda();
+					return "/pages/venda/efetuarVenda.xhtml";
+				}
+			} else {
+				Msg.addMsgFatal("Há na lista um produto com quantidade indisponível no estoque, " +
+						"com isso não será permitida nenhuma venda. Verifique a quantidade disponível no estoque!");
+				System.out.println("...quantidade não disponível no estoque");
+				itemVenda = new ItemVenda();
+				this.cadastro = true;
+			}
+			
 		}
 		return null;
 	}
@@ -293,7 +327,7 @@ public class VendaBean implements Serializable {
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
-			for (ItemVenda i : this.getVenda().getItensVendas()) { // ele está verificando dentro da lista de produtos, só faz a verificação depois que tiver um produto negativo...
+			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade de produto informado ultrapasse o disponível em estoque
 				if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
 					this.cadastro = false;
 					break;
@@ -311,27 +345,23 @@ public class VendaBean implements Serializable {
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
 
-					// para gerar relatorio
+					// para gerar o cupom
 					// HashMap<String, Object> params = new HashMap<String,
 					// Object>();
 					// Report report = new Report("report2", params);
 					// report.pdfReport();
 					// report = new Report();
 
-					//aqui fazer o for (itensVendas) com o buscaId de (item)
-//					e fazer o dao.atualiza(item); dentro do for
+					// atualiza a lista de item (quantidade de saida)					
+					for (ItemVenda iv : this.getVenda().getItensVendas()) {
+						DAO<Item> iDAO = new DAO<Item>(Item.class);
+						Item i = iv.getItem();
+												
+						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+						iDAO.atualiza(i);
+						System.out.println("...atualizou quantidade de saída do item");
+					}	
 					
-//					DAO<Item> iDAO = new DAO<Item>(Item.class);
-//					Item i = iDAO.buscaPorId(this.item.getId());
-					
-//					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-//						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-//						iDAO.atualiza(i);
-//						System.out.println("...atualizou quantidade de saída do item");
-//						break;
-//					}	
-					
-					System.out.println("...passou do for");
 					Msg.addMsgInfo("Venda efetuada com sucesso");
 					System.out.println("...venda efetuada com sucesso!!");
 					dao.adiciona(venda);
@@ -350,15 +380,16 @@ public class VendaBean implements Serializable {
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
 					
-//					DAO<Item> iDAO = new DAO<Item>(Item.class);
-//					Item i = iDAO.buscaPorId(this.item.getId());
-//					
-//					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-//						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-//						iDAO.atualiza(i);
-//						System.out.println("...atualizou quantidade de saída do item");
-//						break;
-//					}	
+					
+					// atualiza a lista de item (quantidade de saida)					
+					for (ItemVenda iv : this.getVenda().getItensVendas()) {
+						DAO<Item> iDAO = new DAO<Item>(Item.class);
+						Item i = iv.getItem();
+						
+						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+						iDAO.atualiza(i);
+						System.out.println("...atualizou quantidade de saída do item");
+					}	
 					
 					dao.adiciona(venda);
 					itemVenda = new ItemVenda();

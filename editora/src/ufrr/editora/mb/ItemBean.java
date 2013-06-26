@@ -11,6 +11,9 @@ import javax.persistence.Query;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Item;
+import ufrr.editora.entity.ItemDevolvido;
+import ufrr.editora.entity.Usuario;
+import ufrr.editora.util.Msg;
 
 @ManagedBean
 @ViewScoped
@@ -22,11 +25,15 @@ public class ItemBean implements Serializable {
 	private LoginBean loginBean;
 	
 	private Item item = new Item();
+	private ItemDevolvido devolvido = new ItemDevolvido();
 	private List<Item> itens;
 	private List<Item> itens1;
 	private DAO<Item> dao = new DAO<Item>(Item.class);
+	private DAO<ItemDevolvido> dao2 = new DAO<ItemDevolvido>(ItemDevolvido.class);
 	
 	private Integer totalProduto;
+	
+	private Integer retorno;
 	
 	// método para somar a quantidade de entrada
 	public Integer getTotalEntrada() {
@@ -51,6 +58,45 @@ public class ItemBean implements Serializable {
 		return getTotalEntrada() - getTotalSaida();
 		
 	}
+	
+	// devolve ao estoque quantidade informada
+	public String updateItem() {
+		if (item.getId() != null) {
+			if(item.getQuantidadeSaida()==0) {
+				Msg.addMsgFatal("Não houve venda deste produto para retorna-lo");
+			}else {
+				this.getDevolvido().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getItensDevolvidos().add(devolvido);
+				
+				Msg.addMsgInfo("Produto devolvido ao estoque");
+				System.out.println("...produto devolvido ao estoque");
+				item.setQuantidadeSaida(getItem().getQuantidadeSaida()-getRetorno());
+				devolvido.setItem(item);
+				devolvido.setRetorno(getRetorno());
+				dao.atualiza(item);
+				dao2.adiciona(devolvido);
+				this.item = new Item();
+				this.devolvido = new ItemDevolvido();
+			}
+		} else {
+			System.out.println("...Não foi possível devolver produto ao estoque");
+			Msg.addMsgFatal("Não foi possível concluir operação");
+		}
+		return "/pages/estoque/devolverEstoque.xhtml";
+	}
+	
+	// devolve ao estoque quantidade informada
+		public void getDevolverEstoque() {
+			if (item.getId()!= null) {
+				dao.atualiza(item);
+				
+			} else {
+				Msg.addMsgFatal("Não foi possível concluir operação");
+			}
+			
+		}
 	
 	public List<Item> getItens() {
 		if (itens == null) {
@@ -87,7 +133,7 @@ public class ItemBean implements Serializable {
 			return itens1;
 		}	
 		
-	
+	// estoque que não aparece valores zerados
 	public List<Item> getEstoque() {
 		itens1 = new ArrayList<Item>();
 		List<Item> item = new ArrayList<Item>();
@@ -172,8 +218,37 @@ public class ItemBean implements Serializable {
 	public void setTotalProduto(Integer totalProduto) {
 		this.totalProduto = totalProduto;
 	}
-	
-	
-	
+
+	public List<Item> getItens1() {
+		return itens1;
+	}
+
+	public void setItens1(List<Item> itens1) {
+		this.itens1 = itens1;
+	}
+
+	public Integer getRetorno() {
+		return retorno;
+	}
+
+	public void setRetorno(Integer retorno) {
+		this.retorno = retorno;
+	}
+
+	public ItemDevolvido getDevolvido() {
+		return devolvido;
+	}
+
+	public void setDevolvido(ItemDevolvido devolvido) {
+		this.devolvido = devolvido;
+	}
+
+	public DAO<ItemDevolvido> getDao2() {
+		return dao2;
+	}
+
+	public void setDao2(DAO<ItemDevolvido> dao2) {
+		this.dao2 = dao2;
+	}
 
 }

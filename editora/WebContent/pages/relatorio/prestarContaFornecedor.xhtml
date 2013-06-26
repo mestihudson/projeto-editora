@@ -42,33 +42,41 @@
 			<br />
 			
 			<h:panelGrid columns="8">
-			
-			<h:outputLabel value="Fornecedor" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:selectOneMenu id="fornecedor" value="#{itemVendaBean.itemVenda.item.notaFiscal.fornecedor.nome}" converter="genericConverter" style="width: 210px;"
-					required="true" requiredMessage="Informe o fornecedor" styleClass="input"
-					effect="fade" filter="true" filterMatchMode="contains">
-						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
-							<f:ajax event="change" />
-					</p:selectOneMenu>
+
+				<p:selectOneRadio value="#{itemVendaBean.box4Search}" 
+							styleClass="OutPut">
+							<f:selectItem itemLabel="Fornecedor" itemValue="1" />
+							<f:ajax render="form_itens" />
+						</p:selectOneRadio>
+
+						<p:autoComplete value="#{itemVendaBean.search}" required="true" requiredMessage="Informe o nome do fornecedor"
+							completeMethod="#{fornecedorBean.autocompleteFornecedor}" var="f"
+							itemValue="#{f}" itemLabel="#{f}"
+							rendered="#{itemVendaBean.box4Search == 1}" minQueryLength="3"
+							maxResults="5" queryDelay="60" id="autocompletePesquisar"
+							size="45" />
+							
+<!-- 						<h:outputLabel value="Mês" styleClass="OutPut" />		 -->
+<!-- 						<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true" -->
+<!-- 						value="#{itemVendaBean.search}" required="true" requiredMessage="Informe o mês"> -->
+<!-- 						</p:calendar> -->
+						
+<!-- 						<h:outputLabel value="Ano" styleClass="OutPut" />		 -->
+<!-- 						<p:calendar id="ano" effect="slideDown" showButtonPanel="true" navigator="true" -->
+<!-- 						value="#{itemVendaBean.search}" required="true"	requiredMessage="Informe o ano"> -->
+<!-- 						</p:calendar>	 -->
+
+						<p:commandButton value="OK" id="botaoPesquisar2" rendered="#{itemVendaBean.box4Search == 1}"
+							action="#{itemVendaBean.getLista}" ajax="false"
+							icon="ui-icon-check" />
 			
 			<h:outputLabel value="" styleClass="OutPut" />		
-			
-			<h:outputLabel value="Mês" styleClass="OutPut" />
-				<h:graphicImage value="/resources/img/as.png" styleClass="as" />		
-				<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true"
-						value="#{itemVendaBean.itemVenda.venda.dataVenda.time}" required="true" validatorMessage="Data inválida"
-						requiredMessage="Informe a data" pattern="MM/yyyy" locale="pt_BR">
-				</p:calendar>		
-						
-			<p:commandButton value="OK" id="botaoPesquisar" action="#{itemVendaBean.getPrestacaoByFornecedorAndData}" ajax="false"
-							icon="ui-icon-check" />
 			
 			</h:panelGrid>				
 					
 					<br />
 					
-					<p:dataTable id="dt" value="#{itemVendaBean.itensVendas}" var="i" scrollHeight="400" scrollable="true"
+					<p:dataTable id="dt" value="#{itemVendaBean.itensVendas1}" var="i" scrollHeight="400" scrollable="true"
 						emptyMessage="Informe os dados acima" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 						rowIndexVar="rowIx">
 						
@@ -84,11 +92,6 @@
 								<f:attribute name="limit" value="40" />
 							</h:outputText>
 						</p:column>
-						
-<!-- 						<p:column headerText="Lote" width="100" style="text-align: center;" -->
-<!-- 							filterBy="#{item.notaFiscal.lote}" filterMatchMode="exact"> -->
-<!-- 							<h:outputText value="#{item.notaFiscal.lote}" rendered="#{item.notaFiscal.lote!=null}" /> -->
-<!-- 						</p:column> -->
 
 						<p:column width="50">
 							<f:facet name="header">valor unit.</f:facet>
@@ -133,10 +136,12 @@
 									
 									<p:column colspan="1" style="text-align: right;">
 										<f:facet name="footer">
-										<h:outputText value="TOTAL:   " style="font-size: 14px;" />
-										<h:outputText value="#{itemVendaBean.totalValor}" style="font-size: 14px; color: #8B0000;">
+										<h:outputText value="T O T A L:   " style="font-size: 14px;" />
+										<h:outputText value="#{itemVendaBean.totalValor}" style="font-size: 14px; color: #8B0000;" rendered="#{not empty itemVendaBean.itensVendas1}">
 											<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 										</h:outputText>
+										
+										<h:outputText value="0,00" style="font-size: 14px; color: #8B0000;" rendered="#{empty itemVendaBean.itensVendas1}" />
 										</f:facet>
 									</p:column>
 									
@@ -148,11 +153,6 @@
 					</p:dataTable>
 
 				</fieldset><br />
-						
-				<div align="center" style="float: center; text-align: center;">
-					<h:outputLabel value="Os Campos Com " styleClass="OutPut" /><h:graphicImage value="/resources/img/as.png" />
-					<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
-				</div>
 				
 				<div align="left" style="width: 350px; margin-right: 500px;">
 					<p:messages id="mgsg" autoUpdate="true" />

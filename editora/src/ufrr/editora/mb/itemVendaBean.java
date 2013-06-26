@@ -3,6 +3,7 @@ package ufrr.editora.mb;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -29,33 +30,72 @@ public class itemVendaBean implements Serializable {
 	private Integer totalProdutoVendido;
 	private Double totalProdutoValor;
 	
+	private String search;
+	private Integer box4Search;
+	
+	@PostConstruct
+	public void init() {
+
+		search = "";
+		box4Search = 1;
+	}
+	
 	public List<ItemVenda> getItensVendas() {
 		if (itensVendas == null) {
 			System.out.println("Carregando itens de vendas...");
 			itensVendas = new DAO<ItemVenda>(ItemVenda.class).getAllOrder("item.produto.nome, item.produto.isbn");
 		}
 		return itensVendas;
-	}
+	}	
+//	
+//	// Exibe uma lista com as solicitações de acesso
+//		@SuppressWarnings("unchecked")
+//		public List<Usuario> getContas() {
+//			Query query = dao.query("SELECT i FROM ItemVenda i ORDERBY i.produto.nome, i.produto.isbn");
+//			itensVendas1 = query.getResultList();
+//			return query.getResultList();
+//		}
 	
-	// serve para prestação de conta
-		@SuppressWarnings("unchecked")
-		public String getPrestacaoByFornecedorAndData() {
-			try {
-				Query query = dao.query("SELECT i FROM ItemVenda i WHERE i.item.notaFiscal.fornecedor = ? and i.venda = ?");
-				query.setParameter(1, itemVenda.getItem().getNotaFiscal().getFornecedor());
-				query.setParameter(2, itemVenda.getVenda());
-				itensVendas = query.getResultList();
-				
-				if (getItensVendas().isEmpty()) {
-					Msg.addMsgError("Nenhuma venda efetuada para este fornecedor na data informada");
+	// Pesquisa pelo fornecedor
+		public String getLista() {
+			
+			if (box4Search.equals(1)) {
+				if (search.length() <= 4) {
+					init();
+					Msg.addMsgError("Informe 5 caracteres para pesquisa");
 					return null;
+				} else {
+					itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);
+					itensVendas1 = dao.getAllOrder("item.produto.nome, item.produto.isbn");
+					if (itensVendas1.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhum registro encontrado");
+					} else {
+						return null;
+					}
 				}
 
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 			return null;
 		}
+	
+	@SuppressWarnings("unchecked")
+	public String getPrestacaoByFornecedorAndData() {
+		try {
+			Query query = dao.query("SELECT i FROM ItemVenda i WHERE i.item =?");
+			query.setParameter(1, itemVenda.getVenda());
+			itensVendas = query.getResultList();
+			
+			if (getItensVendas().isEmpty()) {
+				Msg.addMsgError("Nenhuma venda efetuada para este fornecedor na data informada");
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	// método para somar a quantidade dos itens vendidos
 	public Integer getTotalProdutos() {
@@ -74,51 +114,7 @@ public class itemVendaBean implements Serializable {
 			}
 			return totalProdutoValor;
 		}
-		
-	// variável para exibir a soma do total dos produtos
-//	public Double getValorTotal() {
-//		setTotalValor(00.00);
-//		for (Item i : getNotaFiscal().getItens()) {
-//			setTotalValor(getTotalValor() + i.getTotalPro());
-//		}
-//		return totalValor;
-//	}
-	
-	// método para somar a quantidade de saida
-//	public Integer getTotalSaida() {
-//		setTotalProduto(0);
-//		for (Item i : getEstoque()) {
-//			setTotalProduto(getTotalProduto() + i.getQuantidadeSaida());
-//		}
-//		return totalProduto;
-//	}
-	
-	
-	// Exibe uma lista de itens
-//		@SuppressWarnings("unchecked")
-//		public List<Item> getItens2() {
-//			Query query = dao.query("SELECT i FROM Item i ORDER BY i.produto.nome");
-//			itensVendas = query.getResultList();
-//			System.out.println("Total de Itens: " + getItens().size());
-//			return query.getResultList();
-//		}
-	
-//	public List<Item> getEstoque() {
-//		itens1 = new ArrayList<Item>();
-//		List<Item> item = new ArrayList<Item>();
-//		item = this.getItens();
-//		for (int i = 0; i < item.size(); i++) {
-//			if (item.get(i).getQuantidadeEntrada() <= item.get(i).getQuantidadeSaida()) {
-//
-//			}else {
-//				if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
-//					itens1.add(item.get(i));
-//				}
-//			}
-//		}
-//		return itens1;
-//	}	
-		
+				
 
 	public LoginBean getLoginBean() {
 		return loginBean;
@@ -170,6 +166,22 @@ public class itemVendaBean implements Serializable {
 
 	public void setTotalProdutoValor(Double totalProdutoValor) {
 		this.totalProdutoValor = totalProdutoValor;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public Integer getBox4Search() {
+		return box4Search;
+	}
+
+	public void setBox4Search(Integer box4Search) {
+		this.box4Search = box4Search;
 	}	
 
 }

@@ -2,11 +2,13 @@ package ufrr.editora.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,6 +38,14 @@ public class Item implements Serializable {
 
 	@Transient
 	private Double totalValor;
+	
+	@Transient
+	@ManyToOne
+	private Usuario usuario;
+	
+	@Transient
+	@OneToOne(cascade = CascadeType.ALL)
+	private ItemDevolvido devolvido;
 
 	// get and set
 
@@ -102,7 +112,22 @@ public class Item implements Serializable {
 	public void setTotalValor(Double totalValor) {
 		this.totalValor = totalValor;
 	}
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public ItemDevolvido getDevolvido() {
+		return devolvido;
+	}
+
+	public void setDevolvido(ItemDevolvido devolvido) {
+		this.devolvido = devolvido;
+	}
 
 	// variável para exibir o total de quantidade atual
 	public Double getTotal() {
