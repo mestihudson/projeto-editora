@@ -106,6 +106,14 @@ public class Usuario implements Serializable, BaseEntity {
 	@Transient
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<Venda> vendas = new ArrayList<Venda>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<Item> itens = new ArrayList<Item>();
+	
+	@Transient
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	private Collection<ItemDevolvido> itensDevolvidos = new ArrayList<ItemDevolvido>();
 		
 	
 //	get and set
@@ -308,6 +316,22 @@ public class Usuario implements Serializable, BaseEntity {
 
 	public void setAceitaSolicitacao(Boolean aceitaSolicitacao) {
 		this.aceitaSolicitacao = aceitaSolicitacao;
+	}
+	
+	public Collection<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(Collection<Item> itens) {
+		this.itens = itens;
+	}
+		
+	public Collection<ItemDevolvido> getItensDevolvidos() {
+		return itensDevolvidos;
+	}
+
+	public void setItensDevolvidos(Collection<ItemDevolvido> itensDevolvidos) {
+		this.itensDevolvidos = itensDevolvidos;
 	}
 
 	//hashCode
