@@ -69,7 +69,7 @@
 					<h:panelGrid id="grid" columns="5" cellspacing="5" cellpadding="5">
 					<br /><br />
 					
-					<h:outputLabel value="Saída" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 2}" style="color: #8B0000;" />
+					<h:outputLabel value="Retirar dinheiro do caixa" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 2}" style="color: #8B0000;" />
 					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
