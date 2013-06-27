@@ -35,68 +35,7 @@ public class ItemBean implements Serializable {
 	
 	private Integer retorno;
 	
-	// método para somar a quantidade de entrada
-	public Integer getTotalEntrada() {
-		setTotalProduto(0);
-		for (Item i : getEstoque()) {
-			setTotalProduto(getTotalProduto() + i.getQuantidadeEntrada());
-		}
-		return totalProduto;
-	}
-	
-	// método para somar a quantidade de saida
-	public Integer getTotalSaida() {
-		setTotalProduto(0);
-		for (Item i : getEstoque()) {
-			setTotalProduto(getTotalProduto() + i.getQuantidadeSaida());
-		}
-		return totalProduto;
-	}
-	
-	// quantidade atual do total
-	public Integer getTotalAtual() {
-		return getTotalEntrada() - getTotalSaida();
-		
-	}
-	
-	// devolve ao estoque quantidade informada
-	public String updateItem() {
-		if (item.getId() != null) {
-			if(item.getQuantidadeSaida()==0) {
-				Msg.addMsgFatal("Não houve venda deste produto para retorna-lo");
-			}else {
-				this.getDevolvido().setUsuario(this.loginBean.getUsuario());
-				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
-				u.getItensDevolvidos().add(devolvido);
-				
-				Msg.addMsgInfo("Produto devolvido ao estoque");
-				System.out.println("...produto devolvido ao estoque");
-				item.setQuantidadeSaida(getItem().getQuantidadeSaida()-getRetorno());
-				devolvido.setItem(item);
-				devolvido.setRetorno(getRetorno());
-				dao.atualiza(item);
-				dao2.adiciona(devolvido);
-				this.item = new Item();
-				this.devolvido = new ItemDevolvido();
-			}
-		} else {
-			System.out.println("...Não foi possível devolver produto ao estoque");
-			Msg.addMsgFatal("Não foi possível concluir operação");
-		}
-		return "/pages/estoque/devolverEstoque.xhtml";
-	}
-	
-	// devolve ao estoque quantidade informada
-		public void getDevolverEstoque() {
-			if (item.getId()!= null) {
-				dao.atualiza(item);
-				
-			} else {
-				Msg.addMsgFatal("Não foi possível concluir operação");
-			}
-			
-		}
+	/** list **/
 	
 	public List<Item> getItens() {
 		if (itens == null) {
@@ -150,22 +89,6 @@ public class ItemBean implements Serializable {
 		return itens1;
 	}
 
-		public List<Item> getTeste() {
-			itens1 = new ArrayList<Item>();
-			List<Item> item = new ArrayList<Item>();
-			item = this.getEstoque();
-			for (int i = 0; i < item.size(); i++) {
-//				if (item.get(i).getQuantidadeSaida()==1) {
-				if (item.get(i).getProduto().equals(getItem().getProduto())) {
-					if (itens.size() > i++) {
-						itens1.remove(item.get(i));
-					}else {
-						return null;
-					}
-				}
-			}
-			return itens1;
-		}
 	
 	// lista para a consulta de itens
 	
@@ -181,7 +104,75 @@ public class ItemBean implements Serializable {
 		return itens1;
 	}
 	
+	/** calculo */
+	
+	// método para somar a quantidade de entrada
+	public Integer getTotalEntrada() {
+		setTotalProduto(0);
+		for (Item i : getEstoque()) {
+			setTotalProduto(getTotalProduto() + i.getQuantidadeEntrada());
+		}
+		return totalProduto;
+	}
+	
+	// método para somar a quantidade de saida
+	public Integer getTotalSaida() {
+		setTotalProduto(0);
+		for (Item i : getEstoque()) {
+			setTotalProduto(getTotalProduto() + i.getQuantidadeSaida());
+		}
+		return totalProduto;
+	}
+	
+	// quantidade atual do total
+	public Integer getTotalAtual() {
+		return getTotalEntrada() - getTotalSaida();
 		
+	}
+	
+	/** actions **/
+	
+	// devolve ao estoque quantidade informada
+	// somente caso de troca ou devolução
+	
+	public String updateItem() {
+		if (item.getId() != null) {
+			if(item.getQuantidadeSaida()==0) {
+				Msg.addMsgFatal("Não houve venda deste produto para retorna-lo");
+			}else {
+				this.getDevolvido().setUsuario(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getItensDevolvidos().add(devolvido);
+				
+				Msg.addMsgInfo("Produto devolvido ao estoque");
+				System.out.println("...produto devolvido ao estoque");
+				item.setQuantidadeSaida(getItem().getQuantidadeSaida()-getRetorno());
+				devolvido.setItem(item);
+				devolvido.setRetorno(getRetorno());
+				dao.atualiza(item);
+				dao2.adiciona(devolvido);
+				this.item = new Item();
+				this.devolvido = new ItemDevolvido();
+			}
+		} else {
+			System.out.println("...Não foi possível devolver produto ao estoque");
+			Msg.addMsgFatal("Não foi possível concluir operação");
+		}
+		return "/pages/estoque/devolverEstoque.xhtml";
+	}
+	
+	// devolve ao estoque quantidade informada
+		public void getDevolverEstoque() {
+			if (item.getId()!= null) {
+				dao.atualiza(item);
+				
+			} else {
+				Msg.addMsgFatal("Não foi possível concluir operação");
+			}
+			
+		}
+	
 
 	public LoginBean getLoginBean() {
 		return loginBean;

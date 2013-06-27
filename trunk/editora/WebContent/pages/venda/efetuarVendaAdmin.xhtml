@@ -73,8 +73,12 @@
 					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
-					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}"
+					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 1 and vendaBean.venda.operacao == 1}"
 					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente.show();" readonly="true">
+							<f:ajax event="change" />
+					</p:inputText>
+					<p:inputText id="clientes2" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 2 and vendaBean.venda.operacao == 1}"
+					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente2.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
 					
@@ -384,7 +388,7 @@
 					
 					<h:outputLabel value="Valor R$: " style="font-size: 14px; float: left; text-align: left; font-weight: bold; color: #8B0000; line-height: 20px;" styleClass="acende" rendered="#{vendaBean.venda.operacao == 2}" />
 					<h:inputText value="#{vendaBean.venda.valorTotal}" style="font-size: 15px; float: left; text-align: left; font-weight: bold; color: #8B0000;" 
-					rendered="#{vendaBean.venda.operacao == 2}" size="15" required="true" requiredMessage="Informe o valor da retirada" >
+					rendered="#{vendaBean.venda.operacao == 2}" size="15" required="true" requiredMessage="Informe o valor da retirada" validatorMessage="Valor inválido" converterMessage="Valor inválido">
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 					</h:inputText>
 										
@@ -447,65 +451,9 @@
 			</h:form>								
 			
 		</div>
-		
-		<!-- 			Aqui começa o dialog Add Tipo -->
-			
-			<p:dialog header="Adicionar Tipo de Produto" widgetVar="dlgTipoProduto" resizable="false" modal="true" closable="false" showEffect="fold">
-				<h:form id="form_dialog_tipo">
-				
-				<h:panelGrid id="grid" columns="4">
-					  
-					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" />
-					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="Informe o nome do tipo de produto">
-						<f:ajax event="change" />
-					</p:inputText>
-															
-				</h:panelGrid>
-					<br />
-
-					<p:commandButton action="#{tipoProdutoBean.addTipoProduto}" value="Cadastrar" ajax="false" icon="ui-icon-check">
-						<f:ajax render="@all" />
-					</p:commandButton>&nbsp;
 					
-					<p:commandButton type="reset" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true">
-						<f:ajax render="@all" />
-					</p:commandButton>	
-							
-				</h:form>
-				
-			</p:dialog>	
 			
-			<p:dialog header="Adicionar Categoria" widgetVar="dlgCategoria" resizable="false" modal="true" closable="false" showEffect="fold">
-				<h:form id="form_dialog_categoria">
-				
-				<h:panelGrid id="grid" columns="4">
-					  
-					<h:outputLabel value="Nome" styleClass="OutPut" />
-					<h:graphicImage value="/resources/img/as.png" />
-					<p:autoComplete id="cate_nome" value="#{categoriaBean.categoria.nome}" completeMethod="#{categoriaBean.autoComplete}" itemValue="#{c}" itemLabel="#{c}"  var="c"
-					minQueryLength="1" maxResults="5" converterMessage="Nome inválido" queryDelay="30" 
-					required="true" requiredMessage="Informe o nome da categoria">
-						<f:ajax event="change" />
-					</p:autoComplete>
-															
-				</h:panelGrid>
-					<br />
-
-					<p:commandButton action="#{categoriaBean.addCategoria}" value="Cadastrar" ajax="false" icon="ui-icon-check">
-						<f:ajax render="@all" />
-					</p:commandButton>&nbsp;
-					
-					<p:commandButton type="reset" value="Cancelar" ajax="false" icon="ui-icon-close" immediate="true">
-						<f:ajax render="@all" />
-					</p:commandButton>	
-							
-				</h:form>
-				
-			</p:dialog>	
-			
-<!-- 			Aqui começa o dialog para Editar Produto -->
-			
+<!-- 			Aqui começa o dialog para clientes (liberado para admin) -->	
 			<p:dialog header="Clientes" 
 			widgetVar="dlgCliente" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_cliente">
@@ -531,6 +479,43 @@
 							</h:commandLink>
 							
 							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
+								id="link_codigo_nome2" rendered="#{c.id==1}" style="color: red;">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+						</p:column>			
+					
+					</p:dataTable>
+				
+				
+				</h:form>
+			</p:dialog>
+			
+			<!-- 			Aqui começa o dialog para clientes (liberado para gerente) -->	
+			<p:dialog header="Clientes" 
+			widgetVar="dlgCliente2" resizable="false" modal="true" showEffect="fold">
+				<h:form id="form_dialog_cliente2">
+					
+					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
+					emptyMessage="Não encontrado">
+					
+						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
+							<h:commandLink value="#{c.id}" onclick="dlgCliente2.hide()" id="link_codigo" rendered="#{c.id!=1}">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+							
+							<h:commandLink value="#{c.id}" onclick="dlgCliente2.hide()" id="link_codigo_id" rendered="#{c.id==1}"
+							style="color: red;">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+						</p:column>	
+						
+						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente2.hide()"
+								id="link_codigo2" rendered="#{c.id!=1}">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+							
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente2.hide()"
 								id="link_codigo_nome2" rendered="#{c.id==1}" style="color: red;">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>

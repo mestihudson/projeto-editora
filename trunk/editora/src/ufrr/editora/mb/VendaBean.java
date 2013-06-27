@@ -69,6 +69,44 @@ public class VendaBean implements Serializable {
 		box4Search = 3;
 		box4Search = 4;
 	}
+	
+	/** List of venda **/
+	
+	public List<Venda> getVendas() {
+		if (vendas == null) {
+			System.out.println("Carregando caixa...");
+			vendas = new DAO<Venda>(Venda.class).getAllOrder("id");
+		}
+		return vendas;
+	}
+
+	// entrada de dinheiro no caixa
+	public List<Venda> getCaixaEntrada() {
+		caixaEntrada = new ArrayList<Venda>();
+		List<Venda> vs = new ArrayList<Venda>();
+		vs = this.getVendas();
+		for (int i = 0; i < vs.size(); i++) {
+			if (vs.get(i).getOperacao() == 1) {
+				caixaEntrada.add(vs.get(i));
+			}
+		}
+		return caixaEntrada;
+	}
+
+	// dinheiro retirado do caixa
+	public List<Venda> getCaixaSaida() {
+		caixaSaida = new ArrayList<Venda>();
+		List<Venda> vs = new ArrayList<Venda>();
+		vs = this.getVendas();
+		for (int i = 0; i < vs.size(); i++) {
+			if (vs.get(i).getOperacao() == 2) {
+				caixaSaida.add(vs.get(i));
+			}
+		}
+		return caixaSaida;
+	}
+	
+	/** search **/ 
 
 	// pesquisa venda pela data
 	@SuppressWarnings("unchecked")
@@ -134,43 +172,7 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
-
-	/** List NF **/
-
-	public List<Venda> getVendas() {
-		if (vendas == null) {
-			System.out.println("Carregando caixa...");
-			vendas = new DAO<Venda>(Venda.class).getAllOrder("id");
-		}
-		return vendas;
-	}
-
-	//
-	// entrada de dinheiro no caixa
-	public List<Venda> getCaixaEntrada() {
-		caixaEntrada = new ArrayList<Venda>();
-		List<Venda> vs = new ArrayList<Venda>();
-		vs = this.getVendas();
-		for (int i = 0; i < vs.size(); i++) {
-			if (vs.get(i).getOperacao() == 1) {
-				caixaEntrada.add(vs.get(i));
-			}
-		}
-		return caixaEntrada;
-	}
-
-	// saída de dinheiro no caixa
-	public List<Venda> getCaixaSaida() {
-		caixaSaida = new ArrayList<Venda>();
-		List<Venda> vs = new ArrayList<Venda>();
-		vs = this.getVendas();
-		for (int i = 0; i < vs.size(); i++) {
-			if (vs.get(i).getOperacao() == 2) {
-				caixaSaida.add(vs.get(i));
-			}
-		}
-		return caixaSaida;
-	}
+	
 
 	/** Actions **/
 
@@ -215,7 +217,7 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// método para adicionar venda (entrada de dinheiro)
+	// método para efetuar venda (somente para vendedor)
 	public String addVenda() {
 		boolean all = true;
 
@@ -230,7 +232,7 @@ public class VendaBean implements Serializable {
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
-			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade de produto informado ultrapasse o disponível em estoque
+			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade do produto informado ultrapasse o disponível em estoque
 				if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
 					this.cadastro = false;
 					break;
@@ -312,7 +314,7 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// método para adicionar venda somente Admin
+	// método para efetuar venda para admin e gerente
 	public String addVendaAdmin() {
 		boolean all = true;
 
@@ -408,12 +410,11 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// método para adicionar itens a nota fiscal
+	// método para adicionar produto a venda
 	public void guardaItem() {
 		boolean all = true;
 		if (!all) {
-			System.out
-					.println("...Erro ao efetuar venda: inconsistencia nos dados do item");
+			System.out.println("...Erro ao efetuar venda: inconsistencia nos dados do item");
 		} else {
 			for (ItemVenda i : this.getVenda().getItensVendas()) {
 				if (getIdItem().equals(i.getItem().getId())) {
@@ -423,7 +424,8 @@ public class VendaBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 				
-//				ItemVenda i : this.getVenda().getItensVendas()
+				// este for verifica se a quantidade do produto informado está disponível no estoque
+				// se for menor que 0, error!
 				for (ItemVenda i : this.getVenda().getItensVendas()) {
 					if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
 						this.cadastro = false;
@@ -431,9 +433,7 @@ public class VendaBean implements Serializable {
 					}
 				}
 				if (this.cadastro == true) {
-					
-					// criar um método para não passar os produtos cuja quantidade de venda seja maior que o nível de estoque
-					
+										
 					if (itemVenda.getQuantidade() == null || itemVenda.getQuantidade() == 0) {
 
 						DAO<Item> dao = new DAO<Item>(Item.class);
@@ -478,50 +478,32 @@ public class VendaBean implements Serializable {
 		}
 	}
 	
+	// método para remover o item da lista de itens
+	public void removeItemVenda() {
+		venda.getItensVendas().remove(itemVenda);
+		Msg.addMsgWarn("Produto removido");
+		System.out.println("...Item removido da venda");
+
+		itemVenda = new ItemVenda();
+	}
+
+	// método booleano para informar ao usuário a quantidade indisponível no
+	// estoque
 	public Boolean quantidadeN() {
-		if (venda.getItensVendas().get(0).getItem().getQuantidadeSaida() - venda.getItensVendas().get(1).getItem().getQuantidadeSaida() - itemVenda.getQuantidade() < 0) {
+		if (venda.getItensVendas().get(0).getItem().getQuantidadeSaida()
+				- venda.getItensVendas().get(1).getItem().getQuantidadeSaida()
+				- itemVenda.getQuantidade() < 0) {
 			System.out.println("...quantidade negativa");
 			setQuantidadeN(true);
 			return true;
-		}else {
+		} else {
 			System.out.println("...quantidade normal");
 			setQuantidadeN(false);
 			return false;
 		}
-	}
+	}	
 	
-	// método para remover o item da lista de itens
-		public void removeItemVenda() {
-
-//			getItemVenda().getItem().setQuantidadeSaida(getItemVenda().getQuantidade() - getItem().getQuantidadeSaida());
-//			dao2.atualiza(item);
-			// item.setQuantidadeSaida(itemVenda.getQuantidade() + item.getQuantidadeSaida());
-			// dao2.atualiza(item);
-
-			venda.getItensVendas().remove(itemVenda);
-			Msg.addMsgWarn("Produto removido");
-			System.out.println("...Item removido da venda");
-
-			itemVenda = new ItemVenda();
-		}
-
-	// relatório
-	public void imprimeCupom() {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		Report report = new Report("clientes", params);
-		report.pdfReport();
-	}
-
-
-	public List<ItemVenda> getItensVendas() {
-		return itensVendas;
-	}
-
-	public void setItensVendas(List<ItemVenda> itensVendas) {
-		this.itensVendas = itensVendas;
-	}
-
-	// cancelar cadastro de nota fiscal
+	// cancelar venda (para perfil VENDEDOR)
 	public String cancelarVenda() {
 		if (venda.getCliente().getNome() != null
 				|| !venda.getItensVendas().isEmpty()) {
@@ -533,7 +515,7 @@ public class VendaBean implements Serializable {
 
 	}
 
-	// cancelar cadastro de nota fiscal
+	// cancelar venda (para perfil GERENTE E ADM)
 	public String cancelarVenda2() {
 		if (!venda.getItensVendas().isEmpty()) {
 			Msg.addMsgFatal("Venda cancelada");
@@ -544,7 +526,7 @@ public class VendaBean implements Serializable {
 
 	}
 
-	// cancelar cadastro de nota fiscal
+	// cancelar VENDA
 	public String cancelarVenda3() {
 		if (venda.getCliente().getNome() != null
 				|| !venda.getItensVendas().isEmpty()) {
@@ -562,7 +544,16 @@ public class VendaBean implements Serializable {
 		return "efetuarVendaAdmin.xhtml";
 	}
 
-	// variável para exibir o total R$ dos produtos
+	// relatório
+	public void imprimeCupom() {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		Report report = new Report("clientes", params);
+		report.pdfReport();
+	}	
+	
+	/** calculo **/
+
+	// exibir o total R$ dos produtos
 	public Double getTotal() {
 		if (itemVenda.getQuantidade() != null
 				&& itemVenda.getItem().getValorVenda() != null)
@@ -572,7 +563,7 @@ public class VendaBean implements Serializable {
 			return null;
 	}
 
-	// variável para exibir a soma do total dos produtos
+	// exibir a soma do total dos produtos
 	public Double getValorTotalProdutos() {
 		setTotalValor(00.00);
 		for (ItemVenda i : getVenda().getItensVendas()) {
@@ -580,7 +571,8 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
-
+	
+	// calculo no valor com desconto
 	public Double getValorTotalComDesconto() {
 		setTotalValor(00.00);
 		if (getValorTotalProdutos() != null && getDesconto1() != null)
@@ -588,7 +580,8 @@ public class VendaBean implements Serializable {
 		else
 			return null;
 	}
-
+	
+	// informa o percentual de desconto
 	public Double getDesconto1() {
 		if (totalValor != null && desconto != null)
 			return totalValor * desconto / 100;
@@ -596,11 +589,9 @@ public class VendaBean implements Serializable {
 			return null;
 	}
 
-	// método para adicionar itens a nota fiscal
+	// gerar desconto
 	public void gerarDesconto() {
-
 		itemVenda = new ItemVenda();
-
 	}
 
 	// Fluxo de caixa
@@ -611,7 +602,8 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
-
+	
+	// total de dinheiro retirado
 	public Double getValorTotalSaida() {
 		setTotalValor(00.00);
 		for (Venda v : getCaixaSaida()) {
@@ -619,7 +611,8 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
-
+	
+	// total de lucro
 	public Double getLucro() {
 		setTotalValor(00.00);
 		if (getValorTotalSaida() != null && getValorTotalEntrada() != null)
@@ -634,7 +627,8 @@ public class VendaBean implements Serializable {
 		else
 			return false;
 	}
-
+	
+	// filtragem para fechar o caixa
 	@SuppressWarnings("unchecked")
 	public String getCaixaByDate() {
 		if (getDataFinal().before(getDataInicial())) {
@@ -673,6 +667,14 @@ public class VendaBean implements Serializable {
 	}
 
 	/** get and set **/
+	
+	public List<ItemVenda> getItensVendas() {
+		return itensVendas;
+	}
+	
+	public void setItensVendas(List<ItemVenda> itensVendas) {
+		this.itensVendas = itensVendas;
+	}
 
 	public LoginBean getLoginBean() {
 		return loginBean;

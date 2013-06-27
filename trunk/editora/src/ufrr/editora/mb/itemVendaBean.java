@@ -40,13 +40,6 @@ public class itemVendaBean implements Serializable {
 		box4Search = 1;
 	}
 	
-	public List<ItemVenda> getItensVendas() {
-		if (itensVendas == null) {
-			System.out.println("Carregando itens de vendas...");
-			itensVendas = new DAO<ItemVenda>(ItemVenda.class).getAllOrder("item.produto.nome, item.produto.isbn");
-		}
-		return itensVendas;
-	}	
 //	
 //	// Exibe uma lista com as solicitações de acesso
 //		@SuppressWarnings("unchecked")
@@ -56,7 +49,21 @@ public class itemVendaBean implements Serializable {
 //			return query.getResultList();
 //		}
 	
-	// Pesquisa pelo fornecedor
+	
+	/** list **/
+	
+	public List<ItemVenda> getItensVendas() {
+		if (itensVendas == null) {
+			System.out.println("Carregando itens de vendas...");
+			itensVendas = new DAO<ItemVenda>(ItemVenda.class).getAllOrder("item.produto.nome, item.produto.isbn");
+		}
+		return itensVendas;
+	}	
+	
+	// prestação de conta
+	// Consulta pelo fornecedor
+	
+	// (este método deve funcionar, com a consulta do fornecedor e em seguida o mês) - Falta fazer o mês!!!
 		public String getLista() {
 			
 			if (box4Search.equals(1)) {
@@ -79,6 +86,7 @@ public class itemVendaBean implements Serializable {
 			return null;
 		}
 	
+	// Consulta pela data	
 	@SuppressWarnings("unchecked")
 	public String getPrestacaoByFornecedorAndData() {
 		try {
@@ -96,6 +104,8 @@ public class itemVendaBean implements Serializable {
 		}
 		return null;
 	}
+	
+	/** calculo **/
 	
 	// método para somar a quantidade dos itens vendidos
 	public Integer getTotalProdutos() {
@@ -116,6 +126,8 @@ public class itemVendaBean implements Serializable {
 		}
 				
 
+	/** get and set **/
+		
 	public LoginBean getLoginBean() {
 		return loginBean;
 	}
