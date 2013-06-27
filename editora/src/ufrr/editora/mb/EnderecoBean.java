@@ -20,6 +20,9 @@ public class EnderecoBean implements Serializable {
 	private List<Endereco> enderecos;
 	private DAO<Endereco> dao = new DAO<Endereco>(Endereco.class);
 
+	/** autocomplets **/
+	
+	// automcomplete name bairro
 	public List<String> autocompletebairro(String nome) {
 		List<Endereco> array = dao.getAllByName("bairro", nome);
 		ArrayList<String> nomes = new ArrayList<String>();
@@ -29,6 +32,7 @@ public class EnderecoBean implements Serializable {
 		return nomes;
 	}
 	
+	// autocomplete logradouro
 	public List<String> autocompletelogradouro(String nome) {
 		List<Endereco> array = dao.getAllByName("logradouro", nome);
 		ArrayList<String> nomes = new ArrayList<String>();
@@ -38,6 +42,7 @@ public class EnderecoBean implements Serializable {
 		return nomes;
 	}
 	
+	// autocomplete municipio
 	public List<String> autocompletemunicipio(String nome) {
 		List<Endereco> array = dao.getAllByName("municipio", nome);
 		ArrayList<String> nomes = new ArrayList<String>();

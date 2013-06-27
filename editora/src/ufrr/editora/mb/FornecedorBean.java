@@ -258,18 +258,18 @@ public class FornecedorBean implements Serializable {
 	public String alterFornecedor() {
 		try {
 			boolean all = true;
-			if (!validarNome_agencia()) {
-				all = false;
-				Msg.addMsgError("Agencia não pode ser vazio");
-			}
-			if (!validarNome_conta()) {
-				all = false;
-				Msg.addMsgError("Número da conta não pode ser vazio");
-			}
-			if (!validarNome_titular()) {
-				all = false;
-				Msg.addMsgError("Titular da conta não pode ser vazio");
-			}
+//			if (!validarNome_agencia()) {
+//				all = false;
+//				Msg.addMsgError("Agencia não pode ser vazio");
+//			}
+//			if (!validarNome_conta()) {
+//				all = false;
+//				Msg.addMsgError("Número da conta não pode ser vazio");
+//			}
+//			if (!validarNome_titular()) {
+//				all = false;
+//				Msg.addMsgError("Titular da conta não pode ser vazio");
+//			}
 			if (!all) {
 				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
 				return "/pages/forncedor/cadastrarFornecedor.jsf";
