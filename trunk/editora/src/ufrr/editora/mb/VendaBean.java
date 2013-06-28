@@ -86,7 +86,7 @@ public class VendaBean implements Serializable {
 		List<Venda> vs = new ArrayList<Venda>();
 		vs = this.getVendas();
 		for (int i = 0; i < vs.size(); i++) {
-			if (vs.get(i).getOperacao() == 1) {
+			if (vs.get(i).getOperacao() == 1 && vs.get(i).getAtivado()==true) {
 				caixaEntrada.add(vs.get(i));
 			}
 		}
@@ -201,6 +201,7 @@ public class VendaBean implements Serializable {
 				venda.setOperacao(2);
 				venda.setTituloObs(1);
 				venda.setValorTotalDesconto(getVenda().getValorTotal());
+				venda.setAtivado(true);
 
 				Msg.addMsgInfo("Saída efetuada com sucesso");
 				System.out.println("...saida efetuada com sucesso!!");
@@ -249,6 +250,7 @@ public class VendaBean implements Serializable {
 					venda.setOperacao(1);
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
+					venda.setAtivado(true);
 
 					// para gerar o cupom
 					// HashMap<String, Object> params = new HashMap<String,
@@ -285,6 +287,7 @@ public class VendaBean implements Serializable {
 					Msg.addMsgInfo("Venda efetuada com sucesso");
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
+					venda.setAtivado(true);
 					
 					
 					// atualiza a lista de item (quantidade de saida)					
@@ -346,6 +349,7 @@ public class VendaBean implements Serializable {
 					venda.setOperacao(1);
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
+					venda.setAtivado(true);
 
 					// para gerar o cupom
 					// HashMap<String, Object> params = new HashMap<String,
@@ -381,6 +385,7 @@ public class VendaBean implements Serializable {
 					Msg.addMsgInfo("Venda efetuada com sucesso");
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
+					venda.setAtivado(true);
 					
 					
 					// atualiza a lista de item (quantidade de saida)					
@@ -477,6 +482,22 @@ public class VendaBean implements Serializable {
 			}
 		}
 	}
+	
+	// método para editar/alterar venda
+		public String desativarVenda() {
+				if (venda.getId()!=null && loginBean.getUsuario().getPerfil().getId()==1) {
+					DAO<Venda> dao = new DAO<Venda>(Venda.class);
+					Msg.addMsgInfo("Venda desativada");
+					venda.setAtivado(false);
+					dao.atualiza(venda);
+					venda = new Venda();
+					return "/pages/venda/consultarVenda.xhtml";
+				} else {
+					System.out.println("...Erro: não foi possível desativar venda");
+					Msg.addMsgError("Somente pode desativar venda usuário administrador");
+					return null;
+				}
+		}
 	
 	// método para remover o item da lista de itens
 	public void removeItemVenda() {

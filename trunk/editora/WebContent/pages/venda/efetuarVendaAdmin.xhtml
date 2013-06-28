@@ -40,7 +40,8 @@
 				
 				<h:outputText value="EFETUAR VENDA" style="color: white; font-size: 12px;" styleClass="OutPut" />
 								
-				<p:selectOneRadio value="#{vendaBean.venda.operacao}" styleClass="OutPut" style="color: #8B0000;" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}" 
+				<p:selectOneRadio value="#{vendaBean.venda.operacao}" styleClass="OutPut" style="color: #8B0000; width: 330px;" 
+				rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}" 
 					required="true" requiredMessage="Informe a operação">
 						<f:selectItem itemLabel="Efetuar Venda" itemValue="1" />
 						<f:selectItem itemLabel="Retirar dinheiro do caixa" itemValue="2" />
@@ -72,25 +73,28 @@
 					<h:outputLabel value="Retirar dinheiro do caixa" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 2}" style="color: #8B0000;" />
 					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
+					
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
+					
 					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 1 and vendaBean.venda.operacao == 1}"
 					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
+					
 					<p:inputText id="clientes2" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 2 and vendaBean.venda.operacao == 1}"
 					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente2.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
 					
-					<h:outputLabel id="cliente1" value="#{vendaBean.venda.cliente.id} - " rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1 and vendaBean.venda.operacao != 2}"
+					<h:outputLabel id="cliente1" value="#{vendaBean.venda.cliente.id} - " rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1 and vendaBean.venda.operacao == 1}"
 					styleClass="OutPut" style="color: #8B0000;">
 					</h:outputLabel>
 					
-					<h:outputLabel id="cliente2" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1 and vendaBean.venda.operacao != 2}"
+					<h:outputLabel id="cliente2" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1 and vendaBean.venda.operacao == 1}"
 					styleClass="OutPut" style="color: #8B0000;">
 					</h:outputLabel>
 					
-					<h:outputLabel id="cliente3" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id == 1 and vendaBean.venda.operacao != 2}"
+					<h:outputLabel id="cliente3" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id == 1 and vendaBean.venda.operacao == 1}"
 					styleClass="OutPut" style="color: red;">
 					</h:outputLabel>
 					
@@ -409,31 +413,31 @@
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{vendaBean.addVendaAdmin}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao != 2}">
+				<p:commandButton action="#{vendaBean.addVendaAdmin}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao == 1}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
-				<p:commandButton action="#{vendaBean.addSaida}" value="Efetuar Saída" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao == 2}">
+				<p:commandButton action="#{vendaBean.addSaida}" value="Efetuar Operação" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao == 2}">
 					<f:ajax render="@form" />
 				</p:commandButton>&nbsp;
 				
-				<p:commandButton action="#{vendaBean.cancelarVenda3}" value="Cancelar Saída" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
+				<p:commandButton action="#{vendaBean.cancelarVenda3}" value="Cancelar Retirada" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
 				rendered="#{vendaBean.venda.cliente.id!=null and vendaBean.venda.operacao == 2}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 									
 				<p:commandButton action="#{vendaBean.cancelarVenda3}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
-				rendered="#{vendaBean.venda.cliente.id!=null and vendaBean.venda.operacao != 2}">
+				rendered="#{vendaBean.venda.cliente.id!=null and vendaBean.venda.operacao == 1}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
-				<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Saída" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
+				<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Retirada" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
 				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao == 2}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
 					<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
-				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao != 2}">
+				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao == 1}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
@@ -462,7 +466,7 @@
 					emptyMessage="Não encontrado">
 					
 						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
-							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo" rendered="#{c.id!=1}">
+							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo1" rendered="#{c.id!=1}">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 							
@@ -473,8 +477,7 @@
 						</p:column>	
 						
 						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
-							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
-								id="link_codigo2" rendered="#{c.id!=1}">
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()" id="link_codigo2" rendered="#{c.id!=1}">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 							
@@ -503,7 +506,7 @@
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 							
-							<h:commandLink value="#{c.id}" onclick="dlgCliente2.hide()" id="link_codigo_id" rendered="#{c.id==1}"
+							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo_id" rendered="#{c.id==1}"
 							style="color: red;">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
@@ -515,7 +518,7 @@
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 							
-							<h:commandLink value="#{c.nome}" onclick="dlgCliente2.hide()"
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
 								id="link_codigo_nome2" rendered="#{c.id==1}" style="color: red;">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>

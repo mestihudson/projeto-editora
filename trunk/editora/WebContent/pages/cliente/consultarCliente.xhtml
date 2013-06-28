@@ -108,11 +108,11 @@
 										target="#{usuarioBean.usuario}" />
 								</p:commandLink>
 					
-					<h:outputText value="Cliente sem CPF" rendered="#{usuario.cpf==null}" style="color: red;" />
-					<h:outputText value="Cliente sem Email" rendered="#{usuario.login==null}" style="color: red;" />
+					<h:outputText value="Cliente sem CPF" rendered="#{usuario.cpf==''}" style="color: red;" />
+					<h:outputText value="Cliente sem Email" rendered="#{usuario.login==''}" style="color: red;" />
 					<h:outputText value="Cliente sem Endereço" rendered="#{usuario.endereco.logradouro==null}" style="color: red;" />						
 					
-					<h:outputText value="Atualize os dados do cliente 'urgente'" rendered="#{usuario.cpf==null}" style="color: brown;" />
+					<h:outputText value="Atualize os dados do cliente 'urgente'" rendered="#{usuario.cpf==''}" style="color: brown;" />
 					
 					 		
 
