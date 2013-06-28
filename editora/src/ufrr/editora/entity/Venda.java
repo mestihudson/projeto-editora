@@ -59,6 +59,8 @@ public class Venda implements Serializable {
 	
 	private Integer operacao; // 1=entrada, 2=saida
 	
+	private Boolean ativado;
+	
 	//get and set
 
 	public Long getId() {
@@ -172,6 +174,14 @@ public class Venda implements Serializable {
 	public void setOperacao(Integer operacao) {
 		this.operacao = operacao;
 	}
+	
+	public Boolean getAtivado() {
+		return ativado;
+	}
+
+	public void setAtivado(Boolean ativado) {
+		this.ativado = ativado;
+	}
 
 	@Override
 	public int hashCode() {
@@ -185,9 +195,12 @@ public class Venda implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((imprimeCupom == null) ? 0 : imprimeCupom.hashCode());
+		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
 		result = prime * result
 				+ ((itensVendas == null) ? 0 : itensVendas.hashCode());
 		result = prime * result + ((obs == null) ? 0 : obs.hashCode());
+		result = prime * result
+				+ ((operacao == null) ? 0 : operacao.hashCode());
 		result = prime
 				* result
 				+ ((quantidadeParcela == null) ? 0 : quantidadeParcela
@@ -239,6 +252,11 @@ public class Venda implements Serializable {
 				return false;
 		} else if (!imprimeCupom.equals(other.imprimeCupom))
 			return false;
+		if (itens == null) {
+			if (other.itens != null)
+				return false;
+		} else if (!itens.equals(other.itens))
+			return false;
 		if (itensVendas == null) {
 			if (other.itensVendas != null)
 				return false;
@@ -248,6 +266,11 @@ public class Venda implements Serializable {
 			if (other.obs != null)
 				return false;
 		} else if (!obs.equals(other.obs))
+			return false;
+		if (operacao == null) {
+			if (other.operacao != null)
+				return false;
+		} else if (!operacao.equals(other.operacao))
 			return false;
 		if (quantidadeParcela == null) {
 			if (other.quantidadeParcela != null)
@@ -276,6 +299,5 @@ public class Venda implements Serializable {
 			return false;
 		return true;
 	}
-
-		
+	
 }

@@ -268,7 +268,7 @@
 							</h:panelGrid>	
 							</p:commandLink>
 							
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<p:commandLink action="#{reportBean.relatorioFornecedores}" ajax="false">
 							<h:panelGrid columns="2">
 								<h:graphicImage value="/resources/img/seta1.png" />
 								<h:outputLabel value="Fornecedores registrados no sistema" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />

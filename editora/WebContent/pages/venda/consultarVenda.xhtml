@@ -70,7 +70,7 @@
 					</h:panelGrid>
 
 					<!-- 			grid com a lista de vendas			 		 -->
-					<p:dataTable id="dg" var="v" value="#{vendaBean.caixaEntrada}" 
+					<p:dataTable id="dtable" var="v" value="#{vendaBean.caixaEntrada}" 
 						paginator="true" paginatorPosition="bottom" rows="15"
 						emptyMessage="Nenhuma venda encontrada" rendered="#{vendaBean.venda.id==null}"
 						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
@@ -273,9 +273,15 @@
 							
 							<p:commandButton
 								action="consultarVenda.xhtml?faces-redirect=true" style="color: none;"
-								value="Voltar" ajax="false" update=":form_pesquisa_venda:grid"
+								value="Voltar" ajax="false" update=":form_pesquisa_venda:dtable"
 								icon="ui-icon-arrowthick-1-w" immediate="true"
-								rendered="#{vendaBean.venda.id!=null}" />
+								rendered="#{vendaBean.venda.id!=null}" />&nbsp;&nbsp;
+								
+							<p:commandButton
+								style="color: red;" oncomplete="confirmation2.show()"
+								value="Desativar Venda" 
+								icon="ui-icon-close" immediate="true"
+								rendered="#{vendaBean.venda.id!=null and loginBean.usuario.perfil.id == 1}" />	
 						</div>
 					</h:form>
 
@@ -288,7 +294,23 @@
 			</h:form>
 
 		</div>
-
+		
+		<p:confirmDialog id="confirmDialog2" message="Deseja desativar está venda"  
+                severity="alert" widgetVar="confirmation2"> 
+        <h:form id="form_bt2">  
+        
+        <div align="center">       
+                  
+        	<p:commandButton id="confirm" value="Sim" onclick="confirmation2.hide()" action="#{vendaBean.desativarVenda}"
+        	update=":form_pesquisa_venda:dtable" />  
+                    
+        	<p:commandButton id="decline" value="Não" onclick="confirmation2.hide()" type="button" />
+        	
+        </div>	
+        
+        </h:form>   
+                  
+    </p:confirmDialog>
 
 		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
 			resizable="false" closable="false" modal="true">
