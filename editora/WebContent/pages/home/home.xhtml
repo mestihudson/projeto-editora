@@ -287,7 +287,21 @@
 			</p:dialog>
 			</div>
 			
-			<p:dialog rendered="#{loginBean.usuario.id==null or loginBean.usuario.perfil.id>=4}" visible="true" resizable="false" closable="false" modal="true">
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+			
+			<!-- 			restrição de acesso para ususario status == false -->
+			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />

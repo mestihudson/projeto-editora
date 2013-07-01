@@ -86,13 +86,13 @@
 							style="text-align:center">
 							<h:panelGrid columns="1" style="width:100%;">
 							
-								<h:outputText value="ISBN: #{p.isbn}" rendered="#{p.isbn!=null}" />
+								<h:outputText value="ISBN: #{p.isbn}" rendered="#{p.isbn!=null and p.tipo.id==1}" />
 								
-								<h:outputText value="Código: #{p.id}" rendered="#{p.isbn==null}" />
+								<h:outputText value="Código: #{p.isbn}" rendered="#{p.isbn!=null and p.tipo.id!=1}" />
 								
-								<h:outputText value="Obra: #{p.nome}" rendered="#{p.isbn!=null}" />
+								<h:outputText value="Obra: #{p.nome}" rendered="#{p.isbn!=null and p.tipo.id==1}" />
 								
-								<h:outputText value="Descrição: #{p.nome}" rendered="#{p.isbn==null}" />
+								<h:outputText value="Descrição: #{p.nome}" rendered="#{p.isbn!=null and p.tipo.id!=1}" />
 
 								<h:outputText value="Editora: #{p.editora}" rendered="#{p.editora!=null}" />
 
@@ -163,6 +163,20 @@
 			
 <!-- 			restrição de acesso -->
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+			
+			<!-- 			restrição de acesso para ususario status == false -->
+			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />

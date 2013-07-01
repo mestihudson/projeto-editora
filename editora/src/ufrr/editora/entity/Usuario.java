@@ -70,6 +70,9 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	private Boolean aceitaSolicitacao; // não aceita solicitação
 	
+	@Column(name="esquici_senha")
+	private Boolean esqueciSenha;
+	
 	@ManyToOne
 	@JoinColumn(name="perfil_id", columnDefinition="bigint default 4", insertable=false, updatable=true)
 	private Perfil perfil;
@@ -310,6 +313,15 @@ public class Usuario implements Serializable, BaseEntity {
 		this.preferencia = preferencia;
 	}
 
+	
+	public Boolean getEsqueciSenha() {
+		return esqueciSenha;
+	}
+
+	public void setEsqueciSenha(Boolean esqueciSenha) {
+		this.esqueciSenha = esqueciSenha;
+	}
+
 	public Boolean getAceitaSolicitacao() {
 		return aceitaSolicitacao;
 	}
@@ -334,11 +346,14 @@ public class Usuario implements Serializable, BaseEntity {
 		this.itensDevolvidos = itensDevolvidos;
 	}
 
-	//hashCode
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime
+				* result
+				+ ((aceitaSolicitacao == null) ? 0 : aceitaSolicitacao
+						.hashCode());
 		result = prime * result
 				+ ((categorias == null) ? 0 : categorias.hashCode());
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
@@ -349,6 +364,9 @@ public class Usuario implements Serializable, BaseEntity {
 		result = prime * result
 				+ ((fornecedores == null) ? 0 : fornecedores.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
+		result = prime * result
+				+ ((itensDevolvidos == null) ? 0 : itensDevolvidos.hashCode());
 		result = prime * result
 				+ ((localTrabalho == null) ? 0 : localTrabalho.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
@@ -360,6 +378,8 @@ public class Usuario implements Serializable, BaseEntity {
 		result = prime * result
 				+ ((notasFiscais == null) ? 0 : notasFiscais.hashCode());
 		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
+		result = prime * result
+				+ ((preferencia == null) ? 0 : preferencia.hashCode());
 		result = prime * result
 				+ ((produtos == null) ? 0 : produtos.hashCode());
 		result = prime * result
@@ -373,6 +393,7 @@ public class Usuario implements Serializable, BaseEntity {
 		result = prime * result + ((tipos == null) ? 0 : tipos.hashCode());
 		result = prime * result
 				+ ((universitario == null) ? 0 : universitario.hashCode());
+		result = prime * result + ((vendas == null) ? 0 : vendas.hashCode());
 		return result;
 	}
 
@@ -385,6 +406,11 @@ public class Usuario implements Serializable, BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
+		if (aceitaSolicitacao == null) {
+			if (other.aceitaSolicitacao != null)
+				return false;
+		} else if (!aceitaSolicitacao.equals(other.aceitaSolicitacao))
+			return false;
 		if (categorias == null) {
 			if (other.categorias != null)
 				return false;
@@ -420,6 +446,16 @@ public class Usuario implements Serializable, BaseEntity {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (itens == null) {
+			if (other.itens != null)
+				return false;
+		} else if (!itens.equals(other.itens))
+			return false;
+		if (itensDevolvidos == null) {
+			if (other.itensDevolvidos != null)
+				return false;
+		} else if (!itensDevolvidos.equals(other.itensDevolvidos))
+			return false;
 		if (localTrabalho == null) {
 			if (other.localTrabalho != null)
 				return false;
@@ -454,6 +490,11 @@ public class Usuario implements Serializable, BaseEntity {
 			if (other.perfil != null)
 				return false;
 		} else if (!perfil.equals(other.perfil))
+			return false;
+		if (preferencia == null) {
+			if (other.preferencia != null)
+				return false;
+		} else if (!preferencia.equals(other.preferencia))
 			return false;
 		if (produtos == null) {
 			if (other.produtos != null)
@@ -494,6 +535,11 @@ public class Usuario implements Serializable, BaseEntity {
 			if (other.universitario != null)
 				return false;
 		} else if (!universitario.equals(other.universitario))
+			return false;
+		if (vendas == null) {
+			if (other.vendas != null)
+				return false;
+		} else if (!vendas.equals(other.vendas))
 			return false;
 		return true;
 	}
