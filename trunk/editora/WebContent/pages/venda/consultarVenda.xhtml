@@ -142,12 +142,12 @@
 								
 								<h:outputLabel value="Forma de pagamento: " styleClass="OutPut" style="color: #8B0000;" />
 								<h:outputLabel value="à vista" rendered="#{vendaBean.venda.formaPagamento==1}" styleClass="OutPut" />
-								<h:outputLabel value="cartão(crédito)" rendered="#{vendaBean.venda.formaPagamento==2}" styleClass="OutPut" />
+								<h:outputLabel value="cartão(crédito) - Parcela(s): #{vendaBean.venda.quantidadeParcela}" rendered="#{vendaBean.venda.formaPagamento==2 and vendaBean.venda.quantidadeParcela!=0}" styleClass="OutPut" />
+								<h:outputLabel value="cartão(crédito) - Parcela(s): 0" rendered="#{vendaBean.venda.formaPagamento==2 and vendaBean.venda.quantidadeParcela==0}" styleClass="OutPut" />
 								<h:outputLabel value="cartão(débito)" rendered="#{vendaBean.venda.formaPagamento==3}" styleClass="OutPut" />
 								<h:outputLabel value="cheque(à vista)" rendered="#{vendaBean.venda.formaPagamento==4}" styleClass="OutPut" />
 								<h:outputLabel value="cheque(pré datado)" rendered="#{vendaBean.venda.formaPagamento==5}" styleClass="OutPut" />
 								<h:outputLabel value="depósito bancário" rendered="#{vendaBean.venda.formaPagamento==6}" styleClass="OutPut" />
-								
 								<br />
 								<br />
 
@@ -158,9 +158,8 @@
 								</h:outputLabel>
 								<br />
 								<br />
-								
-								
-								<h:outputLabel value="Obs:" rendered="#{vendaBean.venda.tituloObs!=0}" styleClass="OutPut" style="color: #8B0000;" />
+																
+								<h:outputLabel value="Obs: " rendered="#{vendaBean.venda.tituloObs!=0}" styleClass="OutPut" style="color: #8B0000;" />
 								<h:outputLabel value="Defeito" rendered="#{vendaBean.venda.tituloObs==2}" styleClass="OutPut" />
 								<h:outputLabel value="Doação" rendered="#{vendaBean.venda.tituloObs==3}" styleClass="OutPut" />
 								<h:outputLabel value="Roubo" rendered="#{vendaBean.venda.tituloObs==4}" styleClass="OutPut" />
@@ -170,8 +169,7 @@
 								<br />
 								<br />
 								
-								<h:outputLabel value="Observação:" rendered="#{vendaBean.venda.tituloObs!=0}" styleClass="OutPut" style="color: #8B0000;" />
-								<h:outputLabel value="#{vendaBean.venda.obs}" rendered="#{vendaBean.venda.obs!=0}" styleClass="OutPut" />
+								<h:outputLabel value="#{vendaBean.venda.obs}" rendered="#{vendaBean.venda.obs!=null}" styleClass="OutPut" />
 								<br />
 								<br />
 
