@@ -65,12 +65,11 @@
 			<br /><br /><br />
 				
 					<div style="float: left; margin-left: 10px">					
-					<p:panel header="Dados da Venda" style="height: 130px; width: 450px;">
+					<p:panel header="Dados da Venda" style="height: 130px; width: 450px;" rendered="#{vendaBean.venda.operacao != 2}">
 					
 					<h:panelGrid id="grid" columns="5" cellspacing="5" cellpadding="5">
 					<br /><br />
 					
-					<h:outputLabel value="Retirar dinheiro do caixa" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 2}" style="color: #8B0000;" />
 					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					
@@ -102,6 +101,25 @@
 					<br /><br /><br />
 														
 					<h:outputLabel id="datavenda" value="#{vendaBean.venda.dataVenda.time}" locale="pt_BR" pattern="dd/MM/yyyy" 
+					style="float: right; text-align: right;" styleClass="OutPut">
+						<f:convertDateTime dateStyle="long" timeZone="America/Sao_Paulo" locale="pt_BR" type="date" />
+					</h:outputLabel>
+					<br /><br />
+					
+					</p:panel>
+					
+<!-- 					panel para quando for retirar dinheiro do caixa -->
+					<p:panel header="Retirar dinheiro do caixa" style="height: 130px; width: 450px;" rendered="#{vendaBean.venda.operacao == 2}">
+					
+					<h:panelGrid id="grid_saida" columns="5" cellspacing="5" cellpadding="5">
+					<br /><br />
+					
+					<h:outputLabel value="Permissão de acesso apenas a Administrador e Gerente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 2}" style="color: #8B0000;" />
+									
+					</h:panelGrid>
+					<br /><br /><br />
+														
+					<h:outputLabel id="datavenda2" value="#{vendaBean.venda.dataVenda.time}" locale="pt_BR" pattern="dd/MM/yyyy" 
 					style="float: right; text-align: right;" styleClass="OutPut">
 						<f:convertDateTime dateStyle="long" timeZone="America/Sao_Paulo" locale="pt_BR" type="date" />
 					</h:outputLabel>
@@ -377,7 +395,7 @@
 					<p:separator width="450" />
 					<br /><br />
 					
-					<h:outputLabel value="Funcionário: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
+					<h:outputLabel value="#{loginBean.usuario.perfil.perfil}: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
             		
             		</p:panel>
             		
@@ -391,7 +409,7 @@
 					<p:fieldset style="background: #A6C9E2; border-color: #8B0000; border: 1px solid #8B0000; height: 20px;" styleClass="shadow2" >
 					
 					<h:outputLabel value="Valor R$: " style="font-size: 14px; float: left; text-align: left; font-weight: bold; color: #8B0000; line-height: 20px;" styleClass="acende" rendered="#{vendaBean.venda.operacao == 2}" />
-					<h:inputText value="#{vendaBean.venda.valorTotal}" style="font-size: 15px; float: left; text-align: left; font-weight: bold; color: #8B0000;" 
+					<h:inputText value="#{vendaBean.venda.valorTotal}" style="font-size: 15px; float: left; text-align: left; font-weight: bold; color: #8B0000; margin-left: 10px;" 
 					rendered="#{vendaBean.venda.operacao == 2}" size="15" required="true" requiredMessage="Informe o valor da retirada" validatorMessage="Valor inválido" converterMessage="Valor inválido">
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 					</h:inputText>
@@ -462,7 +480,7 @@
 			widgetVar="dlgCliente" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_cliente">
 					
-					<p:dataTable value="#{usuarioBean.clientesCadastrados2}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
+					<p:dataTable value="#{usuarioBean.clientesAdm}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
 					emptyMessage="Não encontrado">
 					
 						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
@@ -498,7 +516,7 @@
 			widgetVar="dlgCliente2" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_cliente2">
 					
-					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
+					<p:dataTable value="#{usuarioBean.clientes2}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
 					emptyMessage="Não encontrado">
 					
 						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
@@ -597,6 +615,20 @@
 			</p:dialog>
 			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+			
+			<!-- 			restrição de acesso para ususario status == false -->
+			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />

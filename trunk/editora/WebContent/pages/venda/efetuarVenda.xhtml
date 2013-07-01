@@ -270,7 +270,6 @@
                     <h:panelGrid columns="1">
 
 					<h:outputLabel value="OBS" styleClass="OutPut" style="mergin-left: 30px;" />
-					<h:outputLabel value="Justificativa" styleClass="OutPut" style="mergin-left: 30px;" />
 					<p:selectOneMenu style="width: 190px;" id="tituloobs" value="#{vendaBean.venda.tituloObs}"
 					styleClass="input" effect="fade">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
@@ -324,7 +323,7 @@
 					<p:separator width="450" />
 					<br /><br />
 					
-					<h:outputLabel value="Vendedor: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" />
+					<h:outputLabel value="#{loginBean.usuario.perfil.perfil}: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" />
             		
             		</p:panel>
             		
@@ -371,19 +370,28 @@
 			widgetVar="dlgCliente" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_cliente">
 					
-					<p:dataTable value="#{usuarioBean.clientes}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
+					<p:dataTable value="#{usuarioBean.clientes2}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
 					emptyMessage="Não encontrado">
 					
 						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
-							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()"
-								id="link_codigo">
+							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo" rendered="#{c.id!=1}">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+							
+							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo_id" rendered="#{c.id==1}"
+							style="color: red;">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 						</p:column>	
 						
 						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
 							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
-								id="link_codigo2">
+								id="link_codigo2" rendered="#{c.id!=1}">
+								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
+							</h:commandLink>
+							
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
+								id="link_codigo_nome2" rendered="#{c.id==1}" style="color: red;">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 						</p:column>			
@@ -460,6 +468,21 @@
 			</h:form>
 			</p:dialog>
 			
+			<!-- 			restrição de acesso para ususario status == false -->
+			<p:dialog rendered="#{loginBean.usuario.esqueciSenha==false}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+			
+<!-- 			restrição de acesso para ususario null -->
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
@@ -472,6 +495,8 @@
 
 				</div>
 			</p:dialog>
+					
+			 
 	</ui:define>
 </ui:composition>
 </html>

@@ -247,6 +247,24 @@ public class UsuarioBean implements Serializable {
 		System.out.println("Total de Clientes: " + getUsuarios().size());
 		return query.getResultList();
 	}
+	
+	// Exibe uma lista de clientes ativados para venda do vendedor e gerente
+			@SuppressWarnings("unchecked")
+			public List<Usuario> getClientes2() {
+				Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil = 4 ORDER BY u.nome");
+				usuarios = query.getResultList();
+				System.out.println("Total de Clientes: " + getUsuarios().size());
+				return query.getResultList();
+			}
+	
+	// Exibe uma lista de clientes ativados
+		@SuppressWarnings("unchecked")
+		public List<Usuario> getClientesAdm() {
+			Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil <= 4 ORDER BY u.nome");
+			usuarios = query.getResultList();
+			System.out.println("Total de Clientes: " + getUsuarios().size());
+			return query.getResultList();
+		}
 
 	// Exibe uma lista de clientes no geral (ativados e desativados)
 	public List<Usuario> getClientesCadastrados() {
@@ -682,7 +700,7 @@ public class UsuarioBean implements Serializable {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(false);
-			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome() + " DESATIVADO");
+			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome() + " DESATIVADO");		
 			dao.atualiza(usuario);
 			this.usuario = new Usuario();
 			System.out.println("...Usuário desativado");

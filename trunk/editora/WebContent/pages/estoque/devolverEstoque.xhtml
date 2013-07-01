@@ -89,9 +89,11 @@
 						</p:column>
 						
 						<p:column headerText="Autor">
-							<h:outputText value="#{item.produto.autor}" rendered="#{item.quantidadeAtual!=0}" />
+							<h:outputText value="#{item.produto.autor}" rendered="#{item.quantidadeAtual!=0 and item.produto.autor!=null}" />
+							<h:outputText value="NENHUM" rendered="#{item.quantidadeAtual!=0 and item.produto.autor==null}" />
 							
-							<h:outputText value="#{item.produto.autor}"  style="color: #CD0000;" rendered="#{item.quantidadeAtual==0}" />
+							<h:outputText value="#{item.produto.autor}"  style="color: #CD0000;" rendered="#{item.quantidadeAtual==0 and item.produto.autor!=null}" />
+							<h:outputText value="NENHUM"  style="color: #CD0000;" rendered="#{item.quantidadeAtual==0 and item.produto.autor==null}" />
 						</p:column>
 
 						<p:column headerText="qdt Entrada" style="color: #1874CD">
@@ -184,6 +186,20 @@
 
 			</div>
 		</p:dialog>
+		
+		<!-- 			restrição de acesso para ususario status == false -->
+			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
 		
 	</ui:define>
 </ui:composition>

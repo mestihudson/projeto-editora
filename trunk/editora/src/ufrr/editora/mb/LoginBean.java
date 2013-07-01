@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.dao.UsuarioDAO;
+import ufrr.editora.entity.Log;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.entity.Venda;
 import ufrr.editora.util.Msg;
@@ -22,8 +23,9 @@ public class LoginBean implements Serializable {
 	
 	private Venda venda = new Venda();
 	private Usuario usuario = new Usuario();
+	private Log log = new Log();
 	private String senhaVerifica;
-	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
+	DAO<Usuario> dao2 = new DAO<Usuario>(Usuario.class);
 	
 	private String senhaCriptografada;
 	
@@ -35,10 +37,10 @@ public class LoginBean implements Serializable {
 		this.usuario = usuario;
 	}
 	public DAO<Usuario> getDao() {
-		return dao;
+		return dao2;
 	}
 	public void setDao(DAO<Usuario> dao) {
-		this.dao = dao;
+		this.dao2 = dao;
 	}
 	
 	public LoginBean() {
@@ -53,7 +55,7 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getStatus() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("Sua solicitação foi enviada, aguarde autorização do acesso.");
+				Msg.addMsgError("Aguarde liberação do acesso");
 				System.out.println("...acesso não permitido, aguarde liberar o acesso");
 				this.usuario = new Usuario();
 				return null;
@@ -67,6 +69,8 @@ public class LoginBean implements Serializable {
 							+ ". SISTEMA DE VENDAS EDITORA");
 					System.out.println("usuario: " + getUsuario().getNome()
 							+ "\n" + " entrou no sistema");
+					usuario.setEsqueciSenha(false);
+					dao2.atualiza(usuario);
 					return "/pages/home/home.xhtml";
 				}
 
@@ -76,6 +80,8 @@ public class LoginBean implements Serializable {
 							+ ". SISTEMA DE VENDAS EDITORA");
 					System.out.println("usuario: " + getUsuario().getNome()
 							+ "\n" + " entrou no sistema");
+					usuario.setEsqueciSenha(true);
+					dao2.atualiza(usuario);
 					return "/pages/home/home.xhtml";
 
 				} else {
@@ -108,6 +114,8 @@ public class LoginBean implements Serializable {
 				if (this.getUsuario().getStatus().equals(true)) {
 					System.out.println("...usuario: " + getUsuario().getNome()
 							+ " entrou para solicitação de senha");
+					usuario.setEsqueciSenha(true);
+					dao2.atualiza(usuario);
 					return "/pages/usuario/dados.xhtml?faces-redirect=true";
 
 				} else {
@@ -170,7 +178,7 @@ public class LoginBean implements Serializable {
 		public String trocaSenha() {
 			if (this.usuario.getSenha().equalsIgnoreCase(this.usuario.getRepetirSenha())) {
 				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
-				dao.atualiza(usuario);
+				dao2.atualiza(usuario);
 				Msg.addMsgInfo("Operação executada com sucesso");
 				System.out.println("...Senha alterada depois de solicita-la por email");
 				
@@ -204,7 +212,7 @@ public class LoginBean implements Serializable {
 	// atualiza usuário
 	public String updateUsuario() {
 		usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
-		dao.atualiza(usuario);
+		dao2.atualiza(usuario);
 		Msg.addMsgInfo("Cadastro atualizado com sucesso");
 		System.out.println("...Cadastro atualizado");
 		
@@ -239,6 +247,17 @@ public class LoginBean implements Serializable {
 		return "/index.xhtml?faces-redirect=true";
 	}
 	
+	// Derrubar usuario
+	public String derrubar() {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		session.getId().equals(getUsuario().getId());
+		session.invalidate();
+		System.out.println("usuario: " + getUsuario().getNome() + " foi derrubado");
+		return "/index.xhtml?faces-redirect=true";
+	}
+	
 	public String solicitacaoCadastro() {
 		return "/solicitacao.xhtml?faces-redirect=true";
 	}
@@ -264,6 +283,18 @@ public class LoginBean implements Serializable {
 	}
 	public void setVenda(Venda venda) {
 		this.venda = venda;
+	}
+	public Log getLog() {
+		return log;
+	}
+	public void setLog(Log log) {
+		this.log = log;
+	}
+	public DAO<Usuario> getDao2() {
+		return dao2;
+	}
+	public void setDao2(DAO<Usuario> dao2) {
+		this.dao2 = dao2;
 	}
 	
 	
