@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.dao.UsuarioDAO;
-import ufrr.editora.entity.Log;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.entity.Venda;
 import ufrr.editora.util.Msg;
@@ -23,7 +22,6 @@ public class LoginBean implements Serializable {
 	
 	private Venda venda = new Venda();
 	private Usuario usuario = new Usuario();
-	private Log log = new Log();
 	private String senhaVerifica;
 	DAO<Usuario> dao2 = new DAO<Usuario>(Usuario.class);
 	
@@ -80,7 +78,7 @@ public class LoginBean implements Serializable {
 							+ ". SISTEMA DE VENDAS EDITORA");
 					System.out.println("usuario: " + getUsuario().getNome()
 							+ "\n" + " entrou no sistema");
-					usuario.setEsqueciSenha(false);
+					usuario.setEsqueciSenha(true);
 					dao2.atualiza(usuario);
 					return "/pages/home/home.xhtml";
 
@@ -283,12 +281,6 @@ public class LoginBean implements Serializable {
 	}
 	public void setVenda(Venda venda) {
 		this.venda = venda;
-	}
-	public Log getLog() {
-		return log;
-	}
-	public void setLog(Log log) {
-		this.log = log;
 	}
 	public DAO<Usuario> getDao2() {
 		return dao2;
