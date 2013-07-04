@@ -240,7 +240,6 @@ public class VendaBean implements Serializable {
 				}
 			}
 			if (this.cadastro == true) {
-				if (venda.getImprimeCupom().equals(true)) {
 
 					this.getVenda().setVendedor(this.loginBean.getUsuario());
 					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
@@ -251,13 +250,6 @@ public class VendaBean implements Serializable {
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
 					venda.setAtivado(true);
-
-					// para gerar o cupom
-					// HashMap<String, Object> params = new HashMap<String,
-					// Object>();
-					// Report report = new Report("report2", params);
-					// report.pdfReport();
-					// report = new Report();
 
 					// atualiza a lista de item (quantidade de saida)					
 					for (ItemVenda iv : this.getVenda().getItensVendas()) {
@@ -275,36 +267,8 @@ public class VendaBean implements Serializable {
 					itemVenda = new ItemVenda();
 					venda = new Venda();
 
-					return "/pages/venda/efetuarVenda.xhtml";
+					return "/pages/venda/efetuarVenda2.xhtml?faces-redirect=true";
 
-				} else {
-					this.getVenda().setVendedor(this.loginBean.getUsuario());
-					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
-					u.getVendas().add(venda);
-					DAO<Venda> dao = new DAO<Venda>(Venda.class);
-					venda.setOperacao(1);
-					Msg.addMsgInfo("Venda efetuada com sucesso");
-					venda.setValorTotalDesconto(getValorTotalComDesconto());
-					venda.setValorTotal(getValorTotalProdutos());
-					venda.setAtivado(true);
-					
-					
-					// atualiza a lista de item (quantidade de saida)					
-					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-						DAO<Item> iDAO = new DAO<Item>(Item.class);
-						Item i = iv.getItem();
-						
-						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saída do item");
-					}	
-					
-					dao.adiciona(venda);
-					itemVenda = new ItemVenda();
-					venda = new Venda();
-					return "/pages/venda/efetuarVenda.xhtml";
-				}
 			} else {
 				Msg.addMsgFatal("Há na lista um produto com quantidade indisponível no estoque, " +
 						"com isso não será permitida nenhuma venda. Verifique a quantidade disponível no estoque!");
@@ -339,7 +303,6 @@ public class VendaBean implements Serializable {
 				}
 			}
 			if (this.cadastro == true) {
-				if (venda.getImprimeCupom().equals(true)) {
 
 					this.getVenda().setVendedor(this.loginBean.getUsuario());
 					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
@@ -350,13 +313,6 @@ public class VendaBean implements Serializable {
 					venda.setValorTotalDesconto(getValorTotalComDesconto());
 					venda.setValorTotal(getValorTotalProdutos());
 					venda.setAtivado(true);
-
-					// para gerar o cupom
-					// HashMap<String, Object> params = new HashMap<String,
-					// Object>();
-					// Report report = new Report("report2", params);
-					// report.pdfReport();
-					// report = new Report();
 
 					// atualiza a lista de item (quantidade de saida)					
 					for (ItemVenda iv : this.getVenda().getItensVendas()) {
@@ -374,35 +330,8 @@ public class VendaBean implements Serializable {
 					itemVenda = new ItemVenda();
 					venda = new Venda();
 
-					return "/pages/venda/efetuarVendaAdmin.xhtml";
-
-				} else {
-					this.getVenda().setVendedor(this.loginBean.getUsuario());
-					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
-					u.getVendas().add(venda);
-					DAO<Venda> dao = new DAO<Venda>(Venda.class);
-					Msg.addMsgInfo("Venda efetuada com sucesso");
-					venda.setValorTotalDesconto(getValorTotalComDesconto());
-					venda.setValorTotal(getValorTotalProdutos());
-					venda.setAtivado(true);
-					
-					
-					// atualiza a lista de item (quantidade de saida)					
-					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-						DAO<Item> iDAO = new DAO<Item>(Item.class);
-						Item i = iv.getItem();
-						
-						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saída do item");
-					}	
-					
-					dao.adiciona(venda);
-					itemVenda = new ItemVenda();
-					venda = new Venda();
-					return "/pages/venda/efetuarVendaAdmin.xhtml";
-				}
+					return "/pages/venda/efetuarVendaAdmin2.xhtml?faces-redirect=true";
+				
 			} else {
 				Msg.addMsgFatal("Há na lista um produto com quantidade indisponível no estoque, " +
 						"com isso não será permitida nenhuma venda. Verifique a quantidade disponível no estoque!");
@@ -410,7 +339,6 @@ public class VendaBean implements Serializable {
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
 			}
-			
 		}
 		return null;
 	}
@@ -566,11 +494,12 @@ public class VendaBean implements Serializable {
 	}
 
 	// relatório
-	public void imprimeCupom() {
+	public void imprimirCupom() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		Report report = new Report("clientes", params);
+		Report report = new Report("Relatorio-Fornecedores", params);
 		report.pdfReport();
-	}	
+		System.out.println("...imprimindo cupom fiscal");
+	}
 	
 	/** calculo **/
 

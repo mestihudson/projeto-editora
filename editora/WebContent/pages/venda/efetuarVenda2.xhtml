@@ -19,7 +19,7 @@
 
 		<div class="Centralizar" style="background: white;" align="center">
 		
-		<h:form rendered="#{loginBean.usuario.perfil.id>=3}">
+		<h:form rendered="#{loginBean.usuario.perfil.id==4}">
 		<div align="center">
 		
 			<br />		
@@ -32,73 +32,50 @@
 		</div>
 		</h:form>	
 		
-			<h:form id="form_efetuar_venda" rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}">
-			
-			<p:focus context="pnl" for="prod" rendered="#{vendaBean.venda.operacao==1}" />
+			<h:form id="form_efetuar_venda" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				
 				<h:outputText value="EFETUAR VENDA" style="color: white; font-size: 12px;" styleClass="OutPut" />
-								
-				<p:selectOneRadio value="#{vendaBean.venda.operacao}" styleClass="OutPut" style="color: #8B0000; width: 330px;" 
-				rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}" 
-					required="true" requiredMessage="Informe a operação">
-						<f:selectItem itemLabel="Efetuar Venda" itemValue="1" />
-						<f:selectItem itemLabel="Retirar dinheiro do caixa" itemValue="2" />
-						<f:ajax render="form_efetuar_venda" />
-					</p:selectOneRadio>
-					
-			</div>
+			</div>	
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
 			
 			<h:panelGrid id="botton" columns="2" cellspacing="5" style="float: right;">
 				<h:graphicImage value="/resources/img/estoque.png" onclick="dlgEstoque.show();" style="float: right; cursor: pointer;"
 				styleClass="acende"	title="Verificar estoque" />
-			
-				<p:commandLink action="/pages/estoque/devolverEstoque.xhtml?faces-redirect=true" immediate="true">	
-					<h:graphicImage value="/resources/img/troca.png" style="float: right; cursor: pointer;"
-						styleClass="acende"	title="Devolver ou trocar produto vendido" />		
-				</p:commandLink>
 			</h:panelGrid>		
 
-			<br /><br /><br />
+			<br /><br /><br />	
 				
 					<div style="float: left; margin-left: 10px">					
-					<p:panel header="Dados da Venda" style="height: 130px; width: 450px;" rendered="#{vendaBean.venda.operacao != 2}">
+					<p:panel header="Dados da Venda" style="height: 130px; width: 450px;">
 					
+					<br />
+										
 					<h:panelGrid id="grid" columns="5" cellspacing="5" cellpadding="5">
-					<br /><br />
-					
-					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
-					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
-					
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
-					
-					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 1 and vendaBean.venda.operacao == 1}"
+															
+					<h:outputLabel value="Cliente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome}" />
+					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome}" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome}" />
+					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome}"
 					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
 					
-					<p:inputText id="clientes2" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 2 and vendaBean.venda.operacao == 1}"
-					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente2.show();" readonly="true">
-							<f:ajax event="change" />
-					</p:inputText>
-					
-					<h:outputLabel id="cliente1" value="#{vendaBean.venda.cliente.id} - " rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1 and vendaBean.venda.operacao == 1}"
+					<h:outputLabel id="cliente1" value="#{vendaBean.venda.cliente.id} - " rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1}"
 					styleClass="OutPut" style="color: #8B0000;">
 					</h:outputLabel>
 					
-					<h:outputLabel id="cliente2" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1 and vendaBean.venda.operacao == 1}"
+					<h:outputLabel id="cliente2" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id != 1}"
 					styleClass="OutPut" style="color: #8B0000;">
 					</h:outputLabel>
 					
-					<h:outputLabel id="cliente3" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id == 1 and vendaBean.venda.operacao == 1}"
+					<h:outputLabel id="cliente3" value="#{vendaBean.venda.cliente.nome}" rendered="#{not empty vendaBean.venda.cliente.nome and vendaBean.venda.cliente.id == 1}"
 					styleClass="OutPut" style="color: red;">
 					</h:outputLabel>
 					
 					</h:panelGrid>
-					<br /><br /><br />
+					<br /><br />
 														
 					<h:outputLabel id="datavenda" value="#{vendaBean.venda.dataVenda.time}" locale="pt_BR" pattern="dd/MM/yyyy" 
 					style="float: right; text-align: right;" styleClass="OutPut">
@@ -107,71 +84,32 @@
 					<br /><br />
 					
 					</p:panel>
-					
-<!-- 					panel para quando for retirar dinheiro do caixa -->
-					<p:panel header="Retirar dinheiro do caixa" style="height: 130px; width: 450px;" rendered="#{vendaBean.venda.operacao == 2}">
-					
-					<h:panelGrid id="grid_saida" columns="5" cellspacing="5" cellpadding="5">
-					<br /><br />
-					
-					<h:outputLabel value="Permissão de acesso apenas a Administrador e Gerente" styleClass="OutPut" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 2}" style="color: #8B0000;" />
-									
-					</h:panelGrid>
-					<br /><br /><br />
-														
-					<h:outputLabel id="datavenda2" value="#{vendaBean.venda.dataVenda.time}" locale="pt_BR" pattern="dd/MM/yyyy" 
-					style="float: right; text-align: right;" styleClass="OutPut">
-						<f:convertDateTime dateStyle="long" timeZone="America/Sao_Paulo" locale="pt_BR" type="date" />
-					</h:outputLabel>
-					<br /><br />
-					
-					</p:panel>
-					</div>
-										
-					<div style="float: right; text-align: left; margin-right: 10px">
-					<p:panel header="Estou ciente" style="height: 130px; width: 550px; text-align: left" rendered="#{vendaBean.venda.operacao == 2}">
-					<br />
-					
-					<h:outputLabel value="Eu, #{loginBean.usuario.nome}" style="font-weight: bold; color:#8B0000; font-size: 14px;" 
-					styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 2}" /><br /><br />
-					<h:outputLabel value="tenho total convicção que estou" style="font-weight: bold; color:#8B0000; font-size: 14px;" 
-					styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 2}" /><br /><br />
-					<h:outputLabel value="retirando do caixa o valor especificado abaixo." style="font-weight: bold; color:#8B0000; font-size: 14px;" 
-					styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 2}" />
-										
-					</p:panel>
 					</div>
 					
-<!-- 					panel add produto -->
 					<div style="float: right; margin-right: 10px">
-					<p:panel header="Produto" style="height: 130px; width: 550px;" rendered="#{vendaBean.venda.operacao != 2}" id="pnl">
+					<p:panel header="Produto" style="height: 130px; width: 550px;">
 					
-					<h:panelGrid columns="3" cellpadding="5" cellspacing="5">
+					<h:panelGrid columns="4" cellpadding="5" cellspacing="5">
 					
 <!--            		aqui a lista retorna o primeiro id depois que muda o value -->
 
-					<h:outputLabel value="isbn/código" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />   
+						
+					<h:outputLabel value="isbn/código" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
             		<p:selectOneMenu style="width: 400px;" id="prod" value="#{vendaBean.idItem}"
-            		filter="true" filterMatchMode="startsWith"
-					styleClass="input" panelStyle="width:400px" rendered="#{vendaBean.venda.operacao == 1}"
-					effect="fade" required="true" requiredMessage="Adicione o produto">
+					styleClass="input" panelStyle="width:400px" 
+					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Adicione o produto">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" id="filter" />
-<!-- 						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn} - LOTE: #{i.notaFiscal.lote}" itemValue="#{i.id}" id="filter" />             			            		 -->
+						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" id="listagem" />   
+						<f:ajax event="change" />          			            		
             		</p:selectOneMenu>
-            		            		
-            		<!--             		<p:autoComplete style="width: 400px;" id="prod" value="#{vendaBean.idItem}" maxlength="13" -->
-<!-- 					styleClass="input" rendered="#{vendaBean.venda.operacao == 1}" -->
-<!-- 					required="true" requiredMessage="Adicione o produto" converter="genericConverter">           			            		            			            		 -->
-<!--             		</p:autoComplete> -->
-            		
-<!--             		// agora só precisa fazer a conversão! -->
             		
             		<br /><br />
             		
-            		<h:outputLabel value="Quantidade" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
+            		<h:outputLabel value="Quantidade" styleClass="OutPut" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:inputText id="qtd" value="#{vendaBean.itemVenda.quantidade}" size="5"
-					validatorMessage="Quantidade inválida" rendered="#{vendaBean.venda.operacao == 1}">
+					validatorMessage="Quantidade inválida">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" maximum="100" />
 					</p:inputText>
@@ -179,7 +117,7 @@
 					</h:panelGrid>
             		
             		<div>					
-					<p:commandButton value="Adicionar" action="#{vendaBean.guardaItem}" ajax="false" rendered="#{vendaBean.venda.operacao == 1}">
+					<p:commandButton value="Adicionar" action="#{vendaBean.guardaItem}" ajax="false">
 						<f:ajax render="@form" event="click" /> 
 					</p:commandButton>
 					</div>
@@ -192,28 +130,25 @@
 				<div style="float: center">
 				<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 					<div style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 10px; height: 20px; line-height: 20px;" align="center">
-					<h:outputText value="PRODUTOS" style="color: #394674; font-size: 12px;" styleClass="OutPut" rendered="#{vendaBean.venda.operacao != 2}" />
+					<h:outputText value="PRODUTOS" style="color: #394674; font-size: 12px;" styleClass="OutPut" />
 					</div>
 				
 				<fieldset style="border-color: #A6C9E2; margin-left: 10px; margin-right: 10px; border: 1px solid #A6C9E2; border-top: 0;" >
 				
 					<p:dataTable value="#{vendaBean.venda.itensVendas}" var="i" styleClass="dados2" rowClasses="impar, par" id="itens"
 					rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx"
-					emptyMessage="adicione o(s) produto()" rendered="#{vendaBean.venda.operacao != 2}">
+					emptyMessage="adicione o(s) produto()">
 					        				
-        				<p:column width="50" style="font-weight: bold;">
+        				<p:column width="50">
 							<f:facet name="header">isbn/código</f:facet>
 							<h:outputLabel value="#{i.item.produto.isbn}" rendered="#{i.item.produto.isbn!=null}" />
 							<h:outputLabel value="#{i.item.produto.id}" rendered="#{i.item.produto.isbn==null}" />
 						</p:column>
 
-						<p:column style="font-weight: bold;">
+						<p:column>
 							<f:facet name="header">produto</f:facet>
 							<h:outputLabel value="#{i.item.produto.tipo.nome}: " rendered="#{i.item.produto.tipo.id eq 1}" />
-							<h:outputLabel value="#{i.item.produto.nome}">
-								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="50" />
-							</h:outputLabel>
+							<h:outputLabel value="#{i.item.produto.nome}" />
 						</p:column>
 						
 						<p:column width="50" style="color: #2E6EAF; text-align: center;">
@@ -239,19 +174,19 @@
 						    and i.item.quantidadeAtual-i.quantidade!=451 and i.item.quantidadeAtual-i.quantidade!=452 and i.item.quantidadeAtual-i.quantidade!=453 and i.item.quantidadeAtual-i.quantidade!=454	and i.item.quantidadeAtual-i.quantidade!=455 and i.item.quantidadeAtual-i.quantidade!=456 and i.item.quantidadeAtual-i.quantidade!=457 and i.item.quantidadeAtual-i.quantidade!=458	and i.item.quantidadeAtual-i.quantidade!=459 and i.item.quantidadeAtual-i.quantidade!=460 and i.item.quantidadeAtual-i.quantidade!=461	and i.item.quantidadeAtual-i.quantidade!=462 and i.item.quantidadeAtual-i.quantidade!=463 and i.item.quantidadeAtual-i.quantidade!=464 and i.item.quantidadeAtual-i.quantidade!=465	and i.item.quantidadeAtual-i.quantidade!=466 and i.item.quantidadeAtual-i.quantidade!=467 and i.item.quantidadeAtual-i.quantidade!=468 and i.item.quantidadeAtual-i.quantidade!=469	and i.item.quantidadeAtual-i.quantidade!=470 and i.item.quantidadeAtual-i.quantidade!=471 and i.item.quantidadeAtual-i.quantidade!=472 and i.item.quantidadeAtual-i.quantidade!=473	and i.item.quantidadeAtual-i.quantidade!=474 and i.item.quantidadeAtual-i.quantidade!=475 and i.item.quantidadeAtual-i.quantidade!=476 and i.item.quantidadeAtual-i.quantidade!=477	and i.item.quantidadeAtual-i.quantidade!=478 and i.item.quantidadeAtual-i.quantidade!=479 and i.item.quantidadeAtual-i.quantidade!=480 and i.item.quantidadeAtual-i.quantidade!=481	and i.item.quantidadeAtual-i.quantidade!=482 and i.item.quantidadeAtual-i.quantidade!=483 and i.item.quantidadeAtual-i.quantidade!=484 and i.item.quantidadeAtual-i.quantidade!=485 and i.item.quantidadeAtual-i.quantidade!=486 and i.item.quantidadeAtual-i.quantidade!=487 and i.item.quantidadeAtual-i.quantidade!=488	and i.item.quantidadeAtual-i.quantidade!=489 and i.item.quantidadeAtual-i.quantidade!=490 and i.item.quantidadeAtual-i.quantidade!=491 and i.item.quantidadeAtual-i.quantidade!=492 and i.item.quantidadeAtual-i.quantidade!=493 and i.item.quantidadeAtual-i.quantidade!=494 and i.item.quantidadeAtual-i.quantidade!=495 and i.item.quantidadeAtual-i.quantidade!=496 and i.item.quantidadeAtual-i.quantidade!=497 and i.item.quantidadeAtual-i.quantidade!=498 and i.item.quantidadeAtual-i.quantidade!=499 and i.item.quantidadeAtual-i.quantidade!=500}" style="color: red;" />
 						</p:column>
 						
-						<p:column style="text-align: center; font-weight: bold;" width="15">
+						<p:column style="text-align: center;" width="15">
 							<f:facet name="header">qtd</f:facet>
 							<h:outputLabel value="#{i.quantidade}" />
 						</p:column>	
 						
-						<p:column width="50" style="font-weight: bold;">
+						<p:column width="50">
 							<f:facet name="header">valor unit.</f:facet>
 							<h:outputLabel value="#{i.item.valorVenda}">
 								<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 							</h:outputLabel>
 						</p:column>
 						
-						<p:column width="50" style="text-align: center; font-weight: bold;">
+						<p:column width="50" style="text-align: center;">
 							<f:facet name="header">sub total</f:facet>
 							<h:outputText value="#{i.total}">
 							<f:convertNumber type="currency" currencySymbol="R$"
@@ -285,8 +220,7 @@
 										</f:facet>
 									</p:column>
 									
-									<p:column headerText="" />
-
+									<p:column footerText="" />
 								</p:row>
 							</p:columnGroup>
 
@@ -309,8 +243,8 @@
 					
 					<h:panelGrid id="parcela_div" columns="10">
 					
-					<h:outputLabel value="Forma de pagamento" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
-            		<p:selectOneMenu style="width: 150px;" id="forma" value="#{vendaBean.venda.formaPagamento}" rendered="#{vendaBean.venda.operacao == 1}"
+					<h:outputLabel value="Forma de pagamento" styleClass="OutPut" />
+            		<p:selectOneMenu style="width: 150px;" id="forma" value="#{vendaBean.venda.formaPagamento}" 
 					styleClass="input" effect="fade">
 						<f:selectItem itemLabel="à vista" itemValue="1" />
 						<f:selectItem itemLabel="cartão(crédito)" itemValue="2" />
@@ -321,10 +255,10 @@
 						<f:ajax render="parcela_div" />           			            		
             		</p:selectOneMenu>
             		
-            		<h:outputLabel value="Parcelas" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}" />
-					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}" />
-					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5"
-					min="0" max="100" validatorMessage="Parcelas inválida" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}">
+            		<h:outputLabel value="Parcelas" styleClass="OutPut" rendered="#{vendaBean.venda.formaPagamento == 2}" />
+					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{vendaBean.venda.formaPagamento == 2}" />
+					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5" required="true" requiredMessage="Defina a quantidade de parcelas"
+					min="0" max="12" validatorMessage="Parcelas inválida" maxlength="2" rendered="#{vendaBean.venda.formaPagamento == 2}">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
@@ -333,22 +267,19 @@
             		
                     <h:panelGrid columns="1">
 
-					<h:outputLabel value="OBS" styleClass="OutPut" style="mergin-left: 30px;" rendered="#{vendaBean.venda.operacao == 1}" />
-					<h:outputLabel value="Justificativa" styleClass="OutPut" style="mergin-left: 30px;" rendered="#{vendaBean.venda.operacao == 2}" />
-					<p:selectOneMenu style="width: 190px;" id="tituloobs" value="#{vendaBean.venda.tituloObs}" rendered="#{vendaBean.venda.operacao == 1}"
+					<h:outputLabel value="OBS" styleClass="OutPut" style="mergin-left: 30px;" />
+					<p:selectOneMenu style="width: 190px;" id="tituloobs" value="#{vendaBean.venda.tituloObs}"
 					styleClass="input" effect="fade">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
-<!-- 						<f:selectItem itemLabel="Devolução" itemValue="1" /> -->
-<!-- 						<f:selectItem itemLabel="Defeito" itemValue="2" /> -->
+						<f:selectItem itemLabel="Devolução" itemValue="1" />
+						<f:selectItem itemLabel="Defeito" itemValue="2" />
 						<f:selectItem itemLabel="Doação" itemValue="3" />
 						<f:selectItem itemLabel="Roubo" itemValue="4" />
 						<f:selectItem itemLabel="Troca" itemValue="5" />
 						<f:selectItem itemLabel="Venda com desconto" itemValue="6" />
 						<f:selectItem itemLabel="Venda com valor de custo" itemValue="7" />            			            		
             		</p:selectOneMenu>					
-					<p:inputTextarea id="obs" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="250" rendered="#{vendaBean.venda.operacao == 1}" />
-					<p:inputTextarea id="obs2" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="250" cols="20" rows="4" rendered="#{vendaBean.venda.operacao == 2}"
-					required="true" requiredMessage="Para retirada precisa-se de justificativa" />
+					<p:inputTextarea id="obs2" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="66" cols="10" rows="6" />
 					<br /><br />
 					
 					</h:panelGrid>
@@ -357,67 +288,40 @@
 					</div>
 					
 					<div style="float: right; margin-right: 10px; margin-left: 10px;">
-<!-- 					modo entrada -->
-					<p:panel style="text-align: right; width: 400px; height: 190px;" rendered="#{vendaBean.venda.operacao != 2}">
-					 
+					<p:panel style="text-align: right; width: 400px; height: 190px;">
+					
 					<h:panelGrid columns="6" cellpadding="3" cellspacing="3" style="text-align: right; float: right;">
 					
-					<h:outputLabel value="desconto % " styleClass="OutPut" style="font-size: 14px;" rendered="#{vendaBean.venda.operacao == 1}" />
+					<h:outputLabel value="desconto % " styleClass="OutPut" style="font-size: 14px;" />
 					<p:spinner id="desconto" value="#{vendaBean.desconto}" size="5"
-					min="0" max="100" validatorMessage="Desconto inválido" rendered="#{vendaBean.venda.operacao == 1}">
+					min="0" max="100" validatorMessage="Desconto inválido">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
 					
-					<p:commandButton value="Gerar desconto" action="#{vendaBean.gerarDesconto}" ajax="false" icon="ui-icon-check" rendered="#{vendaBean.venda.operacao == 1}">
+					<p:commandButton value="Gerar desconto" action="#{vendaBean.gerarDesconto}" ajax="false" icon="ui-icon-check">
 						<f:ajax render="@form" event="click" /> 
 					</p:commandButton>
 										
 					</h:panelGrid>	
 					<br /><br /><br /><br />
+
 					
 					<p:separator width="450" />
 					
 					<br />
 					<p:fieldset style="background: #A6C9E2; border-color: #8B0000; border: 1px solid #8B0000; height: 20px;" styleClass="shadow2" >
-					
-					<h:outputLabel value="Valor à pagar: " style="font-size: 18px; font-weight: bold; color: #8B0000; line-height: 20px;" styleClass="acende" rendered="#{vendaBean.venda.operacao == 1}" />
-					<h:outputLabel value="#{vendaBean.valorTotalComDesconto}" style="font-size: 18px; font-weight: bold; color: #8B0000;" rendered="#{vendaBean.venda.operacao == 1}" >
+					<h:outputLabel value="Valor à pagar: " style="font-size: 18px; font-weight: bold; color: #8B0000; line-height: 20px;" styleClass="acende" />
+					<h:outputLabel value="#{vendaBean.valorTotalComDesconto}" style="font-size: 18px; font-weight: bold; color: #8B0000;">
 						<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 					</h:outputLabel>
-										
 					</p:fieldset>
 					<br />
 					
 					<p:separator width="450" />
 					<br /><br />
 					
-					<h:outputLabel value="#{loginBean.usuario.perfil.perfil}: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
-            		
-            		</p:panel>
-            		
-<!--             		modo saida -->
-
-					<p:panel style="text-align: right; width: 400px; height: 190px;" rendered="#{vendaBean.venda.operacao == 2}">
-					 
-					<p:separator width="450" />
-					
-					<br />
-					<p:fieldset style="background: #A6C9E2; border-color: #8B0000; border: 1px solid #8B0000; height: 20px;" styleClass="shadow2" >
-					
-					<h:outputLabel value="Valor R$: " style="font-size: 14px; float: left; text-align: left; font-weight: bold; color: #8B0000; line-height: 20px;" styleClass="acende" rendered="#{vendaBean.venda.operacao == 2}" />
-					<h:inputText value="#{vendaBean.venda.valorTotal}" style="font-size: 15px; float: left; text-align: left; font-weight: bold; color: #8B0000; margin-left: 10px;" 
-					rendered="#{vendaBean.venda.operacao == 2}" size="15" required="true" requiredMessage="Informe o valor da retirada" validatorMessage="Valor inválido" converterMessage="Valor inválido">
-						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
-					</h:inputText>
-										
-					</p:fieldset>
-					<br />
-					
-					<p:separator width="450" />
-					<br /><br />
-					
-					<h:outputLabel value="Funcionário: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" rendered="#{vendaBean.venda.operacao != 2}" />
+					<h:outputLabel value="#{loginBean.usuario.perfil.perfil}: #{loginBean.usuario.nome}" style="float: right; text-align: center; font-weight: bold;" styleClass="OutPut" />
             		
             		</p:panel>
             		
@@ -428,31 +332,17 @@
 					</fieldset>										
 			
 			<div style="background: #C4D2EB; height: 28px;" align="center">
-				<p:commandButton action="#{vendaBean.addVendaAdmin}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao == 1}">
-					<f:ajax render="@form" />
-				</p:commandButton>
-				
-				<p:commandButton action="#{vendaBean.addSaida}" value="Efetuar Operação" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid" rendered="#{vendaBean.venda.operacao == 2}">
+				<p:commandButton action="#{vendaBean.addVenda}" value="Finalizar Venda" ajax="false" icon="ui-icon-check" update=":form_efetuar_venda:grid">
 					<f:ajax render="@form" />
 				</p:commandButton>&nbsp;
-				
-				<p:commandButton action="#{vendaBean.cancelarVenda3}" value="Cancelar Retirada" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
-				rendered="#{vendaBean.venda.cliente.id!=null and vendaBean.venda.operacao == 2}">
-					<f:ajax render="@form" />
-				</p:commandButton>
 									
-				<p:commandButton action="#{vendaBean.cancelarVenda3}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
-				rendered="#{vendaBean.venda.cliente.id!=null and vendaBean.venda.operacao == 1}">
+				<p:commandButton action="#{vendaBean.cancelarVenda}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
+				rendered="#{vendaBean.venda.cliente.id!=null}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
-				<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Retirada" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
-				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao == 2}">
-					<f:ajax render="@form" />
-				</p:commandButton>
-				
-					<p:commandButton action="#{vendaBean.cancelarVenda4}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
-				rendered="#{vendaBean.venda.cliente.id==null and vendaBean.venda.operacao == 1}">
+				<p:commandButton action="#{vendaBean.cancelarVenda2}" value="Cancelar Venda" ajax="false" icon="ui-icon-close" immediate="true" style="color: red;"
+				rendered="#{vendaBean.venda.cliente.id==null}">
 					<f:ajax render="@form" />
 				</p:commandButton>
 				
@@ -470,54 +360,19 @@
 			</h:form>								
 			
 		</div>
-					
 			
-<!-- 			Aqui começa o dialog para clientes (liberado para admin) -->	
+						
+<!-- 			Aqui começa o dialog de clientes -->
+			
 			<p:dialog header="Clientes" 
 			widgetVar="dlgCliente" resizable="false" modal="true" showEffect="fold">
 				<h:form id="form_dialog_cliente">
-					
-					<p:dataTable value="#{usuarioBean.clientesAdm}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
-					emptyMessage="Não encontrado">
-					
-						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
-							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo1" rendered="#{c.id!=1}">
-								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
-							</h:commandLink>
-							
-							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo_id" rendered="#{c.id==1}"
-							style="color: red;">
-								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
-							</h:commandLink>
-						</p:column>	
-						
-						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
-							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()" id="link_codigo2" rendered="#{c.id!=1}">
-								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
-							</h:commandLink>
-							
-							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
-								id="link_codigo_nome2" rendered="#{c.id==1}" style="color: red;">
-								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
-							</h:commandLink>
-						</p:column>			
-					
-					</p:dataTable>
-				
-				
-				</h:form>
-			</p:dialog>
-			
-			<!-- 			Aqui começa o dialog para clientes (liberado para gerente) -->	
-			<p:dialog header="Clientes" 
-			widgetVar="dlgCliente2" resizable="false" modal="true" showEffect="fold">
-				<h:form id="form_dialog_cliente2">
 					
 					<p:dataTable value="#{usuarioBean.clientes2}" var="c" id="tb_clientes" paginator="true" rows="20" paginatorPosition="bottom"
 					emptyMessage="Não encontrado">
 					
 						<p:column headerText="Código" filterBy="#{c.id}" filterMatchMode="exact" style="text-align: center;">
-							<h:commandLink value="#{c.id}" onclick="dlgCliente2.hide()" id="link_codigo" rendered="#{c.id!=1}">
+							<h:commandLink value="#{c.id}" onclick="dlgCliente.hide()" id="link_codigo" rendered="#{c.id!=1}">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
 							
@@ -528,7 +383,7 @@
 						</p:column>	
 						
 						<p:column headerText="Nome" filterBy="#{c.nome}" filterMatchMode="contains">
-							<h:commandLink value="#{c.nome}" onclick="dlgCliente2.hide()"
+							<h:commandLink value="#{c.nome}" onclick="dlgCliente.hide()"
 								id="link_codigo2" rendered="#{c.id!=1}">
 								<f:setPropertyActionListener target="#{vendaBean.venda.cliente}" value="#{c}" />
 							</h:commandLink>
@@ -545,7 +400,7 @@
 				</h:form>
 			</p:dialog>	
 			
-<!-- 			Aqui começa o dialog para os produtos disponíveis no estoque -->
+			<!-- 			Aqui começa o dialog para os produtos disponíveis no estoque -->
 			<p:dialog header="" widgetVar="dlgEstoque" modal="true"
 				width="auto" resizable="false">
 				<h:form id="form_itens">
@@ -611,19 +466,6 @@
 			</h:form>
 			</p:dialog>
 			
-			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
-				<div align="center">
-
-					<br />
-					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
-
-				</div>
-			</p:dialog>
-			
 			<!-- 			restrição de acesso para ususario status == false -->
 			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
@@ -637,6 +479,40 @@
 
 				</div>
 			</p:dialog>
+			
+<!-- 			restrição de acesso para ususario null -->
+			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
+				<div align="center">
+
+					<br />
+					<p:graphicImage value="/resources/img/noacsses.png" />
+					<br />
+					<br />
+					<br />
+					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+
+				</div>
+			</p:dialog>
+			
+			<p:dialog visible="true" resizable="false" modal="true" rendered="#{empty vendaBean.venda.itensVendas and vendaBean.venda.cliente.id==null}">
+			<div align="center">
+
+				<h:form id="form_confirmation_venda" rendered="#{loginBean.usuario.perfil.id!=4}" style="text-align: center;">
+
+					<br /><br />
+						<p:graphicImage value="/resources/img/confirmation_venda.png" style="text-align: center;" />
+					<br /><br />
+
+					<p:commandButton action="#{vendaBean.imprimirCupom}" ajax="false"
+						value="Imprimir Cupom Fiscal" icon="ui-icon-print" immediate="true" />
+					<br /><br />	
+
+				</h:form>
+
+			</div>
+		</p:dialog>
+					
+			 
 	</ui:define>
 </ui:composition>
 </html>

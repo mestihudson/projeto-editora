@@ -159,13 +159,6 @@
 						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" id="filter" />
 <!-- 						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn} - LOTE: #{i.notaFiscal.lote}" itemValue="#{i.id}" id="filter" />             			            		 -->
             		</p:selectOneMenu>
-            		            		
-            		<!--             		<p:autoComplete style="width: 400px;" id="prod" value="#{vendaBean.idItem}" maxlength="13" -->
-<!-- 					styleClass="input" rendered="#{vendaBean.venda.operacao == 1}" -->
-<!-- 					required="true" requiredMessage="Adicione o produto" converter="genericConverter">           			            		            			            		 -->
-<!--             		</p:autoComplete> -->
-            		
-<!--             		// agora só precisa fazer a conversão! -->
             		
             		<br /><br />
             		
@@ -637,6 +630,26 @@
 
 				</div>
 			</p:dialog>
+
+		<p:dialog visible="true" resizable="false" modal="true" rendered="#{empty vendaBean.venda.itensVendas and vendaBean.venda.cliente.id==null}">
+			<div align="center">
+
+				<h:form id="form_confirmation_venda" rendered="#{loginBean.usuario.perfil.id!=4}" style="text-align: center;">
+
+					<br /><br />
+						<p:graphicImage value="/resources/img/confirmation_venda.png" style="text-align: center;" />
+					<br /><br />
+
+					<p:commandButton action="#{vendaBean.imprimirCupom}" ajax="false"
+						value="Imprimir Cupom Fiscal" icon="ui-icon-print" immediate="true" />
+					<br /><br />	
+
+				</h:form>
+
+			</div>
+		</p:dialog>
+
+
 	</ui:define>
 </ui:composition>
 </html>

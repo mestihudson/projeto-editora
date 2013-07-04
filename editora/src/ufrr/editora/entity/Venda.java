@@ -37,8 +37,6 @@ public class Venda implements Serializable {
 	private Double valorTotal; // exibe o valor da venda
 	
 	private Double valorTotalDesconto; // valor da venda com desconto
-		
-	private Boolean imprimeCupom;
 
 	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="venda")
 	private List<ItemVenda> itensVendas = new ArrayList<ItemVenda>();
@@ -111,13 +109,6 @@ public class Venda implements Serializable {
 		this.valorTotalDesconto = valorTotalDesconto;
 	}
 
-	public Boolean getImprimeCupom() {
-		return imprimeCupom;
-	}
-
-	public void setImprimeCupom(Boolean imprimeCupom) {
-		this.imprimeCupom = imprimeCupom;
-	}
 
 	public List<ItemVenda> getItensVendas() {
 		return itensVendas;
@@ -193,8 +184,6 @@ public class Venda implements Serializable {
 		result = prime * result
 				+ ((formaPagamento == null) ? 0 : formaPagamento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((imprimeCupom == null) ? 0 : imprimeCupom.hashCode());
 		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
 		result = prime * result
 				+ ((itensVendas == null) ? 0 : itensVendas.hashCode());
@@ -246,11 +235,6 @@ public class Venda implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (imprimeCupom == null) {
-			if (other.imprimeCupom != null)
-				return false;
-		} else if (!imprimeCupom.equals(other.imprimeCupom))
 			return false;
 		if (itens == null) {
 			if (other.itens != null)
