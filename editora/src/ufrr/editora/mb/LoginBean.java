@@ -78,7 +78,7 @@ public class LoginBean implements Serializable {
 							+ ". SISTEMA DE VENDAS EDITORA");
 					System.out.println("usuario: " + getUsuario().getNome()
 							+ "\n" + " entrou no sistema");
-					usuario.setEsqueciSenha(true);
+					usuario.setEsqueciSenha(false);
 					dao2.atualiza(usuario);
 					return "/pages/home/home.xhtml";
 

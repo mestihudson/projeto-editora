@@ -90,6 +90,59 @@ public class ItemVenda implements Serializable {
 			return quantidade * item.getValorCusto();
 		else
 			return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		result = prime * result
+				+ ((quantidade == null) ? 0 : quantidade.hashCode());
+		result = prime * result
+				+ ((quantidadeN == null) ? 0 : quantidadeN.hashCode());
+		result = prime * result + ((venda == null) ? 0 : venda.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemVenda other = (ItemVenda) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
+			return false;
+		if (quantidade == null) {
+			if (other.quantidade != null)
+				return false;
+		} else if (!quantidade.equals(other.quantidade))
+			return false;
+		if (quantidadeN == null) {
+			if (other.quantidadeN != null)
+				return false;
+		} else if (!quantidadeN.equals(other.quantidadeN))
+			return false;
+		if (venda == null) {
+			if (other.venda != null)
+				return false;
+		} else if (!venda.equals(other.venda))
+			return false;
+		return true;
 	}	
+	
+	
 
 }

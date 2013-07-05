@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Item;
 import ufrr.editora.entity.ItemDevolvido;
+import ufrr.editora.entity.NotaFiscal;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 
@@ -25,6 +26,7 @@ public class ItemBean implements Serializable {
 	private LoginBean loginBean;
 	
 	private Item item = new Item();
+	private NotaFiscal notaFiscal = new NotaFiscal();
 	private ItemDevolvido devolvido = new ItemDevolvido();
 	private List<Item> itens;
 	private List<Item> itens1;
@@ -240,6 +242,14 @@ public class ItemBean implements Serializable {
 
 	public void setDao2(DAO<ItemDevolvido> dao2) {
 		this.dao2 = dao2;
+	}
+
+	public NotaFiscal getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.notaFiscal = notaFiscal;
 	}
 
 }
