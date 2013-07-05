@@ -35,44 +35,92 @@
 			<h:form id="form_itens" rendered="#{loginBean.usuario.perfil.id!=4}">
 			
 			<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center" >
-				<h:outputText value="PRODUTOS VENDIDOS NO MÊS" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS" rendered="#{itemVendaBean.mes==null}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM JANEIRO DE #{itemVendaBean.ano} - NOME DO FORNECEDOR" rendered="#{itemVendaBean.mes==1}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM FEVEREIRO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==2}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM MARÇO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==3}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM ABRIL DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==4}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM MAIO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==5}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM JUNHO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==6}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM JULHO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==7}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM AGOSTO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==8}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM SETEMBRO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==9}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM OUTUBRO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==10}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM NOVEMBRO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==11}" style="color: white; font-size: 12px;" styleClass="OutPut" />
+				<h:outputText value="PRODUTOS VENDIDOS EM DEZEMBRO DE #{itemVendaBean.ano}" rendered="#{itemVendaBean.mes==12}" style="color: white; font-size: 12px;" styleClass="OutPut" />
 			</div>
 			
 			<fieldset style="border: 1px solid #A6C9E2; border-top: 0;">
-			<br />
 			
-			<h:panelGrid columns="8">
+				<h:panelGrid columns="4">
 
-				<p:selectOneRadio value="#{itemVendaBean.box4Search}" 
+						<p:selectOneRadio value="#{itemVendaBean.box4Search}" 
 							styleClass="OutPut">
 							<f:selectItem itemLabel="Fornecedor" itemValue="1" />
 							<f:ajax render="form_itens" />
 						</p:selectOneRadio>
+						
+<!-- 						<p:selectOneMenu id="fornecedor" value="#{itemVendaBean.itemVenda.venda.itens}" converter="genericConverter" style="width: 210px;" -->
+<!-- 							required="true" requiredMessage="Informe o fornecedor" styleClass="input"> -->
+<!-- 								<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" /> -->
+<!-- 								<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" /> -->
+<!-- 							<f:ajax event="blur" render="mgsg" /> -->
+<!-- 						</p:selectOneMenu> -->
 
-						<p:autoComplete value="#{itemVendaBean.search}" required="true" requiredMessage="Informe o nome do fornecedor"
+						<p:autoComplete value="#{itemVendaBean.search}"
 							completeMethod="#{fornecedorBean.autocompleteFornecedor}" var="f"
-							itemValue="#{f}" itemLabel="#{f}"
-							rendered="#{itemVendaBean.box4Search == 1}" minQueryLength="3"
+							itemValue="#{f}" itemLabel="#{f}" minQueryLength="3"
 							maxResults="5" queryDelay="60" id="autocompletePesquisar"
 							size="45" />
 							
-<!-- 						<h:outputLabel value="Mês" styleClass="OutPut" />		 -->
-<!-- 						<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true" -->
-<!-- 						value="#{itemVendaBean.search}" required="true" requiredMessage="Informe o mês"> -->
-<!-- 						</p:calendar> -->
-						
-<!-- 						<h:outputLabel value="Ano" styleClass="OutPut" />		 -->
-<!-- 						<p:calendar id="ano" effect="slideDown" showButtonPanel="true" navigator="true" -->
-<!-- 						value="#{itemVendaBean.search}" required="true"	requiredMessage="Informe o ano"> -->
-<!-- 						</p:calendar>	 -->
+				</h:panelGrid>	
+				
+				<h:panelGrid columns="8" cellspacing="10">					
 
-						<p:commandButton value="OK" id="botaoPesquisar2" rendered="#{itemVendaBean.box4Search == 1}"
-							action="#{itemVendaBean.getLista}" ajax="false"
+<!-- 					<p:inputText value="#{itemVendaBean.itemVenda.venda.formaPagamento}" /> -->
+						
+						<h:outputLabel value="Mês" styleClass="OutPut" />
+						<p:selectOneMenu id="mes" value="#{itemVendaBean.mes}" required="true" requiredMessage="Informe o mês" styleClass="input"
+						style="width: 150px;">
+								<f:selectItem itemLabel="JANEIRO" itemValue="1" />
+								<f:selectItem itemLabel="FEVEREIRO" itemValue="2" />
+								<f:selectItem itemLabel="MARÇO" itemValue="3" />
+								<f:selectItem itemLabel="ABRIL" itemValue="4" />
+								<f:selectItem itemLabel="MAIO" itemValue="5" />
+								<f:selectItem itemLabel="JUNHO" itemValue="6" />
+								<f:selectItem itemLabel="JULHO" itemValue="7" />
+								<f:selectItem itemLabel="AGOSTO" itemValue="8" />
+								<f:selectItem itemLabel="SETEMBRO" itemValue="9" />
+								<f:selectItem itemLabel="OUTUBRO" itemValue="10" />
+								<f:selectItem itemLabel="NOVEMBRO" itemValue="11" />
+								<f:selectItem itemLabel="DEZEMBRO" itemValue="12" />
+							<f:ajax event="blur" render="mgsg" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel value=" Ano " styleClass="OutPut" />	
+						<p:selectOneMenu id="ano" value="#{itemVendaBean.ano}" required="true" requiredMessage="Informe o ano" styleClass="input"
+							validatorMessage="Ano inválido" style="width: 75px;">
+								<f:selectItem itemLabel="2013" itemValue="2013" />
+								<f:selectItem itemLabel="2014" itemValue="2014" />
+								<f:selectItem itemLabel="2015" itemValue="2015" />
+								<f:selectItem itemLabel="2016" itemValue="2016" />
+								<f:selectItem itemLabel="2017" itemValue="2017" />
+								<f:selectItem itemLabel="2018" itemValue="2018" />
+								<f:selectItem itemLabel="2019" itemValue="2019" />
+								<f:selectItem itemLabel="2020" itemValue="2020" />
+								<f:selectItem itemLabel="2021" itemValue="2021" />
+								<f:selectItem itemLabel="2022" itemValue="2022" />
+								<f:selectItem itemLabel="2023" itemValue="2023" />
+							<f:ajax event="blur" render="mgsg" />
+						</p:selectOneMenu>
+													
+						<p:commandButton value="OK" id="botaoPesquisar" rendered="#{itemVendaBean.box4Search == 1}"
+							action="#{itemVendaBean.getPrestacaoByDate}" ajax="false"
 							icon="ui-icon-check" />
+								
+				</h:panelGrid>			
 			
 			<h:outputLabel value="" styleClass="OutPut" />		
-			
-			</h:panelGrid>				
 					
 					<br />
 					
@@ -91,6 +139,11 @@
 								<f:converter converterId="stringLimiterConverter" />
 								<f:attribute name="limit" value="40" />
 							</h:outputText>
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">Fornecedor</f:facet>
+							<h:outputLabel value="#{i.item.notaFiscal.fornecedor.nome}" />
 						</p:column>
 
 						<p:column width="50">
@@ -136,7 +189,7 @@
 									
 									<p:column colspan="1" style="text-align: right;">
 										<f:facet name="footer">
-										<h:outputText value="T O T A L:   " style="font-size: 14px;" />
+										<h:outputText value="TOTAL:   " style="font-size: 14px;" />
 										<h:outputText value="#{itemVendaBean.totalValor}" style="font-size: 14px; color: #8B0000;" rendered="#{not empty itemVendaBean.itensVendas1}">
 											<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
 										</h:outputText>
@@ -161,7 +214,6 @@
 			</h:form>								
 			
 		</div>
-
 
 		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
 			resizable="false" closable="false" modal="true">

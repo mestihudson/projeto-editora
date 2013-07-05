@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.Query;
 
 import ufrr.editora.dao.DAO;
+import ufrr.editora.entity.Item;
 import ufrr.editora.entity.ItemVenda;
 import ufrr.editora.util.Msg;
 
@@ -23,6 +24,7 @@ public class itemVendaBean implements Serializable {
 	private LoginBean loginBean;
 	
 	private ItemVenda itemVenda = new ItemVenda();
+	private Item item = new Item();
 	private List<ItemVenda> itensVendas;
 	private List<ItemVenda> itensVendas1;
 	private DAO<ItemVenda> dao = new DAO<ItemVenda>(ItemVenda.class);
@@ -32,6 +34,10 @@ public class itemVendaBean implements Serializable {
 	
 	private String search;
 	private Integer box4Search;
+	
+	private Integer mes;
+	
+	private Integer ano;
 	
 	@PostConstruct
 	public void init() {
@@ -86,24 +92,32 @@ public class itemVendaBean implements Serializable {
 			return null;
 		}
 	
-	// Consulta pela data	
-	@SuppressWarnings("unchecked")
-	public String getPrestacaoByFornecedorAndData() {
-		try {
-			Query query = dao.query("SELECT i FROM ItemVenda i WHERE i.item =?");
-			query.setParameter(1, itemVenda.getVenda());
-			itensVendas = query.getResultList();
-			
-			if (getItensVendas().isEmpty()) {
-				Msg.addMsgError("Nenhuma venda efetuada para este fornecedor na data informada");
-				return null;
-			}
+	//  Pretação de conta com fornecedor	
+		@SuppressWarnings("unchecked")
+		public String getPrestacaoByDate() {
+				try {
+					Query query = dao.query("SELECT v FROM ItemVenda v WHERE extract(month from v.venda.dataVenda) = ? and extract(year from v.venda.dataVenda) = ? order by v.venda.dataVenda");
+					query.setParameter(1, getMes());
+					query.setParameter(2, getAno());
+					itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);
+					itensVendas1 = query.getResultList();
+					
+					// não está fazendo filtragem com o fornecedor, somente com o mês e ano!
+					// não houve sucesso ao tentar fazer pelo sql ex: itemVenda.item.notaFiscal.fornecedor.ano 'returned null' 'item'
+					
+					if (itensVendas1.isEmpty()) {
+						init();
+						Msg.addMsgError("Nenhuma venda efetuada para os dados informados");
+					} else {
+						return null;
+					}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("... erro na consulta do caixa");
+				}
+				return null;
 		}
-		return null;
-	}
 	
 	/** calculo **/
 	
@@ -119,7 +133,7 @@ public class itemVendaBean implements Serializable {
 	// método para somar a quantidade dos itens vendidos
 		public Double getTotalValor() {
 			setTotalProdutoValor(0.00);
-			for (ItemVenda i : getItensVendas()) {
+			for (ItemVenda i : getItensVendas1()) {
 				setTotalProdutoValor(getTotalProdutoValor() + i.getTotalProdutoVenda());
 			}
 			return totalProdutoValor;
@@ -194,6 +208,30 @@ public class itemVendaBean implements Serializable {
 
 	public void setBox4Search(Integer box4Search) {
 		this.box4Search = box4Search;
+	}
+
+	public Integer getAno() {
+		return ano;
+	}
+
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+
+	public Integer getMes() {
+		return mes;
+	}
+
+	public void setMes(Integer mes) {
+		this.mes = mes;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}	
 
 }

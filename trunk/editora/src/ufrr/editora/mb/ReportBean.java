@@ -41,5 +41,13 @@ public class ReportBean implements Serializable {
 		System.out
 				.println("...solicitacao do relatorio de todos os fornecedores cadastrados");
 	}
+	
+	// relatório de produtos registrados (todos)
+		public void relatorioProdutos() {
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			Report report = new Report("Relatorio-Produtos", params);
+			report.pdfReport();
+			System.out.println("...solicitacao do relatorio de todos os produtos cadastrados");
+		}
 
 }

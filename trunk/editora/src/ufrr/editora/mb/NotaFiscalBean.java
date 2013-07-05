@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.Query;
 
 import ufrr.editora.dao.DAO;
+import ufrr.editora.entity.Fornecedor;
 import ufrr.editora.entity.Item;
 import ufrr.editora.entity.NotaFiscal;
 import ufrr.editora.entity.Produto;
@@ -26,6 +27,7 @@ public class NotaFiscalBean implements Serializable {
 	private LoginBean loginBean;
 
 	private static final long serialVersionUID = 1L;
+	private Fornecedor fornecedor = new Fornecedor();
 	private NotaFiscal notaFiscal = new NotaFiscal();
 	private Produto produto = new Produto();
 	private Item item = new Item();
@@ -529,6 +531,14 @@ public class NotaFiscalBean implements Serializable {
 
 	public void setItens(List<Item> itens) {
 		this.itens = itens;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 	
 	
