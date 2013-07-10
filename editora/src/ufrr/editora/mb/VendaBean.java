@@ -33,6 +33,7 @@ public class VendaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Venda venda = new Venda();
 	private ItemVenda itemVenda = new ItemVenda();
+	private Usuario cliente = new Usuario();
 	private Item item = new Item();
 	private Long idItem;
 	private List<ItemVenda> itensVendas;
@@ -153,14 +154,15 @@ public class VendaBean implements Serializable {
 					}
 				}
 			}
+			// este método é para consultarVendaPorCliente.xhtml
 		} else if (box4Search.equals(2)) {
 			if (search.length() <= 4) {
 				init();
 				Msg.addMsgError("Informe 5 caracteres para pesquisa");
 				return null;
 			} else {
-				vendas = dao.getAllByName("obj.cliente.nome", search);
-				if (vendas.isEmpty()) {
+				vendas1 = dao.getAllByName("obj.cliente.nome", search);
+				if (vendas1.isEmpty()) {
 					init();
 					Msg.addMsgError("Nenhuma venda efetuada para este cliente");
 					return null;
@@ -172,6 +174,22 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
+	
+	// Pesquisa cliente pelo cpf
+	public String getListaVendaByCPF() {
+		if (box4Search.equals(1)) {
+			vendas1 = dao.getAllByName("obj.cliente.cpf", search);
+			if (vendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("Nenhuma venda efetuada para este CPF");
+				return null;
+			} else {
+				return null;
+			}
+		}
+		return null;
+	}
+		
 	
 
 	/** Actions **/
@@ -216,6 +234,14 @@ public class VendaBean implements Serializable {
 
 		}
 		return null;
+	}
+
+	public Usuario getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Usuario cliente) {
+		this.cliente = cliente;
 	}
 
 	// método para efetuar venda (somente para vendedor)
@@ -496,7 +522,7 @@ public class VendaBean implements Serializable {
 	// relatório
 	public void imprimirCupom() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		Report report = new Report("Relatorio-Fornecedores", params);
+		Report report = new Report("Cupom-Fiscal", params);
 		report.pdfReport();
 		System.out.println("...imprimindo cupom fiscal");
 	}
@@ -552,6 +578,20 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
+	
+	// Total de compras do Cliente
+		public Double getValorTotalCliente() {
+			setTotalValor(00.00);
+			if (getVendas1() == null) {
+				setTotalValor(00.00);
+			}else {
+			for (Venda v : getVendas1()) {
+				setTotalValor(getTotalValor() + v.getValorTotalDesconto());
+				}
+			return totalValor;
+			}
+			return totalValor;
+		}
 	
 	// total de dinheiro retirado
 	public Double getValorTotalSaida() {
