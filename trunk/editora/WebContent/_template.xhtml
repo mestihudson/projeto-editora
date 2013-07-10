@@ -51,7 +51,11 @@
 		
 	<div style="background: #C4D2EB; height: 60px; width: 95%" align="right" id="menu">
 		
-		<h:outputText value="#{loginBean.usuario.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px " />
+		<h:outputText value="#{loginBean.usuario.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px ">
+			<f:converter converterId="stringLimiterConverter" />
+			<f:attribute name="limit" value="15" />
+		</h:outputText>
+		<h:outputText value="..." style="float: left; font-size: 13px; font-weight: bold; padding-top: 10px " />
 				
 			<p:commandLink action="#{loginBean.redirect}">	
 				<p:graphicImage value="/resources/img/inicio.png" style="cursor: pointer; margin-top: 5px;" styleClass="acende" />
@@ -231,7 +235,7 @@
 						<p:panel header="Venda">
 							<h:panelGrid columns="1">
 							
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<p:commandLink action="/pages/relatorio/consultarVendaPorCliente.xhtml?faces-redirect=true">
 							<h:panelGrid columns="2">
 								<h:graphicImage value="/resources/img/seta1.png" />
 								<h:outputLabel value="Vendas por cliente" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />

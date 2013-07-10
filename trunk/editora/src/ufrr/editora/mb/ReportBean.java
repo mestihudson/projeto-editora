@@ -1,12 +1,22 @@
 package ufrr.editora.mb;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 import ufrr.editora.report.Report;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 
 @ManagedBean
 @SessionScoped
@@ -48,6 +58,18 @@ public class ReportBean implements Serializable {
 			Report report = new Report("Relatorio-Produtos", params);
 			report.pdfReport();
 			System.out.println("...solicitacao do relatorio de todos os produtos cadastrados");
-		}
+	}
+		
+	// Gerar relatório das vendas dos clientes pela consulta		  
+		public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+		    Document pdf = (Document) document;  
+		    pdf.open();  
+		    pdf.setPageSize(PageSize.A4);
+		  
+		    ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();  
+		    String logo = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" + File.separator + "logoeditorarelatorio.png";  
+		  
+		    pdf.add(Image.getInstance(logo));  
+		}	
 
 }
