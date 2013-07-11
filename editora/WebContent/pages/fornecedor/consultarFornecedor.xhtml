@@ -143,6 +143,7 @@
 				<br />
 				
 					<h:outputLabel value="Banco: " styleClass="OutPut" />
+					<h:outputText value="NENHUM" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco==0}" />
 					<h:outputText value="BB" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco==1}" />
 					<h:outputText value="BRADESCO" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco==2}" />
 					<h:outputText value="CAIXA" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.banco==3}" />
@@ -152,10 +153,12 @@
 					<br /><br />
 					
 					<h:outputLabel value="Agencia: " for="ag" styleClass="OutPut" />
+					<h:outputText value="NENHUM" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.agencia==null}" />
 					<h:outputText id="ag" value="#{fornecedorBean.fornecedor.agencia}" styleClass="OutPut" />
 					<br /><br />
 					
 					<h:outputLabel value="C/C: " for="cc" styleClass="OutPut" />
+					<h:outputText value="NENHUM" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.conta==null}" />
 					<h:outputText id="cc" value="#{fornecedorBean.fornecedor.conta}" styleClass="OutPut" />
 					<br /><br />
 					
@@ -164,6 +167,7 @@
 					<br /><br />
 					
 					<h:outputLabel value="Titular: " for="titu" styleClass="OutPut" />
+					<h:outputText value="NENHUM" styleClass="OutPut" rendered="#{fornecedorBean.fornecedor.titularConta==null}" />
 					<h:outputText id="titu" value="#{fornecedorBean.fornecedor.titularConta}" styleClass="OutPut" />
 					<br /><br />
 									
