@@ -68,6 +68,9 @@ public class Report {
 		response.setHeader("Content-disposition", "attachment;filename="+nome+".pdf"); 
 
 		try {
+			// tentando jogar direto para impressora
+//			JasperPrintManager.printReport("/WEB-INF/classes/ufrr/editora/report/" + nome + ".jasper", false);
+			
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
