@@ -381,7 +381,7 @@ public class UsuarioBean implements Serializable {
 				|| usuario.getNome().contains(">")
 				|| usuario.getNome().contains("#")) {
 
-			Msg.addMsgError("Contém caracter(es) inválido(s)");
+			Msg.addMsgError("Contem caracter(es) invalido(s)");
 			return null;
 		}
 		if (usuario.getNome().length() <= 2) {
@@ -401,11 +401,11 @@ public class UsuarioBean implements Serializable {
 							.query("SELECT u FROM Usuario u WHERE u.nome LIKE ?");
 					query.setParameter(1, usuario.getNome() + "%");
 					usuarios = query.getResultList();
-					System.out.println("...Usuário encontrado com sucesso");
+					System.out.println("...Usuario encontrado com sucesso");
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out
-							.println("...erro: Usuário não pode ser pesquisado!");
+							.println("...erro: Usuario não pode ser pesquisado!");
 				}
 				return null;
 			}
@@ -432,7 +432,7 @@ public class UsuarioBean implements Serializable {
 		} else {
 			usuarios = dao.getAllByName("cpf", usuario.getCpf());
 			if (usuarios.isEmpty()) {
-				Msg.addMsgError("CPF não encontrado");
+				Msg.addMsgError("CPF nao encontrado");
 				return null;
 
 			} else {
@@ -446,7 +446,7 @@ public class UsuarioBean implements Serializable {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out
-							.println("...erro: Usuário não pode ser pesquisado!");
+							.println("...erro: Usuario não pode ser pesquisado!");
 				}
 				return null;
 			}
@@ -460,7 +460,7 @@ public class UsuarioBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("*")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 			} else {
 				if (search.length() <= 10) {
@@ -487,7 +487,7 @@ public class UsuarioBean implements Serializable {
 					|| search.contains("/")
 					|| search.contains("-")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
@@ -500,7 +500,7 @@ public class UsuarioBean implements Serializable {
 					if (getClientesCadastrados().isEmpty()) {
 						init();
 						Msg.addMsgError("Nenhum registro encontrado");
-						System.out.println("...Cliente não encontrado");
+						System.out.println("...Cliente nao encontrado");
 						return null;
 					} else {
 						
@@ -527,7 +527,7 @@ public class UsuarioBean implements Serializable {
 			if (!all) {
 				System.out
 						.println("...erro ao cadastrar, este cliente já está cadastrado");
-				Msg.addMsgError("ESTE EMAIL OU CPF JÁ ESTÁ CADASTRADO. FAÇA UMA CONSULTA PARA VERIFICAR");
+				Msg.addMsgError("ESTE EMAIL OU CPF JA ESTA CADASTRADO. FAÇA UMA CONSULTA PARA VERIFICAR");
 				return "/pages/usuario/cadastrarCliente.jsf";
 			} else {
 				usuario.setEndereco(endereco);
@@ -563,13 +563,13 @@ public class UsuarioBean implements Serializable {
 			}
 			if (getUsuario().getTelefone1().equalsIgnoreCase(
 					this.getUsuario().getTelefone2())) {
-				Msg.addMsgError("NÚMERO DE TELEFONES NÃO PODEM SER IGUAIS, POR FAVOR INFORME OUTRO");
+				Msg.addMsgError("NUMERO DE TELEFONES NAO PODEM SER IGUAIS, POR FAVOR INFORME OUTRO");
 				System.out.println("...erro: número de telefones iguais");
 			}
 			if (!all) {
 				System.out
 						.println("...erro ao cadastrar, este cliente já está cadastrado");
-				Msg.addMsgError("EMAIL OU CPF JÁ ESTÁ CADASTRADO NO SISTEMA");
+				Msg.addMsgError("EMAIL OU CPF JA ESTA CADASTRADO NO SISTEMA, SE PERSISTIR O PROBLEMA ENTRE EM CONTATO COM A EDITORA");
 				return "/pages/usuario/cadastrarCliente.jsf";
 			} else {
 				if (getUsuario().getSenha().equalsIgnoreCase(
@@ -612,7 +612,7 @@ public class UsuarioBean implements Serializable {
 			if (!all) {
 				System.out
 						.println("...erro ao cadastrar, este cliente já está cadastrado");
-				Msg.addMsgError("CPF OU EMAIL JÁ CONTÉM REGISTRO NO SISTEMA, TENTE OUTRO.");
+				Msg.addMsgError("CPF OU EMAIL JA CONTEM REGISTRO NO SISTEMA, TENTE OUTRO.");
 				return "/pages/usuario/cadastrarCliente.jsf";
 			} else {
 				if (getUsuario().getSenha().equalsIgnoreCase(
@@ -623,7 +623,7 @@ public class UsuarioBean implements Serializable {
 					usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 					dao.adiciona(usuario);
 					init();
-					Msg.addMsgInfo("SOLICITAÇÃO DE ACESSO ENVIADA COM SUCESSO. AGUARDE AUTORIZAÇÃO!");
+					Msg.addMsgInfo("SOLICITACAO DE ACESSO ENVIADA COM SUCESSO. AGUARDE AUTORIZACAO!");
 					this.usuario = new Usuario();
 					System.out.println("...Solicitação enviada");
 					return "index.xhtml";
@@ -648,8 +648,8 @@ public class UsuarioBean implements Serializable {
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(false);
 			this.getUsuario().setAceitaSolicitacao(false);
-			Msg.addMsgFatal("USUÁRIO: " + getUsuario().getNome()
-					+ " SOLICITAÇÃO NÃO ACEITA");
+			Msg.addMsgFatal("USUARIO: " + getUsuario().getNome()
+					+ " SOLICITACAO NAO ACEITA");
 			dao.atualiza(usuario);
 			System.out.println("...Usuário ativado");
 			return "/pages/usuario/autorizarAcesso.xhtml";
@@ -664,15 +664,15 @@ public class UsuarioBean implements Serializable {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(true);
-			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome()
+			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()
 					+ " ATIVADO COM SUCESSO");
 			dao.atualiza(usuario);
 			System.out.println("...Usuário ativado");
 			return "/pages/usuario/autorizarAcesso.xhtml";
 		} else {
 			System.out.println("..Não foi possível ativar usuário");
-			Msg.addMsgError("USUÁRIO: " + getUsuario().getNome()
-					+ " NÃO FOI ATIVADO. TENTE NOVAMENTE");
+			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
+					+ " NAO FOI ATIVADO. TENTE NOVAMENTE");
 		}
 		return "/pages/usuario/autorizarAcesso.xhtml";
 
@@ -691,15 +691,15 @@ public class UsuarioBean implements Serializable {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(true);
-			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome()
+			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()
 					+ " REATIVADO COM SUCESSO");
 			dao.atualiza(usuario);
 			System.out.println("...Usuário Reativado");
 			return "/pages/usuario/reativarAcesso.xhtml";
 		} else {
 			System.out.println("..Não foi possível reativar usuário");
-			Msg.addMsgError("USUÁRIO: " + getUsuario().getNome()
-					+ " NÃO FOI POSSÍVEL REATIVA-LO. TENTE NOVAMENTE");
+			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
+					+ " NAO FOI POSSIVEL REATIVA-LO. TENTE NOVAMENTE");
 		}
 		return "/pages/usuario/reativarAcesso.xhtml";
 
@@ -710,15 +710,15 @@ public class UsuarioBean implements Serializable {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(false);
-			Msg.addMsgInfo("USUÁRIO: " + getUsuario().getNome() + " DESATIVADO");		
+			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome() + " DESATIVADO");		
 			dao.atualiza(usuario);
 			this.usuario = new Usuario();
 			System.out.println("...Usuário desativado");
 			return "/pages/usuario/desativarAcesso.xhtml";
 		} else {
 			System.out.println("..Não foi possível desativar usuário");
-			Msg.addMsgError("USUÁRIO: " + getUsuario().getNome()
-					+ " NÃO FOI DESATIVADO. TENTE NOVAMENTE");
+			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
+					+ " NAO FOI DESATIVADO. TENTE NOVAMENTE");
 		}
 		return "/pages/usuario/desativarAcesso.xhtml";
 
@@ -737,7 +737,7 @@ public class UsuarioBean implements Serializable {
 					+ getUsuario().getNome() + " modificado");
 		} else {
 			System.out.println("...Não foi possível modificar perfil");
-			Msg.addMsgError("NÃO FOI POSSÍVEL EFETUAR OPERAÇÃO. TENTE NOVAMENTE");
+			Msg.addMsgError("NAO FOI POSSIVEL EFETUAR OPERACAO. TENTE NOVAMENTE");
 		}
 	}
 
@@ -745,7 +745,7 @@ public class UsuarioBean implements Serializable {
 	public void updateCliente() {
 		if (usuario.getTelefone1()
 				.equalsIgnoreCase(getUsuario().getTelefone2())) {
-			Msg.addMsgError("NÚMEROS DE TELEFONE NÃO PODEM SER IGUAIS");
+			Msg.addMsgError("NUMEROS DE TELEFONE NAO PODEM SER IGUAIS");
 		} else {
 			if (usuario.getId() != null) {
 				Msg.addMsgInfo("CADASTRO DO CLIENTE: " + getUsuario().getNome()
@@ -757,7 +757,7 @@ public class UsuarioBean implements Serializable {
 			} else {
 				System.out
 						.println("...Não foi possível alterar cadastro do cliente");
-				Msg.addMsgError("NÃO FOI POSSÍVEL EFETUAR OPERAÇÃO. TENTE NOVAMENTE");
+				Msg.addMsgError("NAO FOI POSSIVEL EFETUAR OPERACAO. TENTE NOVAMENTE");
 			}
 		}
 	}

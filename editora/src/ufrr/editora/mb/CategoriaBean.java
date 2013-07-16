@@ -72,7 +72,7 @@ public class CategoriaBean implements Serializable {
 			boolean all = true;
 			if (!validarNomeUK_nome()) {
 				all = false;
-				Msg.addMsgError("O nome da categoria já tem registro no sistema");
+				Msg.addMsgError("O nome da categoria ja tem registro no sistema");
 			}
 			if (!all) {
 				System.out.println("...Erro ao cadastrar categoria: nome já existe");

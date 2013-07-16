@@ -86,12 +86,12 @@ public class TipoProdutoBean implements Serializable {
 					dao.adiciona(tipo);
 					this.tipo = new TipoProduto();
 				} else {
-					Msg.addMsgInfo("Alteração realizada com sucesso");
+					Msg.addMsgInfo("Alteracao realizada com sucesso");
 					dao.atualiza(tipo);
 				}
 			}
 		} else {
-			Msg.addMsgError("Nome já registrado");
+			Msg.addMsgError("Nome ja registrado");
 		}
 		tipos = dao.getAllOrder("nome");
 		this.cadastro = true;

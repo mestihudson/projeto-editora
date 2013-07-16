@@ -76,7 +76,7 @@ public class MensagemBean implements Serializable {
 			DAO<Usuario> userDao = new DAO<Usuario>(Usuario.class);
 			Usuario user = userDao.buscaPorId(this.loginBean.getUsuario().getId());
 			user.getMensagens().add(mensagem);
-			Msg.addMsgInfo("Mensagem enviada para usuário " + getMensagem().getDestinatario().getNome());
+			Msg.addMsgInfo("Mensagem enviada para usuario " + getMensagem().getDestinatario().getNome());
 			mensagem.setStatus(1);
 			dao.adiciona(mensagem);
 			this.mensagem = new Mensagem();
@@ -90,7 +90,7 @@ public class MensagemBean implements Serializable {
 	
 	public void arquivarMensagem() {
 		if (mensagem.getId() != null) {
-			Msg.addMsgInfo("Você arquivou a mensagem. Para exibir novamente clique no ícone 'Mensagens arquivadas' ");
+			Msg.addMsgInfo("Voce arquivou a mensagem. Para exibir novamente clique no icone 'Mensagens arquivadas' ");
 			mensagem.setStatus(2);
 			dao.atualiza(mensagem);
 			this.mensagem = new Mensagem();

@@ -247,15 +247,15 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNome_editora()) {
 				all = false;
-				Msg.addMsgError("Editora não pode ser vazio");
+				Msg.addMsgError("Editora nao pode ser vazio");
 			}
 			if (!validarNome_nome()) {
 				all = false;
-				Msg.addMsgError("Nome não pode ser vazio");
+				Msg.addMsgError("Nome nao pode ser vazio");
 			}
 			if (!validarIntegerUK_isbn()) {
 				all = false;
-				Msg.addMsgError("Este produto já existe");
+				Msg.addMsgError("Este produto ja existe");
 			}
 			if (!all) {
 				System.out
@@ -289,7 +289,7 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNameUK_nome()) {
 				all = false;
-				Msg.addMsgError("Outro produto com a mesma descrição já foi registrado no sistema");
+				Msg.addMsgError("Outro produto com a mesma descricao ja foi registrado no sistema");
 				return null;
 			}
 			if (!all) {
@@ -326,11 +326,11 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNome_editora()) {
 				all = false;
-				Msg.addMsgError("Editora não pode ser vazio");
+				Msg.addMsgError("Editora nao pode ser vazio");
 			}
 			if (!validarNome_nome()) {
 				all = false;
-				Msg.addMsgError("Nome não pode ser vazio");
+				Msg.addMsgError("Nome nao pode ser vazio");
 			}
 			if (!all) {
 				System.out
@@ -357,7 +357,7 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNome_nome()) {
 				all = false;
-				Msg.addMsgError("Nome do produto não pode ser vazio");
+				Msg.addMsgError("Nome do produto nao pode ser vazio");
 			}
 			if (!all) {
 				System.out
