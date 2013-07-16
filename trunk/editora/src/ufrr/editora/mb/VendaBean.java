@@ -199,7 +199,7 @@ public class VendaBean implements Serializable {
 		boolean all = true;
 
 		if (venda.getCliente() != null) {
-			Msg.addMsgFatal("Erro: operação cancelada. Não identifique o cliente ao retirar dinheiro.");
+			Msg.addMsgFatal("Erro: operacao cancelada. Nao identifique o cliente ao retirar dinheiro do caixa.");
 			all = false;
 			return "/pages/venda/efetuarVendaAdmin.xhtml";
 		}
@@ -221,7 +221,7 @@ public class VendaBean implements Serializable {
 				venda.setValorTotalDesconto(getVenda().getValorTotal());
 				venda.setAtivado(true);
 
-				Msg.addMsgInfo("Saída efetuada com sucesso");
+				Msg.addMsgInfo("Saida efetuada com sucesso");
 				System.out.println("...saida efetuada com sucesso!!");
 				dao.adiciona(venda);
 				venda = new Venda();
@@ -229,7 +229,7 @@ public class VendaBean implements Serializable {
 				return "/pages/venda/efetuarVendaAdmin.xhtml";
 
 			} else {
-				Msg.addMsgFatal("Retirada não permitida");
+				Msg.addMsgFatal("Retirada nao permitida");
 			}
 
 		}
@@ -253,7 +253,7 @@ public class VendaBean implements Serializable {
 			all = false;
 		}
 		if (venda.getItensVendas().isEmpty()) {
-			Msg.addMsgError("Não é possível efetuar a venda sem produto");
+			Msg.addMsgError("Nao foi possivel efetuar a venda sem produto");
 			all = false;
 		}
 		if (!all) {
@@ -296,8 +296,8 @@ public class VendaBean implements Serializable {
 					return "/pages/venda/efetuarVenda2.xhtml?faces-redirect=true";
 
 			} else {
-				Msg.addMsgFatal("Há na lista um produto com quantidade indisponível no estoque, " +
-						"com isso não será permitida nenhuma venda. Verifique a quantidade disponível no estoque!");
+				Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
+						"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
 				System.out.println("...quantidade não disponível no estoque");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
@@ -316,7 +316,7 @@ public class VendaBean implements Serializable {
 			all = false;
 		}
 		if (venda.getItensVendas().isEmpty()) {
-			Msg.addMsgError("Não é possível efetuar a venda sem produto");
+			Msg.addMsgError("Nao foi possível efetuar a venda sem produto");
 			all = false;
 		}
 		if (!all) {
@@ -359,9 +359,9 @@ public class VendaBean implements Serializable {
 					return "/pages/venda/efetuarVendaAdmin2.xhtml?faces-redirect=true";
 				
 			} else {
-				Msg.addMsgFatal("Há na lista um produto com quantidade indisponível no estoque, " +
-						"com isso não será permitida nenhuma venda. Verifique a quantidade disponível no estoque!");
-				System.out.println("...quantidade não disponível no estoque");
+				Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
+						"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
+				System.out.println("...quantidade nao disponivel no estoque");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
 			}
@@ -421,15 +421,15 @@ public class VendaBean implements Serializable {
 							}
 
 				} else {
-					Msg.addMsgFatal("Há na lista um produto com quantidade indisponível no estoque, " +
-							"com isso não será permitida nenhuma venda. Verifique a quantidade disponível no estoque!");
+					Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
+							"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
 					System.out.println("...quantidade não disponível no estoque");
 					itemVenda = new ItemVenda();
 					this.cadastro = true;
 				}
 
 			} else {
-				Msg.addMsgError("Produto não pode ser adicionado novamente");
+				Msg.addMsgError("Produto nao pode ser adicionado novamente");
 				System.out.println("...produto nao pode ser adicionado novamente");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
@@ -448,7 +448,7 @@ public class VendaBean implements Serializable {
 					return "/pages/venda/consultarVenda.xhtml";
 				} else {
 					System.out.println("...Erro: não foi possível desativar venda");
-					Msg.addMsgError("Somente pode desativar venda usuário administrador");
+					Msg.addMsgError("Somente pode desativar venda usuario com perfil administrador");
 					return null;
 				}
 		}

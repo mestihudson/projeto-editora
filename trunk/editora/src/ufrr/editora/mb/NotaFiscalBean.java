@@ -106,12 +106,12 @@ public class NotaFiscalBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 			} else {
 				if (search.length() <= 0) {
 					init();
-					Msg.addMsgError("Número inválido. Preencha corretamente o campo marcado para pesquisa");
+					Msg.addMsgError("Número invalido. Preencha corretamente o campo marcado para pesquisa");
 					return null;
 				} else {
 					notasFiscais = dao.getAllByName("obj.numero", search);
@@ -194,7 +194,7 @@ public class NotaFiscalBean implements Serializable {
 		}
 		if (!all) {
 			System.out
-					.println("...Erro ao cadastrar nota: nota fiscal já existe");
+					.println("...Erro ao cadastrar nota: nota fiscal ja existe");
 		} else {
 			if (notaFiscal.getValor().equals(getValorTotalProdutos())) {
 				this.getNotaFiscal().setUsuario(this.loginBean.getUsuario());
@@ -263,7 +263,7 @@ public class NotaFiscalBean implements Serializable {
 				this.cadastro = true;
 
 			} else {
-				Msg.addMsgError("Este produto já foi adicionado");
+				Msg.addMsgError("Este produto ja foi adicionado");
 				System.out.println("...Este produto já foi adicionado");
 				item = new Item();
 				this.cadastro = true;
@@ -306,7 +306,7 @@ public class NotaFiscalBean implements Serializable {
 			all = false;
 		}
 		if (notaFiscal.getItens().isEmpty()) {
-			Msg.addMsgError("Não é possível cadastrar nota fiscal sem produto");
+			Msg.addMsgError("Nao foi possivel cadastrar nota fiscal sem produto");
 			all = false;
 		}
 		if (!all) {
@@ -363,20 +363,20 @@ public class NotaFiscalBean implements Serializable {
 
 	/** validations **/
 	
-	public boolean validarAddItem() {
-		@SuppressWarnings("unused")
-		boolean var = getIdProduto()==getItem().getProduto().getId();
-			
-		Query q = dao.query("SELECT i FROM Item i WHERE produto and quantidadeEntrada = quantidadeSaida"); //achar um método certo
-				
-		if (!q.getResultList().isEmpty()) {
-			Msg.addMsgError("Este produto encontra-se em estoque, é preciso esgota-lo para nova entrada");
-			return true;
-		} else {
-			resultValidarUK = "";
-			return false;
-		}
-	}
+//	public boolean validarAddItem() {
+//		@SuppressWarnings("unused")
+//		boolean var = getIdProduto()==getItem().getProduto().getId();
+//			
+//		Query q = dao.query("SELECT i FROM Item i WHERE produto and quantidadeEntrada = quantidadeSaida"); //achar um método certo
+//				
+//		if (!q.getResultList().isEmpty()) {
+//			Msg.addMsgError("Este produto encontra-se em estoque, é preciso esgota-lo para nova entrada");
+//			return true;
+//		} else {
+//			resultValidarUK = "";
+//			return false;
+//		}
+//	}
 
 	// validação para não cadastrar nº de nota fiscal para o mesmo fornecedor
 	public boolean validarNota() {
@@ -386,7 +386,7 @@ public class NotaFiscalBean implements Serializable {
 		q.setParameter(2, notaFiscal.getFornecedor());
 
 		if (!q.getResultList().isEmpty()) {
-			Msg.addMsgError("Está nota fiscal já possui registro no sistema");
+			Msg.addMsgError("Esta nota fiscal ja possui registro no sistema");
 			return false;
 		} else {
 			resultValidarUK = "";

@@ -102,7 +102,7 @@ public class FornecedorBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
@@ -194,11 +194,11 @@ public class FornecedorBean implements Serializable {
 			boolean all = true;
 			if (!validarNomeUK_nome()) {
 				all = false;
-				Msg.addMsgError("O nome do fornecedor já tem registro no sistema");
+				Msg.addMsgError("O nome do fornecedor ja tem registro no sistema");
 			}
 			if (!validarNomeUK_cnpj()) {
 				all = false;
-				Msg.addMsgError("CPF ou CNPJ já tem registro no sistema");
+				Msg.addMsgError("CPF ou CNPJ ja tem registro no sistema");
 			}
 //			if (!validarNome_agencia()) {
 //				all = false;
@@ -215,7 +215,7 @@ public class FornecedorBean implements Serializable {
 			if (fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail2())
 				|| fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail3())) {
 				all = false;
-				Msg.addMsgError("Endereço de email não pode se repetir");
+				Msg.addMsgError("Endereco de email não pode se repetir");
 			}
 			if (!all) {
 				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
@@ -230,7 +230,7 @@ public class FornecedorBean implements Serializable {
 							|| fornecedor.getBanco().equals(2) && fornecedor.getOperacao()!=null
 							|| fornecedor.getBanco().equals(4) && fornecedor.getOperacao()!=null
 							|| fornecedor.getBanco().equals(5) && fornecedor.getOperacao()!=null) {
-						Msg.addMsgError("Campo Op serve somente para a opção de banco Caixa");
+						Msg.addMsgError("Campo Op serve somente para a opcao de banco Caixa");
 						return null;	
 				}else
 				this.getFornecedor().setUsuario(this.loginBean.getUsuario());
@@ -275,14 +275,14 @@ public class FornecedorBean implements Serializable {
 				return "/pages/forncedor/cadastrarFornecedor.jsf";
 			} else {					
 				if (fornecedor.getBanco().equals(3) && fornecedor.getOperacao().isEmpty()) {
-					Msg.addMsgError("Campo Op não pode ser vazio");
+					Msg.addMsgError("Campo Op nao pode ser vazio");
 					return null;	
 				}else
 					if (fornecedor.getBanco().equals(3)) {
 						dao.atualiza(fornecedor);
 						this.fornecedor = new Fornecedor();
 						init();
-						Msg.addMsgInfo("Atualização efetuada com sucesso");
+						Msg.addMsgInfo("Atualizacao efetuada com sucesso");
 						System.out.println("...alteração de fornecedor efetuada com sucesso!");
 						
 					} else {
@@ -290,7 +290,7 @@ public class FornecedorBean implements Serializable {
 						dao.atualiza(fornecedor);
 						this.fornecedor = new Fornecedor();
 						init();
-						Msg.addMsgInfo("Atualização efetuada com sucesso");
+						Msg.addMsgInfo("Atualizacao efetuada com sucesso");
 						System.out.println("...alteração de fornecedor efetuada com sucesso!");
 
 					}

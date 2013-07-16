@@ -53,8 +53,8 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getStatus() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("Aguarde liberação do acesso");
-				System.out.println("...acesso não permitido, aguarde liberar o acesso");
+				Msg.addMsgError("Aguarde liberacao do acesso");
+				System.out.println("...acesso nao permitido, aguarde liberar o acesso");
 				this.usuario = new Usuario();
 				return null;
 			} else {
@@ -90,7 +90,7 @@ public class LoginBean implements Serializable {
 
 			}
 		} else {
-			Msg.addMsgFatal("Senha ou login inválido");
+			Msg.addMsgFatal("Senha ou login invalido");
 			System.out.println("...senha ou login invalido");
 			this.usuario = new Usuario();
 			return null;
@@ -104,7 +104,7 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getId() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("Usuário não encontrado");
+				Msg.addMsgError("Usuario nao encontrado");
 				System.out
 						.println("...Usuário não existe ou ainda não foi ativado para pedir solicitação de senha");
 				return null;
@@ -123,7 +123,7 @@ public class LoginBean implements Serializable {
 			}
 		} else {
 			System.out.println("...Digite corretamente as informações para recuperar seu acesso");
-			Msg.addMsgFatal("Registro não encontrado."
+			Msg.addMsgFatal("Registro nao encontrado."
 					+ " Digite seu CPF corretamente"
 					+ " caso persistir o erro, entre em contato com a Editora UFRR");
 			this.usuario = new Usuario();
@@ -144,7 +144,7 @@ public class LoginBean implements Serializable {
 				return null;
 			}
 		} else {
-			System.out.println("...Digite corretamente as informações para recuperar seu acesso");
+			System.out.println("...Digite corretamente as informacoes para recuperar seu acesso");
 			Msg.addMsgFatal("Digite a senha correta conforme enviada para seu email");
 			this.usuario = new Usuario();
 			return null;
@@ -163,7 +163,7 @@ public class LoginBean implements Serializable {
 					return "/pages/usuario/atualizarCadastro.xhtml?faces-redirect=true";
 				}
 			}else {	
-			Msg.addMsgFatal("Senha inválida");
+			Msg.addMsgFatal("Senha invalida");
 			System.out.println("Chegou aqui...");
 			System.out.println(LoginBean.this.getUsuario().getLogin());
 			return "/pages/usuario/senhaCadastro.xhtml";		
@@ -177,7 +177,7 @@ public class LoginBean implements Serializable {
 			if (this.usuario.getSenha().equalsIgnoreCase(this.usuario.getRepetirSenha())) {
 				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 				dao2.atualiza(usuario);
-				Msg.addMsgInfo("Operação executada com sucesso");
+				Msg.addMsgInfo("Operacao executada com sucesso");
 				System.out.println("...Senha alterada depois de solicita-la por email");
 				
 				FacesContext facesContext = FacesContext.getCurrentInstance();
