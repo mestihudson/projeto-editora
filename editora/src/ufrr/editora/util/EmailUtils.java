@@ -8,7 +8,6 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-import ufrr.editora.entity.Venda;
 import ufrr.editora.mb.LoginBean;
 
 public class EmailUtils {
@@ -43,31 +42,20 @@ public class EmailUtils {
 	 email2.setMsg(email.getMensagem());
 	 email2.addTo(email.getDestino().getLogin());
 	 String resposta = email2.send();
-	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + email.getDestino().getLogin(), "Informação"));
+	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + email.getDestino().getLogin(), "Informaï¿½ï¿½o"));
 	 }
 	 
+	 // servidor de teste
 	 @SuppressWarnings("unused")
 		public static void recuperaSenha(LoginBean usuario) throws EmailException {
 		 Email email2 = new SimpleEmail();
 		 email2 = conectaEmail();
-		 email2.setSubject("Recuperação de senha Editora UFRR");
-		 email2.setMsg("Editora UFRR" + "\n" + "siga as instruções abaixa para prosseguir com a solicitação" + "\n" + "\n" + "Clique no link e informe o código abaixo: " 
-		 + "http://172.22.10.110:8082/editora/esqueceuSenha.jsf?faces-redirect=true" 
+		 email2.setSubject("Recuperacao de senha ao sistema Editora UFRR");
+		 email2.setMsg("Editora UFRR" + "\n" + "siga as instrucoes abaixo para prosseguir com a solicitacao" + "\n" + "\n" + "Clique no link e informe este codigo abaixo: " 
+		 + "http://172.22.10.248:8080/editora/esqueceuSenha.xhtml?faces-redirect=true" 
 		 + "\n" + "\n" + usuario.getUsuario().getSenha());
 		 email2.addTo(usuario.getUsuario().getLogin());
 		 String resposta = email2.send();
-		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getUsuario().getLogin(), "Informação"));
+		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getUsuario().getLogin(), "Informacao"));
 		 }
-	 
-	 // envia confirmação de compra para emissão de nota
-	 @SuppressWarnings("unused")
-		public static void enviaComprovante(Venda venda) throws EmailException {
-		 Email email2 = new SimpleEmail();
-		 email2 = conectaEmail();
-		 email2.setSubject("Editora UFRR");
-		 email2.setMsg("Emissão de Nota Fiscal para cliente: " + venda.getCliente().getNome() + "\n" + "CPF: " + venda.getCliente().getCpf());
-		 email2.addTo("leonardo.holanda@ufrr.br");
-		 String resposta = email2.send();
-		 }
-
 }
