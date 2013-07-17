@@ -631,7 +631,7 @@
 				</div>
 			</p:dialog>
 
-		<p:dialog visible="true" resizable="false" modal="true" rendered="#{empty vendaBean.venda.itensVendas and vendaBean.venda.cliente.id==null}">
+		<p:dialog visible="true" resizable="false" modal="true" rendered="#{empty vendaBean.venda.itensVendas and vendaBean.venda.cliente.id==null and loginBean.usuario.perfil.id!=3}">
 			<div align="center">
 
 				<h:form id="form_confirmation_venda" rendered="#{loginBean.usuario.perfil.id!=4}" style="text-align: center;">
