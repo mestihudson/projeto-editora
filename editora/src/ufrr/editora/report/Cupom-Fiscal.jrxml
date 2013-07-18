@@ -79,7 +79,7 @@ AND   tb_usuario."id" <> 1]]>
 				<textFieldExpression><![CDATA[$F{tb_venda_datavenda}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="94bb2721-f075-4bef-9c7f-71801093f91e" x="0" y="0" width="83" height="78"/>
+				<reportElement uuid="94bb2721-f075-4bef-9c7f-71801093f91e" x="0" y="12" width="83" height="66"/>
 				<imageExpression><![CDATA["/home/leonardo/workspace/editora/WebContent/resources/img/logoeditora.png"]]></imageExpression>
 			</image>
 			<textField>
