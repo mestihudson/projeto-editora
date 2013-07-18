@@ -43,12 +43,25 @@
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
 			
 			<div align="right">
-			
+				<h:panelGrid columns="5">
+				
 				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaNota.show();" style="float: right; cursor: pointer;"
 					title="Altera os dados da nota fiscal" styleClass="acende" />
+				
+				<h:commandLink action="/pages/fornecedor/cadastrarJFornecedor.xhtml?faces-redirect=true" immediate="true">	
+					<h:graphicImage value="/resources/img/fornecedor.png" style="float: right; cursor: pointer;"
+						title="Opção para cadastrar fornecedor" styleClass="acende" />
+				</h:commandLink>
+				
+				<h:commandLink action="/pages/produto/cadastrarProduto.xhtml?faces-redirect=true" immediate="true">	
+					<h:graphicImage value="/resources/img/produto.png" style="float: right; cursor: pointer;"
+						title="Opção para cadastrar produto" styleClass="acende" />
+				</h:commandLink>
+				
+				</h:panelGrid>				
 								
 			</div>
-			<br /><br />
+			<br />
 										
 					<p:panel header="Dados da Nota Fiscal" style="width: 92%; margin-left: 10px;">
 					
