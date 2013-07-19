@@ -85,7 +85,7 @@ public class UsuarioBean implements Serializable {
 		box4Search = 3;
 	}
 	
-	/** Função para criar hash da senha informada **/
+	/** Funï¿½ï¿½o para criar hash da senha informada **/
 	public static String md5(String senha) {
 		String sen = "";
 		MessageDigest md = null;
@@ -199,37 +199,36 @@ public class UsuarioBean implements Serializable {
 		return usuarios;
 	}
 
-	// Exibe uma lista com as solicitações de acesso
+	// Exibe uma lista com as solicitaï¿½ï¿½es de acesso
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getSolicitacoes() {
-		Query query = dao
-				.query("SELECT u FROM Usuario u WHERE u.status = false AND u.aceitaSolicitacao = true AND u.perfil = 4");
+		Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = false AND u.aceitaSolicitacao = true AND u.perfil = 4");
 		usuarios = query.getResultList();
-		System.out.println("Total de Usuários: " + getUsuarios().size());
+		System.out.println("Total de Usuarios: " + getUsuarios().size());
 		return query.getResultList();
 	}
 
-	// Exibe uma lista de usuário funcionários ativados
+	// Exibe uma lista de usuï¿½rio funcionï¿½rios ativados
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getAtivados() {
 		Query query = dao
 				.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil <= 3 ORDER BY u.nome");
 		usuarios = query.getResultList();
-		System.out.println("Total de Usuários: " + getUsuarios().size());
+		System.out.println("Total de Usuarios: " + getUsuarios().size());
 		return query.getResultList();
 	}
 
-	// Exibe uma lista de usuário ativados sem clientes e administrador
+	// Exibe uma lista de usuï¿½rio ativados sem clientes e administrador
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getAtivadosSemAdministrador() {
 		Query query = dao
 				.query("SELECT u FROM Usuario u WHERE u.status = true AND u.perfil <= 3 and u.perfil != 1 ORDER BY u.nome");
 		usuarios = query.getResultList();
-		System.out.println("Total de Usuários: " + getUsuarios().size());
+		System.out.println("Total de Usuarios: " + getUsuarios().size());
 		return query.getResultList();
 	}
 	
-	// Exibe uma lista de usuários desativados
+	// Exibe uma lista de usuï¿½rios desativados
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getUsuariosDesativados() {
 		Query query = dao
@@ -239,7 +238,7 @@ public class UsuarioBean implements Serializable {
 		return query.getResultList();
 	}
 
-	// Exibe uma lista de usuários desativados sem administrador
+	// Exibe uma lista de usuï¿½rios desativados sem administrador
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getUsuariosDesativados2() {
 		Query query = dao
@@ -353,7 +352,7 @@ public class UsuarioBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void getClienteById() {
 		if (usuario.getId() == null || usuario.getId() == 0) {
-			Msg.addMsgError("Informe corretamente o código do cliente");
+			Msg.addMsgError("Informe corretamente o codigo do cliente");
 
 		} else {
 			try {
@@ -371,7 +370,7 @@ public class UsuarioBean implements Serializable {
 		}
 	}
 
-	// Pesquisa usuário pelo nome
+	// Pesquisa usuï¿½rio pelo nome
 	@SuppressWarnings("unchecked")
 	public String getListaUsuariosByName() {
 		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
@@ -395,7 +394,7 @@ public class UsuarioBean implements Serializable {
 				return null;
 
 			} else {
-				System.out.println("Chegou Aqui... Processando informações...");
+				System.out.println("Chegou Aqui... Processando informacoes...");
 				try {
 					Query query = dao
 							.query("SELECT u FROM Usuario u WHERE u.nome LIKE ?");
@@ -405,14 +404,14 @@ public class UsuarioBean implements Serializable {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out
-							.println("...erro: Usuario não pode ser pesquisado!");
+							.println("...erro: Usuario nao pode ser pesquisado!");
 				}
 				return null;
 			}
 		}
 	}
 
-	// Pesquisa usuário pelo CPF
+	// Pesquisa usuï¿½rio pelo CPF
 	@SuppressWarnings("unchecked")
 	public String getListaUsuariosByCPF() {
 		if (usuario.getNome().contains("'") || usuario.getNome().contains("@")
@@ -422,7 +421,7 @@ public class UsuarioBean implements Serializable {
 				|| usuario.getNome().contains(">")
 				|| usuario.getNome().contains("#")) {
 
-			Msg.addMsgError("Contém caracter(es) inválido(s)");
+			Msg.addMsgError("Contem caracter(es) invalido(s)");
 			return null;
 		}
 		if (usuario.getCpf().length() != 14) {
@@ -436,17 +435,17 @@ public class UsuarioBean implements Serializable {
 				return null;
 
 			} else {
-				System.out.println("Chegou Aqui... Processando informações...");
+				System.out.println("Chegou Aqui... Processando informacoes...");
 				try {
 					Query query = dao
 							.query("SELECT u FROM Usuario u WHERE u.cpf=? and u.perfil = 4");
 					query.setParameter(1, usuario.getCpf());
 					usuarios = query.getResultList();
-					System.out.println("...Usuário encontrado com sucesso");
+					System.out.println("...Usuario encontrado com sucesso");
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out
-							.println("...erro: Usuario não pode ser pesquisado!");
+							.println("...erro: Usuario nao pode ser pesquisado!");
 				}
 				return null;
 			}
@@ -473,7 +472,7 @@ public class UsuarioBean implements Serializable {
 					if (getClientesCadastrados().isEmpty()) {
 						init();
 						Msg.addMsgError("Nenhum registro encontrado");
-						System.out.println("...Cliente não encontrado");
+						System.out.println("...Cliente nao encontrado");
 						return null;
 					} else {
 						
@@ -513,7 +512,7 @@ public class UsuarioBean implements Serializable {
 
 	/** Actions **/
 
-	// aqui funcionário efetua o cadastro do cliente sem incluir a senha de
+	// aqui funcionï¿½rio efetua o cadastro do cliente sem incluir a senha de
 	// acesso
 	public String addClienteIn() {
 		try {
@@ -526,9 +525,9 @@ public class UsuarioBean implements Serializable {
 			}
 			if (!all) {
 				System.out
-						.println("...erro ao cadastrar, este cliente já está cadastrado");
-				Msg.addMsgError("ESTE EMAIL OU CPF JA ESTA CADASTRADO. FAÇA UMA CONSULTA PARA VERIFICAR");
-				return "/pages/usuario/cadastrarCliente.jsf";
+						.println("...erro ao cadastrar, este cliente ja esta cadastrado");
+				Msg.addMsgError("ESTE EMAIL OU CPF JA ESTA CADASTRADO. FACA UMA CONSULTA PARA VERIFICAR");
+				return "/pages/usuario/cadastrarCliente.xhtml";
 			} else {
 				usuario.setEndereco(endereco);
 				usuario.setStatus(true);
@@ -550,7 +549,7 @@ public class UsuarioBean implements Serializable {
 		return null;
 	}
 
-	// auto cadastro do cliente para comprar produto (não precisará de permissão
+	// auto cadastro do cliente para comprar produto (nï¿½o precisarï¿½ de permissï¿½o
 	// do administrador)
 	public String addCliente() {
 		try {
@@ -564,13 +563,13 @@ public class UsuarioBean implements Serializable {
 			if (getUsuario().getTelefone1().equalsIgnoreCase(
 					this.getUsuario().getTelefone2())) {
 				Msg.addMsgError("NUMERO DE TELEFONES NAO PODEM SER IGUAIS, POR FAVOR INFORME OUTRO");
-				System.out.println("...erro: número de telefones iguais");
+				System.out.println("...erro: numero de telefones iguais");
 			}
 			if (!all) {
 				System.out
-						.println("...erro ao cadastrar, este cliente já está cadastrado");
+						.println("...erro ao cadastrar, este cliente ja foi cadastrado");
 				Msg.addMsgError("EMAIL OU CPF JA ESTA CADASTRADO NO SISTEMA, SE PERSISTIR O PROBLEMA ENTRE EM CONTATO COM A EDITORA");
-				return "/pages/usuario/cadastrarCliente.jsf";
+				return "/pages/usuario/cadastrarCliente.xhtml";
 			} else {
 				if (getUsuario().getSenha().equalsIgnoreCase(
 						this.getUsuario().getRepetirSenha())) {
@@ -599,7 +598,7 @@ public class UsuarioBean implements Serializable {
 		return null;
 	}
 
-	// solicitação de acesso ao sistema(somente para funcionários)
+	// solicitaï¿½ï¿½o de acesso ao sistema(somente para funcionï¿½rios)
 	public String addPessoa() {
 		try {
 			boolean all = true;
@@ -611,9 +610,9 @@ public class UsuarioBean implements Serializable {
 			}
 			if (!all) {
 				System.out
-						.println("...erro ao cadastrar, este cliente já está cadastrado");
+						.println("...erro ao cadastrar, este cliente ja foi cadastrado");
 				Msg.addMsgError("CPF OU EMAIL JA CONTEM REGISTRO NO SISTEMA, TENTE OUTRO.");
-				return "/pages/usuario/cadastrarCliente.jsf";
+				return "/pages/usuario/cadastrarCliente.xhtml";
 			} else {
 				if (getUsuario().getSenha().equalsIgnoreCase(
 						this.getUsuario().getRepetirSenha())) {
@@ -625,7 +624,7 @@ public class UsuarioBean implements Serializable {
 					init();
 					Msg.addMsgInfo("SOLICITACAO DE ACESSO ENVIADA COM SUCESSO. AGUARDE AUTORIZACAO!");
 					this.usuario = new Usuario();
-					System.out.println("...Solicitação enviada");
+					System.out.println("...Solicitacao enviada");
 					return "index.xhtml";
 				} else {
 					System.out.println("...Senhas diferentes");
@@ -641,7 +640,7 @@ public class UsuarioBean implements Serializable {
 		return null;
 	}
 	
-	// Não aceira solicitacao de usuario
+	// Nï¿½o aceira solicitacao de usuario
 	public String naoAceitar() {
 		System.out.println(this.getUsuario().getNome());
 		if (this.getUsuario().getPerfil().getId() != 5
@@ -651,14 +650,14 @@ public class UsuarioBean implements Serializable {
 			Msg.addMsgFatal("USUARIO: " + getUsuario().getNome()
 					+ " SOLICITACAO NAO ACEITA");
 			dao.atualiza(usuario);
-			System.out.println("...Usuário ativado");
+			System.out.println("...Usuario ativado");
 			return "/pages/usuario/autorizarAcesso.xhtml";
 		}
 		return "/pages/usuario/autorizarAcesso.xhtml";
 
 	}
 
-	// Ativar usuário (permitir acesso)
+	// Ativar usuï¿½rio (permitir acesso)
 	public String ativarUsuario() {
 		System.out.println(this.getUsuario().getNome());
 		if (this.getUsuario().getPerfil().getId() != 5
@@ -667,10 +666,10 @@ public class UsuarioBean implements Serializable {
 			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()
 					+ " ATIVADO COM SUCESSO");
 			dao.atualiza(usuario);
-			System.out.println("...Usuário ativado");
+			System.out.println("...Usuario ativado");
 			return "/pages/usuario/autorizarAcesso.xhtml";
 		} else {
-			System.out.println("..Não foi possível ativar usuário");
+			System.out.println("..Nao foi possivel ativar usuario");
 			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
 					+ " NAO FOI ATIVADO. TENTE NOVAMENTE");
 		}
@@ -686,7 +685,7 @@ public class UsuarioBean implements Serializable {
 		this.dataAtual = dataAtual;
 	}
 
-	// Reativar usuário (exceto solicitação)
+	// Reativar usuï¿½rio (exceto solicitaï¿½ï¿½o)
 	public String reativarUsuario() {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
@@ -694,10 +693,10 @@ public class UsuarioBean implements Serializable {
 			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()
 					+ " REATIVADO COM SUCESSO");
 			dao.atualiza(usuario);
-			System.out.println("...Usuário Reativado");
+			System.out.println("...Usuario Reativado");
 			return "/pages/usuario/reativarAcesso.xhtml";
 		} else {
-			System.out.println("..Não foi possível reativar usuário");
+			System.out.println("..Nao foi possivel reativar usuario");
 			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
 					+ " NAO FOI POSSIVEL REATIVA-LO. TENTE NOVAMENTE");
 		}
@@ -705,7 +704,7 @@ public class UsuarioBean implements Serializable {
 
 	}
 
-	// Desativar usuário
+	// Desativar usuï¿½rio
 	public String desativarUsuario() {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
@@ -713,10 +712,10 @@ public class UsuarioBean implements Serializable {
 			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome() + " DESATIVADO");		
 			dao.atualiza(usuario);
 			this.usuario = new Usuario();
-			System.out.println("...Usuário desativado");
+			System.out.println("...Usuario desativado");
 			return "/pages/usuario/desativarAcesso.xhtml";
 		} else {
-			System.out.println("..Não foi possível desativar usuário");
+			System.out.println("..Nao foi possivel desativar usuario");
 			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
 					+ " NAO FOI DESATIVADO. TENTE NOVAMENTE");
 		}
@@ -733,10 +732,10 @@ public class UsuarioBean implements Serializable {
 					+ " FOI MODIFICADO PARA "
 					+ getUsuario().getPerfil().getPerfil());
 			dao.atualiza(usuario);
-			System.out.println("...Perfil de usuário: "
+			System.out.println("...Perfil de usuario: "
 					+ getUsuario().getNome() + " modificado");
 		} else {
-			System.out.println("...Não foi possível modificar perfil");
+			System.out.println("...Nao foi possivel modificar perfil");
 			Msg.addMsgError("NAO FOI POSSIVEL EFETUAR OPERACAO. TENTE NOVAMENTE");
 		}
 	}
@@ -756,7 +755,7 @@ public class UsuarioBean implements Serializable {
 				this.usuario = new Usuario();
 			} else {
 				System.out
-						.println("...Não foi possível alterar cadastro do cliente");
+						.println("...Nao foi possavel alterar cadastro do cliente");
 				Msg.addMsgError("NAO FOI POSSIVEL EFETUAR OPERACAO. TENTE NOVAMENTE");
 			}
 		}
@@ -778,7 +777,7 @@ public class UsuarioBean implements Serializable {
 	}
 
 
-	/** validação UK Login */
+	/** validaï¿½ï¿½o UK Login */
 
 	public boolean validarNomeUK_login() {
 		return validator.validarNomeUK("login", usuario.getLogin());
@@ -792,7 +791,7 @@ public class UsuarioBean implements Serializable {
 		}
 	}
 
-	/** validação para não repetir CPF */
+	/** validaï¿½ï¿½o para nï¿½o repetir CPF */
 
 	public boolean validarNomeUK_cpf() {
 		return validator.validarNomeUK("cpf", usuario.getCpf());

@@ -74,7 +74,7 @@ public class ItemBean implements Serializable {
 			return itens1;
 		}	
 		
-	// estoque que não aparece valores zerados
+	// estoque que nï¿½o aparece valores zerados
 	public List<Item> getEstoque() {
 		itens1 = new ArrayList<Item>();
 		List<Item> item = new ArrayList<Item>();
@@ -108,7 +108,7 @@ public class ItemBean implements Serializable {
 	
 	/** calculo */
 	
-	// método para somar a quantidade de entrada
+	// mï¿½todo para somar a quantidade de entrada
 	public Integer getTotalEntrada() {
 		setTotalProduto(0);
 		for (Item i : getEstoque()) {
@@ -117,7 +117,7 @@ public class ItemBean implements Serializable {
 		return totalProduto;
 	}
 	
-	// método para somar a quantidade de saida
+	// mï¿½todo para somar a quantidade de saida
 	public Integer getTotalSaida() {
 		setTotalProduto(0);
 		for (Item i : getEstoque()) {
@@ -135,12 +135,12 @@ public class ItemBean implements Serializable {
 	/** actions **/
 	
 	// devolve ao estoque quantidade informada
-	// somente caso de troca ou devolução
+	// somente caso de troca ou devoluï¿½ï¿½o
 	
 	public String updateItem() {
 		if (item.getId() != null) {
 			if(item.getQuantidadeSaida()==0) {
-				Msg.addMsgFatal("Não houve venda deste produto para retorna-lo");
+				Msg.addMsgFatal("Nao houve venda deste produto para retorna-lo");
 			}else {
 				this.getDevolvido().setUsuario(this.loginBean.getUsuario());
 				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
@@ -158,8 +158,8 @@ public class ItemBean implements Serializable {
 				this.devolvido = new ItemDevolvido();
 			}
 		} else {
-			System.out.println("...Não foi possível devolver produto ao estoque");
-			Msg.addMsgFatal("Não foi possível concluir operação");
+			System.out.println("...Nao foi possivel devolver produto ao estoque");
+			Msg.addMsgFatal("Nao foi possivel concluir operacao");
 		}
 		return "/pages/estoque/devolverEstoque.xhtml";
 	}
@@ -170,7 +170,7 @@ public class ItemBean implements Serializable {
 				dao.atualiza(item);
 				
 			} else {
-				Msg.addMsgFatal("Não foi possível concluir operação");
+				Msg.addMsgFatal("Nao foi possivel concluir operacao");
 			}
 			
 		}

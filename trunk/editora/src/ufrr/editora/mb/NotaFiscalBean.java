@@ -176,6 +176,16 @@ public class NotaFiscalBean implements Serializable {
 		}
 		return notasFiscais1;
 	}
+	
+	// Reinicia o numero do lote a cada ano
+		@SuppressWarnings("unchecked")
+		public List<NotaFiscal> getCount() {
+			Query query = dao.query("SELECT n FROM NotaFiscal n "
+					+ "WHERE EXTRACT(year FROM n.dataEntrada) = extract(year from CURRENT_DATE)");
+			notasFiscais = query.getResultList();
+			System.out.println("Total de notas por ano: " + notasFiscais.size());
+			return query.getResultList();
+		}
 		
 	/** Actions **/
 
@@ -203,17 +213,17 @@ public class NotaFiscalBean implements Serializable {
 				Usuario u = UDao
 						.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getNotasFiscais().add(notaFiscal);
-				List<NotaFiscal> nfs = new ArrayList<NotaFiscal>();
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
 				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
-				nfs = this.getNotasFiscais();
-								
-				notaFiscal.setLote((long) (nfs.size()+1)); // precisa zerar a cada ano (trazer uma lista só pelo ano, fazer o count +1)
+							
+				notaFiscal.setLote((long) (getCount().size()+1)); // gera o numero do lote
+				System.out.println("...Total de notas: " + getCount().size()); // mostra o total de lotes pelo ano atual
 					
 				notaFiscal.setStatus(true);
 				dao.adiciona(notaFiscal);
 				item = new Item();
 				notaFiscal = new NotaFiscal();
+				System.out.println("...Nota fiscal cadastrada com sucesso");
 				return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";
 			} else {
 				System.out
@@ -273,23 +283,7 @@ public class NotaFiscalBean implements Serializable {
 			}
 		}
 	}
-
-//				} else {
-//					DAO<Produto> dao = new DAO<Produto>(Produto.class);
-//					Produto produto = dao.buscaPorId(idProduto);
-//					item.setProduto(produto);
-//
-//					item.setQuantidadeSaida(0);
-//					item.setVenda(false);
-//					notaFiscal.getItens().add(item);
-//					item.setNotaFiscal(notaFiscal);
-
-//					Msg.addMsgWarn("Produto: " + getItem().getProduto().getNome() + " encontra-se em estoque, portanto n�o vai ser exposto a venda");
-//					System.out.println("...Este produto: " + getItem().getProduto().getId() + "encontra-se em estoque, portanto n�o vai ser exposto a venda");
-//					item = new Item();
-//					this.cadastro = true;
-
-				
+			
 	
 	// cancelar cadastro de nota fiscal
 		public String cancelarNotaFiscal() {
@@ -378,7 +372,7 @@ public class NotaFiscalBean implements Serializable {
 //		Query q = dao.query("SELECT i FROM Item i WHERE produto and quantidadeEntrada = quantidadeSaida"); //achar um m�todo certo
 //				
 //		if (!q.getResultList().isEmpty()) {
-//			Msg.addMsgError("Este produto encontra-se em estoque, � preciso esgota-lo para nova entrada");
+//			Msg.addMsgError("Este produto encontra-se em estoque, é preciso esgota-lo para nova entrada");
 //			return true;
 //		} else {
 //			resultValidarUK = "";

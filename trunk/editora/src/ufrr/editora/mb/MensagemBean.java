@@ -68,7 +68,7 @@ public class MensagemBean implements Serializable {
 
 	public void enviarMensagem() {
 		if (mensagem.getDescricao().isEmpty()) {
-			Msg.addMsgError("Preencha corretamente a descrição da mensagem");
+			Msg.addMsgError("Preencha corretamente a descricao da mensagem");
 			
 		}
 		if (mensagem.getId() == null) {

@@ -197,8 +197,8 @@
 			<div align="center">
 			<p:dialog rendered="#{!empty usuarioBean.solicitacoes and loginBean.usuario.perfil.id==1 or !empty usuarioBean.solicitacoes and loginBean.usuario.perfil.id==2}" 
 			visible="true" resizable="false" modal="true" header="Solicitações de acesso"
-			footer="Atenção: você recebeu nova(s) solicitação(ões) de acesso ao sistema" style="background: #EEDD82;">
-				
+			footer="Atenção: você recebeu nova(s) solicitação(ões) de acesso ao sistema" style="background: #C4D2EB;">
+				<h:form>
 
 					<p:dataTable id="list" value="#{usuarioBean.solicitacoes}" var="u"
 						emptyMessage="Nenhuma solicitação no momento"
@@ -223,11 +223,13 @@
 					</p:dataTable>
 					
 					<br />
-					
-					<p:commandLink action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" title="Mostra página de solicitações">
-						<h:outputLabel value="Detalhar" style="color: blue; cursor: pointer; font-size: 12px;" />
-					</p:commandLink>
-
+					<div align="center">
+					<p:commandButton action="/pages/usuario/autorizarAcesso.xhtml?faces-redirect=true" value="Detalhar" icon="ui-icon-check" 
+					title="Mostra página de solicitações" ajax="false">
+<!-- 						<h:outputLabel value="Detalhar" style="color: blue; cursor: pointer; font-size: 12px;" /> -->
+					</p:commandButton>
+					</div>
+				</h:form>
 			</p:dialog>
 			
 			<p:dialog header="Cliente Aniversariante" modal="true" resizable="false"

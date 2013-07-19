@@ -188,14 +188,14 @@ public class ProdutoBean implements Serializable {
 		return null;
 	}
 
-	// Pesquisa produtos pela descrição e isbn
+	// Pesquisa produtos pela descriï¿½ï¿½o e isbn
 	public String getListaProdutos() {
 
 		if (box4Search.equals(1)) {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
@@ -218,7 +218,7 @@ public class ProdutoBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 		}else {
 			if (search.length() <= 4) {
@@ -259,7 +259,7 @@ public class ProdutoBean implements Serializable {
 			}
 			if (!all) {
 				System.out
-						.println("...Erro ao cadastrar produto: produto já existe");
+						.println("...Erro ao cadastrar produto: produto ja existe");
 				return null;
 			} else {
 				this.getProduto().setUsuario(this.loginBean.getUsuario());
@@ -293,7 +293,7 @@ public class ProdutoBean implements Serializable {
 				return null;
 			}
 			if (!all) {
-				System.out.println("...Erro ao cadastrar produto: produto já existe");
+				System.out.println("...Erro ao cadastrar produto: produto ja existe");
 				return null;
 			} else {
 				this.getProduto().setUsuario(this.loginBean.getUsuario());
@@ -334,7 +334,7 @@ public class ProdutoBean implements Serializable {
 			}
 			if (!all) {
 				System.out
-						.println("...Erro ao cadastrar produto: este produto já existe");
+						.println("...Erro ao cadastrar produto: este produto ja existe");
 				return null;
 			} else {
 				dao.atualiza(produto);
@@ -361,7 +361,7 @@ public class ProdutoBean implements Serializable {
 			}
 			if (!all) {
 				System.out
-						.println("...Erro ao cadastrar produto: nome não pode ser vazio");
+						.println("...Erro ao cadastrar produto: nome nao pode ser vazio");
 				return null;
 			} else {
 				dao.atualiza(produto);
@@ -404,7 +404,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-	/** validação UK ISBN */
+	/** validaï¿½ï¿½o UK ISBN */
 
 	public boolean validarIntegerUK_isbn() {
 		return validator.validarIntegerUK("isbn", produto.getIsbn());
@@ -418,7 +418,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-	/** validação UK ISBN */
+	/** validaï¿½ï¿½o UK ISBN */
 
 	public boolean validarNameUK_nome() {
 		return validator.validarNomeUK("nome", produto.getNome());
@@ -432,7 +432,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-	/** validação EMPTY */
+	/** validaï¿½ï¿½o EMPTY */
 
 	public boolean validarNome() {
 		return validator.validarNome(produto.getNome());

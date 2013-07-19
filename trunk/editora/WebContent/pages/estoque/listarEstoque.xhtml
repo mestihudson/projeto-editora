@@ -82,7 +82,10 @@
 						
 						<p:column headerText="Autor" width="200"
 							filterBy="#{item.produto.autor}" filterMatchMode="contains">
-							<h:outputText value="#{item.produto.autor}" rendered="#{item.produto.autor!=null}" />
+							<h:outputText value="#{item.produto.autor}" rendered="#{item.produto.autor!=null}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="33" />
+							</h:outputText>
 							<h:outputText value="NENHUM" rendered="#{item.produto.autor==null}" />
 						</p:column>
 
