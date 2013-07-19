@@ -203,8 +203,7 @@
 					<p:dataTable id="list" value="#{usuarioBean.solicitacoes}" var="u"
 						emptyMessage="Nenhuma solicitação no momento"
 						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
-						rowIndexVar="rowIx" paginator="true" rows="15"
-						paginatorPosition="bottom">
+						rowIndexVar="rowIx">
 
 						<p:column headerText="ID">
 							<h:outputText value="#{u.id}" />
