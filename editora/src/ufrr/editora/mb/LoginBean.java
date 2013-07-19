@@ -53,7 +53,7 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getStatus() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("Aguarde liberacao do acesso");
+				Msg.addMsgError("AGUARDE PERMISSÃƒO PARA ACESSAR O SISTEMA");
 				System.out.println("...acesso nao permitido, aguarde liberar o acesso");
 				this.usuario = new Usuario();
 				return null;
@@ -90,14 +90,14 @@ public class LoginBean implements Serializable {
 
 			}
 		} else {
-			Msg.addMsgFatal("Senha ou login invalido");
+			Msg.addMsgFatal("SENHA OU LOGIN INVALIDO");
 			System.out.println("...senha ou login invalido");
 			this.usuario = new Usuario();
 			return null;
 		}
 	}
 	
-	// solicitação de Senha
+	// solicitaï¿½ï¿½o de Senha
 	public String esqueceuSenha() {
 		UsuarioDAO dao = new UsuarioDAO();
 		this.usuario = dao.trocaSenha(this.usuario);
@@ -106,12 +106,12 @@ public class LoginBean implements Serializable {
 					|| this.getUsuario().getStatus().equals(false)) {
 				Msg.addMsgError("Usuario nao encontrado");
 				System.out
-						.println("...Usuário não existe ou ainda não foi ativado para pedir solicitação de senha");
+						.println("...Usuario nao existe ou ainda nao foi ativado para pedir solicitacao de senha");
 				return null;
 			} else {
 				if (this.getUsuario().getStatus().equals(true)) {
 					System.out.println("...usuario: " + getUsuario().getNome()
-							+ " entrou para solicitação de senha");
+							+ " entrou para solicitacao de senha");
 					usuario.setEsqueciSenha(true);
 					dao2.atualiza(usuario);
 					return "/pages/usuario/dados.xhtml?faces-redirect=true";
@@ -122,16 +122,16 @@ public class LoginBean implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("...Digite corretamente as informações para recuperar seu acesso");
+			System.out.println("...Digite corretamente as informacoes para recuperar seu acesso");
 			Msg.addMsgFatal("Registro nao encontrado."
-					+ " Digite seu CPF corretamente"
-					+ " caso persistir o erro, entre em contato com a Editora UFRR");
+					+ " DIGITE SEU CPF CORRETAMENTE"
+					+ " CASO O ERRO PERSISTA, ENTRE EM CONTATO COM A EDITORA UFRR");
 			this.usuario = new Usuario();
 			return null;
 		}
 	}
 		
-	// acesso após solicitação do esqueceuSenha
+	// acesso apï¿½s solicitaï¿½ï¿½o do esqueceuSenha
 	public String esqueceuSenha2() {
 		UsuarioDAO dao = new UsuarioDAO();
 		this.usuario = dao.senhaCriptografada(this.usuario);
@@ -145,14 +145,14 @@ public class LoginBean implements Serializable {
 			}
 		} else {
 			System.out.println("...Digite corretamente as informacoes para recuperar seu acesso");
-			Msg.addMsgFatal("Digite a senha correta conforme enviada para seu email");
+			Msg.addMsgFatal("DIGITE O CODIGO CONFORME ENVIADO PARA SEU EMAIL");
 			this.usuario = new Usuario();
 			return null;
 		}
 	}
 		
 	
-	//autorização para alterar dados do cadastro
+	//autorizaï¿½ï¿½o para alterar dados do cadastro
 	public String updateLogin() {
 		setSenhaVerifica(TransformaStringMD5.md5(getSenhaVerifica()));
 		if (getSenhaVerifica().equalsIgnoreCase(LoginBean.this.usuario.getSenha())) {	
@@ -163,7 +163,7 @@ public class LoginBean implements Serializable {
 					return "/pages/usuario/atualizarCadastro.xhtml?faces-redirect=true";
 				}
 			}else {	
-			Msg.addMsgFatal("Senha invalida");
+			Msg.addMsgFatal("SENHA INVALIDA");
 			System.out.println("Chegou aqui...");
 			System.out.println(LoginBean.this.getUsuario().getLogin());
 			return "/pages/usuario/senhaCadastro.xhtml";		
@@ -172,7 +172,7 @@ public class LoginBean implements Serializable {
 		return null;
 		}
 	
-	//autorização para alterar dados do cadastro
+	//autorizaï¿½ï¿½o para alterar dados do cadastro
 		public String trocaSenha() {
 			if (this.usuario.getSenha().equalsIgnoreCase(this.usuario.getRepetirSenha())) {
 				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
@@ -192,7 +192,7 @@ public class LoginBean implements Serializable {
 			return null;
 			}
 	
-	// Método para redireciona o usuario para a página inicial
+	// Mï¿½todo para redireciona o usuario para a pï¿½gina inicial
 		public String redirect() {
 			if (this.getUsuario().getPerfil().getId() == 1) {
 				return "/pages/home/home.xhtml?faces-redirect=true";
@@ -207,7 +207,7 @@ public class LoginBean implements Serializable {
 			}
 		}
 		
-	// atualiza usuário
+	// atualiza usuï¿½rio
 	public String updateUsuario() {
 		usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 		dao2.atualiza(usuario);
@@ -233,7 +233,7 @@ public class LoginBean implements Serializable {
 		return "/index.xhtml?faces-redirect=true";
 	}
 	
-	// Sair da recuperação de senha
+	// Sair da recuperaï¿½ï¿½o de senha
 	public String sair2() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();

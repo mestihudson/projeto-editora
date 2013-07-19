@@ -202,28 +202,28 @@ public class FornecedorBean implements Serializable {
 			}
 //			if (!validarNome_agencia()) {
 //				all = false;
-//				Msg.addMsgError("Agencia não pode ser vazio");
+//				Msg.addMsgError("Agencia nï¿½o pode ser vazio");
 //			}
 //			if (!validarNome_conta()) {
 //				all = false;
-//				Msg.addMsgError("Número da conta não pode ser vazio");
+//				Msg.addMsgError("Nï¿½mero da conta nï¿½o pode ser vazio");
 //			}
 //			if (!validarNome_titular()) {
 //				all = false;
-//				Msg.addMsgError("Titular da conta não pode ser vazio");
+//				Msg.addMsgError("Titular da conta nï¿½o pode ser vazio");
 //			}
 			if (fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail2())
 				|| fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail3())) {
 				all = false;
-				Msg.addMsgError("Endereco de email não pode se repetir");
+				Msg.addMsgError("Endereco de email nao pode se repetir");
 			}
 			if (!all) {
-				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
-				return "/pages/forncedor/cadastrarFornecedor.jsf";
+				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor ja existe");
+				return "/pages/forncedor/cadastrarFornecedor.xhtml";
 			} else {					
 				if (fornecedor.getBanco().equals(3) && fornecedor.getOperacao()==null
 						|| fornecedor.getBanco().equals(3) && fornecedor.getOperacao()==null) {
-					Msg.addMsgError("Campo Op não pode ser vazio");
+					Msg.addMsgError("Campo Op nao pode ser vazio");
 					return null;	
 				}	
 					if (fornecedor.getBanco().equals(1) && fornecedor.getOperacao()!=null
@@ -254,25 +254,25 @@ public class FornecedorBean implements Serializable {
 		return null;
 	}
 
-	// método para alterar o fornecedor
+	// mï¿½todo para alterar o fornecedor
 	public String alterFornecedor() {
 		try {
 			boolean all = true;
 //			if (!validarNome_agencia()) {
 //				all = false;
-//				Msg.addMsgError("Agencia não pode ser vazio");
+//				Msg.addMsgError("Agencia nï¿½o pode ser vazio");
 //			}
 //			if (!validarNome_conta()) {
 //				all = false;
-//				Msg.addMsgError("Número da conta não pode ser vazio");
+//				Msg.addMsgError("Nï¿½mero da conta nï¿½o pode ser vazio");
 //			}
 //			if (!validarNome_titular()) {
 //				all = false;
-//				Msg.addMsgError("Titular da conta não pode ser vazio");
+//				Msg.addMsgError("Titular da conta nï¿½o pode ser vazio");
 //			}
 			if (!all) {
-				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor já existe");
-				return "/pages/forncedor/cadastrarFornecedor.jsf";
+				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor ja existe");
+				return "/pages/forncedor/cadastrarFornecedor.xhtml";
 			} else {					
 				if (fornecedor.getBanco().equals(3) && fornecedor.getOperacao().isEmpty()) {
 					Msg.addMsgError("Campo Op nao pode ser vazio");
@@ -283,7 +283,7 @@ public class FornecedorBean implements Serializable {
 						this.fornecedor = new Fornecedor();
 						init();
 						Msg.addMsgInfo("Atualizacao efetuada com sucesso");
-						System.out.println("...alteração de fornecedor efetuada com sucesso!");
+						System.out.println("...alteracao de fornecedor efetuada com sucesso!");
 						
 					} else {
 						fornecedor.setOperacao("000");
@@ -291,7 +291,7 @@ public class FornecedorBean implements Serializable {
 						this.fornecedor = new Fornecedor();
 						init();
 						Msg.addMsgInfo("Atualizacao efetuada com sucesso");
-						System.out.println("...alteração de fornecedor efetuada com sucesso!");
+						System.out.println("...alteracao de fornecedor efetuada com sucesso!");
 
 					}
 			}
@@ -317,7 +317,7 @@ public class FornecedorBean implements Serializable {
 		}
 	}
 
-	/** validação UK Nome */
+	/** validaï¿½ï¿½o UK Nome */
 
 	public boolean validarNomeUK_nome() {
 		return validator.validarNomeUK("nome", fornecedor.getNome());
@@ -331,7 +331,7 @@ public class FornecedorBean implements Serializable {
 		}
 	}
 
-	/** validação UK CPF / CNPJ */
+	/** validaï¿½ï¿½o UK CPF / CNPJ */
 
 	public boolean validarNome() {
 		return validator.validarNome(fornecedor.getNome());

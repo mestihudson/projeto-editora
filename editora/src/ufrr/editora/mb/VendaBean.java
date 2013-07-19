@@ -136,7 +136,7 @@ public class VendaBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("*")) {
 				init();
-				Msg.addMsgError("Contém caractér(es) inválido(s)");
+				Msg.addMsgError("Contem caracter(es) invalido(s)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
@@ -154,7 +154,7 @@ public class VendaBean implements Serializable {
 					}
 				}
 			}
-			// este método é para consultarVendaPorCliente.xhtml
+			// este mï¿½todo ï¿½ para consultarVendaPorCliente.xhtml
 		} else if (box4Search.equals(2)) {
 			if (search.length() <= 4) {
 				init();
@@ -194,7 +194,7 @@ public class VendaBean implements Serializable {
 
 	/** Actions **/
 
-	// saída de dinheiro
+	// saï¿½da de dinheiro
 	public String addSaida() {
 		boolean all = true;
 
@@ -244,7 +244,7 @@ public class VendaBean implements Serializable {
 		this.cliente = cliente;
 	}
 
-	// método para efetuar venda (somente para vendedor)
+	// mï¿½todo para efetuar venda (somente para vendedor)
 	public String addVenda() {
 		boolean all = true;
 
@@ -259,7 +259,7 @@ public class VendaBean implements Serializable {
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
-			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade do produto informado ultrapasse o disponível em estoque
+			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade do produto informado ultrapasse o disponï¿½vel em estoque
 				if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
 					this.cadastro = false;
 					break;
@@ -284,7 +284,7 @@ public class VendaBean implements Serializable {
 												
 						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
 						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saída do item");
+						System.out.println("...atualizou quantidade de saida do item");
 					}	
 					
 					Msg.addMsgInfo("Venda efetuada com sucesso");
@@ -298,7 +298,7 @@ public class VendaBean implements Serializable {
 			} else {
 				Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
 						"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
-				System.out.println("...quantidade não disponível no estoque");
+				System.out.println("...quantidade nao disponivel no estoque");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
 			}
@@ -307,7 +307,7 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// método para efetuar venda para admin e gerente
+	// mï¿½todo para efetuar venda para admin e gerente
 	public String addVendaAdmin() {
 		boolean all = true;
 
@@ -316,13 +316,13 @@ public class VendaBean implements Serializable {
 			all = false;
 		}
 		if (venda.getItensVendas().isEmpty()) {
-			Msg.addMsgError("Nao foi possível efetuar a venda sem produto");
+			Msg.addMsgError("Nao foi possivel efetuar a venda sem produto");
 			all = false;
 		}
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
-			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade de produto informado ultrapasse o disponível em estoque
+			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade de produto informado ultrapasse o disponï¿½vel em estoque
 				if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
 					this.cadastro = false;
 					break;
@@ -347,7 +347,7 @@ public class VendaBean implements Serializable {
 												
 						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
 						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saída do item");
+						System.out.println("...atualizou quantidade de saida do item");
 					}	
 					
 					Msg.addMsgInfo("Venda efetuada com sucesso");
@@ -369,7 +369,7 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// método para adicionar produto a venda
+	// mï¿½todo para adicionar produto a venda
 	public void guardaItem() {
 		boolean all = true;
 		if (!all) {
@@ -383,7 +383,7 @@ public class VendaBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 				
-				// este for verifica se a quantidade do produto informado está disponível no estoque
+				// este for verifica se a quantidade do produto informado estï¿½ disponï¿½vel no estoque
 				// se for menor que 0, error!
 				for (ItemVenda i : this.getVenda().getItensVendas()) {
 					if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
@@ -404,7 +404,7 @@ public class VendaBean implements Serializable {
 						itemVenda.setVenda(venda);
 
 						itemVenda = new ItemVenda();
-						System.out.println("...Produto adicionado a venda com qtd não informada !! (ok)");
+						System.out.println("...Produto adicionado a venda com qtd nao informada !! (ok)");
 
 					} else {
 							
@@ -423,7 +423,7 @@ public class VendaBean implements Serializable {
 				} else {
 					Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
 							"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
-					System.out.println("...quantidade não disponível no estoque");
+					System.out.println("...quantidade nao disponivel no estoque");
 					itemVenda = new ItemVenda();
 					this.cadastro = true;
 				}
@@ -437,7 +437,7 @@ public class VendaBean implements Serializable {
 		}
 	}
 	
-	// método para editar/alterar venda
+	// mï¿½todo para editar/alterar venda
 		public String desativarVenda() {
 				if (venda.getId()!=null && loginBean.getUsuario().getPerfil().getId()==1) {
 					DAO<Venda> dao = new DAO<Venda>(Venda.class);
@@ -447,13 +447,13 @@ public class VendaBean implements Serializable {
 					venda = new Venda();
 					return "/pages/venda/consultarVenda.xhtml";
 				} else {
-					System.out.println("...Erro: não foi possível desativar venda");
+					System.out.println("...Erro: nao foi possivel desativar venda");
 					Msg.addMsgError("Somente pode desativar venda usuario com perfil administrador");
 					return null;
 				}
 		}
 	
-	// método para remover o item da lista de itens
+	// mï¿½todo para remover o item da lista de itens
 	public void removeItemVenda() {
 		venda.getItensVendas().remove(itemVenda);
 		Msg.addMsgWarn("Produto removido");
@@ -462,7 +462,7 @@ public class VendaBean implements Serializable {
 		itemVenda = new ItemVenda();
 	}
 
-	// método booleano para informar ao usuário a quantidade indisponível no
+	// mï¿½todo booleano para informar ao usuï¿½rio a quantidade indisponï¿½vel no
 	// estoque
 	public Boolean quantidadeN() {
 		if (venda.getItensVendas().get(0).getItem().getQuantidadeSaida()
@@ -519,7 +519,7 @@ public class VendaBean implements Serializable {
 		return "efetuarVendaAdmin.xhtml";
 	}
 
-	// relatório
+	// relatï¿½rio
 	public void imprimirCupom() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		Report report = new Report("Cupom-Fiscal", params);
@@ -622,7 +622,7 @@ public class VendaBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public String getCaixaByDate() {
 		if (getDataFinal().before(getDataInicial())) {
-			Msg.addMsgError("Período inválido");
+			Msg.addMsgError("Periodo invalido");
 		} else {
 			try {
 				Query query = dao
