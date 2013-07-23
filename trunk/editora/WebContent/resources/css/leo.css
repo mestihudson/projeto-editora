@@ -362,6 +362,13 @@ table.dados tr td{
 	background:none repeat scroll 0 0 #DDDDDD;
 }
 
+/* tirar as linhas da tabela */
+/* table tbody .ui-widget-content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 0 solid #FFFFFF;
+    color: #333333;
+} */
+
 /* Para mensagens em growl */
 #growl3123 {
 	margin-left: 30px;

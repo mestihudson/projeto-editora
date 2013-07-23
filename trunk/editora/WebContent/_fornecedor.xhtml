@@ -105,10 +105,10 @@
 			
 			<h:graphicImage value="/resources/img/logoeditora.png" style="float: left; opacity:0.65; -moz-opacity: 0.65; filter: alpha(opacity=65); width: 150px; " />
 			<div style="display: block;" align="center" />
-			<div id="rodape" style="background: #394674; height: 20px; line-height: 20px; text-align: center;">
-				&copy; Copyright 2013 &nbsp; UFRR - Diretoria de Tecnologia da Informação &nbsp;&nbsp; Layout UFRN - SIG &nbsp;&nbsp;
-				Editora UFRR (95)3621-3111 &nbsp; editora@ufrr.br
-			</div>
+				<div id="rodape" style="background: #394674; height: 20px; line-height: 20px; text-align: center;">
+					&copy; Copyright 2013 &nbsp; UFRR - Diretoria de Tecnologia da Informação &nbsp; | &nbsp; Layout UFRN - SIG &nbsp;| &nbsp;
+					Editora UFRR (95)3621-3111 &nbsp; editora@ufrr.br
+				</div>
 			<div style="display: block;" align="center" />
 	
 	</div>
@@ -236,7 +236,7 @@
 						<p:panel header="Cliente" style="height: 115px;">
 							<h:panelGrid columns="1">
 							
-							<p:commandLink action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+							<p:commandLink action="/pages/relatorio/consultarClientePorCategoria.xhtml?faces-redirect=true" ajax="false">
 							<h:panelGrid columns="2">
 								<h:graphicImage value="/resources/img/seta1.png" />
 								<h:outputLabel value="Cliente por preferencia de categoria" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />

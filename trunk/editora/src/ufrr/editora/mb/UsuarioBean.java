@@ -288,6 +288,19 @@ public class UsuarioBean implements Serializable {
 		return usuariosE;
 	}
 	
+	// Exibe uma lista de clientes para relatorio de cliente por categoria
+		public List<Usuario> getClientesCategoria() {
+			usuariosE = new ArrayList<Usuario>();
+			List<Usuario> us = new ArrayList<Usuario>();
+			us = this.getUsuariosE();
+			for (int i = 0; i < us.size(); i++) {
+				if (us.get(i).getPerfil().getId() == 4 && us.get(i).getId() != 1) {
+					usuariosE.add(us.get(i));
+				}
+			}
+			return usuariosE;
+		}
+	
 //	where extract(month from u.data_nascimento) = extract(month from CURRENT_DATE)
 //	and extract(day from u.data_nascimento) = extract(day from CURRENT_DATE)
 	
@@ -337,8 +350,8 @@ public class UsuarioBean implements Serializable {
 				try {
 					Query query = dao.query("SELECT u FROM Usuario u WHERE u.preferencia=?");
 					query.setParameter(1, usuario.getPreferencia());
-					usuarios = query.getResultList();
-					if (usuarios.isEmpty()) {
+					usuariosE = query.getResultList();
+					if (usuariosE.isEmpty()) {
 						init();
 						Msg.addMsgError("Nenhum registro encontrado");
 					}

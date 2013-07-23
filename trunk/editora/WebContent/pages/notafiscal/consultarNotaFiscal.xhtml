@@ -134,7 +134,9 @@
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 								
-								<h:outputText value="Lote: #{n.lote}" />
+								<h:outputText value="Lote: #{n.lote}" /><h:outputText value="#{n.dataEntrada.time}">
+									<f:convertDateTime pattern="yyyy"/>
+									</h:outputText>
 
 								<h:outputText value="Status" />
 								<h:outputText value="Ativado" style="color: blue;"

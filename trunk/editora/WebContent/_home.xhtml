@@ -231,7 +231,7 @@
 						<p:panel header="Cliente" style="height: 115px;">
 							<h:panelGrid columns="1">
 							
-							<p:commandLink onclick="categoriaNome.show()">
+							<p:commandLink action="/pages/relatorio/consultarClientePorCategoria.xhtml?faces-redirect=true" ajax="false">
 							<h:panelGrid columns="2">
 								<h:graphicImage value="/resources/img/seta1.png" />
 								<h:outputLabel value="Cliente por preferencia de categoria" style="cursor: pointer; font-family: Verdana;" styleClass="OutPut" />
@@ -375,38 +375,6 @@
 		</h:form>		
 	</p:dialog>
 <!-- 	aqui termina o dialog de relatorio -->
-
-	<!-- 	aqui começa o dialog de cliente por categoria -->
-	<p:dialog modal="true" width="auto" widgetVar="categoriaNome" resizable="false" showEffect="fold" header="Módulo Relatório" 
-		style="text-align: center; float: center;">
-		
-		<h:form id="form_categoria">
-			
-			<div align="center">
-
-					<p:panel header="Cliente por categoria" style="height: 115px;">
-								
-								<h:outputLabel value="Preferencia de categoria"	styleClass="OutPut" /><br />
-								<h:inputText value="#{usuarioBean.usuario.login}" size="50" />
-<!-- 								<p:selectOneMenu style="width: 200px;" id="categoria" -->
-<!-- 									value="#{usuarioBean.usuario.preferencia}" -->
-<!-- 									converter="genericConverter" required="true" -->
-<!-- 									requiredMessage="Informe a preferencia" styleClass="input"> -->
-<!-- 									<f:selectItem itemValue="" itemLabel="" -->
-<!-- 										noSelectionOption="true" /> -->
-<!-- 									<f:selectItems value="#{categoriaBean.categorias}" var="c" -->
-<!-- 										itemLabel="#{c.nome}" itemValue="#{c}" /> -->
-<!-- 									<f:ajax event="change" /> -->
-<!-- 								</p:selectOneMenu> -->
-								
-								<br /><br />
-								
-								<h:commandButton action="#{reportBean.relatorioClienteCategoria}" value="Gerar Relatorio" />
-
-					</p:panel>
-			</div>
-		</h:form>
-	</p:dialog>							
 	
 	<p:confirmDialog id="confirmDialog" message="Deseja sair do sistema"  
                 severity="alert" widgetVar="confirmation"> 
