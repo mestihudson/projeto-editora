@@ -83,7 +83,9 @@
 						
 						<p:column headerText="Lote" width="100" style="text-align: center;"
 							filterBy="#{item.notaFiscal.lote}" filterMatchMode="exact">
-							<h:outputText value="#{item.notaFiscal.lote}" rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}" />
+							<h:outputText value="#{item.notaFiscal.lote}" rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}" />-<h:outputText value="#{item.notaFiscal.dataEntrada.time}" rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}">
+								<f:convertDateTime pattern="yyyy" />
+							</h:outputText>
 							
 							<h:outputText value="#{item.notaFiscal.lote}" rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual == 0}" style="color: red;" />
 						</p:column>
