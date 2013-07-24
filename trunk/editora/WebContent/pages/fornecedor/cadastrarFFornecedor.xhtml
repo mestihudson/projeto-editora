@@ -91,14 +91,14 @@
 					<h:outputLabel value="CPF" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputMask id="cpf" value="#{fornecedorBean.fornecedor.cnpj}" mask="999.999.999-99" styleClass="input"
-						required="true" requiredMessage="Informe o cpf" rendered="#{fornecedorBean.fornecedor.cnpj==null}">
+						required="true" requiredMessage="INFORME O CPF" rendered="#{fornecedorBean.fornecedor.cnpj==null}">
 						<f:ajax event="blur" render="error_cpf" />
 					</p:inputMask>
 					<p:message id="error_cpf" for="cpf" rendered="#{fornecedorBean.fornecedor.cnpj==null}" />
 					
 					<p:inputMask id="cpf2" value="#{fornecedorBean.fornecedor.cnpj}" mask="999.999.999-99" styleClass="input" disabled="true" 
 					rendered="#{fornecedorBean.fornecedor.cnpj!=null}"
-						required="true" requiredMessage="Informe o cpf">
+						required="true" requiredMessage="INFORME O CPF">
 						<f:ajax event="blur" render="error_cpf2" />
 					</p:inputMask>
 					<p:message id="error_cpf2" for="cpf2" rendered="#{fornecedorBean.fornecedor.cnpj!=null}" />
@@ -106,7 +106,7 @@
 					  
 					<h:outputLabel value="Nome Completo" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="forn_nome" value="#{fornecedorBean.fornecedor.nome}" required="true" requiredMessage="Informe o nome do fornecedor"
+					<p:inputText id="forn_nome" value="#{fornecedorBean.fornecedor.nome}" required="true" requiredMessage="INFORME O NOME DO FORNECEDOR"
 					rendered="#{fornecedorBean.fornecedor.nome==null}"
 					styleClass="input">
 						<f:ajax event="blur" render="error_nome" />
@@ -122,8 +122,8 @@
 					
 					<h:outputLabel value="Pis" styleClass="OutPut" onclick="dlgObsPis.show();" style="cursor: pointer;" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="forn_pis" value="#{fornecedorBean.fornecedor.pis}" required="true" requiredMessage="Informe o número do pis"
-					styleClass="input" validatorMessage="Número do pis inválido" maxlength="11">
+					<p:inputText id="forn_pis" value="#{fornecedorBean.fornecedor.pis}" required="true" requiredMessage="INFORME O PIS"
+					styleClass="input" validatorMessage="PIS INVÁLIDO" maxlength="11">
 						<f:ajax event="blur" render="error_pis" />
 						<f:validateLength maximum="11" minimum="11" />
 					</p:inputText>
@@ -133,7 +133,7 @@
 					<h:outputLabel value="Telefone 1" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputMask mask="(99)9999-9999" id="forn_fone1" value="#{fornecedorBean.fornecedor.telefone1}" styleClass="input"
-					required="true" requiredMessage="Informe o telefone para contato">
+					required="true" requiredMessage="INFORME O TELEFONE">
 						<f:ajax event="blur" render="error_fone1" />
 					</p:inputMask>
 					<p:message id="error_fone1" for="forn_fone1" />
@@ -150,7 +150,7 @@
 					<h:outputLabel value="Email" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:inputText id="forn_email" value="#{fornecedorBean.fornecedor.email}" styleClass="input"
-					required="true" requiredMessage="Informe o endereco de email" validatorMessage="Email inválido">
+					required="true" requiredMessage="INFORME O EMAIL" validatorMessage="EMAIL INVÁLIDO">
 						<f:ajax event="blur" render="error_email" />
 					</p:inputText>
 					<p:message id="error_email" for="forn_email" />
@@ -191,7 +191,7 @@
 					<div style="float: left">
 					
 					<p:selectOneRadio value="#{fornecedorBean.fornecedor.tipoConta}" styleClass="OutPut" style="margin-left: 60px;"
-					required="true" requiredMessage="Informe o tipo da conta" rendered="#{fornecedorBean.fornecedor.banco == null}">
+					required="true" requiredMessage="INFORME O TIPO DA CONTA" rendered="#{fornecedorBean.fornecedor.banco == null}">
 							<f:selectItem itemLabel="Conta Corrente" itemValue="Conta Corrente" />
 							<f:selectItem itemLabel="Poupança" itemValue="Poupança" />
 						</p:selectOneRadio>
@@ -249,7 +249,7 @@
 						
 						<h:outputLabel value="Estado" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-						<p:selectOneMenu style="width: 50px;" id="unif_sigla" value="#{fornecedorBean.endereco.unidade}" equired="true" requiredMessage="Informe a sigla do estado" styleClass="input">
+						<p:selectOneMenu style="width: 50px;" id="unif_sigla" value="#{fornecedorBean.endereco.unidade}" equired="true" requiredMessage="INFORME A SIGLA DO ESTADO" styleClass="input">
 							<f:selectItem itemLabel="RR" itemValue="RR" />
 							<f:selectItem itemLabel="AM" itemValue="AM" />
 							<f:selectItem itemLabel="AC" itemValue="AC" />
@@ -285,7 +285,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:autoComplete id="end_municipio" value="#{fornecedorBean.endereco.municipio}" styleClass="input" size="30" completeMethod="#{enderecoBean.autocompletemunicipio}"
 						minQueryLength="3" maxResults="1" queryDelay="30" var="m" itemLabel="#{m}" itemValue="#{m}"
-							required="true" requiredMessage="Informe o municipio">
+							required="true" requiredMessage="INFORME O MUNICIPIO">
 								<f:ajax event="blur" render="error_municipio" />
 						</p:autoComplete>
 						<p:message id="error_municipio" for="end_municipio" display="icon" />							
@@ -293,7 +293,7 @@
 						<h:outputLabel value="Tipo Logradouro" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:selectOneMenu id="end_tipo_logra" value="#{fornecedorBean.endereco.tipoLogradouro}" styleClass="input"
-							required="true" requiredMessage="Informe o tipo de logradouro" style="width: 50px;"> 
+							required="true" requiredMessage="INFORME O TIPO DE LOGRADOURO" style="width: 50px;"> 
 							<f:selectItem itemLabel="" itemValue="" />
 							<f:selectItem itemLabel="Av" itemValue="Av" />
 							<f:selectItem itemLabel="Br" itemValue="Br" />
@@ -306,7 +306,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:autoComplete id="end_logra" value="#{fornecedorBean.endereco.logradouro}" styleClass="input" size="30" completeMethod="#{enderecoBean.autocompletelogradouro}"
 						minQueryLength="3" maxResults="1" queryDelay="30" var="l" itemLabel="#{l}" itemValue="#{l}"
-							required="true" requiredMessage="Informe o logradouro">
+							required="true" requiredMessage="INFORME O LOGRADOURO">
 							<f:ajax event="blur" render="error_logradouro" />
 						</p:autoComplete>
 						<p:message id="error_logradouro" for="end_logra" display="icon" />
@@ -314,7 +314,7 @@
 						<h:outputLabel value="Número" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="end_numero" value="#{fornecedorBean.endereco.numero}" style="width: 40px;"
-							required="true" requiredMessage="Informe o numero">
+							required="true" requiredMessage="INFORME O NÚMERO">
 							<f:ajax event="blur" render="error_numero" />
 						</p:inputText>
 						<p:message id="error_numero" for="end_numero" display="icon" />
@@ -323,7 +323,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:autoComplete id="end_bairro" value="#{fornecedorBean.endereco.bairro}" styleClass="input" completeMethod="#{enderecoBean.autocompletebairro}"
 						minQueryLength="3" maxResults="1" queryDelay="30" var="b" itemLabel="#{b}" itemValue="#{b}" size="30"
-							required="true" requiredMessage="Informe o bairro">
+							required="true" requiredMessage="INFORME O BAIRRO">
 							<f:ajax event="blur" render="error_bairro" />
 						</p:autoComplete>
 						<p:message id="error_bairro" for="end_bairro" display="icon" />
@@ -331,7 +331,7 @@
 						<h:outputLabel value="CEP" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputMask mask="99.999-999" id="end_cep" value="#{fornecedorBean.endereco.cep}" styleClass="input" style="width: 100px;"
-							required="true" requiredMessage="Informe o cep">
+							required="true" requiredMessage="INFORME O CEP">
 							<f:ajax event="blur" render="error_cep" />
 						</p:inputMask>
 						<p:message id="error_cep" for="end_cep" display="icon" />
@@ -349,7 +349,7 @@
 						
 						<h:outputLabel value="Estado" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-						<p:selectOneMenu style="width: 50px;" id="unif_sigla2" value="#{fornecedorBean.fornecedor.endereco.unidade}" equired="true" requiredMessage="Informe a sigla do estado" styleClass="input">
+						<p:selectOneMenu style="width: 50px;" id="unif_sigla2" value="#{fornecedorBean.fornecedor.endereco.unidade}" equired="true" requiredMessage="INFORME A SIGLA DO ESTADO" styleClass="input">
 							<f:selectItem itemLabel="RR" itemValue="RR" />
 							<f:selectItem itemLabel="AM" itemValue="AM" />
 							<f:selectItem itemLabel="AC" itemValue="AC" />
@@ -385,7 +385,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:autoComplete id="end_municipio2" value="#{fornecedorBean.fornecedor.endereco.municipio}" styleClass="input" size="30" completeMethod="#{enderecoBean.autocompletemunicipio}"
 						minQueryLength="3" maxResults="1" queryDelay="30" var="m" itemLabel="#{m}" itemValue="#{m}"
-							required="true" requiredMessage="Informe o municipio">
+							required="true" requiredMessage="INFORME O MUNICIPIO">
 								<f:ajax event="blur" render="error_municipio2" />
 						</p:autoComplete>
 						<p:message id="error_municipio2" for="end_municipio2" display="icon" />							
@@ -393,7 +393,7 @@
 						<h:outputLabel value="Tipo Logradouro" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:selectOneMenu id="end_tipo_logra2" value="#{fornecedorBean.fornecedor.endereco.tipoLogradouro}" styleClass="input"
-							required="true" requiredMessage="Informe o tipo de logradouro" style="width: 50px;"> 
+							required="true" requiredMessage="INFORME O TIPO DE LOGRADOURO" style="width: 50px;"> 
 							<f:selectItem itemLabel="" itemValue="" />
 							<f:selectItem itemLabel="Av" itemValue="Av" />
 							<f:selectItem itemLabel="Br" itemValue="Br" />
@@ -406,7 +406,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:autoComplete id="end_logra2" value="#{fornecedorBean.fornecedor.endereco.logradouro}" styleClass="input" size="30" completeMethod="#{enderecoBean.autocompletelogradouro}"
 						minQueryLength="3" maxResults="1" queryDelay="30" var="l" itemLabel="#{l}" itemValue="#{l}"
-							required="true" requiredMessage="Informe o logradouro">
+							required="true" requiredMessage="INFORME O LOGRADOURO">
 							<f:ajax event="blur" render="error_logradouro2" />
 						</p:autoComplete>
 						<p:message id="error_logradouro2" for="end_logra2" display="icon" />
@@ -414,7 +414,7 @@
 						<h:outputLabel value="Número" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="end_numero2" value="#{fornecedorBean.fornecedor.endereco.numero}" style="width: 40px;"
-							required="true" requiredMessage="Informe o numero">
+							required="true" requiredMessage="INFORME O NÚMERO">
 							<f:ajax event="blur" render="error_numero2" />
 						</p:inputText>
 						<p:message id="error_numero2" for="end_numero2" display="icon" />
@@ -423,7 +423,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:autoComplete id="end_bairro2" value="#{fornecedorBean.fornecedor.endereco.bairro}" styleClass="input" completeMethod="#{enderecoBean.autocompletebairro}"
 						minQueryLength="3" maxResults="1" queryDelay="30" var="b" itemLabel="#{b}" itemValue="#{b}" size="30"
-							required="true" requiredMessage="Informe o bairro">
+							required="true" requiredMessage="INFORME O BAIRRO">
 							<f:ajax event="blur" render="error_bairro2" />
 						</p:autoComplete>
 						<p:message id="error_bairro2" for="end_bairro2" display="icon" />
@@ -431,7 +431,7 @@
 						<h:outputLabel value="CEP" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputMask mask="99.999-999" id="end_cep2" value="#{fornecedorBean.fornecedor.endereco.cep}" styleClass="input" style="width: 100px;"
-							required="true" requiredMessage="Informe o cep">
+							required="true" requiredMessage="INFORME O CEP">
 							<f:ajax event="blur" render="error_cep2" />
 						</p:inputMask>
 						<p:message id="error_cep2" for="end_cep2" display="icon" />

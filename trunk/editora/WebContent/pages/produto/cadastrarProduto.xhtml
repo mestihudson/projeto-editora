@@ -68,17 +68,11 @@
 			
 			<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0px;">
 			
-			<h:panelGrid id="botton" columns="6" style="float: right;">
+			<h:panelGrid id="botton" columns="3" style="float: right;">
 			
 				<h:graphicImage value="/resources/img/edita.png" onclick="dlgEditaProduto.show();" style="float: right; cursor: pointer;"
 					title="Altera os dados do livro(obra) cadastrado no sistema" styleClass="acende" />
 			
-				<h:graphicImage value="/resources/img/tipo-produto.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
-					title="Adicionar novo tipo de produto" styleClass="acende" />
-					
-				<h:graphicImage value="/resources/img/categoria.png" onclick="dlgCategoria.show();" style="float: right; cursor: pointer;"
-					title="Adicionar nova categoria" styleClass="acende" />	
-					
 				<h:commandLink action="/pages/fornecedor/cadastrarJFornecedor.xhtml?faces-redirect=true" immediate="true">	
 					<h:graphicImage value="/resources/img/fornecedor.png" style="float: right; cursor: pointer;"
 						title="Opção para cadastrar fornecedor" styleClass="acende" />
@@ -88,6 +82,12 @@
 					<h:graphicImage value="/resources/img/notafiscal2.png" style="float: right; cursor: pointer;"
 						title="Opção para cadastrar nota fiscal" styleClass="acende" />
 				</h:commandLink>
+				
+				<h:graphicImage value="/resources/img/tipo-produto.png" onclick="dlgTipoProduto.show();" style="float: right; cursor: pointer;"
+					title="Adicionar novo tipo de produto" styleClass="acende" />
+					
+				<h:graphicImage value="/resources/img/categoria.png" onclick="dlgCategoria.show();" style="float: right; cursor: pointer;"
+					title="Adicionar nova categoria" styleClass="acende" />	
 			
 			</h:panelGrid>
 					
