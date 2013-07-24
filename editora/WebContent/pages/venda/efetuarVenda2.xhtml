@@ -58,7 +58,7 @@
 					<h:outputLabel value="Cliente: " styleClass="OutPut" rendered="#{not empty vendaBean.venda.cliente.nome}" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome}" />
 					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome}"
-					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente.show();" readonly="true">
+					required="true" requiredMessage="INFORME O CLIENTE" styleClass="input" onclick="dlgCliente.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
 					
@@ -98,7 +98,7 @@
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
             		<p:selectOneMenu style="width: 400px;" id="prod" value="#{vendaBean.idItem}"
 					styleClass="input" panelStyle="width:400px" 
-					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Adicione o produto">
+					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="ADICIONE O PRODUTO">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
 						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" id="listagem" />   
 						<f:ajax event="change" />          			            		
@@ -109,7 +109,7 @@
             		<h:outputLabel value="Quantidade" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:inputText id="qtd" value="#{vendaBean.itemVenda.quantidade}" size="5"
-					validatorMessage="Quantidade inválida">
+					validatorMessage="QUANTIDADE INVÁLIDA">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" maximum="100" />
 					</p:inputText>
@@ -257,8 +257,8 @@
             		
             		<h:outputLabel value="Parcelas" styleClass="OutPut" rendered="#{vendaBean.venda.formaPagamento == 2}" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{vendaBean.venda.formaPagamento == 2}" />
-					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5" required="true" requiredMessage="Defina a quantidade de parcelas"
-					min="0" max="12" validatorMessage="Parcelas inválida" maxlength="2" rendered="#{vendaBean.venda.formaPagamento == 2}">
+					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5" required="true" requiredMessage="DEFINA A QUANTIDADE DE PARCELAS"
+					min="0" max="12" validatorMessage="PARCELAS INVÁLIDA" maxlength="2" rendered="#{vendaBean.venda.formaPagamento == 2}">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
@@ -294,7 +294,7 @@
 					
 					<h:outputLabel value="desconto % " styleClass="OutPut" style="font-size: 14px;" />
 					<p:spinner id="desconto" value="#{vendaBean.desconto}" size="5"
-					min="0" max="100" validatorMessage="Desconto inválido">
+					min="0" max="100" validatorMessage="DESCONTO INVÁLIDO">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>

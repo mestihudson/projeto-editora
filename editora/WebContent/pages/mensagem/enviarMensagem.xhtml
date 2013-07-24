@@ -50,8 +50,8 @@
 					  
 					<h:outputLabel value="Mensagem" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputTextarea id="msg" value="#{mensagemBean.mensagem.descricao}" required="true" requiredMessage="Informe a descrição da mensagem"
-					styleClass="input" validatorMessage="Mensagem inválida" rows="7" cols="20">
+					<p:inputTextarea id="msg" value="#{mensagemBean.mensagem.descricao}" required="true" requiredMessage="INFORME A DESCRIÇÃO DA MENSAGEM"
+					styleClass="input" validatorMessage="MENSAGE INVÁLIDA" rows="7" cols="20">
 						<f:ajax event="blur" render="msgs" />
 						<f:validateLength minimum="5" maximum="250" />
 					</p:inputTextarea>

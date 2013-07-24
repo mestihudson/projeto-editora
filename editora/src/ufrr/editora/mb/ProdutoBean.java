@@ -160,7 +160,7 @@ public class ProdutoBean implements Serializable {
 			produtos = query.getResultList();
 			if (produtos.isEmpty()) {
 				init();
-				Msg.addMsgError("Nenhum registro encontrado");
+				Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				produtos = query.getResultList();
 			}
 
@@ -179,7 +179,7 @@ public class ProdutoBean implements Serializable {
 			produtos = query.getResultList();
 			if (produtos.isEmpty()) {
 				init();
-				Msg.addMsgError("Nenhum registro encontrado");
+				Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 			}
 
 		} catch (Exception e) {
@@ -195,18 +195,18 @@ public class ProdutoBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contem caracter(es) invalido(s)");
+				Msg.addMsgError("CONTEM CARACTERES(ES) INVALIDO(S)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
 					init();
-					Msg.addMsgError("Informe pelo menos 5 caracteres");
+					Msg.addMsgError("INFORME PELO MENOS 5 CARACTERES");
 					return null;
 				} else {
 					produtos = dao.getAllByName("obj.nome", search);
 					if (getAtivados().isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					} else {
 						return null;
 					}
@@ -218,18 +218,18 @@ public class ProdutoBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contem caracter(es) invalido(s)");
+				Msg.addMsgError("CONTEM CARACTER(ES) INVALIDO(S)");
 				return null;
 		}else {
 			if (search.length() <= 4) {
 				init();
-				Msg.addMsgError("Informe pelo menos 5 caracteres");
+				Msg.addMsgError("INFORME PELO MENOS 5 CARACTERES");
 				return null;
 			} else {
 				produtos = dao.getAllByName("obj.autor", search);
 				if (getAtivados().isEmpty()) {
 					init();
-					Msg.addMsgError("Nenhum registro encontrado");
+					Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				} else {
 					return null;
 					}
@@ -247,19 +247,19 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNome_editora()) {
 				all = false;
-				Msg.addMsgError("Editora nao pode ser vazio");
+				Msg.addMsgError("CAMPO EDITORA NAO PODE SER VAZIO");
 			}
 			if (!validarNome_nome()) {
 				all = false;
-				Msg.addMsgError("Nome nao pode ser vazio");
+				Msg.addMsgError("CAMPO TITULO DA OBRA NAO PODE SER VAZIO");
 			}
 			if (!validarIntegerUK_isbn()) {
 				all = false;
-				Msg.addMsgError("Este produto ja existe");
+				Msg.addMsgError("ESTA OBRA JA FOI REGISTRADA");
 			}
 			if (!all) {
 				System.out
-						.println("...Erro ao cadastrar produto: produto ja existe");
+						.println("...Erro ao cadastrar obra: produto ja existe");
 				return null;
 			} else {
 				this.getProduto().setUsuario(this.loginBean.getUsuario());
@@ -270,7 +270,7 @@ public class ProdutoBean implements Serializable {
 				dao.adiciona(produto);
 				this.produto = new Produto();
 				init();
-				Msg.addMsgInfo("Cadastro efetuado com sucesso");
+				Msg.addMsgInfo("CADASTRO EFETUADO COM SUCESSO");
 				System.out
 						.println("...cadastro de produto efetuado com sucesso!");
 			}
@@ -289,7 +289,7 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNameUK_nome()) {
 				all = false;
-				Msg.addMsgError("Outro produto com a mesma descricao ja foi registrado no sistema");
+				Msg.addMsgError("UM PRODUTO COM A MESMA DESCRICAO JA FOI REGISTRADO NO SISTEMA");
 				return null;
 			}
 			if (!all) {
@@ -306,7 +306,7 @@ public class ProdutoBean implements Serializable {
 				dao.adiciona(produto);
 				this.produto = new Produto();
 				init();
-				Msg.addMsgInfo("Cadastro efetuado com sucesso");
+				Msg.addMsgInfo("CADASTRO EFETUADO COM SUCESSO");
 				System.out.println("...cadastro de produto efetuado com sucesso!");
 				
 				return "/pages/produto/cadastrarProdutoOutros.xhtml";
@@ -326,11 +326,11 @@ public class ProdutoBean implements Serializable {
 			boolean all = true;
 			if (!validarNome_editora()) {
 				all = false;
-				Msg.addMsgError("Editora nao pode ser vazio");
+				Msg.addMsgError("CAMPO EDITORA NAO PODE SER VAZIO");
 			}
 			if (!validarNome_nome()) {
 				all = false;
-				Msg.addMsgError("Nome nao pode ser vazio");
+				Msg.addMsgError("CAMPO TITULO DA OBRA NAO PODE SER VAZIO");
 			}
 			if (!all) {
 				System.out
@@ -340,7 +340,7 @@ public class ProdutoBean implements Serializable {
 				dao.atualiza(produto);
 				this.produto = new Produto();
 				init();
-				Msg.addMsgInfo("Produto editado com sucesso");
+				Msg.addMsgInfo("DADOS DA OBRA ALTERADO COM SUCESSO");
 				System.out.println("...produto editado com sucesso!");
 			}
 		} catch (Exception e) {
@@ -351,13 +351,13 @@ public class ProdutoBean implements Serializable {
 		return null;
 	}
 
-	// Edita dados do produto tipo livro
+	// Edita dados do produto tipo outros
 	public String alterOutros() {
 		try {
 			boolean all = true;
 			if (!validarNome_nome()) {
 				all = false;
-				Msg.addMsgError("Nome do produto nao pode ser vazio");
+				Msg.addMsgError("CAMPO DESCRICAO NAO PODE SER VAZIO");
 			}
 			if (!all) {
 				System.out
@@ -367,7 +367,7 @@ public class ProdutoBean implements Serializable {
 				dao.atualiza(produto);
 				this.produto = new Produto();
 				init();
-				Msg.addMsgInfo("Produto editado com sucesso");
+				Msg.addMsgInfo("DADOS DO PRODUTO ALTERADO COM SUCESSO");
 				System.out.println("...produto editado com sucesso!");
 			}
 		} catch (Exception e) {
@@ -381,11 +381,11 @@ public class ProdutoBean implements Serializable {
 	// ativar/desativar produto
 	public void alterStatus() {
 		if (produto.getAtivado()==true) {
-			Msg.addMsgInfo("Produto desativado");
+			Msg.addMsgInfo("PRODUTO DESATIVADO");
 			produto.setAtivado(false);
 			dao.atualiza(produto);
 		}else {
-			Msg.addMsgInfo("Produto reativado");
+			Msg.addMsgInfo("PRODUTO REATIVADO");
 			produto.setAtivado(true);
 			dao.atualiza(produto);
 		}
@@ -404,7 +404,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-	/** valida��o UK ISBN */
+	/** validacao UK ISBN */
 
 	public boolean validarIntegerUK_isbn() {
 		return validator.validarIntegerUK("isbn", produto.getIsbn());
@@ -418,7 +418,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-	/** valida��o UK ISBN */
+	/** validacao UK ISBN */
 
 	public boolean validarNameUK_nome() {
 		return validator.validarNomeUK("nome", produto.getNome());
@@ -432,7 +432,7 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 
-	/** valida��o EMPTY */
+	/** validacao EMPTY */
 
 	public boolean validarNome() {
 		return validator.validarNome(produto.getNome());

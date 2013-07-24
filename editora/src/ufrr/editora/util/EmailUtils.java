@@ -8,6 +8,7 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
+import ufrr.editora.entity.Usuario;
 import ufrr.editora.mb.LoginBean;
 
 public class EmailUtils {
@@ -42,20 +43,54 @@ public class EmailUtils {
 	 email2.setMsg(email.getMensagem());
 	 email2.addTo(email.getDestino().getLogin());
 	 String resposta = email2.send();
-	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + email.getDestino().getLogin(), "Informa��o"));
+	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-MAIL ENVIADO COM SUCESSO PARA: " + email.getDestino().getLogin(), "Informacao"));
 	 }
 	 
-	 // servidor de teste
+	// servidor de teste
+	@SuppressWarnings("unused")
+	public static void recuperaSenha(LoginBean usuario) throws EmailException {
+		Email email2 = new SimpleEmail();
+		email2 = conectaEmail();
+		email2.setSubject("Recuperacao de senha ao sistema Editora UFRR");
+		email2.setMsg("Editora UFRR"
+				+ "\n"
+				+ "siga as instrucoes abaixo para prosseguir com a solicitacao"
+				+ "\n"
+				+ "\n"
+				+ "Clique no link e informe este codigo abaixo: "
+				+ "http://172.22.10.248:8080/editora/esqueceuSenha.xhtml?faces-redirect=true"
+				+ "\n" + "\n" + usuario.getUsuario().getSenha());
+		email2.addTo(usuario.getUsuario().getLogin());
+		String resposta = email2.send();
+		FacesContext.getCurrentInstance()
+				.addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"E-MAIL ENVIADO COM SUCESSO PARA: "
+										+ usuario.getUsuario().getLogin(),
+								"Informacao"));
+	}
+	
 	 @SuppressWarnings("unused")
-		public static void recuperaSenha(LoginBean usuario) throws EmailException {
+		public static void confirmaAcesso(Usuario usuario) throws EmailException {
 		 Email email2 = new SimpleEmail();
 		 email2 = conectaEmail();
-		 email2.setSubject("Recuperacao de senha ao sistema Editora UFRR");
-		 email2.setMsg("Editora UFRR" + "\n" + "siga as instrucoes abaixo para prosseguir com a solicitacao" + "\n" + "\n" + "Clique no link e informe este codigo abaixo: " 
-		 + "http://172.22.10.248:8080/editora/esqueceuSenha.xhtml?faces-redirect=true" 
-		 + "\n" + "\n" + usuario.getUsuario().getSenha());
-		 email2.addTo(usuario.getUsuario().getLogin());
+		 email2.setSubject("Sistema Editora UFRR");
+		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no link abaixo, digite seu email e senha para acessa-lo" + "\n" + "\n" +
+		 "http://172.22.10.248/editora");
+		 email2.addTo(usuario.getLogin());
 		 String resposta = email2.send();
-		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "E-mail enviado com sucesso para: " + usuario.getUsuario().getLogin(), "Informacao"));
+		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CONFIRMAÇÃO DE ACESSO ENVIADO PARA O EMAIL: " + usuario.getLogin(), "Informacao"));
 		 }
+	 
+//	 @SuppressWarnings("unused")
+//		public static void acessoNaoAutorizado(Usuario usuario) throws EmailException {
+//		 Email email2 = new SimpleEmail();
+//		 email2 = conectaEmail();
+//		 email2.setSubject("Sistema Editora UFRR");
+//		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR Não foi autorizado, entre em contato.");
+//		 email2.addTo(usuario.getLogin());
+//		 String resposta = email2.send();
+//		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CONFIRMAÇÃO DE ACESSO ENVIADO PARA O EMAIL: " + usuario.getLogin(), "Informacao"));
+//		 }
 }

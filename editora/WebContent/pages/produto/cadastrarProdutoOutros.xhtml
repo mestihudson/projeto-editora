@@ -99,7 +99,7 @@
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:selectOneListbox style="width: 185px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter"
-					required="true" requiredMessage="Informe o tipo" styleClass="input">
+					required="true" requiredMessage="INFORME O TIPO" styleClass="input">
 						<f:selectItems value="#{tipoProdutoBean.outros}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 							<f:ajax event="blur" render="error_nome_tipo" />
 					</p:selectOneListbox>
@@ -108,8 +108,8 @@
 					
 					<h:outputLabel value="Descrição" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe a descrição do produto"
-					validatorMessage="Descrição inválida"
+					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="INFORME A DESCRIÇÃO DO PRODUTO"
+					validatorMessage="DESCRIÇÃO INVÁLIDA"
 					styleClass="input">
 						<f:validateLength minimum="10" maximum="150" />
 						<f:ajax event="blur" render="error_nome" />
@@ -119,7 +119,7 @@
 					
 					<h:outputLabel value="Quant. mínima de estoque" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="Informe a quantidade mínima de estoque"
+					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="INFORME A QUANTIDADE MÍNIMA DE ESTOQUE"
 					min="0" max="100" title="Quantidade Mínima de Estoque">
 						<f:ajax event="blur" render="error_min" />
 						<f:validateLongRange minimum="0" />
@@ -169,7 +169,7 @@
 					  
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" />
-					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="Informe o nome do tipo de produto">
+					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="INFORME O NOME DO TIPO DE PRODUTO">
 						<f:ajax event="change" />
 					</p:inputText>
 															

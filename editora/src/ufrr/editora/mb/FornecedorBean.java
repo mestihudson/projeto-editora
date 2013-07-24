@@ -107,13 +107,13 @@ public class FornecedorBean implements Serializable {
 			} else {
 				if (search.length() <= 4) {
 					init();
-					Msg.addMsgError("Informe pelo menos 5 caracteres");
+					Msg.addMsgError("INFORME PELO MENOS 5 CARACTERES");
 					return null;
 				} else {
 					fornecedores = dao.getAllByName("obj.nome", search);
 					if (fornecedores.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					} else {
 						return null;
 					}
@@ -123,13 +123,13 @@ public class FornecedorBean implements Serializable {
 			else if (box4Search.equals(2)) {
 				if (search.length() != 18) {
 					init();
-					Msg.addMsgError("Informe o CNPJ correto");
+					Msg.addMsgError("INFORME O CNPJ CORRETO");
 					return null;
 				} else {
 					fornecedores = dao.getAllByName("obj.cnpj", search);
 					if (fornecedores.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					} else {
 						return null;
 					}
@@ -137,13 +137,13 @@ public class FornecedorBean implements Serializable {
 		} else {
 			if (search.length() != 14) {
 				init();
-				Msg.addMsgError("Informe o CPF correto");
+				Msg.addMsgError("INFORME O CPF CORRETO");
 				return null;
 			} else {
 				fornecedores = dao.getAllByName("obj.cnpj", search);
 				if (fornecedores.isEmpty()) {
 					init();
-					Msg.addMsgError("Nenhum registro encontrado");
+					Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				} else {
 					return null;
 				}
@@ -194,11 +194,11 @@ public class FornecedorBean implements Serializable {
 			boolean all = true;
 			if (!validarNomeUK_nome()) {
 				all = false;
-				Msg.addMsgError("O nome do fornecedor ja tem registro no sistema");
+				Msg.addMsgError("NOME JA REGISTRADO NO SISTEMA, TENTE OUTRO.");
 			}
 			if (!validarNomeUK_cnpj()) {
 				all = false;
-				Msg.addMsgError("CPF ou CNPJ ja tem registro no sistema");
+				Msg.addMsgError("Nº DO CPF OU CNPJ JA POSSUI REGISTRO NO SISTEMA");
 			}
 //			if (!validarNome_agencia()) {
 //				all = false;
@@ -215,7 +215,7 @@ public class FornecedorBean implements Serializable {
 			if (fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail2())
 				|| fornecedor.getEmail().equalsIgnoreCase(getFornecedor().getEmail3())) {
 				all = false;
-				Msg.addMsgError("Endereco de email nao pode se repetir");
+				Msg.addMsgError("ENDERECO DE EMAIL NAO PODE SE REPETIR");
 			}
 			if (!all) {
 				System.out.println("...Erro ao cadastrar fornecedor: dados faltam ser preenchidos ou fornecedor ja existe");
@@ -242,7 +242,7 @@ public class FornecedorBean implements Serializable {
 				this.endereco = new Endereco();
 				this.fornecedor = new Fornecedor();
 				init();
-				Msg.addMsgInfo("Cadastro efetuado com sucesso");
+				Msg.addMsgInfo("CADASTRO EFETUADO COM SUCESSO");
 				System.out.println("...cadastro efetuado com sucesso!");
 			}
 		} catch (Exception e) {
@@ -254,7 +254,7 @@ public class FornecedorBean implements Serializable {
 		return null;
 	}
 
-	// m�todo para alterar o fornecedor
+	// metodo para alterar o fornecedor
 	public String alterFornecedor() {
 		try {
 			boolean all = true;
@@ -282,7 +282,7 @@ public class FornecedorBean implements Serializable {
 						dao.atualiza(fornecedor);
 						this.fornecedor = new Fornecedor();
 						init();
-						Msg.addMsgInfo("Atualizacao efetuada com sucesso");
+						Msg.addMsgInfo("ATUALIZACAO REALIZADA COM SUCESSO");
 						System.out.println("...alteracao de fornecedor efetuada com sucesso!");
 						
 					} else {
@@ -290,7 +290,7 @@ public class FornecedorBean implements Serializable {
 						dao.atualiza(fornecedor);
 						this.fornecedor = new Fornecedor();
 						init();
-						Msg.addMsgInfo("Atualizacao efetuada com sucesso");
+						Msg.addMsgInfo("ATUALIZACAO REALIZADA COM SUCESSO");
 						System.out.println("...alteracao de fornecedor efetuada com sucesso!");
 
 					}
@@ -317,7 +317,7 @@ public class FornecedorBean implements Serializable {
 		}
 	}
 
-	/** valida��o UK Nome */
+	/** validacao UK Nome */
 
 	public boolean validarNomeUK_nome() {
 		return validator.validarNomeUK("nome", fornecedor.getNome());

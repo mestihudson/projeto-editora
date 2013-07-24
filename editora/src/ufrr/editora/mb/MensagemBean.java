@@ -68,7 +68,7 @@ public class MensagemBean implements Serializable {
 
 	public void enviarMensagem() {
 		if (mensagem.getDescricao().isEmpty()) {
-			Msg.addMsgError("Preencha corretamente a descricao da mensagem");
+			Msg.addMsgError("PREENCHA CORRETAMENTE A DESCRICAO DA MENSAGEM");
 			
 		}
 		if (mensagem.getId() == null) {
@@ -76,13 +76,13 @@ public class MensagemBean implements Serializable {
 			DAO<Usuario> userDao = new DAO<Usuario>(Usuario.class);
 			Usuario user = userDao.buscaPorId(this.loginBean.getUsuario().getId());
 			user.getMensagens().add(mensagem);
-			Msg.addMsgInfo("Mensagem enviada para usuario " + getMensagem().getDestinatario().getNome());
+			Msg.addMsgInfo("MENSAGEM ENVIADA PARA USUARIO " + getMensagem().getDestinatario().getNome());
 			mensagem.setStatus(1);
 			dao.adiciona(mensagem);
 			this.mensagem = new Mensagem();
 			
 		} else {
-			Msg.addMsgError("Erro ao enviar mensagem, tente novamente");
+			Msg.addMsgError("ERRO AO ENVIAR MENSAGEM, TENTE NOVAMENTE");
 			
 		}
 		mensagens = dao.getAllDesc("id");
@@ -90,13 +90,13 @@ public class MensagemBean implements Serializable {
 	
 	public void arquivarMensagem() {
 		if (mensagem.getId() != null) {
-			Msg.addMsgInfo("Voce arquivou a mensagem. Para exibir novamente clique no icone 'Mensagens arquivadas' ");
+			Msg.addMsgInfo("VOCE ARQUIVOU A MENSAGEM. PARA NOVA VISUALIZACAO CLIQUE NO ICONE 'MENSAGENS ARQUIVADAS' ");
 			mensagem.setStatus(2);
 			dao.atualiza(mensagem);
 			this.mensagem = new Mensagem();
 			
 		} else {
-			Msg.addMsgError("Erro ao enviar mensagem, tente novamente");
+			Msg.addMsgError("ERRO AO ENVIAR MENSAGEM, TENTE NOVAMENTE.");
 			
 		}
 		mensagens = dao.getAllDesc("id");

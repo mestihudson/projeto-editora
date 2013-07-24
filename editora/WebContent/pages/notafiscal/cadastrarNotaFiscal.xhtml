@@ -70,7 +70,7 @@
 					<h:outputLabel value="Fornecedor" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" converter="genericConverter" style="width: 210px;"
-					required="true" requiredMessage="Informe o fornecedor" styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id==null}"
+					required="true" requiredMessage="INFORME O FORNECEDOR" styleClass="input" rendered="#{notaFiscalBean.notaFiscal.id==null}"
 					effect="fade" filter="true" filterMatchMode="contains">
 						<f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{fornecedorBean.fornecedores}" var="f" itemLabel="#{f.nome}" itemValue="#{f}" />
@@ -86,7 +86,7 @@
 					<h:outputLabel value="Número" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="numero" value="#{notaFiscalBean.notaFiscal.numero}" rendered="#{notaFiscalBean.notaFiscal.id==null}"
-					required="true" requiredMessage="Informe o número da nota fiscal">
+					required="true" requiredMessage="INFORME O NÚMERO DA NOTA FISCAL">
 						<f:ajax event="blur" render="mgsg" />
 					</p:inputText>
 					
@@ -98,8 +98,8 @@
 					<h:outputLabel value="Data de emissão" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:calendar id="emissao" effect="slideDown" showButtonPanel="true" navigator="true"
-							value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" validatorMessage="Data inválida"
-							requiredMessage="Informe a data de emissão da nota" locale="pt_BR" pattern="dd/MM/yyyy">
+							value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" validatorMessage="DATA INVÁLIDA"
+							requiredMessage="INFORME A DATA DE EMISSÃO DA NOTA" locale="pt_BR" pattern="dd/MM/yyyy">
 							<f:ajax event="change" render="mgsg" />
 						</p:calendar>
 					<br /><br />
@@ -107,8 +107,8 @@
 					<h:outputLabel value="Data de entrada" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:calendar id="entrada" effect="slideDown" showButtonPanel="true" navigator="true"
-							value="#{notaFiscalBean.notaFiscal.dataEntrada.time}" required="true" validatorMessage="Data inválida"
-							requiredMessage="Informe a data de emissão da nota" locale="pt_BR" pattern="dd/MM/yyyy">
+							value="#{notaFiscalBean.notaFiscal.dataEntrada.time}" required="true" validatorMessage="DATA INVÁLIDA"
+							requiredMessage="INFORME A DATA DE EMISSÃO DA NOTA" locale="pt_BR" pattern="dd/MM/yyyy">
 							<f:ajax event="change" render="mgsg" />
 						</p:calendar>
 					<br /><br />
@@ -116,7 +116,7 @@
 					<h:outputLabel value="Valor total da nota" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="valor" value="#{notaFiscalBean.notaFiscal.valor}"
-					required="true" requiredMessage="Informe o valor total da nota fiscal">
+					required="true" requiredMessage="INFORME O VALOR TOTAL DA NOTA FISCAL">
 						<f:ajax event="blur" render="mgsg" />
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 					</p:inputText>
@@ -136,7 +136,7 @@
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" style="margin-left: 35px;" />
             		<p:selectOneMenu style="width: 400px;" id="prod_categoria2" value="#{notaFiscalBean.idProduto}"
 					styleClass="input" panelStyle="width:400px"
-					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="Informe o produto">
+					effect="fade" filter="true" filterMatchMode="contains" required="true" requiredMessage="INFORME O PRODUTO">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
 						<f:selectItems value="#{produtoBean.ativados}" var="produto" itemLabel="#{produto.nome}" itemValue="#{produto.id}" />					
 					</p:selectOneMenu>
@@ -149,7 +149,7 @@
             		<h:outputLabel value="Quantidade" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:spinner id="qtd" value="#{notaFiscalBean.item.quantidadeEntrada}" size="5"
-					min="0" max="100" validatorMessage="Quantidade inválida">
+					min="0" max="100" validatorMessage="QUANTIDADE INVÁLIDA">
 						<f:ajax event="blur" render="error_qtd" />
 						<f:validateLongRange minimum="0" maximum="500" />
 					</p:spinner>
@@ -158,7 +158,7 @@
             		
             		<h:outputLabel value="Valor de custo" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="valorCusto" value="#{notaFiscalBean.item.valorCusto}" validatorMessage="Valor de custo inválido">
+					<p:inputText id="valorCusto" value="#{notaFiscalBean.item.valorCusto}" validatorMessage="VALOR DE CUSTO INVÁLIDO">
 						<f:ajax event="blur" render="error_valorCusto" />
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 						<f:validateDoubleRange minimum="0" />
@@ -168,7 +168,7 @@
 					
 					<h:outputLabel value="Valor de venda" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputText id="valorVenda" value="#{notaFiscalBean.item.valorVenda}" validatorMessage="Valor de venda inválido">
+					<p:inputText id="valorVenda" value="#{notaFiscalBean.item.valorVenda}" validatorMessage="VALOR DE VENDA INVÁLIDO">
 						<f:ajax event="blur" render="error_valorVenda" />
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 						<f:validateDoubleRange minimum="0" />
@@ -319,7 +319,7 @@
 					  
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" />
-					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="Informe o nome do tipo de produto">
+					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="INFORME O NOME DO TIPO DE PRODUTO">
 						<f:ajax event="change" />
 					</p:inputText>
 															
@@ -347,7 +347,7 @@
 					<h:graphicImage value="/resources/img/as.png" />
 					<p:autoComplete id="cate_nome" value="#{categoriaBean.categoria.nome}" completeMethod="#{categoriaBean.autoComplete}" itemValue="#{c}" itemLabel="#{c}"  var="c"
 					minQueryLength="1" maxResults="5" converterMessage="Nome inválido" queryDelay="30" 
-					required="true" requiredMessage="Informe o nome da categoria">
+					required="true" requiredMessage="INFORME O NOME DA CATEGORIA">
 						<f:ajax event="change" />
 					</p:autoComplete>
 															

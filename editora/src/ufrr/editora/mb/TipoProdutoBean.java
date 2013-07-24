@@ -75,23 +75,23 @@ public class TipoProdutoBean implements Serializable {
 		}
 		if (this.cadastro == true) {
 			if (this.tipo.getNome().length() > 31) {
-				Msg.addMsgError("Nome extenso, retire alguns caracteres.");
+				Msg.addMsgError("NOME DO TIPO DE PRODUTO PASSOU DO TAMANHO PERMITIDO, RETIRE ALGUNS CARACTERES");
 			} else {
 				if (tipo.getId() == null) {
 					this.getTipo().setUsuario(this.loginBean.getUsuario());
 					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
 					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 					u.getTipos().add(tipo);
-					Msg.addMsgInfo("Cadastro realizado com sucesso");
+					Msg.addMsgInfo("CADASTRO REALIZADO COM SUCESSO");
 					dao.adiciona(tipo);
 					this.tipo = new TipoProduto();
 				} else {
-					Msg.addMsgInfo("Alteracao realizada com sucesso");
+					Msg.addMsgInfo("CADASTRO REALIZADO COM SUCESSO");
 					dao.atualiza(tipo);
 				}
 			}
 		} else {
-			Msg.addMsgError("Nome ja registrado");
+			Msg.addMsgError("ESTE NOME JA FOI REGISTRADO");
 		}
 		tipos = dao.getAllOrder("nome");
 		this.cadastro = true;

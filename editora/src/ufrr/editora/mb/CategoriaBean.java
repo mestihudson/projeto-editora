@@ -72,10 +72,10 @@ public class CategoriaBean implements Serializable {
 			boolean all = true;
 			if (!validarNomeUK_nome()) {
 				all = false;
-				Msg.addMsgError("O nome da categoria ja tem registro no sistema");
+				Msg.addMsgError("ESTA CATEGORIA JA TEM REGISTRO NO SISTEMA");
 			}
 			if (!all) {
-				System.out.println("...Erro ao cadastrar categoria: nome já existe");
+				System.out.println("...Erro ao cadastrar categoria: nome ja existe");
 				return null;
 			} else {	
 				this.getCategoria().setUsuario(this.loginBean.getUsuario());
@@ -85,7 +85,7 @@ public class CategoriaBean implements Serializable {
 				dao.adiciona(categoria);
 				this.categoria = new Categoria();
 				init();
-				Msg.addMsgInfo("Cadastro efetuado com sucesso");
+				Msg.addMsgInfo("CADASTRO EFETUADO COM SUCESSO");
 				System.out.println("...cadastro efetuado com sucesso!");
 			}
 		} catch (Exception e) {
@@ -98,7 +98,7 @@ public class CategoriaBean implements Serializable {
 		return null;
 	}
 	
-	/** validação UK nome da categoria */
+	/** validaï¿½ï¿½o UK nome da categoria */
 
 	public boolean validarNomeUK_nome() {
 		return validator.validarNomeUK("nome", categoria.getNome());

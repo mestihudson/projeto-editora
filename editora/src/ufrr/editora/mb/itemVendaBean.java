@@ -47,7 +47,7 @@ public class itemVendaBean implements Serializable {
 	}
 	
 //	
-//	// Exibe uma lista com as solicitações de acesso
+//	// Exibe uma lista com as solicitacoes de acesso
 //		@SuppressWarnings("unchecked")
 //		public List<Usuario> getContas() {
 //			Query query = dao.query("SELECT i FROM ItemVenda i ORDERBY i.produto.nome, i.produto.isbn");
@@ -66,23 +66,23 @@ public class itemVendaBean implements Serializable {
 		return itensVendas;
 	}	
 	
-	// prestação de conta
+	// prestaï¿½ï¿½o de conta
 	// Consulta pelo fornecedor
 	
-	// (este método deve funcionar, com a consulta do fornecedor e em seguida o mês) - Falta fazer o mês!!!
+	// (este mï¿½todo deve funcionar, com a consulta do fornecedor e em seguida o mes) - Falta fazer o mes!!!
 		public String getLista() {
 			
 			if (box4Search.equals(1)) {
 				if (search.length() <= 4) {
 					init();
-					Msg.addMsgError("Informe 5 caracteres para pesquisa");
+					Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
 					return null;
 				} else {
 					itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);
 					itensVendas1 = dao.getAllOrder("item.produto.nome, item.produto.isbn");
 					if (itensVendas1.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUMA VENDA EFETUADA!");
 					} else {
 						return null;
 					}
@@ -92,7 +92,7 @@ public class itemVendaBean implements Serializable {
 			return null;
 		}
 	
-	//  Pretação de conta com fornecedor	
+	//  Pretaï¿½ï¿½o de conta com fornecedor	
 		@SuppressWarnings("unchecked")
 		public String getPrestacaoByDate() {
 				try {
@@ -102,12 +102,12 @@ public class itemVendaBean implements Serializable {
 					itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);
 					itensVendas1 = query.getResultList();
 					
-					// não está fazendo filtragem com o fornecedor, somente com o mês e ano!
-					// não houve sucesso ao tentar fazer pelo sql ex: itemVenda.item.notaFiscal.fornecedor.ano 'returned null' 'item'
+					// nï¿½o estï¿½ fazendo filtragem com o fornecedor, somente com o mï¿½s e ano!
+					// nï¿½o houve sucesso ao tentar fazer pelo sql ex: itemVenda.item.notaFiscal.fornecedor.ano 'returned null' 'item'
 					
 					if (itensVendas1.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhuma venda efetuada para os dados informados");
+						Msg.addMsgError("NENHUMA VENDA EFETUADA PARA OS DADOS INFORMADOS");
 					} else {
 						return null;
 					}
@@ -121,7 +121,7 @@ public class itemVendaBean implements Serializable {
 	
 	/** calculo **/
 	
-	// método para somar a quantidade dos itens vendidos
+	// mï¿½todo para somar a quantidade dos itens vendidos
 	public Integer getTotalProdutos() {
 		setTotalProdutoVendido(0);
 		for (ItemVenda i : getItensVendas()) {
@@ -130,7 +130,7 @@ public class itemVendaBean implements Serializable {
 		return totalProdutoVendido;
 	}
 	
-	// método para somar a quantidade dos itens vendidos
+	// mï¿½todo para somar a quantidade dos itens vendidos
 		public Double getTotalValor() {
 			setTotalProdutoValor(0.00);
 			for (ItemVenda i : getItensVendas1()) {

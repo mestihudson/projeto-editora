@@ -38,7 +38,7 @@
 				<h:outputText value="FLUXO DE CAIXA" style="color: white; font-size: 12px;" styleClass="OutPut" />
 				
 				<p:selectOneRadio value="#{vendaBean.box4Search}" styleClass="OutPut"
-					required="true" requiredMessage="Informe a operação">
+					required="true" requiredMessage="INFORME A OPERAÇÃO">
 						<f:selectItem itemLabel="Todos" itemValue="4" />
 						<f:selectItem itemLabel="Filtrar" itemValue="5" />
 						<f:ajax render="form_caixa" />
@@ -53,23 +53,23 @@
 									
 					<p:calendar id="inicial" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=4}"
 						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida"
-						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
+						requiredMessage="INFORME A DATA INICIAL" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 					
 					<p:calendar id="inicial2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==4}"
 						value="#{vendaBean.dataInicial.time}" required="true" validatorMessage="Data inválida" disabled="true"
-						requiredMessage="Informe a data inicial" pattern="dd/MM/yy" locale="pt_BR">
+						requiredMessage="INFORME A DATA INICIAL" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>		
 				
 				<h:outputLabel value=" à " styleClass="OutPut" />	
 					<p:calendar id="final" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search!=4}"
 						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida"
-						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
+						requiredMessage="INFORME A DATA FINAL" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 					
 					<p:calendar id="final2" effect="slideDown" showButtonPanel="true" navigator="true" rendered="#{vendaBean.box4Search==4}"
 						value="#{vendaBean.dataFinal.time}" required="true" validatorMessage="Data inválida" disabled="true"
-						requiredMessage="Informe a data final" pattern="dd/MM/yy" locale="pt_BR">
+						requiredMessage="INFORME A DATA FINAL" pattern="dd/MM/yy" locale="pt_BR">
 					</p:calendar>
 							
 			<p:commandButton value="OK" id="botaoPesquisar" action="#{vendaBean.getCaixaByDate}" ajax="false" icon="ui-icon-check" rendered="#{vendaBean.box4Search!=4}">

@@ -53,7 +53,7 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getStatus() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("AGUARDE PERMISSÃO PARA ACESSAR O SISTEMA");
+				Msg.addMsgError("AGUARDE PERMISSAO PARA ACESSAR O SISTEMA");
 				System.out.println("...acesso nao permitido, aguarde liberar o acesso");
 				this.usuario = new Usuario();
 				return null;
@@ -104,7 +104,7 @@ public class LoginBean implements Serializable {
 		if (this.usuario != null) {
 			if (this.getUsuario().getId() == null
 					|| this.getUsuario().getStatus().equals(false)) {
-				Msg.addMsgError("Usuario nao encontrado");
+				Msg.addMsgError("USUARIO NAO ENCONTRADO");
 				System.out
 						.println("...Usuario nao existe ou ainda nao foi ativado para pedir solicitacao de senha");
 				return null;
@@ -152,12 +152,12 @@ public class LoginBean implements Serializable {
 	}
 		
 	
-	//autoriza��o para alterar dados do cadastro
+	//autorizacao para alterar dados do cadastro
 	public String updateLogin() {
 		setSenhaVerifica(TransformaStringMD5.md5(getSenhaVerifica()));
 		if (getSenhaVerifica().equalsIgnoreCase(LoginBean.this.usuario.getSenha())) {	
 				if (this.getUsuario().getSenha().isEmpty()) {
-					Msg.addMsgInfo("Informe sua senha para atualizar seus dados");
+					Msg.addMsgInfo("INFORME A SENHA PARA ATUALIZAR SEUS DADOS");
 					
 				}else {
 					return "/pages/usuario/atualizarCadastro.xhtml?faces-redirect=true";
@@ -177,7 +177,7 @@ public class LoginBean implements Serializable {
 			if (this.usuario.getSenha().equalsIgnoreCase(this.usuario.getRepetirSenha())) {
 				usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 				dao2.atualiza(usuario);
-				Msg.addMsgInfo("Operacao executada com sucesso");
+				Msg.addMsgInfo("OPERACAO REALIZADA COM SUCESSO");
 				System.out.println("...Senha alterada depois de solicita-la por email");
 				
 				FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -192,7 +192,7 @@ public class LoginBean implements Serializable {
 			return null;
 			}
 	
-	// M�todo para redireciona o usuario para a p�gina inicial
+	// Metodo para redireciona o usuario para a pagina inicial
 		public String redirect() {
 			if (this.getUsuario().getPerfil().getId() == 1) {
 				return "/pages/home/home.xhtml?faces-redirect=true";
@@ -207,18 +207,18 @@ public class LoginBean implements Serializable {
 			}
 		}
 		
-	// atualiza usu�rio
+	// atualiza usuario
 	public String updateUsuario() {
 		usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 		dao2.atualiza(usuario);
-		Msg.addMsgInfo("Cadastro atualizado com sucesso");
+		Msg.addMsgInfo("CADASTRO ATUALIZADO COM SUCESSO");
 		System.out.println("...Cadastro atualizado");
 		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) facesContext.getExternalContext()
 				.getSession(false);
 		session.invalidate();
-		System.out.println("Saiu do Sistema");
+		System.out.println("Saiu do sistema para atualizar os dados");
 		return "/index.xhtml";
 	}
 	
@@ -233,7 +233,7 @@ public class LoginBean implements Serializable {
 		return "/index.xhtml?faces-redirect=true";
 	}
 	
-	// Sair da recupera��o de senha
+	// Sair da recuperacao de senha
 	public String sair2() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();

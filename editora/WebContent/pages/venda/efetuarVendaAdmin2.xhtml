@@ -42,7 +42,7 @@
 								
 				<p:selectOneRadio value="#{vendaBean.venda.operacao}" styleClass="OutPut" style="color: #8B0000; width: 330px;" 
 				rendered="#{loginBean.usuario.perfil.id==1 or loginBean.usuario.perfil.id==2}" 
-					required="true" requiredMessage="Informe a operação">
+					required="true" requiredMessage="INFORME A OPERAÇÃO">
 						<f:selectItem itemLabel="Efetuar Venda" itemValue="1" />
 						<f:selectItem itemLabel="Retirar dinheiro do caixa" itemValue="2" />
 						<f:ajax render="form_efetuar_venda" />
@@ -76,12 +76,12 @@
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{empty vendaBean.venda.cliente.nome and vendaBean.venda.operacao == 1}" />
 					
 					<p:inputText id="cliente" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 1 and vendaBean.venda.operacao == 1}"
-					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente.show();" readonly="true">
+					required="true" requiredMessage="INFORME O CLIENTE" styleClass="input" onclick="dlgCliente.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
 					
 					<p:inputText id="clientes2" value="#{vendaBean.venda.cliente.nome}" size="200" rendered="#{empty vendaBean.venda.cliente.nome and loginBean.usuario.perfil.id == 2 and vendaBean.venda.operacao == 1}"
-					required="true" requiredMessage="Informe o Cliente" styleClass="input" onclick="dlgCliente2.show();" readonly="true">
+					required="true" requiredMessage="INFORME O CLIENTE" styleClass="input" onclick="dlgCliente2.show();" readonly="true">
 							<f:ajax event="change" />
 					</p:inputText>
 					
@@ -154,7 +154,7 @@
             		<p:selectOneMenu style="width: 400px;" id="prod" value="#{vendaBean.idItem}"
             		filter="true" filterMatchMode="startsWith"
 					styleClass="input" panelStyle="width:400px" rendered="#{vendaBean.venda.operacao == 1}"
-					effect="fade" required="true" requiredMessage="Adicione o produto">
+					effect="fade" required="true" requiredMessage="ADICIONE O PRODUTO">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
 						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn}" itemValue="#{i.id}" id="filter" />
 <!-- 						<f:selectItems value="#{itemBean.estoque}" var="i" itemLabel="#{i.produto.isbn} - LOTE: #{i.notaFiscal.lote}" itemValue="#{i.id}" id="filter" />             			            		 -->
@@ -164,7 +164,7 @@
             		
             		<h:outputLabel value="Quantidade" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1}" />
 					<p:inputText id="qtd" value="#{vendaBean.itemVenda.quantidade}" size="5"
-					validatorMessage="Quantidade inválida" rendered="#{vendaBean.venda.operacao == 1}">
+					validatorMessage="QUANTIDADE INVÁLIDA" rendered="#{vendaBean.venda.operacao == 1}">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" maximum="100" />
 					</p:inputText>
@@ -317,7 +317,7 @@
             		<h:outputLabel value="Parcelas" styleClass="OutPut" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}" />
 					<p:spinner id="parcela" value="#{vendaBean.venda.quantidadeParcela}" size="5"
-					min="0" max="100" validatorMessage="Parcelas inválida" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}">
+					min="0" max="100" validatorMessage="PARCELAS INVÁLIDA" rendered="#{vendaBean.venda.operacao == 1 and vendaBean.venda.formaPagamento == 2}">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
@@ -341,7 +341,7 @@
             		</p:selectOneMenu>					
 					<p:inputTextarea id="obs" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="250" rendered="#{vendaBean.venda.operacao == 1}" />
 					<p:inputTextarea id="obs2" value="#{vendaBean.venda.obs}" styleClass="input" maxlength="250" cols="20" rows="4" rendered="#{vendaBean.venda.operacao == 2}"
-					required="true" requiredMessage="Para retirada precisa-se de justificativa" />
+					required="true" requiredMessage="PARA RETIRADA PRECISA-SE DE JUSTIFICATIVA" />
 					<br /><br />
 					
 					</h:panelGrid>
@@ -357,7 +357,7 @@
 					
 					<h:outputLabel value="desconto % " styleClass="OutPut" style="font-size: 14px;" rendered="#{vendaBean.venda.operacao == 1}" />
 					<p:spinner id="desconto" value="#{vendaBean.desconto}" size="5"
-					min="0" max="100" validatorMessage="Desconto inválido" rendered="#{vendaBean.venda.operacao == 1}">
+					min="0" max="100" validatorMessage="DESCONTO INVÁLIDO" rendered="#{vendaBean.venda.operacao == 1}">
 						<f:ajax event="blur" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
@@ -400,7 +400,7 @@
 					
 					<h:outputLabel value="Valor R$: " style="font-size: 14px; float: left; text-align: left; font-weight: bold; color: #8B0000; line-height: 20px;" styleClass="acende" rendered="#{vendaBean.venda.operacao == 2}" />
 					<h:inputText value="#{vendaBean.venda.valorTotal}" style="font-size: 15px; float: left; text-align: left; font-weight: bold; color: #8B0000; margin-left: 10px;" 
-					rendered="#{vendaBean.venda.operacao == 2}" size="15" required="true" requiredMessage="Informe o valor da retirada" validatorMessage="Valor inválido" converterMessage="Valor inválido">
+					rendered="#{vendaBean.venda.operacao == 2}" size="15" required="true" requiredMessage="INFORME O VALOR DA RETIRADA" validatorMessage="VALOR INVÁLIDO" converterMessage="Valor inválido">
 						<f:convertNumber locale="pt_BR" pattern="#,##0.00" />
 					</h:inputText>
 										
