@@ -62,17 +62,17 @@
 						
 						<p:inputMask value="#{vendaBean.search}" mask="999.999.999-99" 
 							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 1}" size="40"
-							id="cpf" required="true" requiredMessage="Informe o CPF do cliente"  />
+							id="cpf" required="true" requiredMessage="INFORME O CPF DO CLIENTE"  />
 												
 						<p:autoComplete value="#{vendaBean.search}" 
 							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 2 }" size="40"
-							id="cliente" required="true" requiredMessage="Informe o nome do cliente" 
+							id="cliente" required="true" requiredMessage="INFORME O NOME DO CLIENTE" 
 							completeMethod="#{usuarioBean.autocompletenome}" var="c" itemValue="#{c}" itemLabel="#{c}"
 							minQueryLength="3" maxResults="5" queryDelay="60" />
 						
 						<p:autoComplete value="#{vendaBean.search}" 
 							rendered="#{not empty vendaBean.vendas1}" size="40"
-							required="true" requiredMessage="Informe o nome do cliente" disabled="true" 
+							required="true" requiredMessage="INFORME O NOME DO CLIENTE" disabled="true" 
 							completeMethod="#{usuarioBean.autocompletenome}" var="c" itemValue="#{c}" itemLabel="#{c}"
 							minQueryLength="3" maxResults="5" queryDelay="60" />	
 							

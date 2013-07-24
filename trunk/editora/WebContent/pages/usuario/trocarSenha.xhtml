@@ -76,7 +76,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:password id="senha" value="#{loginBean.usuario.senha}" feedback="true" promptLabel="Digite sua nova senha"
 						weakLabel="senha fácil" goodLabel="senha média" strongLabel="senha segura"
-							required="true" requiredMessage="Informe sua senha">
+							required="true" requiredMessage="INFORME SUA SENHA">
 							<f:ajax event="blur" render="error_senha" />
 						</p:password>
 						<p:message id="error_senha" for="senha" display="icon" />
@@ -87,7 +87,7 @@
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:password id="rsenha"
 							value="#{loginBean.usuario.repetirSenha}" required="true"
-							requiredMessage="Senha inválida">
+							requiredMessage="SENHA INVÁLIDA">
 							<f:ajax event="blur" render="error_rsenha" />
 						</p:password>
 						<p:message id="error_rsenha" for="rsenha" display="icon" />

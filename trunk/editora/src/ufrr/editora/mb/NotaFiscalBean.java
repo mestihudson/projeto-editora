@@ -58,7 +58,7 @@ public class NotaFiscalBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void getNotaFiscalByNumero() {
 		if (notaFiscal.getNumero().equals(null) || notaFiscal.getNumero() == 0) {
-			Msg.addMsgError("Informe corretamente a nota fiscal");
+			Msg.addMsgError("INFORME CORRETAMENTE A NOTA FISCAL");
 
 		} else {
 			try {
@@ -68,7 +68,7 @@ public class NotaFiscalBean implements Serializable {
 				notasFiscais = query.getResultList();
 				if (notasFiscais.isEmpty()) {
 					init();
-					Msg.addMsgError("Nenhum registro encontrado");
+					Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				}
 
 			} catch (Exception e) {
@@ -81,7 +81,7 @@ public class NotaFiscalBean implements Serializable {
 		@SuppressWarnings("unchecked")
 		public void getNotaFiscalByLote() {
 			if (notaFiscal.getLote().equals(null) || notaFiscal.getLote() == 0) {
-				Msg.addMsgError("Informe corretamente o lote");
+				Msg.addMsgError("INFOME CORRETAMENTE O LOTE");
 
 			} else {
 				try {
@@ -91,7 +91,7 @@ public class NotaFiscalBean implements Serializable {
 					notasFiscais = query.getResultList();
 					if (notasFiscais.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					}
 
 				} catch (Exception e) {
@@ -107,18 +107,18 @@ public class NotaFiscalBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("/") || search.contains("*")) {
 				init();
-				Msg.addMsgError("Contem caracter(es) invalido(s)");
+				Msg.addMsgError("COMTEM CARACTER(ER) INVALIDO(S)");
 				return null;
 			} else {
 				if (search.length() <= 0) {
 					init();
-					Msg.addMsgError("Numero invalido. Preencha corretamente o campo marcado para pesquisa");
+					Msg.addMsgError("NUMERO INVALIDO. PREENCHA CORRETAMENTE O CAMPO MARCADO PARA PESQUISA");
 					return null;
 				} else {
 					notasFiscais = dao.getAllByName("obj.numero", search);
 					if (notasFiscais.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					} else {
 						return null;
 					}
@@ -127,13 +127,13 @@ public class NotaFiscalBean implements Serializable {
 		} else if (box4Search.equals(2)) {
 			if (search.length() <= 4) {
 				init();
-				Msg.addMsgError("Informe 5 caracteres para pesquisa");
+				Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
 				return null;
 			} else {
 				notasFiscais = dao.getAllByName("obj.fornecedor.nome", search);
 				if (notasFiscais.isEmpty()) {
 					init();
-					Msg.addMsgError("Nenhum registro encontrado");
+					Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				} else {
 					return null;
 				}
@@ -196,11 +196,11 @@ public class NotaFiscalBean implements Serializable {
 			all = false;
 		}
 		if (notaFiscal.getValor() == null || notaFiscal.getValor() == 0) {
-			Msg.addMsgError("Informe o valor total da nota fiscal");
+			Msg.addMsgError("INFORME O VALOR TOTAL DA NOTA FISCAL");
 			all = false;
 		}
 		if (notaFiscal.getItens().isEmpty()) {
-			Msg.addMsgError("Nao foi possivel cadastrar nota fiscal sem produto");
+			Msg.addMsgError("NAO FOI POSSIVEL CADASTRAR NOTA FISCAL SEM PRODUTO");
 			all = false;
 		}
 		if (!all) {
@@ -214,7 +214,7 @@ public class NotaFiscalBean implements Serializable {
 						.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getNotasFiscais().add(notaFiscal);
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
-				Msg.addMsgInfo("Nota Fiscal cadastrada com sucesso");
+				Msg.addMsgInfo("NOTA FISCAL CADASTRADA COM SUCESSO");
 							
 				notaFiscal.setLote((long) (getCount().size()+1)); // gera o numero do lote
 				System.out.println("...Total de notas: " + getCount().size()); // mostra o total de lotes pelo ano atual
@@ -228,7 +228,7 @@ public class NotaFiscalBean implements Serializable {
 			} else {
 				System.out
 						.println("...Erro: o valor da nota fiscal deve ser o mesmo ao total de itens");
-				Msg.addMsgError("O valor total da nota fiscal deve ser igual ao valor dos produtos somados");
+				Msg.addMsgError("VALOR TOTAL DA NOTA DEVE SER IGUAL AO VALOR DOS PRODUTOS SOMADOS");
 				return null;
 			}
 		}
@@ -239,15 +239,15 @@ public class NotaFiscalBean implements Serializable {
 	public void guardaItem() {
 		boolean all = true;
 		if (item.getQuantidadeEntrada() == null || item.getQuantidadeEntrada() == 0) {
-			Msg.addMsgError("Informe a quantidade");
+			Msg.addMsgError("INFORME A QUANTIDADE");
 			all = false;
 		}
 		if (item.getValorCusto() == null || item.getValorCusto() == 0.00) {
-			Msg.addMsgError("Informe o valor de custo");
+			Msg.addMsgError("INFORME O VALOR DE CUSTO");
 			all = false;
 		}
 		if (item.getValorVenda() == null || item.getValorVenda() == 0.00) {
-			Msg.addMsgError("Informe o valor de venda");
+			Msg.addMsgError("INFORME O VALOR DE VENDA");
 			all = false;
 		}
 		
@@ -276,7 +276,7 @@ public class NotaFiscalBean implements Serializable {
 				this.cadastro = true;
 
 			} else {
-				Msg.addMsgError("Este produto ja foi adicionado");
+				Msg.addMsgError("ESTE PRODUTO JA FOI ADICIONADO");
 				System.out.println("...Este produto ja foi adicionado");
 				item = new Item();
 				this.cadastro = true;
@@ -299,11 +299,11 @@ public class NotaFiscalBean implements Serializable {
 	public String alterNota() {
 		boolean all = true;
 		if (notaFiscal.getValor() == null || notaFiscal.getValor() == 0) {
-			Msg.addMsgError("Informe o valor total da nota fiscal");
+			Msg.addMsgError("INFORME O VALOR TOTAL DA NOTA FISCAL");
 			all = false;
 		}
 		if (notaFiscal.getItens().isEmpty()) {
-			Msg.addMsgError("Nao foi possivel cadastrar nota fiscal sem produto");
+			Msg.addMsgError("NAO FOI POSSIVEL CADASTRAR NOTA FISCAL SEM PRODUTO");
 			all = false;
 		}
 		if (!all) {
@@ -312,14 +312,14 @@ public class NotaFiscalBean implements Serializable {
 		} else {
 			if (notaFiscal.getValor().equals(getValorTotalProdutos())) {
 				DAO<NotaFiscal> dao = new DAO<NotaFiscal>(NotaFiscal.class);
-				Msg.addMsgInfo("Nota Fiscal alterada com sucesso");
+				Msg.addMsgInfo("NOTA FISCAL ALTERADA COM SUCESSO");
 				dao.atualiza(notaFiscal);
 				notaFiscal = new NotaFiscal();
 				return "/pages/notafiscal/cadastrarNotaFiscal.xhtml";
 			} else {
 				System.out
 						.println("...Erro: o valor da nota fiscal deve ser o mesmo ao total de itens");
-				Msg.addMsgError("O valor total da nota fiscal deve ser igual ao valor dos produtos somados");
+				Msg.addMsgError("O VALOR TOTAL DA NOTA FISCAL DEVE SER IGUAL AO VALOR DOS PRODUTOS SOMADOS");
 				return null;
 			}
 		}
@@ -329,7 +329,7 @@ public class NotaFiscalBean implements Serializable {
 	// m�todo para remover o item da lista de itens no cadastro de nota fiscal
 	public void removeItem() {
 		notaFiscal.getItens().remove(item);
-		Msg.addMsgWarn("Item removido");
+		Msg.addMsgWarn("ITEM REMOVIDO");
 		System.out.println("Item removido...");
 
 		item = new Item();
@@ -340,19 +340,19 @@ public class NotaFiscalBean implements Serializable {
 		if (notaFiscal.getStatus().equals(true)) {
 			notaFiscal.setStatus(false);
 			dao.atualiza(notaFiscal);
-			Msg.addMsgInfo("Nota fiscal: " + getNotaFiscal().getNumero() + "\n"
-					+ "Fornecedor: "
+			Msg.addMsgInfo("NOTA FISCAL: " + getNotaFiscal().getNumero() + "\n"
+					+ "FORNECEDOR: "
 					+ getNotaFiscal().getFornecedor().getNome() + "\n"
-					+ "desativada com sucesso");
+					+ "DESATIVADA COM SUCESSO");
 			System.out.println("...Nota fiscal desativada");
 			return "/pages/notafiscal/consultarNotaFiscal.xhtml";
 		} else {
 			notaFiscal.setStatus(true);
 			dao.atualiza(notaFiscal);
-			Msg.addMsgInfo("Nota fiscal: " + getNotaFiscal().getNumero() + "\n"
-					+ "Fornecedor: "
+			Msg.addMsgInfo("NOTA FISCAL: " + getNotaFiscal().getNumero() + "\n"
+					+ "FORNECEDOR: "
 					+ getNotaFiscal().getFornecedor().getNome() + "\n"
-					+ "reativada com sucesso");
+					+ "REATIVADA COM SUCESSO");
 			System.out.println("...Nota fiscal ativada");
 			return "/pages/notafiscal/consultarNotaFiscal.xhtml";
 		}
@@ -388,7 +388,7 @@ public class NotaFiscalBean implements Serializable {
 		q.setParameter(2, notaFiscal.getFornecedor());
 
 		if (!q.getResultList().isEmpty()) {
-			Msg.addMsgError("Esta nota fiscal ja possui registro no sistema");
+			Msg.addMsgError("ESTA NOTA JA POSSUI REGISTRO NO SISTEMA");
 			return false;
 		} else {
 			resultValidarUK = "";

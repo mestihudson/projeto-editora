@@ -52,7 +52,7 @@
 				<h:outputLabel value="Informe a categoria"	styleClass="OutPut" />
 		
 				<p:selectOneMenu style="width: 200px;" id="categoria" value="#{usuarioBean.usuario.preferencia}"
-				converter="genericConverter" required="true" requiredMessage="Informe a preferencia" styleClass="input">
+				converter="genericConverter" required="true" requiredMessage="INFORME A PREFERENCIA DE CATEGORIA" styleClass="input">
 					<f:selectItem itemValue="" itemLabel=""	noSelectionOption="true" />
 					<f:selectItems value="#{categoriaBean.categorias}" var="c"
 						itemLabel="#{c.nome}" itemValue="#{c}" />

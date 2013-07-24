@@ -45,7 +45,7 @@ public class EmailBean implements Serializable {
 			this.email = new EnviaEmail();
 			return "/pages/email/enviadoComSucesso.xhtml?faces-redirect=true";
 		} catch (EmailException ex) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro! Occoreu um erro ao tentar enviar a mensagem.", "Erro"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO! OCORREU UM ERRO AO TENTAR ENVIAR A MENSAGEM.", "Erro"));
 			Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
 		}
 		return null;

@@ -127,7 +127,7 @@
 
 						<h:outputLabel value="Perfil" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:selectOneMenu id="perfil_tipo" requiredMessage="Selecione um perfil" required="true" rendered="#{loginBean.usuario.perfil.id==1}"
+						<p:selectOneMenu id="perfil_tipo" requiredMessage="SELECIONE UM PERFIL" required="true" rendered="#{loginBean.usuario.perfil.id==1}"
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 120px;">
 							<f:selectItems value="#{perfilBean.solicitacaoUsuario}" var="p"
@@ -135,7 +135,7 @@
 							<f:ajax event="blur" render="error_perfil" />
 						</p:selectOneMenu>
 						
-						<p:selectOneMenu id="perfil_tipo2" requiredMessage="Selecione um perfil" required="true" rendered="#{loginBean.usuario.perfil.id==2}"
+						<p:selectOneMenu id="perfil_tipo2" requiredMessage="SELECIONE UM PERFIL" required="true" rendered="#{loginBean.usuario.perfil.id==2}"
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 100px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />

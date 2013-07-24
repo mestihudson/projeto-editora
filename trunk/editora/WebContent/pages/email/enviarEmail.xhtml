@@ -57,7 +57,7 @@
 						<h:outputLabel value="Título" styleClass="OutPut" style="margin-left: 10px;" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputText id="titulo" value="#{emailBean.email.titulo}" size="75"
-							required="true" requiredMessage="Informe o título"
+							required="true" requiredMessage="INFORME O TITULO"
 							styleClass="input">
 								<p:ajax event="blur" render="error_titulo" />
 						</p:inputText>
@@ -67,7 +67,7 @@
 						<h:outputLabel value="Mensagem" styleClass="OutPut" style="margin-left: 10px;" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:inputTextarea id="msg" value="#{emailBean.email.mensagem}" cols="150" autoResize="true" 
-							rows="10" required="true" requiredMessage="Escreva a mensagem"
+							rows="10" required="true" requiredMessage="ESCREVA A MENSAGEM"
 							styleClass="input">
 								<p:ajax event="blur" render="error_msg" />
 						</p:inputTextarea>

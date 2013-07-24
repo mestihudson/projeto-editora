@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Endereco;
+import ufrr.editora.entity.EnviaEmail;
 import ufrr.editora.entity.Perfil;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.EmailUtils;
@@ -57,6 +58,10 @@ public class UsuarioBean implements Serializable {
 	private Validator<Usuario> validator;
 	private String search;
 	private Integer box4Search;
+	
+	private EnviaEmail email = new EnviaEmail();
+	private DAO<EnviaEmail> dao2 = new DAO<EnviaEmail>(EnviaEmail.class);
+	private List<EnviaEmail> emails;
 
 	DAO<Usuario> dao = new DAO<Usuario>(Usuario.class);
 	private Long usuarioId;
@@ -85,7 +90,7 @@ public class UsuarioBean implements Serializable {
 		box4Search = 3;
 	}
 	
-	/** Fun��o para criar hash da senha informada **/
+	/** Funcao para criar hash da senha informada **/
 	public static String md5(String senha) {
 		String sen = "";
 		MessageDigest md = null;
@@ -199,7 +204,7 @@ public class UsuarioBean implements Serializable {
 		return usuarios;
 	}
 
-	// Exibe uma lista com as solicita��es de acesso
+	// Exibe uma lista com as solicitacoes de acesso
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getSolicitacoes() {
 		Query query = dao.query("SELECT u FROM Usuario u WHERE u.status = false AND u.aceitaSolicitacao = true AND u.perfil = 4");
@@ -208,7 +213,7 @@ public class UsuarioBean implements Serializable {
 		return query.getResultList();
 	}
 
-	// Exibe uma lista de usu�rio funcion�rios ativados
+	// Exibe uma lista de usuario funcion�rios ativados
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getAtivados() {
 		Query query = dao
@@ -218,7 +223,7 @@ public class UsuarioBean implements Serializable {
 		return query.getResultList();
 	}
 
-	// Exibe uma lista de usu�rio ativados sem clientes e administrador
+	// Exibe uma lista de usuario ativados sem clientes e administrador
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getAtivadosSemAdministrador() {
 		Query query = dao
@@ -311,7 +316,7 @@ public class UsuarioBean implements Serializable {
 				"AND extract(month from u.nascimento) = extract(month from CURRENT_DATE)" +
 				"AND extract(day from u.nascimento) = extract(day from CURRENT_DATE) ORDER BY u.nome");
 		usuarios = query.getResultList();
-		System.out.println("Total de Clientes: " + getUsuarios().size());
+		System.out.println("Total de Clientes Aniversariantes do dia: " + getUsuarios().size());
 		return query.getResultList();
 	}
 	
@@ -353,7 +358,7 @@ public class UsuarioBean implements Serializable {
 					usuariosE = query.getResultList();
 					if (usuariosE.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					}
 
 				} catch (Exception e) {
@@ -365,7 +370,7 @@ public class UsuarioBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void getClienteById() {
 		if (usuario.getId() == null || usuario.getId() == 0) {
-			Msg.addMsgError("Informe corretamente o codigo do cliente");
+			Msg.addMsgError("INFORME CORRETAMENTE O CODIGO DO CLIENTE");
 
 		} else {
 			try {
@@ -374,7 +379,7 @@ public class UsuarioBean implements Serializable {
 				usuarios = query.getResultList();
 				if (usuarios.isEmpty()) {
 					init();
-					Msg.addMsgError("Nenhum registro encontrado");
+					Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				}
 
 			} catch (Exception e) {
@@ -393,17 +398,17 @@ public class UsuarioBean implements Serializable {
 				|| usuario.getNome().contains(">")
 				|| usuario.getNome().contains("#")) {
 
-			Msg.addMsgError("Contem caracter(es) invalido(s)");
+			Msg.addMsgError("CONTEM CARACTER(ES) INVALIDO(s)");
 			return null;
 		}
 		if (usuario.getNome().length() <= 2) {
-			Msg.addMsgError("Informe pelo menos 3 caracteres");
+			Msg.addMsgError("INFORME PELO MENOS 3 CARACTERES");
 			return null;
 
 		} else {
 			usuarios = dao.getAllByName("nome", usuario.getNome());
 			if (usuarios.isEmpty()) {
-				Msg.addMsgError("Nenhum registro encontrado");
+				Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 				return null;
 
 			} else {
@@ -434,17 +439,17 @@ public class UsuarioBean implements Serializable {
 				|| usuario.getNome().contains(">")
 				|| usuario.getNome().contains("#")) {
 
-			Msg.addMsgError("Contem caracter(es) invalido(s)");
+			Msg.addMsgError("CONTEM CARACTER(ES) INVALIDO(S)");
 			return null;
 		}
 		if (usuario.getCpf().length() != 14) {
-			Msg.addMsgError("Informe o CPF correto");
+			Msg.addMsgError("INFORME O CPF CORRETO");
 			return null;
 
 		} else {
 			usuarios = dao.getAllByName("cpf", usuario.getCpf());
 			if (usuarios.isEmpty()) {
-				Msg.addMsgError("CPF nao encontrado");
+				Msg.addMsgError("CPF NAO ENCONTRADO");
 				return null;
 
 			} else {
@@ -472,19 +477,19 @@ public class UsuarioBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("*")) {
 				init();
-				Msg.addMsgError("Contem caracter(es) invalido(s)");
+				Msg.addMsgError("CONTEM CARACTER(ES) INVALIDOS(S)");
 				return null;
 			} else {
 				if (search.length() <= 10) {
 					init();
-					Msg.addMsgError("Informe o CPF corretamente");
+					Msg.addMsgError("INFORME O CPF CORRETAMENTE");
 					System.out.println("...Informe o CPF corretamente para consultar cliente");
 					return null;
 				} else {
 					usuarios = dao.getAllByName("obj.cpf", search);
 					if (getClientesCadastrados().isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 						System.out.println("...Cliente nao encontrado");
 						return null;
 					} else {
@@ -499,19 +504,19 @@ public class UsuarioBean implements Serializable {
 					|| search.contains("/")
 					|| search.contains("-")) {
 				init();
-				Msg.addMsgError("Contem caracter(es) invalido(s)");
+				Msg.addMsgError("CONTEM CARACTER(ES) INVALIDO(S)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
 					init();
-					Msg.addMsgError("Informe pelo menos 5 caracteres");
+					Msg.addMsgError("INFORME PELO MENOS 5 CARACTERES");
 					System.out.println("...Informe pelo menos 5 caracteres para consultar cliente");
 					return null;
 				} else {
 					usuarios = dao.getAllByName("obj.nome", search);
 					if (getClientesCadastrados().isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhum registro encontrado");
+						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 						System.out.println("...Cliente nao encontrado");
 						return null;
 					} else {
@@ -525,7 +530,7 @@ public class UsuarioBean implements Serializable {
 
 	/** Actions **/
 
-	// aqui funcion�rio efetua o cadastro do cliente sem incluir a senha de
+	// aqui funcionario efetua o cadastro do cliente sem incluir a senha de
 	// acesso
 	public String addClienteIn() {
 		try {
@@ -562,7 +567,7 @@ public class UsuarioBean implements Serializable {
 		return null;
 	}
 
-	// auto cadastro do cliente para comprar produto (n�o precisar� de permiss�o
+	// auto cadastro do cliente para comprar produto (nao precisara de permissao
 	// do administrador)
 	public String addCliente() {
 		try {
@@ -611,7 +616,7 @@ public class UsuarioBean implements Serializable {
 		return null;
 	}
 
-	// solicita��o de acesso ao sistema(somente para funcion�rios)
+	// solicitacao de acesso ao sistema(somente para funcionarios)
 	public String addPessoa() {
 		try {
 			boolean all = true;
@@ -635,7 +640,8 @@ public class UsuarioBean implements Serializable {
 					usuario.setSenha(TransformaStringMD5.md5(usuario.getSenha()));
 					dao.adiciona(usuario);
 					init();
-					Msg.addMsgInfo("SOLICITACAO DE ACESSO ENVIADA COM SUCESSO. AGUARDE AUTORIZACAO!");
+					Msg.addMsgInfo("SOLICITACAO DE ACESSO ENVIADA COM SUCESSO. AGUARDE PERMISSAO PARA ACESSAR O SISTEMA"
+							+ "CASO SUA SOLICITAÇÃO FOR ACEITA VOCE RECEBERA UM EMAIL DE CONFIRMACAO");
 					this.usuario = new Usuario();
 					System.out.println("...Solicitacao enviada");
 					return "index.xhtml";
@@ -664,23 +670,40 @@ public class UsuarioBean implements Serializable {
 					+ " SOLICITACAO NAO ACEITA");
 			dao.atualiza(usuario);
 			System.out.println("...Usuario ativado");
+			
 			return "/pages/usuario/autorizarAcesso.xhtml";
 		}
 		return "/pages/usuario/autorizarAcesso.xhtml";
 
 	}
 
-	// Ativar usu�rio (permitir acesso)
+	// Ativar usuario (permitir acesso)
 	public String ativarUsuario() {
 		System.out.println(this.getUsuario().getNome());
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
 			this.getUsuario().setStatus(true);
-			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()
-					+ " ATIVADO COM SUCESSO");
+			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()	+ " ATIVADO COM SUCESSO");
 			dao.atualiza(usuario);
 			System.out.println("...Usuario ativado");
-			return "/pages/usuario/autorizarAcesso.xhtml";
+			
+			try {
+				EmailUtils.confirmaAcesso(usuario);
+				this.getEmail().setUsuario(this.login.getUsuario());
+				DAO<Usuario> udao = new DAO<Usuario>(Usuario.class);
+				Usuario u = udao.buscaPorId(this.login.getUsuario().getId());
+				u.getEmails().add(email);
+				email.setDestino(usuario);
+				email.setMensagem("Acesso permitido com sucesso");
+				email.setTitulo("Solicitacao de acesso");
+				dao2.adiciona(email);
+				System.out.println("...confirmacao de acesso enviado por email");
+
+				return "/pages/usuario/autorizarAcesso.xhtml";
+			} catch (EmailException ex) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO! OCORREU UM ERRO AO TENTAR ENVIAR A MENSAGEM.","Erro"));
+				Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
+			}
 		} else {
 			System.out.println("..Nao foi possivel ativar usuario");
 			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
@@ -698,7 +721,7 @@ public class UsuarioBean implements Serializable {
 		this.dataAtual = dataAtual;
 	}
 
-	// Reativar usu�rio (exceto solicita��o)
+	// Reativar usuario (exceto solicitacao)
 	public String reativarUsuario() {
 		if (this.getUsuario().getPerfil().getId() != 5
 				&& this.getUsuario().getPerfil().getId() != null) {
@@ -951,6 +974,30 @@ public class UsuarioBean implements Serializable {
 
 	public void setValidator(Validator<Usuario> validator) {
 		this.validator = validator;
+	}
+
+	public EnviaEmail getEmail() {
+		return email;
+	}
+
+	public void setEmail(EnviaEmail email) {
+		this.email = email;
+	}
+
+	public DAO<EnviaEmail> getDao2() {
+		return dao2;
+	}
+
+	public void setDao2(DAO<EnviaEmail> dao2) {
+		this.dao2 = dao2;
+	}
+
+	public List<EnviaEmail> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(List<EnviaEmail> emails) {
+		this.emails = emails;
 	}
 
 }

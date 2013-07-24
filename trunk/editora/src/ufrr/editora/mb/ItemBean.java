@@ -117,7 +117,7 @@ public class ItemBean implements Serializable {
 		return totalProduto;
 	}
 	
-	// m�todo para somar a quantidade de saida
+	// metodo para somar a quantidade de saida
 	public Integer getTotalSaida() {
 		setTotalProduto(0);
 		for (Item i : getEstoque()) {
@@ -135,19 +135,19 @@ public class ItemBean implements Serializable {
 	/** actions **/
 	
 	// devolve ao estoque quantidade informada
-	// somente caso de troca ou devolu��o
+	// somente caso de troca ou devolucao
 	
 	public String updateItem() {
 		if (item.getId() != null) {
 			if(item.getQuantidadeSaida()==0) {
-				Msg.addMsgFatal("Nao houve venda deste produto para retorna-lo");
+				Msg.addMsgFatal("OPERACAO INDISPONIVEL! NAO HOUVE VENDA DESTE PRODUTO PARA DEVOLUCAO");
 			}else {
 				this.getDevolvido().setUsuario(this.loginBean.getUsuario());
 				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getItensDevolvidos().add(devolvido);
 				
-				Msg.addMsgInfo("Produto devolvido ao estoque");
+				Msg.addMsgInfo("PRODUTO DEVOLVIDO AO ESTOQUE");
 				System.out.println("...produto devolvido ao estoque");
 				item.setQuantidadeSaida(getItem().getQuantidadeSaida()-getRetorno());
 				devolvido.setItem(item);
@@ -159,7 +159,7 @@ public class ItemBean implements Serializable {
 			}
 		} else {
 			System.out.println("...Nao foi possivel devolver produto ao estoque");
-			Msg.addMsgFatal("Nao foi possivel concluir operacao");
+			Msg.addMsgFatal("NAO FOI POSSIVEL CONCLUIR OPERACAO");
 		}
 		return "/pages/estoque/devolverEstoque.xhtml";
 	}
@@ -170,7 +170,7 @@ public class ItemBean implements Serializable {
 				dao.atualiza(item);
 				
 			} else {
-				Msg.addMsgFatal("Nao foi possivel concluir operacao");
+				Msg.addMsgFatal("NAO FOI POSSIVEL CONCLUIR OPERACAO");
 			}
 			
 		}

@@ -98,14 +98,14 @@
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:selectOneMenu style="width: 190px;" id="prod_tipo" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id==null}"
-					required="true" requiredMessage="Informe o tipo" styleClass="input">
+					required="true" requiredMessage="INFORME O TIPO" styleClass="input">
 						<f:selectItems value="#{tipoProdutoBean.id1}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 							<f:ajax event="blur" render="error_nome_tipo" />
 					</p:selectOneMenu>
 					<p:message id="error_nome_tipo" for="prod_tipo" rendered="#{produtoBean.produto.id==null}" />
 					
 					<p:selectOneMenu style="width: 190px;" id="prod_tipo2" value="#{produtoBean.produto.tipo}" converter="genericConverter" rendered="#{produtoBean.produto.id!=null}"
-					required="true" requiredMessage="Informe o tipo" styleClass="input" disabled="true">
+					required="true" requiredMessage="INFORME O TIPO" styleClass="input" disabled="true">
 						<f:selectItems value="#{tipoProdutoBean.id1}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo}" />
 							<f:ajax event="blur" render="error_nome_tipo2" />
 					</p:selectOneMenu>
@@ -114,7 +114,7 @@
 
 					<h:outputLabel value="Título da Obra" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
-					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="Informe o título da obra"
+					<p:inputTextarea id="prod_nome" value="#{produtoBean.produto.nome}" required="true" requiredMessage="INFORME O TÍTULO DA OBRA"
 					styleClass="input" maxlength="80">
 						<f:ajax event="blur" render="error_nome" />
 						<f:validateLength minimum="6" />
@@ -143,8 +143,8 @@
 					<h:outputLabel value="Autor/organizador" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:autoComplete id="prod_autor" value="#{produtoBean.produto.autor}" size="31"
-					required="true" requiredMessage="Informe o autor e organizador do livro" completeMethod="#{produtoBean.autocompleteautor}" minQueryLength="4" maxResults="1" queryDelay="30" var="a" itemLabel="#{a}"
-					itemValue="#{a}" validatorMessage="Informe corretamente o autor">
+					required="true" requiredMessage="INFORME O AUTOR E ORGANIZADOR DA OBRA" completeMethod="#{produtoBean.autocompleteautor}" minQueryLength="4" maxResults="1" queryDelay="30" var="a" itemLabel="#{a}"
+					itemValue="#{a}" validatorMessage="INFORME CORRETAMENTE O AUTOR">
 						<f:ajax event="blur" render="error_autor" />
 						<f:validateLength minimum="5" />
 					</p:autoComplete>
@@ -156,7 +156,7 @@
 					<p:autoComplete id="prod_editora" value="#{produtoBean.produto.editora}" styleClass="input" 
 					completeMethod="#{produtoBean.autocompleteeditora}" size="31"
 					minQueryLength="2" maxResults="1" queryDelay="30" var="e" itemLabel="#{e}" itemValue="#{e}"
-					required="true" requiredMessage="Informe a editora do livro" validatorMessage="Informe corretamente a editora">
+					required="true" requiredMessage="INFORME A EDITORA DA OBRA" validatorMessage="INFORME CORRETAMENTE A EDITORA">
 						<f:ajax event="blur" render="error_editora" />
 						<f:validateLength minimum="5" />
 					</p:autoComplete>
@@ -166,7 +166,7 @@
 					<h:outputLabel value="Categoria" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 					<p:selectOneMenu style="width: 190px;" id="prod_categoria" value="#{produtoBean.produto.categoria}" converter="genericConverter"
-					required="true" requiredMessage="Informe a categoria" styleClass="input" rendered="#{produtoBean.produto.id==null}">
+					required="true" requiredMessage="INFORME A CATEGORIA" styleClass="input" rendered="#{produtoBean.produto.id==null}">
 						<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
 						<f:selectItems value="#{categoriaBean.categorias}" var="c" 
 						itemLabel="#{c.nome}" itemValue="#{c}" />
@@ -175,7 +175,7 @@
 					<p:message id="error_nome_categoria" for="prod_categoria" rendered="#{produtoBean.produto.id==null}" />
 					
 					<p:selectOneMenu style="width: 190px;" id="prod_categoria2" value="#{produtoBean.produto.categoria}" converter="genericConverter"
-					required="true" requiredMessage="Informe a categoria" styleClass="input" rendered="#{produtoBean.produto.id!=null}">
+					required="true" requiredMessage="INFORME A CATEGORIA" styleClass="input" rendered="#{produtoBean.produto.id!=null}">
 						<f:selectItems value="#{categoriaBean.categorias}" var="categoria" 
 						itemLabel="#{categoria.nome}" itemValue="#{categoria}" />
 							<f:ajax event="blur" render="error_nome_categoria2" />
@@ -185,8 +185,8 @@
 					
 					<h:outputLabel value="Quant. mínima de estoque" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="Informe a quantidade mínima de estoque"
-					min="0" max="100" title="Quantidade Mínima de Estoque" validatorMessage="Quantidade mínima de estoque inválida">
+					<p:spinner id="prod_min" value="#{produtoBean.produto.quantidadeMinima}" size="5" required="true" requiredMessage="INFORME A QUANTIDADE MÍNIMA DE ESTOQUE"
+					min="0" max="100" title="Quantidade Mínima de Estoque" validatorMessage="QUANTIDADE MÍNIMA DE ESTOQUE INVÁLIDA">
 						<f:ajax event="blur" render="error_min" />
 						<f:validateLongRange minimum="0" />
 					</p:spinner>
@@ -196,8 +196,8 @@
 					<h:outputLabel value="ISBN" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" styleClass="as" />					
 					<p:inputText id="prod_isbn" value="#{produtoBean.produto.isbn}" styleClass="input" 
-					required="true" requiredMessage="Informe o número do ISBN" rendered="#{produtoBean.produto.id==null}" converterMessage="Somente números"
-					maxlength="13" validatorMessage="ISBN inválido">
+					required="true" requiredMessage="INFORME O NÚMERO ISBN" rendered="#{produtoBean.produto.id==null}" converterMessage="Somente números"
+					maxlength="13" validatorMessage="ISBN INVÁLIDO">
 						<f:ajax event="blur" render="error_codigobarra" />
 						<f:validateLength minimum="10" maximum="13" />
 					</p:inputText>
@@ -251,7 +251,7 @@
 					  
 					<h:outputLabel value="Tipo de Produto" styleClass="OutPut" />
 					<h:graphicImage value="/resources/img/as.png" />
-					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="Informe o nome do tipo de produto">
+					<p:inputText id="tipo_nome" value="#{tipoProdutoBean.tipo.nome}" required="true" requiredMessage="INFORME O NOME DO TIPO DE PRODUTO">
 						<f:ajax event="change" />
 					</p:inputText>
 															
@@ -279,7 +279,7 @@
 					<h:graphicImage value="/resources/img/as.png" />
 					<p:autoComplete id="cate_nome" value="#{categoriaBean.categoria.nome}" completeMethod="#{categoriaBean.autoComplete}" itemValue="#{c}" itemLabel="#{c}"  var="c"
 					minQueryLength="1" maxResults="5" converterMessage="Nome inválido" queryDelay="30" 
-					required="true" requiredMessage="Informe o nome da categoria">
+					required="true" requiredMessage="INFORME O NOME DA CATEGORIA">
 						<f:ajax event="change" />
 					</p:autoComplete>
 															

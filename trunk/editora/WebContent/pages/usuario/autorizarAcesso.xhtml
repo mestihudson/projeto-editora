@@ -118,6 +118,16 @@
 				<div align="left" style="width: 350px; margin-right: 500px;">
 					<p:messages autoUpdate="true" />
 				</div>
+				
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage value="/resources/img/aguarde.gif" width="150" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
 
 			</h:form>
 
@@ -219,7 +229,7 @@
 						<h:outputLabel value="Perfil" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:selectOneMenu id="perfil_tipo"
-							requiredMessage="Selecione um perfil" required="true"
+							requiredMessage="SELECIONE UM PERFIL" required="true"
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 150px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
@@ -236,6 +246,18 @@
 						icon="ui-icon-check" style="float: center; text-align: center;"
 						ajax="false" title="Ativar usuário">
 					</p:commandButton>
+					<br />
+					
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage value="/resources/img/aguarde.gif" width="150" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
 				</h:form>
 			</p:dialog>
 
@@ -260,7 +282,7 @@
 						<h:outputLabel value="Perfil" styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
 						<p:selectOneMenu id="perfil_tipo2"
-							requiredMessage="Selecione um perfil" required="true"
+							requiredMessage="SELECIONE UM PERFIL" required="true"
 							value="#{usuarioBean.usuario.perfil}"
 							converter="genericConverter" style="width: 100px;">
 							<f:selectItem noSelectionOption="true" itemLabel="" itemValue="" />
@@ -277,9 +299,21 @@
 						icon="ui-icon-check" style="float: center; text-align: center;"
 						ajax="false" title="Ativar usuário">
 					</p:commandButton>
+					<br />
+					
+					<p:ajaxStatus>
+					<f:facet name="start">
+						<h:graphicImage value="/resources/img/aguarde.gif" width="150" />
+					</f:facet>
+
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
 				</h:form>
 			</p:dialog>
-
+			
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
 				resizable="false" closable="false" modal="true">
 				<div align="center">
