@@ -124,6 +124,12 @@
 					
 					<br />
 					
+					<fieldset style="border: 1px solid #6A6A6A; border-top: 0; margin-left: 20px; margin-right: 20px;">
+			
+					<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center">
+						<h:outputText value="RESULTADO" style="color: white; font-size: 12px;" styleClass="OutPut" />
+					</div>
+					
 					<p:dataTable id="dt" value="#{itemVendaBean.itensVendas1}" var="i" scrollHeight="400" scrollable="true"
 						emptyMessage="Informe os dados acima" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 						rowIndexVar="rowIx">
@@ -204,6 +210,9 @@
 							</p:columnGroup>
 
 					</p:dataTable>
+					
+					</fieldset>
+					<br />
 
 				</fieldset><br />
 				

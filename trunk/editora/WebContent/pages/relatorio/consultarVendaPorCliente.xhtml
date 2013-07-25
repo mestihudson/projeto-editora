@@ -96,18 +96,28 @@
 						</p:commandButton>
 
 					</h:panelGrid>
+					
+					<fieldset style="border: 1px solid #6A6A6A; border-top: 0; margin-left: 20px; margin-right: 20px;">
+			
+					<div style="background: #394674; align-top: center; height: 20px; line-height: 20px;" align="center">
+						<h:outputText value="RESULTADO" style="color: white; font-size: 12px;" styleClass="OutPut" />
+					</div>
 
 					<!-- 			grid com a lista de vendas			 		 -->
 					<p:dataTable id="dtable" var="v" value="#{vendaBean.vendas1}" 
 						scrollable="true" scrollHeight="400"
-						emptyMessage="Nenhuma venda encontrada" rendered="#{vendaBean.venda.id==null}"
+						emptyMessage="Nenhuma venda encontrada" rendered="#{not empty vendaBean.vendas1 and vendaBean.venda.id==null}"
 						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
 
 							<p:column width="200" exportable="false">
 								<f:facet name="header">  
            						 	<h:outputText value="Vendedor" />  
         						</f:facet>
-									<h:outputLabel value="#{v.vendedor.nome}" styleClass="OutPut" />
+									<h:outputLabel value="#{v.vendedor.nome}" styleClass="OutPut">
+										<f:converter converterId="stringLimiterConverter" />
+										<f:attribute name="limit" value="20" />
+										<h:outputText value="..." rendered="#{v.vendedor.nome.length()>=21}" styleClass="OutPut" />
+									</h:outputLabel>									
 							</p:column>
 							
 							<p:column width="200">
@@ -117,8 +127,8 @@
         						
 									<h:outputLabel value="#{v.cliente.nome}" rendered="#{v.cliente.id!=1}" styleClass="OutPut">
 										<f:converter converterId="stringLimiterConverter" />
-										<f:attribute name="limit" value="10" />
-										<h:outputText value="..." rendered="#{v.cliente.id!=1}" styleClass="OutPut" />
+										<f:attribute name="limit" value="20" />
+										<h:outputText value="..." rendered="#{v.cliente.id!=1 and v.cliente.nome.length()>=21}" styleClass="OutPut" />
 									</h:outputLabel>
 								
 									<h:outputLabel value="NÃO IDENTIFICADO" rendered="#{v.cliente.id==1}" style="color: #8B0000;" styleClass="OutPut" />
@@ -177,6 +187,9 @@
 						</p:columnGroup>
 
 					</p:dataTable>
+					
+					</fieldset>
+					<br />
 
 					<h:form rendered="#{vendaBean.venda.id!=null}">
 

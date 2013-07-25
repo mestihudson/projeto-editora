@@ -119,7 +119,7 @@ public class VendaBean implements Serializable {
 			vendas = query.getResultList();
 			if (getCaixaEntrada().isEmpty()) {
 				init();
-				Msg.addMsgError("Nenhuma venda efetuada na data informada");
+				Msg.addMsgError("NENHUMA VENDA EFETUADA NA DATA INFORMADA");
 				return null;
 			}
 
@@ -136,35 +136,35 @@ public class VendaBean implements Serializable {
 			if (search.contains("'") || search.contains("@")
 					|| search.contains("*")) {
 				init();
-				Msg.addMsgError("Contem caracter(es) invalido(s)");
+				Msg.addMsgError("CONTEM CARACTER(ES) INVALIDO(S)");
 				return null;
 			} else {
 				if (search.length() <= 4) {
 					init();
-					Msg.addMsgError("Informe 5 caracteres para pesquisa");
+					Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
 					return null;
 				} else {
 					vendas = dao.getAllByName("obj.vendedor.nome", search);
 					if (vendas.isEmpty()) {
 						init();
-						Msg.addMsgError("Nenhuma efetuada para este vendedor");
+						Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE VENDEDOR");
 						return null;
 					} else {
 						return null;
 					}
 				}
 			}
-			// este m�todo � para consultarVendaPorCliente.xhtml
+			// este metodo serve para consultarVendaPorCliente.xhtml
 		} else if (box4Search.equals(2)) {
 			if (search.length() <= 4) {
 				init();
-				Msg.addMsgError("Informe 5 caracteres para pesquisa");
+				Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
 				return null;
 			} else {
 				vendas1 = dao.getAllByName("obj.cliente.nome", search);
 				if (vendas1.isEmpty()) {
 					init();
-					Msg.addMsgError("Nenhuma venda efetuada para este cliente");
+					Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CLIENTE");
 					return null;
 				} else {
 					return null;
@@ -181,7 +181,7 @@ public class VendaBean implements Serializable {
 			vendas1 = dao.getAllByName("obj.cliente.cpf", search);
 			if (vendas1.isEmpty()) {
 				init();
-				Msg.addMsgError("Nenhuma venda efetuada para este CPF");
+				Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CPF");
 				return null;
 			} else {
 				return null;
@@ -199,7 +199,7 @@ public class VendaBean implements Serializable {
 		boolean all = true;
 
 		if (venda.getCliente() != null) {
-			Msg.addMsgFatal("Erro: operacao cancelada. Nao identifique o cliente ao retirar dinheiro do caixa.");
+			Msg.addMsgFatal("ERRO: OPERACAO CANCELADA. NAO IDENTIFIQUE O CLIENTE AO RETIRAR DINHEIRO DO CAIXA, TENTE NOVAMENTE.");
 			all = false;
 			return "/pages/venda/efetuarVendaAdmin.xhtml";
 		}
@@ -221,7 +221,7 @@ public class VendaBean implements Serializable {
 				venda.setValorTotalDesconto(getVenda().getValorTotal());
 				venda.setAtivado(true);
 
-				Msg.addMsgInfo("Saida efetuada com sucesso");
+				Msg.addMsgInfo("RETIRADA EFETUADA COM SUCESSO");
 				System.out.println("...saida efetuada com sucesso!!");
 				dao.adiciona(venda);
 				venda = new Venda();
@@ -229,7 +229,7 @@ public class VendaBean implements Serializable {
 				return "/pages/venda/efetuarVendaAdmin.xhtml";
 
 			} else {
-				Msg.addMsgFatal("Retirada nao permitida");
+				Msg.addMsgFatal("RETIRADA NAO PERMITIDA");
 			}
 
 		}
@@ -249,17 +249,17 @@ public class VendaBean implements Serializable {
 		boolean all = true;
 
 		if (venda.getCliente() == null) {
-			Msg.addMsgError("Informe o cliente");
+			Msg.addMsgError("INFORME O CLIENTE");
 			all = false;
 		}
 		if (venda.getItensVendas().isEmpty()) {
-			Msg.addMsgError("Nao foi possivel efetuar a venda sem produto");
+			Msg.addMsgError("NAO FOI POSSIVEL EFETUAR A VENDA SEM PRODUTO");
 			all = false;
 		}
 		if (!all) {
 			System.out.println("...Erro ao efetuar a venda: dados incompletos");
 		} else {
-			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade do produto informado ultrapasse o dispon�vel em estoque
+			for (ItemVenda i : this.getVenda().getItensVendas()) { // verifica se a quantidade do produto informado ultrapasse o disponivel em estoque
 				if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {
 					this.cadastro = false;
 					break;
@@ -287,7 +287,7 @@ public class VendaBean implements Serializable {
 						System.out.println("...atualizou quantidade de saida do item");
 					}	
 					
-					Msg.addMsgInfo("Venda efetuada com sucesso");
+					Msg.addMsgInfo("VENDA EFETUADA COM SUCESSO");
 					System.out.println("...venda efetuada com sucesso!!");
 					dao.adiciona(venda);
 					itemVenda = new ItemVenda();
@@ -296,8 +296,8 @@ public class VendaBean implements Serializable {
 					return "/pages/venda/efetuarVenda2.xhtml?faces-redirect=true";
 
 			} else {
-				Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
-						"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
+				Msg.addMsgFatal("HA NA LISTA UM PRODUTO COM QUANTIDADE INDISPONIVEL NO ESTOQUE, " +
+						"COM ISSO NAO SERA POSSIVEL EFETUAR A VENDA. VERIFIQUE A QUANTIDADE DISPONIVEL NO ESTOQUE!");
 				System.out.println("...quantidade nao disponivel no estoque");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
@@ -307,16 +307,16 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// m�todo para efetuar venda para admin e gerente
+	// metodo para efetuar venda para admin e gerente
 	public String addVendaAdmin() {
 		boolean all = true;
 
 		if (venda.getCliente() == null) {
-			Msg.addMsgError("Informe o cliente");
+			Msg.addMsgError("INFORME O CLIENTE");
 			all = false;
 		}
 		if (venda.getItensVendas().isEmpty()) {
-			Msg.addMsgError("Nao foi possivel efetuar a venda sem produto");
+			Msg.addMsgError("NAO FOI POSSIVEL EFETUAR A VENDA SEM PRODUTO");
 			all = false;
 		}
 		if (!all) {
@@ -350,7 +350,7 @@ public class VendaBean implements Serializable {
 						System.out.println("...atualizou quantidade de saida do item");
 					}	
 					
-					Msg.addMsgInfo("Venda efetuada com sucesso");
+					Msg.addMsgInfo("VENDA EFETUADA COM SUCESSO");
 					System.out.println("...venda efetuada com sucesso!!");
 					dao.adiciona(venda);
 					itemVenda = new ItemVenda();
@@ -359,8 +359,8 @@ public class VendaBean implements Serializable {
 					return "/pages/venda/efetuarVendaAdmin2.xhtml?faces-redirect=true";
 				
 			} else {
-				Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
-						"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
+				Msg.addMsgFatal("HA NA LISTA UM PRODUTO COM QUANTIDADE INDISPONIVEL NO ESTOQUE, " +
+						"COM ISSO NAO SERA POSSIVEL EFETUAR A VENDA. VERIFIQUE A QUANTIDADE DISPONIVEL NO ESTOQUE!");
 				System.out.println("...quantidade nao disponivel no estoque");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
@@ -421,15 +421,15 @@ public class VendaBean implements Serializable {
 							}
 
 				} else {
-					Msg.addMsgFatal("Ha na lista um produto com quantidade indisponivel no estoque, " +
-							"com isso nao sera permitida nenhuma venda. Verifique a quantidade disponivel no estoque!");
+					Msg.addMsgFatal("HA NA LISTA UM PRODUTO COM QUANTIDADE INDISPONIVEL NO ESTOQUE, " +
+						"COM ISSO NAO SERA POSSIVEL EFETUAR A VENDA. VERIFIQUE A QUANTIDADE DISPONIVEL NO ESTOQUE!");
 					System.out.println("...quantidade nao disponivel no estoque");
 					itemVenda = new ItemVenda();
 					this.cadastro = true;
 				}
 
 			} else {
-				Msg.addMsgError("Produto nao pode ser adicionado novamente");
+				Msg.addMsgError("PRODUTO NAO PODE SER ADICIONADO NOVAMENTE");
 				System.out.println("...produto nao pode ser adicionado novamente");
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
@@ -445,18 +445,18 @@ public class VendaBean implements Serializable {
 					venda.setAtivado(false);
 					dao.atualiza(venda);
 					venda = new Venda();
-					return "/pages/venda/consultarVenda.xhtml";
+					return "/pages/venda/consultarVenda.xhtml?faces-redirect=true";
 				} else {
 					System.out.println("...Erro: nao foi possivel desativar venda");
-					Msg.addMsgError("Somente pode desativar venda usuario com perfil administrador");
+					Msg.addMsgError("SOMENTE PODERÁ DESATIVAR VENDA USUARIO COM PERFIL ADMINISTRADOR");
 					return null;
 				}
 		}
 	
-	// m�todo para remover o item da lista de itens
+	// metodo para remover o item da lista de itens
 	public void removeItemVenda() {
 		venda.getItensVendas().remove(itemVenda);
-		Msg.addMsgWarn("Produto removido");
+		Msg.addMsgWarn("PRODUTO REMOVIDO DA LISTA");
 		System.out.println("...Item removido da venda");
 
 		itemVenda = new ItemVenda();
@@ -482,7 +482,7 @@ public class VendaBean implements Serializable {
 	public String cancelarVenda() {
 		if (venda.getCliente().getNome() != null
 				|| !venda.getItensVendas().isEmpty()) {
-			Msg.addMsgFatal("Venda cancelada");
+			Msg.addMsgFatal("VENDA CANCELADA");
 			return "efetuarVenda.xhtml";
 		} else {
 			return "efetuarVenda.xhtml?faces-redirect=true";
@@ -493,7 +493,7 @@ public class VendaBean implements Serializable {
 	// cancelar venda (para perfil GERENTE E ADM)
 	public String cancelarVenda2() {
 		if (!venda.getItensVendas().isEmpty()) {
-			Msg.addMsgFatal("Venda cancelada");
+			Msg.addMsgFatal("VENDA CANCELADA");
 			return "efetuarVenda.xhtml";
 		} else {
 			return "efetuarVenda.xhtml?faces-redirect=true";
@@ -505,7 +505,7 @@ public class VendaBean implements Serializable {
 	public String cancelarVenda3() {
 		if (venda.getCliente().getNome() != null
 				|| !venda.getItensVendas().isEmpty()) {
-			Msg.addMsgFatal("Operacao cancelada");
+			Msg.addMsgFatal("OPERACAO CANCELADA");
 			return "efetuarVendaAdmin.xhtml";
 		} else {
 			return "efetuarVendaAdmin.xhtml?faces-redirect=true";
@@ -515,7 +515,7 @@ public class VendaBean implements Serializable {
 
 	// cancelar venda/saida
 	public String cancelarVenda4() {
-		Msg.addMsgFatal("Operacao cancelada");
+		Msg.addMsgFatal("OPERACAO CANCELADA");
 		return "efetuarVendaAdmin.xhtml";
 	}
 
