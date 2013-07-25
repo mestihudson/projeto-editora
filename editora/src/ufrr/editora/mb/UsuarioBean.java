@@ -679,36 +679,37 @@ public class UsuarioBean implements Serializable {
 
 	// Ativar usuario (permitir acesso)
 	public String ativarUsuario() {
-		System.out.println(this.getUsuario().getNome());
-		if (this.getUsuario().getPerfil().getId() != 5
-				&& this.getUsuario().getPerfil().getId() != null) {
-			this.getUsuario().setStatus(true);
-			Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()	+ " ATIVADO COM SUCESSO");
-			dao.atualiza(usuario);
-			System.out.println("...Usuario ativado");
-			
+		System.out.println(this.getUsuario().getNome());			
 			try {
-				EmailUtils.confirmaAcesso(usuario);
-				this.getEmail().setUsuario(this.login.getUsuario());
-				DAO<Usuario> udao = new DAO<Usuario>(Usuario.class);
-				Usuario u = udao.buscaPorId(this.login.getUsuario().getId());
-				u.getEmails().add(email);
-				email.setDestino(usuario);
-				email.setMensagem("Acesso permitido com sucesso");
-				email.setTitulo("Solicitacao de acesso");
-				dao2.adiciona(email);
-				System.out.println("...confirmacao de acesso enviado por email");
+				
+				if (this.getUsuario().getPerfil().getId() != 5
+						&& this.getUsuario().getPerfil().getId() != null) {
+					this.getUsuario().setStatus(true);
+					Msg.addMsgInfo("USUARIO: " + getUsuario().getNome()	+ " ATIVADO COM SUCESSO");
+					dao.atualiza(usuario);
+					System.out.println("...Usuario ativado");
+					EmailUtils.confirmaAcesso(usuario);
+					this.getEmail().setUsuario(this.login.getUsuario());
+					DAO<Usuario> udao = new DAO<Usuario>(Usuario.class);
+					Usuario u = udao.buscaPorId(this.login.getUsuario().getId());
+					u.getEmails().add(email);
+					email.setDestino(usuario);
+					email.setMensagem("Acesso permitido com sucesso");
+					email.setTitulo("Solicitacao de acesso");
+					dao2.adiciona(email);
+					System.out.println("...confirmacao de acesso enviado por email");
+				} else {
+					System.out.println("..Nao foi possivel ativar usuario");
+					Msg.addMsgError("USUARIO: " + getUsuario().getNome()
+							+ " NAO FOI ATIVADO. TENTE NOVAMENTE");
+				}	
 
 				return "/pages/usuario/autorizarAcesso.xhtml";
 			} catch (EmailException ex) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO! OCORREU UM ERRO AO TENTAR ENVIAR A MENSAGEM.","Erro"));
 				Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
 			}
-		} else {
-			System.out.println("..Nao foi possivel ativar usuario");
-			Msg.addMsgError("USUARIO: " + getUsuario().getNome()
-					+ " NAO FOI ATIVADO. TENTE NOVAMENTE");
-		}
+		
 		return "/pages/usuario/autorizarAcesso.xhtml";
 
 	}
