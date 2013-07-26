@@ -641,7 +641,7 @@ public class UsuarioBean implements Serializable {
 					dao.adiciona(usuario);
 					init();
 					Msg.addMsgInfo("SOLICITACAO DE ACESSO ENVIADA COM SUCESSO. AGUARDE PERMISSAO PARA ACESSAR O SISTEMA"
-							+ "CASO SUA SOLICITAÇÃO FOR ACEITA VOCE RECEBERA UM EMAIL DE CONFIRMACAO");
+							+ " CASO SUA SOLICITAÇÃO FOR ACEITA VOCE RECEBERA UM EMAIL DE CONFIRMACAO");
 					this.usuario = new Usuario();
 					System.out.println("...Solicitacao enviada");
 					return "index.xhtml";

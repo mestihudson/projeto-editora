@@ -49,11 +49,7 @@
 		
 	<div style="background: #C4D2EB; height: 60px; width: 95%" align="right" id="menu">
 		
-		<h:outputText value="#{loginBean.usuario.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px ">
-			<f:converter converterId="stringLimiterConverter" />
-			<f:attribute name="limit" value="15" />
-		</h:outputText>
-		<h:outputText value="..." rendered="#{loginBean.usuario.nome.length()>=15}" style="float: left; font-size: 13px; font-weight: bold; padding-top: 10px " />
+		<h:outputText value="#{loginBean.usuario.nome}" style="float: left; font-size: 13px; font-weight: bold; margin-left: 10px; padding-top: 10px " />
 			
 			<p:commandLink action="#{loginBean.redirect}">	
 				<p:graphicImage value="/resources/img/inicio.png" style="cursor: pointer; margin-top: 5px;" styleClass="acende" />

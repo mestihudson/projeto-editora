@@ -78,23 +78,27 @@
 	 			<p:panel header="#{usuario.nome} - #{usuario.id}" style="text-align:center" footer="CPF: #{usuario.cpf}">
 					<h:panelGrid columns="1" style="width:100%">
 					
-					<h:outputText value="Email: #{usuario.login}" /> 
+					<h:outputText value="Email: #{usuario.login}" rendered="#{usuario.login!=''}" /> 
+					<h:outputText value="Email: Sem Email" rendered="#{usuario.login==''}" style="color: red;" />
 												
-					<h:outputText value="Data de Nascimento" />
-					<h:outputText value="#{usuario.nascimento}">
+					<h:outputText value="Data de Nascimento" rendered="#{usuario.nascimento!=null}" />
+					<h:outputText value="#{usuario.nascimento}" rendered="#{usuario.nascimento!=null}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
+					
+					<h:outputText value="Sem Data de Nascimento" rendered="#{usuario.nascimento==null}" style="color: red;" />
 					
 					<h:outputText value="Cliente desde" />
 					<h:outputText value="#{usuario.data.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 					
-					<h:outputText value="Vinculo com UFRR: #{usuario.universitario}" />
+					<h:outputText value="Vinculo com UFRR: #{usuario.universitario}"  rendered="#{usuario.universitario!=''}" />
+					<h:outputText value="Vinculo com UFRR: NENHUM" rendered="#{usuario.universitario=='' or usuario.universitario!=null}" />
 					
-					<h:outputText value="Contato: #{usuario.telefone1}  #{usuario.telefone1}" rendered="#{usuario.telefone1 != null}" />
+					<h:outputText value="Contato: #{usuario.telefone1}  #{usuario.telefone2}" rendered="#{usuario.telefone1 != ''}" />
 					
-					<h:outputText value="Contato: NENHUM" rendered="#{usuario.telefone1 == null}" />
+					<h:outputText value="Contato: NENHUM" rendered="#{usuario.telefone1==''}" />
 					
 					<h:outputText value="Preferencia por categoria: #{usuario.preferencia.nome}" rendered="#{usuario.preferencia.nome!=null}" />
 					
@@ -107,9 +111,11 @@
 									<f:setPropertyActionListener value="#{usuario}"
 										target="#{usuarioBean.usuario}" />
 								</p:commandLink>
-					
+					<p:separator rendered="#{usuario.cpf=='' or usuario.login==null or usuario.endereco.logradouro==null}" />
 					<h:outputText value="Cliente sem CPF" rendered="#{usuario.cpf==''}" style="color: red;" />
 					<h:outputText value="Cliente sem Email" rendered="#{usuario.login==''}" style="color: red;" />
+					<h:outputText value="Cliente sem Contato Telefonico" rendered="#{usuario.telefone1==''}" style="color: red;" />
+					<h:outputText value="Cliente sem Data de Nascimento" rendered="#{usuario.nascimento.time==null}" style="color: red;" />
 					<h:outputText value="Cliente sem Endereço" rendered="#{usuario.endereco.logradouro==null}" style="color: red;" />						
 					
 					<h:outputText value="Atualize os dados do cliente 'urgente'" rendered="#{usuario.cpf==''}" style="color: brown;" />
