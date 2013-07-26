@@ -77,7 +77,7 @@ public class EmailUtils {
 		 email2 = conectaEmail();
 		 email2.setSubject("Sistema Editora UFRR");
 		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no link abaixo, digite seu email e senha para acessa-lo" + "\n" + "\n" +
-		 "http://172.22.10.248/editora");
+		 "http://172.22.10.248:8080/editora");
 		 email2.addTo(usuario.getLogin());
 		 String resposta = email2.send();
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CONFIRMAÇÃO DE ACESSO ENVIADO PARA O EMAIL: " + usuario.getLogin(), "Informacao"));
