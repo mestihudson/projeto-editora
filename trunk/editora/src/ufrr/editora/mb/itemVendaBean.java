@@ -44,6 +44,8 @@ public class itemVendaBean implements Serializable {
 
 		search = "";
 		box4Search = 1;
+		box4Search = 2;
+		box4Search = 3;
 	}
 	
 //	
@@ -65,6 +67,60 @@ public class itemVendaBean implements Serializable {
 		}
 		return itensVendas;
 	}	
+	
+	// Pesquisa venda pelo cpf
+	public String getListaVendaFornecedorByCPF() {
+		if (box4Search.equals(1)) {
+			itensVendas1 = dao.getAllByName(
+					"obj.item.notaFiscal.fornecedor.cnpj", search);
+			if (itensVendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CPF");
+				return null;
+			} else {
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	// Pesquisa venda pelo cpf
+		public String getListaVendaFornecedorByCNPJ() {
+			if (box4Search.equals(2)) {
+				itensVendas1 = dao.getAllByName(
+						"obj.item.notaFiscal.fornecedor.cnpj", search);
+				if (itensVendas1.isEmpty()) {
+					init();
+					Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CPF");
+					return null;
+				} else {
+					return null;
+				}
+			}
+			return null;
+		}
+		
+	// Pesquisa venda pelo cliente, data e vendedor
+	public String getListaVendaFornecedorByNome() {
+
+			if (box4Search.equals(4)) {
+					if (search.length() <= 4) {
+						init();
+						Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
+						return null;
+					} else {
+						itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);
+						if (itensVendas1.isEmpty()) {
+							init();
+							Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE FORNECEDOR");
+							return null;
+						} else {
+							return null;
+						}
+					}
+				}
+			return null;
+	}
 	
 	// presta��o de conta
 	// Consulta pelo fornecedor
