@@ -139,9 +139,9 @@ public class VendaBean implements Serializable {
 				Msg.addMsgError("CONTEM CARACTER(ES) INVALIDO(S)");
 				return null;
 			} else {
-				if (search.length() <= 4) {
+				if (search.length() <= 10) {
 					init();
-					Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
+					Msg.addMsgError("INFORME O NOME COMPLETO DO CLIENTE");
 					return null;
 				} else {
 					vendas = dao.getAllByName("obj.vendedor.nome", search);
@@ -189,6 +189,21 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
+	
+	// Pesquisa venda pelo cpf
+		public String getListaVendaFornecedorByCPF() {
+			if (box4Search.equals(1)) {
+				vendas1 = dao.getAllByName("obj.item.produto.notafiscal.fornecedor.cnpj", search);
+				if (vendas1.isEmpty()) {
+					init();
+					Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CPF");
+					return null;
+				} else {
+					return null;
+				}
+			}
+			return null;
+		}
 		
 	
 
