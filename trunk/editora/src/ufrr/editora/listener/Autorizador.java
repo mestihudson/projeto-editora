@@ -23,15 +23,16 @@ public class Autorizador implements PhaseListener {
 			return;
 		}
 		
-		// Obtendo LoginBean da Sessão
+		// Obtendo LoginBean da Sessao
 		LoginBean loginBean = context.getApplication().evaluateExpressionGet(context, "#{loginBean}", LoginBean.class);
 		
 		if (!loginBean.isLogado()) {
 			NavigationHandler handler = context.getApplication().getNavigationHandler();
 			handler.handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
+			System.out.println("...Sessao expirada");
 			context.renderResponse();
 			
-			//Efetua a Renderização da tela
+			//Efetua a Renderizacao da tela
 			context.renderResponse();
 		}
 	}
