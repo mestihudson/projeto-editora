@@ -160,10 +160,10 @@ ORDER BY
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tb_usuario_login}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy">
+				<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
 					<reportElement uuid="6243b08e-29a7-47cf-ae98-f7615ee0cdca" style="Detail" x="356" y="0" width="72" height="15"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Serif" size="10"/>
+						<font fontName="Serif" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tb_usuario_data_nascimento}]]></textFieldExpression>
 				</textField>
