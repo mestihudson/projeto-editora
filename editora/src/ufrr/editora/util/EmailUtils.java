@@ -71,13 +71,14 @@ public class EmailUtils {
 								"Informacao"));
 	}
 	
+	// email para confirmação de autorização!
 	 @SuppressWarnings("unused")
 		public static void confirmaAcesso(Usuario usuario) throws EmailException {
 		 Email email2 = new SimpleEmail();
 		 email2 = conectaEmail();
 		 email2.setSubject("Sistema Editora UFRR");
-		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no link abaixo, digite seu email e senha para acessa-lo" + "\n" + "\n" +
-		 "http://172.22.10.248:8080/editora");
+		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no endereco abaixo digite seu email e senha" + "\n" + "\n" +
+		 "http://172.22.10.248:8080/editora" + "\n" + "\n" + "NAO RESPONDA, EMAIL AUTOMATICO.");
 		 email2.addTo(usuario.getLogin());
 		 String resposta = email2.send();
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CONFIRMAÇÃO DE ACESSO ENVIADO PARA O EMAIL: " + usuario.getLogin(), "Informacao"));

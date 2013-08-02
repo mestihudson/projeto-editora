@@ -1,6 +1,11 @@
 @charset "UTF-8";
-* { margin:0px; padding:0px; }
-a:LINK, a:VISITED {
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+a:LINK,a:VISITED {
 	text-decoration: none;
 }
 
@@ -42,7 +47,6 @@ body {
 	text-align: center;
 	margin: 0 auto;
 	background-image: url("../resources/img/background1.png");
-
 }
 
 .formulario {
@@ -90,7 +94,7 @@ form fieldset legend {
 }
 
 /* miolo */
-#conteudo, section {
+#conteudo,section {
 	width: 1100px;
 }
 
@@ -113,7 +117,6 @@ form fieldset legend {
 	text-align: center;
 	background: #404E82;
 	margin-top: auto;
-	
 }
 
 #rodape3 {
@@ -125,7 +128,6 @@ form fieldset legend {
 	text-align: center;
 	background: #404E82;
 	margin-top: 100px;
-	
 }
 
 /** rodape **/
@@ -153,8 +155,8 @@ form fieldset legend {
 }
 
 button {
-	font-size:10px; 
-	size: 12px; 
+	font-size: 10px;
+	size: 12px;
 }
 
 form {
@@ -176,8 +178,8 @@ form .campos {
 	clear: both;
 	width: 100px;
 	height: 200px;
-	}
-	
+}
+
 .erros li {
 	display: inline;
 	list-style-position: inside;
@@ -187,7 +189,7 @@ form .campos {
 	border: 2px solid #DF7D7D;
 	float: left;
 	padding: 6px;
-	margin: 3px;	
+	margin: 3px;
 }
 
 #img {
@@ -196,7 +198,7 @@ form .campos {
 }
 
 #pfieldset {
-	float: left; 
+	float: left;
 	text-align: left;
 	font-family: sans-serif;
 	text-align: justify;
@@ -205,7 +207,7 @@ form .campos {
 
 /* botão */
 .buton {
-	cursor:pointer;
+	cursor: pointer;
 	margin-left: 100px;
 }
 
@@ -217,9 +219,9 @@ form .campos {
 	width: 300px;
 }
 
-#titulo{
+#titulo {
 	color: #1E90FF;
-	font-weight:bold;
+	font-weight: bold;
 }
 
 /* Cor do outPutText Formulario */
@@ -255,7 +257,6 @@ form .campos {
 }
 
 /* Div */
-
 div#titulo {
 	background: #EFF3FA;
 	height: 26px;
@@ -267,7 +268,6 @@ div#titulo {
 /* efeito a hover */
 img.acende {
 	color: #aacac7;
-	
 }
 
 img.acende:hover {
@@ -281,68 +281,66 @@ img.acende:hover {
 	box-shadow: 0px 0px 15px #000; /* Sombra */
 }
 
-.ui-datatable .ui-datatable-data .even-row td{  
-    background-color:#F0F9FF;  
+.ui-datatable .ui-datatable-data .even-row td {
+	background-color: #F0F9FF;
 }
 
-.ui-datatable .ui-datatable-data .even-row2 td{  
-   background-image: url("../resources/img/degrade.png");
-   background-repeat: no-repeat;     
-}  
-      
-.ui-datatable .ui-datatable-data .odd-row td{  
-    background-color:#DDDDDD;  
+.ui-datatable .ui-datatable-data .even-row2 td {
+	background-image: url("../resources/img/degrade.png");
+	background-repeat: no-repeat;
+}
+
+.ui-datatable .ui-datatable-data .odd-row td {
+	background-color: #DDDDDD;
 }
 
 /* Tabela zebrada Leonardo Holanda */
+.ui-datatable .ui-datatable-data .even-row td {
+	background-color: #EFF3FA;
+}
 
-.ui-datatable .ui-datatable-data .even-row td{  
-    background-color:#EFF3FA;  
-}  
-      
-.ui-datatable .ui-datatable-data .odd-row td{  
-    background-color:#FAFAFA;  
+.ui-datatable .ui-datatable-data .odd-row td {
+	background-color: #FAFAFA;
 }
 
 /* tabela zebrada Caelum */
-
-table.dados{
-	height:auto;
+table.dados {
+	height: auto;
 	margin-bottom: 10px;
-	width:100%;
+	width: 100%;
 }
 
-table.dados2{
-	height:auto;
+table.dados2 {
+	height: auto;
 	margin-bottom: 10px;
-	width:100%;
+	width: 100%;
 }
 
-table.dados tr th{
-	background-color:#394674;
-	color:#fff;
-	color:1em;
-	padding:10px;
+table.dados tr th {
+	background-color: #394674;
+	color: #fff;
+	color: 1em;
+	padding: 10px;
 	font-size: 10px;
 }
 
-table.dados2 tr th{
-	background-color:#A6C9E2;
-	color:#394674;
-	color:1em;
-	padding:10px;
+table.dados2 tr th {
+	background-color: #A6C9E2;
+	color: #394674;
+	color: 1em;
+	padding: 10px;
 }
 
 table.dados2 tfoot tr td {
-	background-color:#A6C9E2;
-	color:#394674;
-	color:1em;
-	padding:6px;
+	background-color: #A6C9E2;
+	color: #394674;
+	color: 1em;
+	padding: 6px;
 	font-weight: bold;
 }
 
-table.dados tr td{
-	padding:5px 10px;
+table.dados tr td {
+	padding: 5px 10px;
 }
 
 .campos tbody tr td {
@@ -351,15 +349,15 @@ table.dados tr td{
 }
 
 .dados {
-	width: 100%;	
+	width: 100%;
 }
 
-.par  {
+.par {
 	background-color: #F0F9FF;
 }
 
 .impar {
-	background:none repeat scroll 0 0 #DDDDDD;
+	background: none repeat scroll 0 0 #DDDDDD;
 }
 
 /* tirar as linhas da tabela */
@@ -377,19 +375,17 @@ table.dados tr td{
 	width: 300px;
 }
 
-.ui-growl{
-    position:fixed;
-    top:50%;
-    right:50%;
-    width:301px;
+.ui-growl {
+	position: fixed;
+	top: 50%;
+	right: 50%;
+	width: 301px;
 }
 
-[title]
-{
-color:blue;
-
+[title] {
+	color: blue;
 }
 
 .highlight {
-    background: red  !important ;
+	background: red !important;
 }

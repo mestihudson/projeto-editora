@@ -6,21 +6,23 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/_template.xhtml">			
+<ui:composition template="/_template.xhtml">
 	<ui:define name="head">
-	
-	<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%" align="left">
-		<h:outputText value="Usuário > Atualizar Cadastro" styleClass="title" style="line-height: 20px;" />
-		<div style="background: #C4D2EB; height: 2px;" ></div>	
-	</div>
+
+		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
+			align="left">
+			<h:outputText value="Usuário > Atualizar Cadastro" styleClass="title"
+				style="line-height: 20px;" />
+			<div style="background: #C4D2EB; height: 2px;"></div>
+		</div>
 	</ui:define>
 
 	<ui:define name="body">
 
-				
-			<p:dialog modal="true" width="500" widgetVar="dlgUsuarioUpdate" resizable="false" showEffect="fold" visible="true"
-			closable="false">
-				<h:form id="form_usuario_update">
+
+		<p:dialog modal="true" width="500" widgetVar="dlgUsuarioUpdate"
+			resizable="false" showEffect="fold" visible="true" closable="false">
+			<h:form id="form_usuario_update">
 
 				<div class="Centralizar" style="background: white;" align="center">
 
@@ -36,8 +38,7 @@
 
 						<fieldset
 							style="border: 1px solid #6A6A6A; border-bottom: 0; border-top: 0;">
-							<br />
-							<br />
+							<br /> <br />
 
 							<div align="center">
 								<p:panel
@@ -58,9 +59,7 @@
 									<br />
 
 								</p:panel>
-								<br />
-								<br />
-								<br />
+								<br /> <br /> <br />
 							</div>
 
 						</fieldset>
@@ -84,29 +83,28 @@
 							<h:graphicImage value="/resources/img/as.png" />
 							<h:outputLabel value="São Obrigatórios" styleClass="OutPut" />
 						</div>
-						
+
 						<p:messages />
 
 					</h:form>
 				</div>
 			</h:form>
 		</p:dialog>
-		
-		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true" resizable="false" closable="false" modal="true">
-				<div align="center">
 
-					<br />
-					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
+			resizable="false" closable="false" modal="true">
+			<div align="center">
 
-				</div>
-			</p:dialog>
-		
+				<br />
+				<p:graphicImage value="/resources/img/noacsses.png" />
+				<br /> <br /> <br /> <br /> <a
+					href="javascript:history.back(-1)">Voltar</a><br />
 
-</ui:define>
+			</div>
+		</p:dialog>
+
+
+	</ui:define>
 </ui:composition>
 
 </html>

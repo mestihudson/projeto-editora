@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -13,6 +14,7 @@ import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Item;
 import ufrr.editora.entity.ItemDevolvido;
 import ufrr.editora.entity.NotaFiscal;
+import ufrr.editora.entity.Produto;
 import ufrr.editora.entity.Usuario;
 import ufrr.editora.util.Msg;
 
@@ -21,24 +23,35 @@ import ufrr.editora.util.Msg;
 public class ItemBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
-	
+
 	private Item item = new Item();
+	private Produto produto = new Produto();
 	private NotaFiscal notaFiscal = new NotaFiscal();
 	private ItemDevolvido devolvido = new ItemDevolvido();
 	private List<Item> itens;
 	private List<Item> itens1;
 	private DAO<Item> dao = new DAO<Item>(Item.class);
 	private DAO<ItemDevolvido> dao2 = new DAO<ItemDevolvido>(ItemDevolvido.class);
-	
+	private DAO<Produto> dao3 = new DAO<Produto>(Produto.class);
+	private Integer box4Search;
+	private String search;
+
 	private Integer totalProduto;
-	
+
 	private Integer retorno;
-	
+
+	@PostConstruct
+	public void init() {
+
+		search = "";
+		box4Search = 1;
+	}
+
 	/** list **/
-	
+
 	public List<Item> getItens() {
 		if (itens == null) {
 			System.out.println("Carregando itens...");
@@ -46,35 +59,44 @@ public class ItemBean implements Serializable {
 		}
 		return itens;
 	}
-	
+
 	// Exibe uma lista de itens
+	@SuppressWarnings("unchecked")
+	public List<Item> getItens2() {
+		Query query = dao.query("SELECT i FROM Item i ORDER BY i.produto.nome");
+		itens = query.getResultList();
+		System.out.println("Total de Itens: " + getItens().size());
+		return query.getResultList();
+	}
+	
+	// Exibe uma lista do estoque
 		@SuppressWarnings("unchecked")
-		public List<Item> getItens2() {
-			Query query = dao.query("SELECT i FROM Item i ORDER BY i.produto.nome");
-			itens = query.getResultList();
-			System.out.println("Total de Itens: " + getItens().size());
+		public List<Item> getEstoque2() {
+			Query query = dao.query("SELECT i FROM Item i WHERE i.quantidadeEntrada < i.quantidadeSaida ORDER BY i.produto.nome");
+			itens1 = query.getResultList();
+			System.out.println("Total de Itens: " + getEstoque2().size());
 			return query.getResultList();
 		}
-		
-		// Lista de produtos desativados (sem livros)
-		public List<Item> getEstoqueCritico() {
-			itens1 = new ArrayList<Item>();
-			List<Item> item = new ArrayList<Item>();
-			item = this.getItens();
-			for (int i = 0; i < item.size(); i++) {
-				if (item.get(i).getQuantidadeEntrada() == item.get(i).getQuantidadeSaida()) {
-				}else {
-					if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual() 
-							&& item.get(i).getNotaFiscal().getStatus().equals(true)) {
-						itens1.add(item.get(i));
-					}	
-				}
-				
+
+	// Lista de produtos desativados (sem livros)
+	public List<Item> getEstoqueCritico() {
+		itens1 = new ArrayList<Item>();
+		List<Item> item = new ArrayList<Item>();
+		item = this.getItens();
+		for (int i = 0; i < item.size(); i++) {
+			if (item.get(i).getQuantidadeEntrada() == item.get(i).getQuantidadeSaida()) {
+			}else {
+				if (item.get(i).getProduto().getQuantidadeMinima()>=item.get(i).getQuantidadeAtual() 
+						&& item.get(i).getNotaFiscal().getStatus().equals(true)) {
+					itens1.add(item.get(i));
+				}	
 			}
-			return itens1;
-		}	
-		
-	// estoque que n�o aparece valores zerados
+
+		}
+		return itens1;
+	}	
+
+	// estoque que nao aparece valores zerados
 	public List<Item> getEstoque() {
 		itens1 = new ArrayList<Item>();
 		List<Item> item = new ArrayList<Item>();
@@ -91,24 +113,24 @@ public class ItemBean implements Serializable {
 		return itens1;
 	}
 
-	
+
 	// lista para a consulta de itens
-	
+
 	public List<Item> getItemNotaFiscal() {
 		itens1 = new ArrayList<Item>();
 		List<Item> item = new ArrayList<Item>();
 		item = this.getItens();
 		for (int i = 0; i < item.size(); i++) {
-				if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
-					itens1.add(item.get(i));
+			if (item.get(i).getNotaFiscal().getStatus().equals(true)) {
+				itens1.add(item.get(i));
 			}
 		}
 		return itens1;
 	}
-	
+
 	/** calculo */
-	
-	// m�todo para somar a quantidade de entrada
+
+	// metodo para somar a quantidade de entrada
 	public Integer getTotalEntrada() {
 		setTotalProduto(0);
 		for (Item i : getEstoque()) {
@@ -116,7 +138,7 @@ public class ItemBean implements Serializable {
 		}
 		return totalProduto;
 	}
-	
+
 	// metodo para somar a quantidade de saida
 	public Integer getTotalSaida() {
 		setTotalProduto(0);
@@ -125,18 +147,50 @@ public class ItemBean implements Serializable {
 		}
 		return totalProduto;
 	}
-	
+
 	// quantidade atual do total
 	public Integer getTotalAtual() {
 		return getTotalEntrada() - getTotalSaida();
-		
+
 	}
-	
+
 	/** actions **/
-	
+
+	// Pesquisa produto pelo nome
+	@SuppressWarnings("unchecked")
+	public void getListaEstoqueByProduto() {
+		try {
+			Query query = dao.query("SELECT i FROM Item i WHERE i.produto.nome=? and i.quantidadeEntrada > i.quantidadeSaida");
+			query.setParameter(1, item.getProduto().getNome());
+			itens1 = query.getResultList();
+			if (itens1.isEmpty()) {
+				init();
+				Msg.addMsgError("PRODUTO NÃO ESCONTRADO NO ESTOQUE");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Pesquisa produto pelo nome
+	//		public String getListaEstoqueByProduto() {
+	//			if (box4Search.equals(1)) {
+	//				itens1 = dao.getAllByName("obj.item.produto", search);
+	//				if (itens1.isEmpty()) {
+	//					init();
+	//					Msg.addMsgError("PRODUTO NÃO ESCONTRADO NO ESTOQUE");
+	//					return null;
+	//				} else {
+	//					return null;
+	//				}
+	//			}
+	//			return null;
+	//		}
+
 	// devolve ao estoque quantidade informada
 	// somente caso de troca ou devolucao
-	
+
 	public String updateItem() {
 		if (item.getId() != null) {
 			if(item.getQuantidadeSaida()==0) {
@@ -146,7 +200,7 @@ public class ItemBean implements Serializable {
 				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
 				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
 				u.getItensDevolvidos().add(devolvido);
-				
+
 				Msg.addMsgInfo("PRODUTO DEVOLVIDO AO ESTOQUE");
 				System.out.println("...produto devolvido ao estoque");
 				item.setQuantidadeSaida(getItem().getQuantidadeSaida()-getRetorno());
@@ -163,18 +217,28 @@ public class ItemBean implements Serializable {
 		}
 		return "/pages/estoque/devolverEstoque.xhtml";
 	}
-	
+
 	// devolve ao estoque quantidade informada
-		public void getDevolverEstoque() {
-			if (item.getId()!= null) {
-				dao.atualiza(item);
-				
-			} else {
-				Msg.addMsgFatal("NAO FOI POSSIVEL CONCLUIR OPERACAO");
-			}
-			
+	public void getDevolverEstoque() {
+		if (item.getId()!= null) {
+			dao.atualiza(item);
+
+		} else {
+			Msg.addMsgFatal("NAO FOI POSSIVEL CONCLUIR OPERACAO");
 		}
+
+	}
 	
+//	aucomplete produto nome
+	public List<String> autocomplete(String nome) {
+		List<Produto> array = dao3.getAllByName("nome", nome);
+		ArrayList<String> nomes = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			nomes.add(array.get(i).getNome());
+		}
+		return nomes;
+	}	
+
 
 	public LoginBean getLoginBean() {
 		return loginBean;
@@ -250,6 +314,38 @@ public class ItemBean implements Serializable {
 
 	public void setNotaFiscal(NotaFiscal notaFiscal) {
 		this.notaFiscal = notaFiscal;
+	}
+
+	public Integer getBox4Search() {
+		return box4Search;
+	}
+
+	public void setBox4Search(Integer box4Search) {
+		this.box4Search = box4Search;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public DAO<Produto> getDao3() {
+		return dao3;
+	}
+
+	public void setDao3(DAO<Produto> dao3) {
+		this.dao3 = dao3;
 	}
 
 }

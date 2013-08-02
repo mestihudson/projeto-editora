@@ -12,9 +12,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import ufrr.editora.converter.BaseEntity;
+
 @Entity
 @Table(name = "tb_item")
-public class Item implements Serializable {
+public class Item implements Serializable, BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -129,7 +131,7 @@ public class Item implements Serializable {
 		this.devolvido = devolvido;
 	}
 
-	// variável para exibir o total de quantidade atual
+	// variï¿½vel para exibir o total de quantidade atual
 	public Double getTotal() {
 		if (quantidadeEntrada != null && valorCusto != null)
 			return quantidadeEntrada * valorCusto;
@@ -137,7 +139,7 @@ public class Item implements Serializable {
 			return null;
 	}
 
-	// variável para exibir a soma do total dos produtos
+	// variï¿½vel para exibir a soma do total dos produtos
 	public Double getValorTotalProdutos() {
 		setTotalValor(00.00);
 		for (Item i : getNotaFiscal().getItens()) {
@@ -146,7 +148,7 @@ public class Item implements Serializable {
 		return totalValor;
 	}
 	
-	// variável para exibir o total de quantidade atual
+	// variï¿½vel para exibir o total de quantidade atual
 	public Integer getQuantidadeAtual() {
 		if (quantidadeEntrada != null && quantidadeSaida != null)
 			return quantidadeEntrada - quantidadeSaida;

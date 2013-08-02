@@ -190,7 +190,7 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 	
-	// Pesquisa venda pelo cpf
+	// Pesquisa venda pelo cpf do fornecedor
 		public String getListaVendaFornecedorByCPF() {
 			if (box4Search.equals(1)) {
 				vendas1 = dao.getAllByName("obj.item.produto.notafiscal.fornecedor.cnpj", search);
@@ -205,11 +205,31 @@ public class VendaBean implements Serializable {
 			return null;
 		}
 		
-	
+		// pesquisa vendedor pelo código
+		@SuppressWarnings("unchecked")
+		public void getVendaByFornecedorCodigo() {
+			if (venda.getVendedor().getId() == 0) {
+				Msg.addMsgError("INFORME CORRETAMENTE O CODIGO DO VENDEDOR");
+
+			} else {
+				try {
+					Query query = dao.query("SELECT v FROM Venda v WHERE v.vendedor=?");
+					query.setParameter(1, venda.getVendedor().getId());
+					vendas1 = query.getResultList();
+					if (vendas1.isEmpty()) {
+						init();
+						Msg.addMsgError("NENHUMA VENDA ENCONTRADA");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
 	/** Actions **/
 
-	// sa�da de dinheiro
+	// saida de dinheiro
 	public String addSaida() {
 		boolean all = true;
 

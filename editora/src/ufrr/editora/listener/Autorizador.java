@@ -7,6 +7,7 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
 import ufrr.editora.mb.LoginBean;
+import ufrr.editora.util.Msg;
 
 public class Autorizador implements PhaseListener {
 
@@ -29,6 +30,7 @@ public class Autorizador implements PhaseListener {
 		if (!loginBean.isLogado()) {
 			NavigationHandler handler = context.getApplication().getNavigationHandler();
 			handler.handleNavigation(context, null, "/index.xhtml?faces-redirect=true");
+			Msg.addMsgFatal("POR QUESTAO DE SEGURANCA SUA SESSAO FOI EXPIRADA!");
 			System.out.println("...Sessao expirada");
 			context.renderResponse();
 			
