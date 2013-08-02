@@ -146,7 +146,7 @@ public class UsuarioBean implements Serializable {
 		return nomes;
 	}
 	
-	// AutoComplete clientes
+	// AutoComplete vendedor
 	public List<String> autocompleteVendedor(String nome) {
 		List<Usuario> array = dao.getAllByName("nome", nome);
 		ArrayList<String> nomes = new ArrayList<String>();
@@ -697,6 +697,7 @@ public class UsuarioBean implements Serializable {
 					email.setMensagem("Acesso permitido com sucesso");
 					email.setTitulo("Solicitacao de acesso");
 					dao2.adiciona(email);
+					this.usuario = new Usuario();
 					System.out.println("...confirmacao de acesso enviado por email");
 				} else {
 					System.out.println("..Nao foi possivel ativar usuario");

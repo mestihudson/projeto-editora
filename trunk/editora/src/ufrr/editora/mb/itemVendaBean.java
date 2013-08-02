@@ -104,9 +104,9 @@ public class itemVendaBean implements Serializable {
 	public String getListaVendaFornecedorByNome() {
 
 			if (box4Search.equals(4)) {
-					if (search.length() <= 4) {
+					if (search.length() <= 15) {
 						init();
-						Msg.addMsgError("INFORME 5 CARACTERES PARA PESQUISA");
+						Msg.addMsgError("INFORME O NOME CORRETO DO FORNECEDOR");
 						return null;
 					} else {
 						itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);

@@ -13,8 +13,8 @@
 
 		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
 			align="left">
-			<h:outputText value="Relatório > Cliente por categoria" styleClass="title"
-				style="line-height: 20px;" />
+			<h:outputText value="Relatório > Cliente por categoria"
+				styleClass="title" style="line-height: 20px;" />
 			<div style="background: #C4D2EB; height: 2px;"></div>
 		</div>
 
@@ -45,36 +45,43 @@
 					<h:outputText value="RELATÓRIO DE CLIENTES"
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
-				
-				<fieldset style="border: 1px solid #6A6A6A; border-bottom: 0; border-top: 0; height: 300px;">
-					
-					<br /><br />
+
+				<fieldset
+					style="border: 1px solid #6A6A6A; border-bottom: 0; border-top: 0; height: 300px;">
+
+					<br />
+					<br />
 					<h:panelGrid columns="3" style="margin-left: 10px;">
 						<h:outputLabel value="Categoria: " styleClass="OutPut" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="cliente" value="#{usuarioBean.usuario.preferencia.nome}" size="100"
+						<p:inputText id="cliente"
+							value="#{usuarioBean.usuario.preferencia.nome}" size="100"
 							styleClass="input" onclick="dlgCategoria.show();">
-								<f:ajax event="change" />
+							<f:ajax event="change" />
 						</p:inputText>
-					</h:panelGrid>	
-					<br /><br />
-					
+					</h:panelGrid>
+					<br />
+					<br />
+
 				</fieldset>
-				
+
 				<div style="background: #C4D2EB; height: 28px;" align="center">
-							<p:commandButton value="Gerar Relatório" id="relatorio" action="#{reportBean.relatorioCategoria}" ajax="false"
-							icon="ui-icon-print" />
-				</div>			
-			
+					<p:commandButton value="Gerar Relatório" id="relatorio"
+						action="#{reportBean.relatorioCategoria}" ajax="false"
+						icon="ui-icon-print" />
+				</div>
+
 			</h:form>
 
 		</div>
-		
+
 		<!-- 			aqui começa o dialog -->
-			<p:dialog widgetVar="dlgCategoria" resizable="false" modal="true" showEffect="fold"
-			rendered="#{usuarioBean.usuario.id==null}" width="350" style="text-align: center;">	
+		<p:dialog widgetVar="dlgCategoria" resizable="false" modal="true"
+			showEffect="fold" rendered="#{usuarioBean.usuario.id==null}"
+			width="350" style="text-align: center;">
 			<h:form>
-				<fieldset style="border: 1px solid #6A6A6A; border-top: 0; width: 300px;">
+				<fieldset
+					style="border: 1px solid #6A6A6A; border-top: 0; width: 300px;">
 
 					<div
 						style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
@@ -82,36 +89,39 @@
 						<h:outputText value="CATEGORIAS"
 							style="color: white; font-size: 12px;" styleClass="OutPut" />
 					</div>
-					
-					<!-- 			grid com a lista de categorias			 		 -->
-					<p:dataTable id="dg" var="c" value="#{categoriaBean.categorias}" 
-						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}" rowIndexVar="rowIx">
-						
-							<p:column headerText="Código">
-								<h:commandLink value="#{c.id}" onclick="dlgCategoria.hide()"
-									id="link_codigo">
-									<f:setPropertyActionListener target="#{usuarioBean.usuario.preferencia}" value="#{c}" />
-								</h:commandLink>
-							</p:column>
 
-							<p:column headerText="Nome">
-								<h:commandLink value="#{c.nome}" onclick="dlgCategoria.hide()"
-									id="link_name">
-									<f:setPropertyActionListener target="#{usuarioBean.usuario.preferencia}" value="#{c}" />
-								</h:commandLink>
-							</p:column>
-															
+					<!-- 			grid com a lista de categorias			 		 -->
+					<p:dataTable id="dg" var="c" value="#{categoriaBean.categorias}"
+						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+						rowIndexVar="rowIx">
+
+						<p:column headerText="Código">
+							<h:commandLink value="#{c.id}" onclick="dlgCategoria.hide()"
+								id="link_codigo">
+								<f:setPropertyActionListener
+									target="#{usuarioBean.usuario.preferencia}" value="#{c}" />
+							</h:commandLink>
+						</p:column>
+
+						<p:column headerText="Nome">
+							<h:commandLink value="#{c.nome}" onclick="dlgCategoria.hide()"
+								id="link_name">
+								<f:setPropertyActionListener
+									target="#{usuarioBean.usuario.preferencia}" value="#{c}" />
+							</h:commandLink>
+						</p:column>
+
 
 					</p:dataTable>
-					
+
 				</fieldset>
 			</h:form>
 
-				<div align="left" style="width: 350px; margin-right: 500px;">
-					<p:messages id="mgsg" autoUpdate="true" />
-				</div>
-				
-				</p:dialog>
+			<div align="left" style="width: 350px; margin-right: 500px;">
+				<p:messages id="mgsg" autoUpdate="true" />
+			</div>
+
+		</p:dialog>
 
 
 		<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
@@ -125,20 +135,19 @@
 
 			</div>
 		</p:dialog>
-		
+
 		<!-- 			restrição de acesso para ususario status == false -->
-			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
-				<div align="center">
+		<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}"
+			visible="true" resizable="false" closable="false" modal="true">
+			<div align="center">
 
-					<br />
-					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+				<br />
+				<p:graphicImage value="/resources/img/noacsses.png" />
+				<br /> <br /> <br /> <br /> <a
+					href="javascript:history.back(-1)">Voltar</a><br />
 
-				</div>
-			</p:dialog>
+			</div>
+		</p:dialog>
 
 	</ui:define>
 

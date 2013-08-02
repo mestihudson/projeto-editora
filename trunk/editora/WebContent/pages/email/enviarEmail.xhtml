@@ -25,14 +25,12 @@
 
 					<br />
 					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+					<br /> <br /> <br /> <br /> <a
+						href="javascript:history.back(-1)">Voltar</a><br />
 
 				</div>
 			</h:form>
-			
+
 			<h:form id="form_enviar_email"
 				rendered="#{loginBean.usuario.perfil.id!=4}">
 
@@ -43,36 +41,44 @@
 						style="color: white; font-size: 12px;" styleClass="OutPut" />
 				</div>
 
-				<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0;">
+				<fieldset
+					style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0;">
 
+					<br /> <br />
+
+					<h:outputLabel value="Para: " styleClass="OutPut"
+						style="margin-left: 12px;" />
+					<h:outputLabel id="destinatario"
+						value="#{emailBean.email.destino.login}" styleClass="OutPut"
+						style="margin-left: 45px;" />
 					<br />
 					<br />
-					
-						<h:outputLabel value="Para: " styleClass="OutPut" style="margin-left: 12px;" />
-						<h:outputLabel id="destinatario" value="#{emailBean.email.destino.login}" styleClass="OutPut" style="margin-left: 45px;" />
-						<br /><br />
-						
-						<h:panelGrid id="gridMail" columns="5">	
 
-						<h:outputLabel value="Título" styleClass="OutPut" style="margin-left: 10px;" />
+					<h:panelGrid id="gridMail" columns="5">
+
+						<h:outputLabel value="Título" styleClass="OutPut"
+							style="margin-left: 10px;" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputText id="titulo" value="#{emailBean.email.titulo}" size="75"
-							required="true" requiredMessage="INFORME O TITULO"
+						<p:inputText id="titulo" value="#{emailBean.email.titulo}"
+							size="75" required="true" requiredMessage="INFORME O TITULO"
 							styleClass="input">
-								<p:ajax event="blur" render="error_titulo" />
+							<p:ajax event="blur" render="error_titulo" />
 						</p:inputText>
-						<p:message id="error_titulo" for="titulo" />	
-						<br /><br />
+						<p:message id="error_titulo" for="titulo" />
+						<br />
+						<br />
 
-						<h:outputLabel value="Mensagem" styleClass="OutPut" style="margin-left: 10px;" />
+						<h:outputLabel value="Mensagem" styleClass="OutPut"
+							style="margin-left: 10px;" />
 						<h:graphicImage value="/resources/img/as.png" styleClass="as" />
-						<p:inputTextarea id="msg" value="#{emailBean.email.mensagem}" cols="150" autoResize="true" 
-							rows="10" required="true" requiredMessage="ESCREVA A MENSAGEM"
-							styleClass="input">
-								<p:ajax event="blur" render="error_msg" />
+						<p:inputTextarea id="msg" value="#{emailBean.email.mensagem}"
+							cols="150" autoResize="true" rows="10" required="true"
+							requiredMessage="ESCREVA A MENSAGEM" styleClass="input">
+							<p:ajax event="blur" render="error_msg" />
 						</p:inputTextarea>
 						<p:message id="error_msg" for="msg" />
-						<br /><br />
+						<br />
+						<br />
 
 					</h:panelGrid>
 					<br />
@@ -88,7 +94,7 @@
 					<p:commandButton
 						action="/pages/email/enviarEmail.xhtml?faces-redirect=true"
 						value="Apagar" icon="ui-icon-pencil" immediate="true" />
-					&nbsp;	
+					&nbsp;
 
 					<p:commandButton action="#{loginBean.redirect}" value="Cancelar"
 						icon="ui-icon-close" immediate="true" />
@@ -116,45 +122,59 @@
 				</p:ajaxStatus>
 
 			</h:form>
-			
-<!-- 			Dialog para destinatário -->
 
-		<p:dialog header="Clique no email para identificar o destino" widgetVar="dlgMsg" resizable="false" modal="true" visible="true" closable="false"
-		rendered="#{emailBean.email.destino==null}" showEffect="fold" hideEffect="fold">
-		<h:form>
-				<p:dataTable value="#{usuarioBean.clientes}" var="usuario" id="tb_usuarios" paginator="true"
-				rows="15" paginatorPosition="bottom" emptyMessage="Não encontrado">
-				
-						<p:column headerText="Código" filterBy="#{usuario.id}" filterMatchMode="exact">
-							<h:commandLink value="#{usuario.id}" onclick="dlgMsg.hide()" id="link_id">
-								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
+			<!-- 			Dialog para destinatário -->
+
+			<p:dialog header="Clique no email para identificar o destino"
+				widgetVar="dlgMsg" resizable="false" modal="true" visible="true"
+				closable="false" rendered="#{emailBean.email.destino==null}"
+				showEffect="fold" hideEffect="fold">
+				<h:form>
+					<p:dataTable value="#{usuarioBean.clientes}" var="usuario"
+						id="tb_usuarios" paginator="true" rows="15"
+						paginatorPosition="bottom" emptyMessage="Não encontrado">
+
+						<p:column headerText="Código" filterBy="#{usuario.id}"
+							filterMatchMode="exact">
+							<h:commandLink value="#{usuario.id}" onclick="dlgMsg.hide()"
+								id="link_id">
+								<f:setPropertyActionListener target="#{emailBean.email.destino}"
+									value="#{usuario}" />
 							</h:commandLink>
 						</p:column>
-					
-						<p:column headerText="Nome" filterBy="#{usuario.nome}" filterMatchMode="contains">
-							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()" id="link_nome">
-								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
+
+						<p:column headerText="Nome" filterBy="#{usuario.nome}"
+							filterMatchMode="contains">
+							<h:commandLink value="#{usuario.nome}" onclick="dlgMsg.hide()"
+								id="link_nome">
+								<f:setPropertyActionListener target="#{emailBean.email.destino}"
+									value="#{usuario}" />
 							</h:commandLink>
 						</p:column>
-						
-						<p:column headerText="e-mail" filterBy="#{usuario.login}" filterMatchMode="contains">
-							<h:commandLink value="#{usuario.login}" onclick="dlgMsg.hide()" id="link_email">
-								<f:setPropertyActionListener target="#{emailBean.email.destino}" value="#{usuario}" />
+
+						<p:column headerText="e-mail" filterBy="#{usuario.login}"
+							filterMatchMode="contains">
+							<h:commandLink value="#{usuario.login}" onclick="dlgMsg.hide()"
+								id="link_email">
+								<f:setPropertyActionListener target="#{emailBean.email.destino}"
+									value="#{usuario}" />
 							</h:commandLink>
-						</p:column>	
-											
-				</p:dataTable>
-				
-				<div align="left">
-					<p:messages autoUpdate="true" id="msgs" />
-				</div><br />
-				
-				<p:commandLink action="#{loginBean.redirect}">
-					<p:graphicImage value="/resources/img/inicio.png" style="cursor: pointer; margin-top: 5px;" styleClass="acende" />
-				</p:commandLink>
-		</h:form>
-			
-		</p:dialog>
+						</p:column>
+
+					</p:dataTable>
+
+					<div align="left">
+						<p:messages autoUpdate="true" id="msgs" />
+					</div>
+					<br />
+
+					<p:commandLink action="#{loginBean.redirect}">
+						<p:graphicImage value="/resources/img/inicio.png"
+							style="cursor: pointer; margin-top: 5px;" styleClass="acende" />
+					</p:commandLink>
+				</h:form>
+
+			</p:dialog>
 
 			<p:dialog rendered="#{loginBean.usuario.id==null}" visible="true"
 				resizable="false" closable="false" modal="true">
@@ -167,17 +187,16 @@
 
 				</div>
 			</p:dialog>
-			
+
 			<!-- 			restrição de acesso para ususario status == false -->
-			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}" visible="true" resizable="false" closable="false" modal="true">
+			<p:dialog rendered="#{loginBean.usuario.esqueciSenha!=false}"
+				visible="true" resizable="false" closable="false" modal="true">
 				<div align="center">
 
 					<br />
 					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+					<br /> <br /> <br /> <br /> <a
+						href="javascript:history.back(-1)">Voltar</a><br />
 
 				</div>
 			</p:dialog>
