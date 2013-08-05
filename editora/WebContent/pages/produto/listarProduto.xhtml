@@ -87,7 +87,7 @@
 							completeMethod="#{produtoBean.autocompleteautor}" var="p"
 							itemValue="#{p}" itemLabel="#{p}"
 							rendered="#{produtoBean.box4Search == 4}" minQueryLength="3"
-							maxResults="5" queryDelay="30" id="autor" size="60" />
+							maxResults="1" queryDelay="30" id="autor" size="60" />
 
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"
 							action="#{produtoBean.getListaProdutos}" ajax="false"
