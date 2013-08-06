@@ -123,9 +123,9 @@ public class LoginBean implements Serializable {
 			}
 		} else {
 			System.out.println("...Digite corretamente as informacoes para recuperar seu acesso");
-			Msg.addMsgFatal("Registro nao encontrado."
+			Msg.addMsgFatal("REGISTRO NAO ENCONTRADO."
 					+ " DIGITE SEU CPF CORRETAMENTE"
-					+ " CASO O ERRO PERSISTA, ENTRE EM CONTATO COM A EDITORA UFRR");
+					+ " CASO O ERRO PERSISTA ENTRE EM CONTATO COM A EDITORA UFRR");
 			this.usuario = new Usuario();
 			return null;
 		}

@@ -109,7 +109,7 @@
 							<div
 								style="background: #A6C9E2; align-top: center; height: 20px; line-height: 20px;"
 								align="center">
-								<h:outputText value="ENTRADA"
+								<h:outputText value="ENTRADA DE CAPITAL"
 									style="color: #394674; font-size: 12px;" styleClass="OutPut" />
 							</div>
 
@@ -122,8 +122,8 @@
 									rowIndexVar="rowIx" paginator="true" rows="13"
 									paginatorPosition="top" emptyMessage="Nenhuma entrada">
 
-									<p:column style="text-align: center;" width="15">
-										<f:facet name="header">Forma de pagamento</f:facet>
+									<p:column style="text-align: center;" width="10">
+										<f:facet name="header">Forma de pagto.</f:facet>
 										<h:outputLabel value="à vista"
 											rendered="#{v.formaPagamento==1}" />
 										<h:outputLabel value="crédito"
@@ -138,15 +138,43 @@
 											rendered="#{v.formaPagamento==6}" />
 									</p:column>
 
-									<p:column width="90">
+									<p:column width="30">
 										<f:facet name="header">Valor</f:facet>
 										<h:outputLabel value="#{v.valorTotalDesconto}"
-											style="color: blue;">
+											style="color: blue;" rendered="#{v.tituloObs!=8}">
+											<f:convertNumber type="currency" currencySymbol="R$"
+												locale="pt_BR" />
+										</h:outputLabel>
+										
+										<h:outputLabel value="#{v.valorTotalDesconto}"
+											style="color: #8B0000;" rendered="#{v.tituloObs==8}">
 											<f:convertNumber type="currency" currencySymbol="R$"
 												locale="pt_BR" />
 										</h:outputLabel>
 									</p:column>
-
+									
+									<p:column width="90">
+										<f:facet name="header">Observação</f:facet>
+										<h:outputLabel value="#{v.obs}" rendered="#{not empty v.obs and v.tituloObs!=8}"
+											style="color: blue;">
+												<f:converter converterId="stringLimiterConverter" />
+												<f:attribute name="limit" value="55" />
+										</h:outputLabel>
+										
+										<h:outputLabel value="#{v.obs}" rendered="#{not empty v.obs and v.tituloObs==8}"
+											style="color: #8B0000;">
+												<f:converter converterId="stringLimiterConverter" />
+												<f:attribute name="limit" value="55" />
+										</h:outputLabel>
+										
+										<h:outputText value="..."
+											rendered="#{v.obs.length()>=56}" />
+										
+										<h:outputLabel value="Nenhuma" rendered="#{empty v.obs}"
+											style="color: blue;" />	
+										
+									</p:column>
+										
 								</p:dataTable>
 
 							</fieldset>
@@ -170,7 +198,7 @@
 							<div
 								style="background: #8B0000; align-top: center; height: 20px; line-height: 20px;"
 								align="center">
-								<h:outputText value="SAÍDA"
+								<h:outputText value="SAÍDA DE CAPITAL"
 									style="color: white; font-size: 12px;" styleClass="OutPut" />
 							</div>
 

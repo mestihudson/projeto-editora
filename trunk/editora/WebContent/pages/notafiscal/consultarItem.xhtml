@@ -98,15 +98,19 @@
 							style="text-align: center;" filterBy="#{item.notaFiscal.lote}"
 							filterMatchMode="exact">
 							<h:outputText value="#{item.notaFiscal.lote}"
-								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}" />-<h:outputText
+								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}" />
+							<h:outputText value="#{item.notaFiscal.lote}"
+								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual == 0}" style="color: red;" />-<h:outputText
 								value="#{item.notaFiscal.dataEntrada.time}"
 								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}">
-								<f:convertDateTime pattern="yyyy" />
+									<f:convertDateTime pattern="yyyy" />
+							</h:outputText>	
+								
+							<h:outputText style="color: red;"
+								value="#{item.notaFiscal.dataEntrada.time}"
+								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual == 0}">
+									<f:convertDateTime pattern="yyyy" />
 							</h:outputText>
-
-							<h:outputText value="#{item.notaFiscal.lote}"
-								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual == 0}"
-								style="color: red;" />
 						</p:column>
 
 						<p:column headerText="Produto" width="300"
@@ -124,12 +128,18 @@
 								<f:converter converterId="stringLimiterConverter" />
 								<f:attribute name="limit" value="40" />
 							</h:outputText>
+							
+							<h:outputText value="..."
+								rendered="#{item.quantidadeAtual != 0 and item.produto.nome.length()>=41}" />
 
 							<h:outputText value="#{item.produto.nome}" style="color: red;"
 								rendered="#{item.quantidadeAtual == 0}">
 								<f:converter converterId="stringLimiterConverter" />
 								<f:attribute name="limit" value="40" />
 							</h:outputText>
+							
+							<h:outputText value="..." style="color: red;"
+								rendered="#{item.quantidadeAtual == 0 and item.produto.nome.length()>=41}" />
 
 						</p:column>
 
@@ -148,14 +158,20 @@
 							<h:outputText value="#{item.notaFiscal.fornecedor.nome}"
 								rendered="#{item.quantidadeAtual != 0}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="26" />
+								<f:attribute name="limit" value="20" />
 							</h:outputText>
-
+							
+							<h:outputText value="..."
+								rendered="#{item.quantidadeAtual != 0 and item.notaFiscal.fornecedor.nome.length()>=21}" />
+								
 							<h:outputText value="#{item.notaFiscal.fornecedor.nome}"
 								style="color: red;" rendered="#{item.quantidadeAtual == 0}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="26" />
+								<f:attribute name="limit" value="20" />
 							</h:outputText>
+							
+							<h:outputText value="..." style="color: red;"
+								rendered="#{item.quantidadeAtual == 0 and item.notaFiscal.fornecedor.nome.length()>=21}" />
 						</p:column>
 
 						<p:column headerText="Entr. / Atual" style="text-align: center;">

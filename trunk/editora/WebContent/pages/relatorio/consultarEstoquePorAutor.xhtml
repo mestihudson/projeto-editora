@@ -13,7 +13,7 @@
 
 		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
 			align="left">
-			<h:outputText value="Relatório > Estoque Por Produto"
+			<h:outputText value="Relatório > Estoque Por Autor da Obra"
 				styleClass="title" style="line-height: 20px;" />
 			<div style="background: #C4D2EB; height: 2px;"></div>
 		</div>
@@ -53,21 +53,19 @@
 
 					<h:panelGrid id="grid_pesquisa" columns="15" cellspacing="15">
 					
-					<h:outputText value="Produto" styleClass="OutPut" />	
+					<h:outputText value="Autor" styleClass="OutPut" />	
+						
 						<p:selectOneMenu style="width: 300px;" id="produto"
 							value="#{itemBean.item.produto}" converter="genericConverter" filterMatchMode="contains" filter="true"
-							required="true" requiredMessage="INFORME O PRODUTO" styleClass="input">
-							<f:selectItem itemValue="" itemLabel="" />
-							<f:selectItems value="#{produtoBean.tipoOutros}" var="p"
-								itemLabel="#{p.nome}" itemValue="#{p}" />	
+							required="true" requiredMessage="INFORME O AUTOR DA OBRA" styleClass="input">
+							<f:selectItem itemValue="" itemLabel="" />	
 							<f:selectItems value="#{produtoBean.tiposId1}" var="p"
-								itemLabel="LIVRO: #{p.nome}" itemValue="#{p}" />
+								itemLabel="#{p.autor}" itemValue="#{p}" />
 						</p:selectOneMenu>
 
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"
-							rendered="#{empty itemBean.itens1 and itemBean.box4Search == 1}"
-							action="#{itemBean.getListaEstoqueByProduto}" ajax="false"
-							icon="ui-icon-search" />
+							action="#{itemBean.getListaEstoqueByAutor}" ajax="false" 
+							rendered="#{empty itemBean.itens1 and itemBean.box4Search == 1}" icon="ui-icon-search" />
 
 						<p:commandButton value="Cancelar operação" id="cancelar"
 							rendered="#{not empty itemBean.itens1}" immediate="true"
@@ -80,7 +78,7 @@
 							rendered="#{not empty itemBean.itens1 and itemBean.box4Search == 1}">
 							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
 							<p:dataExporter type="pdf" target="dtable"
-								fileName="Relatório-Produto-Estoque"
+								fileName="Relatório-Estoque-Autor"
 								preProcessor="#{reportBean.preProcessPDF}" />
 						</p:commandButton>
 
@@ -96,7 +94,7 @@
 								style="color: white; font-size: 12px;" styleClass="OutPut" />
 						</div>
 
-						<!-- 			grid com a lista de vendas			 		 -->
+						
 						<p:dataTable id="dtable" var="item" value="#{itemBean.itens1}"
 							scrollable="true" scrollHeight="400"
 							emptyMessage="Nenhum produto encontrado"
@@ -104,13 +102,13 @@
 							rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 							rowIndexVar="rowIx">
 
-							<p:column width="100" id="isbn" headerText="isbn/código"
+							<p:column width="100" id="isbn" headerText="isbn"
 								filterBy="#{item.produto.isbn}" filterMatchMode="exact"
 								filterMaxLength="13">
 								<h:outputText value="#{item.produto.isbn}" />
 							</p:column>
 
-							<p:column headerText="Produto" width="250"
+							<p:column headerText="Nome da Obra" width="250"
 								filterBy="#{item.produto.nome}" filterMatchMode="contains">
 								<h:outputText value="#{item.produto.tipo.nome}: "
 									rendered="#{item.produto.tipo.id eq 1}" />
