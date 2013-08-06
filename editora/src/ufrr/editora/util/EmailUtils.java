@@ -12,23 +12,23 @@ import ufrr.editora.entity.Usuario;
 import ufrr.editora.mb.LoginBean;
 
 public class EmailUtils {
-//	 private static final String HOSTNAME = "smtp.gmail.com";
-//	 private static final String HOSTNAME = "smtp.amajari.ufrr.br";
-//	 private static final String USERNAME = "leonardo.holanda";
-//	 private static final String PASSWORD = "***************";
-//	 private static final String EMAILORIGEM = "leonardo.holanda@ufrr.br";
+
+	 private static final String HOSTNAME = "smtp.amajari.ufrr.br";
+	 private static final String USERNAME = "csi";
+	 private static final String PASSWORD = "Csi_13";
+	 private static final String EMAILORIGEM = "csi.naoresponder@ufrr.br";
 	 
-	 private static final String HOSTNAME = "smtp.gmail.com";
-	 private static final String USERNAME = "ufrreditora";
-	 private static final String PASSWORD = "sistemaeditora";
-	 private static final String EMAILORIGEM = "ufrreditora@gmail.com";
+//	 private static final String HOSTNAME = "smtp.gmail.com";
+//	 private static final String USERNAME = "user";
+//	 private static final String PASSWORD = "**************";
+//	 private static final String EMAILORIGEM = "email@gmail.com";
 	 
 	 @SuppressWarnings("deprecation")
 	public static Email conectaEmail() throws EmailException {
 	 Email email2 = new SimpleEmail();
 	 email2.setHostName(HOSTNAME);
-//	 email2.setSmtpPort(25);
-	 email2.setSmtpPort(587);
+	 email2.setSmtpPort(25);
+//	 email2.setSmtpPort(587);
 	 email2.setAuthenticator(new DefaultAuthenticator(USERNAME, PASSWORD));
 	 email2.setTLS(true);
 	 email2.setFrom(EMAILORIGEM);
@@ -78,7 +78,7 @@ public class EmailUtils {
 		 email2 = conectaEmail();
 		 email2.setSubject("Sistema Editora UFRR");
 		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no endereco abaixo digite seu email e senha" + "\n" + "\n" +
-		 "http://172.22.10.248:8080/editora" + "\n" + "\n" + "NAO RESPONDA, EMAIL AUTOMATICO.");
+		 "http://172.22.10.248:8080/editora" + "\n" + "\n" + "EMAIL AUTOMATICO. NAO RESPONDA!");
 		 email2.addTo(usuario.getLogin());
 		 String resposta = email2.send();
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CONFIRMAÇÃO DE ACESSO ENVIADO PARA O EMAIL: " + usuario.getLogin(), "Informacao"));

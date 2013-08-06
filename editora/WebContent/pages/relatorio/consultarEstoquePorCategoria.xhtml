@@ -13,7 +13,7 @@
 
 		<div id="titulo" style="background: #EFF3FA; height: 24px; width: 95%"
 			align="left">
-			<h:outputText value="Relatório > Estoque Por Produto"
+			<h:outputText value="Relatório > Estoque Por Categoria"
 				styleClass="title" style="line-height: 20px;" />
 			<div style="background: #C4D2EB; height: 2px;"></div>
 		</div>
@@ -53,20 +53,18 @@
 
 					<h:panelGrid id="grid_pesquisa" columns="15" cellspacing="15">
 					
-					<h:outputText value="Produto" styleClass="OutPut" />	
+					<h:outputText value="Categoria" styleClass="OutPut" />	
 						<p:selectOneMenu style="width: 300px;" id="produto"
-							value="#{itemBean.item.produto}" converter="genericConverter" filterMatchMode="contains" filter="true"
-							required="true" requiredMessage="INFORME O PRODUTO" styleClass="input">
-							<f:selectItem itemValue="" itemLabel="" />
-							<f:selectItems value="#{produtoBean.tipoOutros}" var="p"
-								itemLabel="#{p.nome}" itemValue="#{p}" />	
-							<f:selectItems value="#{produtoBean.tiposId1}" var="p"
-								itemLabel="LIVRO: #{p.nome}" itemValue="#{p}" />
+							value="#{itemBean.item.produto.categoria}" converter="genericConverter" filterMatchMode="contains" filter="true"
+							required="true" requiredMessage="INFORME A CATEGORIA" styleClass="input">
+							<f:selectItem itemValue="" itemLabel="" />	
+							<f:selectItems value="#{categoriaBean.categorias}" var="c"
+								itemLabel="#{c.nome}" itemValue="#{c}" />
 						</p:selectOneMenu>
 
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"
 							rendered="#{empty itemBean.itens1 and itemBean.box4Search == 1}"
-							action="#{itemBean.getListaEstoqueByProduto}" ajax="false"
+							action="#{itemBean.getListaEstoqueByCategoria}" ajax="false"
 							icon="ui-icon-search" />
 
 						<p:commandButton value="Cancelar operação" id="cancelar"

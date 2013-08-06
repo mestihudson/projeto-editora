@@ -208,9 +208,13 @@
 									rendered="#{vendaBean.venda.tituloObs==6}" styleClass="OutPut" />
 								<h:outputLabel value="Venda com valor de custo"
 									rendered="#{vendaBean.venda.tituloObs==7}" styleClass="OutPut" />
+								<h:outputLabel value="Devolução para fornecedor/editora"
+									rendered="#{vendaBean.venda.tituloObs==8}" styleClass="OutPut" />	
 								<br />
 								<br />
-
+								
+								<h:outputLabel value="Complemento: " styleClass="OutPut"
+									style="color: #8B0000;" rendered="#{vendaBean.venda.tituloObs!=0}" />
 								<h:outputLabel value="#{vendaBean.venda.obs}"
 									rendered="#{vendaBean.venda.obs!=null}" styleClass="OutPut" />
 								<br />

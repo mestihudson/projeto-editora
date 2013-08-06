@@ -467,12 +467,14 @@
 									<!-- 						<f:selectItem itemLabel="Devolução" itemValue="1" /> -->
 									<!-- 						<f:selectItem itemLabel="Defeito" itemValue="2" /> -->
 									<f:selectItem itemLabel="Doação" itemValue="3" />
+									<f:selectItem itemLabel="Devolução para fornecedor/editora" itemValue="8" />
 									<f:selectItem itemLabel="Roubo" itemValue="4" />
 									<f:selectItem itemLabel="Troca" itemValue="5" />
 									<f:selectItem itemLabel="Venda com desconto" itemValue="6" />
 									<f:selectItem itemLabel="Venda com valor de custo"
 										itemValue="7" />
 								</p:selectOneMenu>
+								
 								<p:inputTextarea id="obs" value="#{vendaBean.venda.obs}"
 									styleClass="input" maxlength="250"
 									rendered="#{vendaBean.venda.operacao == 1}" />

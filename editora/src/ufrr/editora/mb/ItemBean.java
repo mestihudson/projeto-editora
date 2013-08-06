@@ -165,7 +165,41 @@ public class ItemBean implements Serializable {
 			itens1 = query.getResultList();
 			if (itens1.isEmpty()) {
 				init();
-				Msg.addMsgError("PRODUTO NÃO ESCONTRADO NO ESTOQUE");
+				Msg.addMsgError("PRODUTO NÃO ENCONTRADO NO ESTOQUE");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Pesquisa produto pelo autor da obra
+	@SuppressWarnings("unchecked")
+	public void getListaEstoqueByAutor() {
+		try {
+			Query query = dao.query("SELECT i FROM Item i WHERE i.produto.autor=? and i.quantidadeEntrada > i.quantidadeSaida");
+			query.setParameter(1, item.getProduto().getAutor());
+			itens1 = query.getResultList();
+			if (itens1.isEmpty()) {
+				init();
+				Msg.addMsgError("NÃO EXISTE NENHUMA OBRA COM ESSE AUTOR DISPONÍVEL NO ESTOQUE NO MOMENTO");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Pesquisa produto pelo nome
+	@SuppressWarnings("unchecked")
+	public void getListaEstoqueByCategoria() {
+		try {
+			Query query = dao.query("SELECT i FROM Item i WHERE i.produto.categoria.nome=? and i.quantidadeEntrada > i.quantidadeSaida");
+			query.setParameter(1, item.getProduto().getCategoria());
+			itens1 = query.getResultList();
+			if (itens1.isEmpty()) {
+				init();
+				Msg.addMsgError("CATEGORIA INFORMADA NÃO ENCONTRADA NO ESTOQUE");
 			}
 
 		} catch (Exception e) {
@@ -173,20 +207,20 @@ public class ItemBean implements Serializable {
 		}
 	}
 
-	// Pesquisa produto pelo nome
-	//		public String getListaEstoqueByProduto() {
-	//			if (box4Search.equals(1)) {
-	//				itens1 = dao.getAllByName("obj.item.produto", search);
-	//				if (itens1.isEmpty()) {
-	//					init();
-	//					Msg.addMsgError("PRODUTO NÃO ESCONTRADO NO ESTOQUE");
-	//					return null;
-	//				} else {
-	//					return null;
-	//				}
-	//			}
-	//			return null;
-	//		}
+//	Pesquisa produto pelo nome
+//	public String getListaEstoqueByProduto2() {
+//		if (box4Search.equals(1)) {
+//			itens1 = dao.getAllByName("obj.item.produto.autor", search);
+//			if (itens1.isEmpty()) {
+//				init();
+//				Msg.addMsgError("PRODUTO NÃO ENCONTRADO NO ESTOQUE");
+//				return null;
+//			} else {
+//				return null;
+//			}
+//		}
+//		return null;
+//	}
 
 	// devolve ao estoque quantidade informada
 	// somente caso de troca ou devolucao
