@@ -30,10 +30,8 @@
 
 					<br />
 					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+					<br /> <br /> <br /> <br /> <a
+						href="javascript:history.back(-1)">Voltar</a><br />
 
 
 				</div>
@@ -72,7 +70,7 @@
 
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"
 							action="#{usuarioBean.getCategoria}" ajax="false"
-							icon="ui-icon-check" />
+							icon="ui-icon-search" />
 
 						<p:commandButton
 							action="#{relatorioBean.relatorioClienteCategoria}"
@@ -95,8 +93,9 @@
 								style="color: white; font-size: 12px;" styleClass="OutPut" />
 						</div>
 
-						<p:dataTable id="grid_dados" var="usuario"
-							value="#{usuarioBean.usuariosE}" emptyMessage="Não encontrado"
+						<p:dataTable id="grid_dados" var="usuario" 
+							value="#{usuarioBean.usuariosE}"
+							emptyMessage="Não encontrado"
 							rendered="#{not empty usuarioBean.usuariosE}">
 
 							<p:column headerText="Nome">

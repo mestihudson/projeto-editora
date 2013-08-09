@@ -53,10 +53,21 @@
 
 					<h:panelGrid id="grid_pesquisa" columns="15" cellspacing="15">
 					
+<!-- 					ativado -->
 					<h:outputText value="Categoria" styleClass="OutPut" />	
 						<p:selectOneMenu style="width: 300px;" id="produto"
-							value="#{itemBean.item.produto.categoria}" converter="genericConverter" filterMatchMode="contains" filter="true"
-							required="true" requiredMessage="INFORME A CATEGORIA" styleClass="input">
+							value="#{itemBean.produto.categoria}" converter="genericConverter" filterMatchMode="contains" filter="true"
+							required="true" requiredMessage="INFORME A CATEGORIA" styleClass="input"
+							rendered="#{empty itemBean.itens1}">
+							<f:selectItem itemValue="" itemLabel="" />	
+							<f:selectItems value="#{categoriaBean.categorias}" var="c"
+								itemLabel="#{c.nome}" itemValue="#{c}" />
+						</p:selectOneMenu>
+						
+<!-- 						desativado -->
+						<p:selectOneMenu style="width: 300px;" id="produto2"
+							value="#{itemBean.produto.categoria}" converter="genericConverter" styleClass="input" disabled="true"
+							rendered="#{not empty itemBean.produto.categoria and not empty itemBean.itens1}">
 							<f:selectItem itemValue="" itemLabel="" />	
 							<f:selectItems value="#{categoriaBean.categorias}" var="c"
 								itemLabel="#{c.nome}" itemValue="#{c}" />
@@ -69,11 +80,11 @@
 
 						<p:commandButton value="Cancelar operação" id="cancelar"
 							rendered="#{not empty itemBean.itens1}" immediate="true"
-							action="consultarEstoquePorProduto.xhtml?faces-redirect=true"
+							action="consultarEstoquePorCategoria.xhtml?faces-redirect=true"
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
 						<!-- gera o relatório -->
-						<p:commandButton value="Imprimir relatório" icon="ui-icon-print"
+						<p:commandButton value="Gerar Relatório" icon="ui-icon-print"
 							ajax="false"
 							rendered="#{not empty itemBean.itens1 and itemBean.box4Search == 1}">
 							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->

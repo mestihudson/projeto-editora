@@ -68,7 +68,7 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	private Boolean status; // ativa
 	
-	private Boolean aceitaSolicitacao; // não aceita solicitação
+	private Boolean aceitaSolicitacao; // nï¿½o aceita solicitaï¿½ï¿½o
 	
 	@Column(name="esquici_senha")
 	private Boolean esqueciSenha;
@@ -91,7 +91,7 @@ public class Usuario implements Serializable, BaseEntity {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Collection<Mensagem> mensagens = new ArrayList<Mensagem>();
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="usuario")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="autorEnvio")
 	private Collection<EnviaEmail> emails = new ArrayList<EnviaEmail>();
 	
 	@Transient
@@ -362,6 +362,8 @@ public class Usuario implements Serializable, BaseEntity {
 		result = prime * result
 				+ ((endereco == null) ? 0 : endereco.hashCode());
 		result = prime * result
+				+ ((esqueciSenha == null) ? 0 : esqueciSenha.hashCode());
+		result = prime * result
 				+ ((fornecedores == null) ? 0 : fornecedores.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
@@ -435,6 +437,11 @@ public class Usuario implements Serializable, BaseEntity {
 			if (other.endereco != null)
 				return false;
 		} else if (!endereco.equals(other.endereco))
+			return false;
+		if (esqueciSenha == null) {
+			if (other.esqueciSenha != null)
+				return false;
+		} else if (!esqueciSenha.equals(other.esqueciSenha))
 			return false;
 		if (fornecedores == null) {
 			if (other.fornecedores != null)
@@ -543,6 +550,8 @@ public class Usuario implements Serializable, BaseEntity {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 			

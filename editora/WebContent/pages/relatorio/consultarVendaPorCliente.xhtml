@@ -52,15 +52,18 @@
 						rendered="#{vendaBean.box4Search == 1}" />
 					<p:focus context="cliente" for="cliente"
 						rendered="#{vendaBean.box4Search == 2}" />
+					<p:focus context="cliente" for="codigo"
+						rendered="#{vendaBean.box4Search == 3}" />	
 
-					<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="15"
+					<h:panelGrid id="grid_pesquisa" columns="7" cellspacing="15"
 						rendered="#{vendaBean.venda.id==null}">
 
 						<p:selectOneRadio value="#{vendaBean.box4Search}"
 							rendered="#{vendaBean.venda.id==null}" styleClass="OutPut"
-							style="width: 200px;">
+							style="width: 280px;">
 							<f:selectItem itemLabel="CPF" itemValue="1" />
 							<f:selectItem itemLabel="Nome do cliente" itemValue="2" />
+							<f:selectItem itemLabel="Código" itemValue="3" />
 							<f:ajax render="form_pesquisa_venda" />
 						</p:selectOneRadio>
 
@@ -78,21 +81,47 @@
 							maxResults="5" queryDelay="60" />
 
 						<p:autoComplete value="#{vendaBean.search}"
-							rendered="#{not empty vendaBean.vendas1}" size="40"
+							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 1
+							or not empty vendaBean.vendas1 and vendaBean.box4Search == 2}" size="40"
 							required="true" requiredMessage="INFORME O NOME DO CLIENTE"
 							disabled="true" completeMethod="#{usuarioBean.autocompletenome}"
 							var="c" itemValue="#{c}" itemLabel="#{c}" minQueryLength="3"
 							maxResults="5" queryDelay="60" />
-
-						<p:commandButton value="Pesquisar" id="botaoPesquisar"
-							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 2}"
-							action="#{vendaBean.getListaVendaByCDV}" ajax="false"
-							icon="ui-icon-search" />
-
+							
+						<p:selectOneMenu style="width: 210px;" id="codigo" filter="true" filterMatchMode="startsWith"
+							value="#{vendaBean.venda.cliente}"
+							converter="genericConverter" required="true"
+							requiredMessage="INFORME O CODIGO DO CLIENTE" styleClass="input"
+							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 3}">
+								<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+								<f:selectItems value="#{usuarioBean.clientesCadastrados}" var="c"
+									itemLabel="#{c.id}" itemValue="#{c}" />
+						</p:selectOneMenu>
+						
+						<p:selectOneMenu style="width: 210px;" id="codigo2"
+							value="#{vendaBean.venda.cliente}" disabled="true"
+							converter="genericConverter" required="true"
+							requiredMessage="INFORME O CODIGO DO CLIENTE" styleClass="input"
+							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 3}">
+								<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+								<f:selectItems value="#{usuarioBean.clientesCadastrados}" var="c"
+									itemLabel="#{c.id}" itemValue="#{c}" />
+						</p:selectOneMenu>
+						
 						<p:commandButton value="Pesquisar" id="botaoPesquisar2"
 							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 1}"
 							action="#{vendaBean.getListaVendaByCPF}" ajax="false"
 							icon="ui-icon-search" />
+							
+						<p:commandButton value="Pesquisar" id="botaoPesquisar"
+							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 2}"
+							action="#{vendaBean.getListaVendaByCDV}" ajax="false"
+							icon="ui-icon-search" />
+							
+						<p:commandButton value="Pesquisar" id="botaoPesquisar3"
+							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 3}"
+							action="#{vendaBean.getVendaByCodigoCliente}" ajax="false"
+							icon="ui-icon-search" />	
 
 						<p:commandButton value="Cancelar operação" id="cancelar"
 							rendered="#{not empty vendaBean.vendas1}" immediate="true"
@@ -100,10 +129,9 @@
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
 						<!-- gera o relatório -->
-						<p:commandButton value="Imprimir relatório" icon="ui-icon-print"
+						<p:commandButton value="Gerar relatório" icon="ui-icon-print"
 							ajax="false"
-							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 1 
-						or not empty vendaBean.vendas1 and vendaBean.box4Search == 2}">
+							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search >= 1}">
 							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
 							<p:dataExporter type="pdf" target="dtable"
 								fileName="Relatório-Compras-Cliente"
@@ -136,9 +164,9 @@
 								</f:facet>
 								<h:outputLabel value="#{v.vendedor.nome}" styleClass="OutPut">
 									<f:converter converterId="stringLimiterConverter" />
-									<f:attribute name="limit" value="20" />
+									<f:attribute name="limit" value="28" />
 									<h:outputText value="..."
-										rendered="#{v.vendedor.nome.length()>=21}" styleClass="OutPut" />
+										rendered="#{v.vendedor.nome.length()>=29}" styleClass="OutPut" />
 								</h:outputLabel>
 							</p:column>
 
@@ -167,7 +195,7 @@
 								</f:facet>
 								<h:outputLabel value="#{v.cliente.cpf}" styleClass="OutPut"
 									rendered="#{v.cliente.id!=1}" />
-								<h:outputLabel value="CPF NÃO CADASTRADO"
+								<h:outputLabel value="CPF NAO CADASTRADO"
 									rendered="#{v.cliente.id==1 or v.cliente.cpf==''}"
 									style="color: #8B0000;" styleClass="OutPut" />
 							</p:column>

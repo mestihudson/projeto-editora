@@ -39,27 +39,26 @@
 
 				<div
 					style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
-					align="center">
+					align="center">						
 					<h:outputText value="FLUXO DE CAIXA"
-						style="color: white; font-size: 12px;" styleClass="OutPut" />
+						style="color: white; font-size: 12px; float: center;" styleClass="OutPut" />
 
 					<p:selectOneRadio value="#{vendaBean.box4Search}"
 						styleClass="OutPut" required="true"
 						requiredMessage="INFORME A OPERAÇÃO">
-						<f:selectItem itemLabel="Todos" itemValue="4" />
 						<f:selectItem itemLabel="Filtrar" itemValue="5" />
 						<f:ajax render="form_caixa" />
 					</p:selectOneRadio>
 				</div>
 
-				<fieldset style="border: 1px solid #6A6A6A; border-top: 0;">
+				<fieldset style="border: 1px solid #6A6A6A; border-top: 0; border-bottom: 0;">
 
 					<h:panelGrid columns="7" cellpadding="5" cellspacing="5">
 
 						<h:outputLabel value="Período " styleClass="OutPut" />
 
 						<p:calendar id="inicial" effect="slideDown" showButtonPanel="true"
-							navigator="true" rendered="#{vendaBean.box4Search!=4}"
+							navigator="true" rendered="#{vendaBean.box4Search==5}"
 							value="#{vendaBean.dataInicial.time}" required="true"
 							validatorMessage="Data inválida"
 							requiredMessage="INFORME A DATA INICIAL" pattern="dd/MM/yy"
@@ -68,7 +67,7 @@
 
 						<p:calendar id="inicial2" effect="slideDown"
 							showButtonPanel="true" navigator="true"
-							rendered="#{vendaBean.box4Search==4}"
+							rendered="#{vendaBean.box4Search!=5}"
 							value="#{vendaBean.dataInicial.time}" required="true"
 							validatorMessage="Data inválida" disabled="true"
 							requiredMessage="INFORME A DATA INICIAL" pattern="dd/MM/yy"
@@ -77,7 +76,7 @@
 
 						<h:outputLabel value=" à " styleClass="OutPut" />
 						<p:calendar id="final" effect="slideDown" showButtonPanel="true"
-							navigator="true" rendered="#{vendaBean.box4Search!=4}"
+							navigator="true" rendered="#{vendaBean.box4Search==5}"
 							value="#{vendaBean.dataFinal.time}" required="true"
 							validatorMessage="Data inválida"
 							requiredMessage="INFORME A DATA FINAL" pattern="dd/MM/yy"
@@ -85,7 +84,7 @@
 						</p:calendar>
 
 						<p:calendar id="final2" effect="slideDown" showButtonPanel="true"
-							navigator="true" rendered="#{vendaBean.box4Search==4}"
+							navigator="true" rendered="#{vendaBean.box4Search!=5}"
 							value="#{vendaBean.dataFinal.time}" required="true"
 							validatorMessage="Data inválida" disabled="true"
 							requiredMessage="INFORME A DATA FINAL" pattern="dd/MM/yy"
@@ -94,9 +93,16 @@
 
 						<p:commandButton value="OK" id="botaoPesquisar"
 							action="#{vendaBean.getCaixaByDate}" ajax="false"
-							icon="ui-icon-check" rendered="#{vendaBean.box4Search!=4}">
+							icon="ui-icon-check" rendered="#{vendaBean.box4Search==5}">
 							<f:ajax render="@form" />
 						</p:commandButton>
+						
+						<p:commandButton value="Cancelar Filtro" id="cancelar"
+							action="/pages/caixa/consultarCaixa.xhtml" ajax="false" style="color: red;"
+							icon="ui-icon-close" rendered="#{vendaBean.box4Search==5}">
+							<f:ajax render="@form" />
+						</p:commandButton>
+						
 					</h:panelGrid>
 
 					<br />
@@ -155,23 +161,26 @@
 									
 									<p:column width="90">
 										<f:facet name="header">Observação</f:facet>
-										<h:outputLabel value="#{v.obs}" rendered="#{not empty v.obs and v.tituloObs!=8}"
-											style="color: blue;">
-												<f:converter converterId="stringLimiterConverter" />
-												<f:attribute name="limit" value="55" />
-										</h:outputLabel>
-										
-										<h:outputLabel value="#{v.obs}" rendered="#{not empty v.obs and v.tituloObs==8}"
-											style="color: #8B0000;">
-												<f:converter converterId="stringLimiterConverter" />
-												<f:attribute name="limit" value="55" />
-										</h:outputLabel>
-										
-										<h:outputText value="..."
-											rendered="#{v.obs.length()>=56}" />
-										
-										<h:outputLabel value="Nenhuma" rendered="#{empty v.obs}"
+										<h:outputLabel value="Nenhuma" rendered="#{v.tituloObs==0}"
+											style="color: blue;" />
+											
+										<h:outputLabel value="Doação" rendered="#{not empty v.obs and v.tituloObs==3}"
+											style="color: blue;" />
+											
+										<h:outputLabel value="Roubo" rendered="#{not empty v.obs and v.tituloObs==4}"
 											style="color: blue;" />	
+										
+										<h:outputLabel value="Troca" rendered="#{not empty v.obs and v.tituloObs==5}"
+											style="color: blue;" />
+											
+										<h:outputLabel value="Venda com desconto" rendered="#{not empty v.obs and v.tituloObs==6}"
+											style="color: blue;" />	
+										
+										<h:outputLabel value="Venda com valor de custo" rendered="#{not empty v.obs and v.tituloObs==7}"
+											style="color: blue;" />
+												
+										<h:outputLabel value="Devolvido p/ fornecedor" rendered="#{not empty v.obs and v.tituloObs==8}"
+											style="color: #8B0000;" />	
 										
 									</p:column>
 										
@@ -246,12 +255,13 @@
 						</p:panel>
 
 						<br />
+						<br />
 					</div>
 
 				</fieldset>
 
 				<div style="background: #C4D2EB; height: 30px; line-height: 25px;"
-					align="center">
+					align="center">				
 					<h:outputText value="R$ " rendered="#{vendaBean.result != true}"
 						style="color: red; font-size: 14px;" styleClass="OutPut" />
 					<h:outputText value="#{vendaBean.lucro}"

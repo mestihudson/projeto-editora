@@ -178,7 +178,7 @@ public class ItemBean implements Serializable {
 	public void getListaEstoqueByAutor() {
 		try {
 			Query query = dao.query("SELECT i FROM Item i WHERE i.produto.autor=? and i.quantidadeEntrada > i.quantidadeSaida");
-			query.setParameter(1, item.getProduto().getAutor());
+			query.setParameter(1, produto.getAutor());
 			itens1 = query.getResultList();
 			if (itens1.isEmpty()) {
 				init();
@@ -195,7 +195,7 @@ public class ItemBean implements Serializable {
 	public void getListaEstoqueByCategoria() {
 		try {
 			Query query = dao.query("SELECT i FROM Item i WHERE i.produto.categoria.nome=? and i.quantidadeEntrada > i.quantidadeSaida");
-			query.setParameter(1, item.getProduto().getCategoria());
+			query.setParameter(1, produto.getCategoria().getNome());
 			itens1 = query.getResultList();
 			if (itens1.isEmpty()) {
 				init();
@@ -204,6 +204,18 @@ public class ItemBean implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	// Pesquisa venda pela categoria --apagar este se o de cima funcionar
+	public String getListaEstoqueCategoria() {
+		itens1 = dao.getAllByName("obj.item.produto.categoria.nome", search);
+		if (itens1.isEmpty()) {
+			init();
+			Msg.addMsgError("CATEGORIA INFORMADA NÃO ENCONTRADA NO ESTOQUE");
+			return null;
+		} else {
+			return null;
 		}
 	}
 
