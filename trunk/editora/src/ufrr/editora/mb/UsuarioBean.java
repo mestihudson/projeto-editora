@@ -689,10 +689,12 @@ public class UsuarioBean implements Serializable {
 					dao.atualiza(usuario);
 					System.out.println("...Usuario ativado");
 					EmailUtils.confirmaAcesso(usuario);
-					this.getEmail().setUsuario(this.login.getUsuario());
+					
+					this.getEmail().setAutorEnvio(this.login.getUsuario());
 					DAO<Usuario> udao = new DAO<Usuario>(Usuario.class);
 					Usuario u = udao.buscaPorId(this.login.getUsuario().getId());
 					u.getEmails().add(email);
+					
 					email.setDestino(usuario);
 					email.setMensagem("Acesso permitido com sucesso");
 					email.setTitulo("Solicitacao de acesso");
@@ -707,7 +709,7 @@ public class UsuarioBean implements Serializable {
 
 				return "/pages/usuario/autorizarAcesso.xhtml";
 			} catch (EmailException ex) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO! OCORREU UM ERRO AO TENTAR ENVIAR A MENSAGEM.","Erro"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO! OCORREU UM ERRO AO TENTAR ENVIAR O EMAIL PARA A CONTA DO USUARIO.","Erro"));
 				Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);
 			}
 		
@@ -803,11 +805,12 @@ public class UsuarioBean implements Serializable {
 	public void recuperaSenha() {
 		try {
 			EmailUtils.recuperaSenha(login);
+			System.out.println("...Solicitacao esqueci minha senha enviada com sucesso");
 		} catch (EmailException ex) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro! Occoreu um erro ao tentar enviar o email",
+							"OCORREU UM ERRO AO TENTAR ENVIAR EMAIL",
 							"Erro"));
 			System.out.println("...Erro ao tentar enviar o email para solicitacao esqueci minha senha");
 			Logger.getLogger(EmailBean.class.getName()).log(Level.ERROR, null, ex);

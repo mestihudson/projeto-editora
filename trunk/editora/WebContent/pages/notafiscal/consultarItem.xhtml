@@ -113,7 +113,7 @@
 							</h:outputText>
 						</p:column>
 
-						<p:column headerText="Produto" width="300"
+						<p:column headerText="Produto" width="260"
 							filterBy="#{item.produto.nome}" filterMatchMode="contains">
 
 							<h:outputText value="#{item.produto.tipo.nome}: "
@@ -126,20 +126,20 @@
 							<h:outputText value="#{item.produto.nome}"
 								rendered="#{item.quantidadeAtual != 0}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="40" />
+								<f:attribute name="limit" value="35" />
 							</h:outputText>
 							
 							<h:outputText value="..."
-								rendered="#{item.quantidadeAtual != 0 and item.produto.nome.length()>=41}" />
+								rendered="#{item.quantidadeAtual != 0 and item.produto.nome.length()>=36}" />
 
 							<h:outputText value="#{item.produto.nome}" style="color: red;"
 								rendered="#{item.quantidadeAtual == 0}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="40" />
+								<f:attribute name="limit" value="35" />
 							</h:outputText>
 							
 							<h:outputText value="..." style="color: red;"
-								rendered="#{item.quantidadeAtual == 0 and item.produto.nome.length()>=41}" />
+								rendered="#{item.quantidadeAtual == 0 and item.produto.nome.length()>=36}" />
 
 						</p:column>
 

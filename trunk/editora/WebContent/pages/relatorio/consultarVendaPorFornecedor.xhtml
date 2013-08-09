@@ -114,7 +114,7 @@
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
 						<!-- gera o relatório -->
-						<p:commandButton value="Imprimir relatório" icon="ui-icon-print"
+						<p:commandButton value="Gerar relatório" icon="ui-icon-print"
 							ajax="false"
 							rendered="#{not empty itemVendaBean.itensVendas1 and itemVendaBean.box4Search == 1 
 						or not empty itemVendaBean.itensVendas1 and itemVendaBean.box4Search == 2 or not empty itemVendaBean.itensVendas1 and itemVendaBean.box4Search == 4}">
@@ -152,9 +152,9 @@
 								<h:outputLabel value="#{i.venda.vendedor.nome}"
 									styleClass="OutPut">
 									<f:converter converterId="stringLimiterConverter" />
-									<f:attribute name="limit" value="20" />
+									<f:attribute name="limit" value="30" />
 									<h:outputText value="..."
-										rendered="#{i.venda.vendedor.nome.length()>=21}"
+										rendered="#{i.venda.vendedor.nome.length()>=31}"
 										styleClass="OutPut" />
 								</h:outputLabel>
 							</p:column>

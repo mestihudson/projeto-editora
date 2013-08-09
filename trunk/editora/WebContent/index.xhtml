@@ -10,10 +10,16 @@
 	<title>Editora UFRR</title>
 	<h:outputStylesheet name="leo.css" library="css" />
 	<link rel="shortcut icon" href="resources/img/favicon.ico" />
-	<meta http-equiv="refresh" content="90" />
+
+	<script type="text/javascript">
+		function updatePage() {
+			window.location.reload();
+		}
+	</script>
+	
 </h:head>
 
-<h:body styleClass="shadow">
+<h:body styleClass="shadow" onload="setInterval('updatePage()',1200000)">
 
 	<h:form id="login">
 

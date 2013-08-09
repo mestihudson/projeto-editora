@@ -7,12 +7,6 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>ufrr.editora.entity.Usuario</class>
-		<class>ufrr.editora.entity.Produto</class>
-		<class>ufrr.editora.entity.Fornecedor</class>
-		<class>ufrr.editora.entity.Endereco</class>
-		<class>ufrr.editora.entity.Perfil</class>
-
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />

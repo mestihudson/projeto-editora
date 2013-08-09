@@ -26,10 +26,8 @@
 
 					<br />
 					<p:graphicImage value="/resources/img/noacsses.png" />
-					<br />
-					<br />
-					<br />
-					<br /> <a href="javascript:history.back(-1)">Voltar</a><br />
+					<br /> <br /> <br /> <br /> <a
+						href="javascript:history.back(-1)">Voltar</a><br />
 
 
 				</div>
@@ -56,9 +54,7 @@
 							title="Verificar estoque" />
 					</h:panelGrid>
 
-					<br />
-					<br />
-					<br />
+					<br /> <br /> <br />
 
 					<div style="float: left; margin-left: 10px">
 						<p:panel header="Dados da Venda"
@@ -165,17 +161,8 @@
 					<!-- 				aqui começa a tabela de produtos -->
 					<br />
 					<div style="float: center">
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
+						<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+						<br /> <br />
 						<div
 							style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 10px; height: 20px; line-height: 20px;"
 							align="center">
@@ -348,7 +335,8 @@
 									<f:selectItem itemValue="" itemLabel=""
 										noSelectionOption="true" />
 									<f:selectItem itemLabel="Doação" itemValue="3" />
-									<f:selectItem itemLabel="Devolução para fornecedor/editora" itemValue="8" />
+									<f:selectItem itemLabel="Devolução para fornecedor/editora"
+										itemValue="8" />
 									<f:selectItem itemLabel="Roubo" itemValue="4" />
 									<f:selectItem itemLabel="Troca" itemValue="5" />
 									<f:selectItem itemLabel="Venda com desconto" itemValue="6" />
@@ -420,8 +408,7 @@
 
 						</p:panel>
 
-						<br />
-						<br />
+						<br /> <br />
 					</div>
 
 
@@ -534,58 +521,77 @@
 						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
 						rowIndexVar="rowIx" style="width: 1000px;">
 
-						<p:column width="100" headerText="isbn/código"
+						<p:column width="100" id="isbn" headerText="isbn/código"
 							filterBy="#{item.produto.isbn}" filterMatchMode="exact"
 							filterMaxLength="13">
-							<h:outputText value="#{item.produto.id}"
-								rendered="#{item.produto.isbn==null}" />
-							<h:outputText value="#{item.produto.isbn}"
-								rendered="#{item.produto.isbn!=null}" />
+							<h:outputText value="#{item.produto.isbn}" />
 						</p:column>
 
-						<p:column headerText="Produto" width="300"
+						<p:column headerText="Produto" width="250"
 							filterBy="#{item.produto.nome}" filterMatchMode="contains">
 							<h:outputText value="#{item.produto.tipo.nome}: "
 								rendered="#{item.produto.tipo.id eq 1}" />
 							<h:outputText value="#{item.produto.nome}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="40" />
+								<f:attribute name="limit" value="30" />
 							</h:outputText>
+							<h:outputText value="..."
+								rendered="#{item.produto.nome.length()>=31}" />
 						</p:column>
 
-						<p:column headerText="Lote" width="100"
-							style="text-align: center;" filterBy="#{item.notaFiscal.lote}"
-							filterMatchMode="exact">
+						<p:column headerText="Lote" width="50" style="text-align: center;">
 							<h:outputText value="#{item.notaFiscal.lote}"
-								rendered="#{item.notaFiscal.lote!=null}" />
+								rendered="#{item.notaFiscal.lote!=null}" />-<h:outputText
+								value="#{item.notaFiscal.dataEntrada.time}"
+								rendered="#{item.notaFiscal.lote!=null}">
+								<f:convertDateTime pattern="yyyy" />
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="Autor" width="200"
 							filterBy="#{item.produto.autor}" filterMatchMode="contains">
 							<h:outputText value="#{item.produto.autor}"
-								rendered="#{item.produto.autor!=null}" />
+								rendered="#{item.produto.autor!=null}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="30" />
+							</h:outputText>
+							<h:outputText value="..."
+								rendered="#{item.produto.autor.length()>=31}" />
 							<h:outputText value="NENHUM"
 								rendered="#{item.produto.autor==null}" />
 						</p:column>
 
-						<p:column headerText="qdt Entrada" style="color: #1874CD">
+						<p:column headerText="Categoria" width="100"
+							filterBy="#{item.produto.categoria.nome}"
+							filterMatchMode="contains">
+							<h:outputText value="#{item.produto.categoria.nome}"
+								rendered="#{item.produto.categoria.nome!=null}">
+								<f:converter converterId="stringLimiterConverter" />
+								<f:attribute name="limit" value="15" />
+							</h:outputText>
+							<h:outputText value="..."
+								rendered="#{item.produto.categoria.nome.length()>=16}" />
+							<h:outputText value="NENHUM"
+								rendered="#{item.produto.categoria.nome==null}" />
+						</p:column>
+
+						<p:column headerText="Entrada" style="color: #1874CD">
 							<h:outputText value="#{item.quantidadeEntrada}" />
 						</p:column>
 
-						<p:column headerText="qdt Saida" style="color: #8B0000">
+						<p:column headerText="Saída" style="color: #8B0000">
 							<h:outputText value="#{item.quantidadeSaida}" />
 						</p:column>
 
-						<p:column headerText="qdt Atual" style="color: blue;">
+						<p:column headerText="qdt. Atual" style="color: blue;">
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"
 								style="color: #CD0000;"
 								rendered="#{item.produto.quantidadeMinima >= item.quantidadeAtual}" />
 						</p:column>
-
-					</p:dataTable>
-
+						
+					</p:dataTable>	
 				</fieldset>
 
 			</h:form>

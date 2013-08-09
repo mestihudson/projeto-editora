@@ -70,9 +70,9 @@ public class VendaBean implements Serializable {
 		box4Search = 3;
 		box4Search = 4;
 	}
-	
+
 	/** List of venda **/
-	
+
 	public List<Venda> getVendas() {
 		if (vendas == null) {
 			System.out.println("Carregando caixa...");
@@ -106,8 +106,27 @@ public class VendaBean implements Serializable {
 		}
 		return caixaSaida;
 	}
-	
+
 	/** search **/ 
+
+	// pesquisa venda pelo codigo do cliente
+	@SuppressWarnings("unchecked")
+	public String getVendaByCodigoCliente() {
+		try {
+			Query query = dao.query("SELECT v FROM Venda v WHERE v.cliente.id=?");
+			query.setParameter(1, venda.getCliente().getId());
+			vendas1 = query.getResultList();
+			if (vendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("NENHUMA VENDA EFETUADA PARA O CLIENTE INFORMADO");
+				return null;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// pesquisa venda pela data
 	@SuppressWarnings("unchecked")
@@ -174,7 +193,7 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
-	
+
 	// Pesquisa cliente pelo cpf
 	public String getListaVendaByCPF() {
 		if (box4Search.equals(1)) {
@@ -189,43 +208,43 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
-	
+
 	// Pesquisa venda pelo cpf do fornecedor
-		public String getListaVendaFornecedorByCPF() {
-			if (box4Search.equals(1)) {
-				vendas1 = dao.getAllByName("obj.item.produto.notafiscal.fornecedor.cnpj", search);
+	public String getListaVendaFornecedorByCPF() {
+		if (box4Search.equals(1)) {
+			vendas1 = dao.getAllByName("obj.item.produto.notafiscal.fornecedor.cnpj", search);
+			if (vendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CPF");
+				return null;
+			} else {
+				return null;
+			}
+		}
+		return null;
+	}
+
+	// pesquisa vendedor pelo código
+	@SuppressWarnings("unchecked")
+	public void getVendaByFornecedorCodigo() {
+		if (venda.getVendedor().getId() == 0) {
+			Msg.addMsgError("INFORME CORRETAMENTE O CODIGO DO VENDEDOR");
+
+		} else {
+			try {
+				Query query = dao.query("SELECT v FROM Venda v WHERE v.vendedor=?");
+				query.setParameter(1, venda.getVendedor().getId());
+				vendas1 = query.getResultList();
 				if (vendas1.isEmpty()) {
 					init();
-					Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE CPF");
-					return null;
-				} else {
-					return null;
+					Msg.addMsgError("NENHUMA VENDA ENCONTRADA");
 				}
-			}
-			return null;
-		}
-		
-		// pesquisa vendedor pelo código
-		@SuppressWarnings("unchecked")
-		public void getVendaByFornecedorCodigo() {
-			if (venda.getVendedor().getId() == 0) {
-				Msg.addMsgError("INFORME CORRETAMENTE O CODIGO DO VENDEDOR");
 
-			} else {
-				try {
-					Query query = dao.query("SELECT v FROM Venda v WHERE v.vendedor=?");
-					query.setParameter(1, venda.getVendedor().getId());
-					vendas1 = query.getResultList();
-					if (vendas1.isEmpty()) {
-						init();
-						Msg.addMsgError("NENHUMA VENDA ENCONTRADA");
-					}
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+	}
 
 	/** Actions **/
 
@@ -240,7 +259,7 @@ public class VendaBean implements Serializable {
 		}
 		if (!all) {
 			System.out
-					.println("...Erro ao efetuar a saida: retire o nome do cliente");
+			.println("...Erro ao efetuar a saida: retire o nome do cliente");
 		} else {
 
 			if (loginBean.getUsuario().getPerfil().getId() == 1) {
@@ -302,33 +321,33 @@ public class VendaBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 
-					this.getVenda().setVendedor(this.loginBean.getUsuario());
-					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
-					u.getVendas().add(venda);
-					DAO<Venda> dao = new DAO<Venda>(Venda.class);
-					venda.setOperacao(1);
-					venda.setValorTotalDesconto(getValorTotalComDesconto());
-					venda.setValorTotal(getValorTotalProdutos());
-					venda.setAtivado(true);
+				this.getVenda().setVendedor(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getVendas().add(venda);
+				DAO<Venda> dao = new DAO<Venda>(Venda.class);
+				venda.setOperacao(1);
+				venda.setValorTotalDesconto(getValorTotalComDesconto());
+				venda.setValorTotal(getValorTotalProdutos());
+				venda.setAtivado(true);
 
-					// atualiza a lista de item (quantidade de saida)					
-					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-						DAO<Item> iDAO = new DAO<Item>(Item.class);
-						Item i = iv.getItem();
-												
-						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saida do item");
-					}	
-					
-					Msg.addMsgInfo("VENDA EFETUADA COM SUCESSO");
-					System.out.println("...venda efetuada com sucesso!!");
-					dao.adiciona(venda);
-					itemVenda = new ItemVenda();
-					venda = new Venda();
+				// atualiza a lista de item (quantidade de saida)					
+				for (ItemVenda iv : this.getVenda().getItensVendas()) {
+					DAO<Item> iDAO = new DAO<Item>(Item.class);
+					Item i = iv.getItem();
 
-					return "/pages/venda/efetuarVenda2.xhtml?faces-redirect=true";
+					i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+					iDAO.atualiza(i);
+					System.out.println("...atualizou quantidade de saida do item");
+				}	
+
+				Msg.addMsgInfo("VENDA EFETUADA COM SUCESSO");
+				System.out.println("...venda efetuada com sucesso!!");
+				dao.adiciona(venda);
+				itemVenda = new ItemVenda();
+				venda = new Venda();
+
+				return "/pages/venda/efetuarVenda2.xhtml?faces-redirect=true";
 
 			} else {
 				Msg.addMsgFatal("HA NA LISTA UM PRODUTO COM QUANTIDADE INDISPONIVEL NO ESTOQUE, " +
@@ -337,7 +356,7 @@ public class VendaBean implements Serializable {
 				itemVenda = new ItemVenda();
 				this.cadastro = true;
 			}
-			
+
 		}
 		return null;
 	}
@@ -365,34 +384,34 @@ public class VendaBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 
-					this.getVenda().setVendedor(this.loginBean.getUsuario());
-					DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
-					Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
-					u.getVendas().add(venda);
-					DAO<Venda> dao = new DAO<Venda>(Venda.class);
-					venda.setOperacao(1);
-					venda.setValorTotalDesconto(getValorTotalComDesconto());
-					venda.setValorTotal(getValorTotalProdutos());
-					venda.setAtivado(true);
+				this.getVenda().setVendedor(this.loginBean.getUsuario());
+				DAO<Usuario> UDao = new DAO<Usuario>(Usuario.class);
+				Usuario u = UDao.buscaPorId(this.loginBean.getUsuario().getId());
+				u.getVendas().add(venda);
+				DAO<Venda> dao = new DAO<Venda>(Venda.class);
+				venda.setOperacao(1);
+				venda.setValorTotalDesconto(getValorTotalComDesconto());
+				venda.setValorTotal(getValorTotalProdutos());
+				venda.setAtivado(true);
 
-					// atualiza a lista de item (quantidade de saida)					
-					for (ItemVenda iv : this.getVenda().getItensVendas()) {
-						DAO<Item> iDAO = new DAO<Item>(Item.class);
-						Item i = iv.getItem();
-												
-						i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
-						iDAO.atualiza(i);
-						System.out.println("...atualizou quantidade de saida do item");
-					}	
-					
-					Msg.addMsgInfo("VENDA EFETUADA COM SUCESSO");
-					System.out.println("...venda efetuada com sucesso!!");
-					dao.adiciona(venda);
-					itemVenda = new ItemVenda();
-					venda = new Venda();
+				// atualiza a lista de item (quantidade de saida)					
+				for (ItemVenda iv : this.getVenda().getItensVendas()) {
+					DAO<Item> iDAO = new DAO<Item>(Item.class);
+					Item i = iv.getItem();
 
-					return "/pages/venda/efetuarVendaAdmin2.xhtml?faces-redirect=true";
-				
+					i.setQuantidadeSaida(i.getQuantidadeSaida()+iv.getQuantidade());
+					iDAO.atualiza(i);
+					System.out.println("...atualizou quantidade de saida do item");
+				}	
+
+				Msg.addMsgInfo("VENDA EFETUADA COM SUCESSO");
+				System.out.println("...venda efetuada com sucesso!!");
+				dao.adiciona(venda);
+				itemVenda = new ItemVenda();
+				venda = new Venda();
+
+				return "/pages/venda/efetuarVendaAdmin2.xhtml?faces-redirect=true";
+
 			} else {
 				Msg.addMsgFatal("HA NA LISTA UM PRODUTO COM QUANTIDADE INDISPONIVEL NO ESTOQUE, " +
 						"COM ISSO NAO SERA POSSIVEL EFETUAR A VENDA. VERIFIQUE A QUANTIDADE DISPONIVEL NO ESTOQUE!");
@@ -417,7 +436,7 @@ public class VendaBean implements Serializable {
 				}
 			}
 			if (this.cadastro == true) {
-				
+
 				// este for verifica se a quantidade do produto informado est� dispon�vel no estoque
 				// se for menor que 0, error!
 				for (ItemVenda i : this.getVenda().getItensVendas()) {
@@ -427,7 +446,7 @@ public class VendaBean implements Serializable {
 					}
 				}
 				if (this.cadastro == true) {
-										
+
 					if (itemVenda.getQuantidade() == null || itemVenda.getQuantidade() == 0) {
 
 						DAO<Item> dao = new DAO<Item>(Item.class);
@@ -442,22 +461,22 @@ public class VendaBean implements Serializable {
 						System.out.println("...Produto adicionado a venda com qtd nao informada !! (ok)");
 
 					} else {
-							
-							DAO<Item> dao = new DAO<Item>(Item.class);
-							Item item = dao.buscaPorId(idItem);
-							itemVenda.setItem(item);
 
-							venda.getItensVendas().add(itemVenda);
-							itemVenda.setVenda(venda);
+						DAO<Item> dao = new DAO<Item>(Item.class);
+						Item item = dao.buscaPorId(idItem);
+						itemVenda.setItem(item);
 
-							itemVenda = new ItemVenda();
-							System.out.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
-								
-							}
+						venda.getItensVendas().add(itemVenda);
+						itemVenda.setVenda(venda);
+
+						itemVenda = new ItemVenda();
+						System.out.println("...Produto adicionado a venda com qtd superior a 1 !! (ok)");
+
+					}
 
 				} else {
 					Msg.addMsgFatal("HA NA LISTA UM PRODUTO COM QUANTIDADE INDISPONIVEL NO ESTOQUE, " +
-						"COM ISSO NAO SERA POSSIVEL EFETUAR A VENDA. VERIFIQUE A QUANTIDADE DISPONIVEL NO ESTOQUE!");
+							"COM ISSO NAO SERA POSSIVEL EFETUAR A VENDA. VERIFIQUE A QUANTIDADE DISPONIVEL NO ESTOQUE!");
 					System.out.println("...quantidade nao disponivel no estoque");
 					itemVenda = new ItemVenda();
 					this.cadastro = true;
@@ -471,23 +490,23 @@ public class VendaBean implements Serializable {
 			}
 		}
 	}
-	
+
 	// m�todo para editar/alterar venda
-		public String desativarVenda() {
-				if (venda.getId()!=null && loginBean.getUsuario().getPerfil().getId()==1) {
-					DAO<Venda> dao = new DAO<Venda>(Venda.class);
-					Msg.addMsgInfo("Venda desativada");
-					venda.setAtivado(false);
-					dao.atualiza(venda);
-					venda = new Venda();
-					return "/pages/venda/consultarVenda.xhtml?faces-redirect=true";
-				} else {
-					System.out.println("...Erro: nao foi possivel desativar venda");
-					Msg.addMsgError("SOMENTE PODERÁ DESATIVAR VENDA USUARIO COM PERFIL ADMINISTRADOR");
-					return null;
-				}
+	public String desativarVenda() {
+		if (venda.getId()!=null && loginBean.getUsuario().getPerfil().getId()==1) {
+			DAO<Venda> dao = new DAO<Venda>(Venda.class);
+			Msg.addMsgInfo("Venda desativada");
+			venda.setAtivado(false);
+			dao.atualiza(venda);
+			venda = new Venda();
+			return "/pages/venda/consultarVenda.xhtml?faces-redirect=true";
+		} else {
+			System.out.println("...Erro: nao foi possivel desativar venda");
+			Msg.addMsgError("SOMENTE PODERÁ DESATIVAR VENDA USUARIO COM PERFIL ADMINISTRADOR");
+			return null;
 		}
-	
+	}
+
 	// metodo para remover o item da lista de itens
 	public void removeItemVenda() {
 		venda.getItensVendas().remove(itemVenda);
@@ -512,7 +531,7 @@ public class VendaBean implements Serializable {
 			return false;
 		}
 	}	
-	
+
 	// cancelar venda (para perfil VENDEDOR)
 	public String cancelarVenda() {
 		if (venda.getCliente().getNome() != null
@@ -561,7 +580,7 @@ public class VendaBean implements Serializable {
 		report.pdfReport();
 		System.out.println("...imprimindo cupom fiscal");
 	}
-	
+
 	/** calculo **/
 
 	// exibir o total R$ dos produtos
@@ -582,7 +601,7 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
-	
+
 	// calculo no valor com desconto
 	public Double getValorTotalComDesconto() {
 		setTotalValor(00.00);
@@ -591,7 +610,7 @@ public class VendaBean implements Serializable {
 		else
 			return null;
 	}
-	
+
 	// informa o percentual de desconto
 	public Double getDesconto1() {
 		if (totalValor != null && desconto != null)
@@ -613,21 +632,21 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
-	
+
 	// Total de compras do Cliente
-		public Double getValorTotalCliente() {
+	public Double getValorTotalCliente() {
+		setTotalValor(00.00);
+		if (getVendas1() == null) {
 			setTotalValor(00.00);
-			if (getVendas1() == null) {
-				setTotalValor(00.00);
-			}else {
+		}else {
 			for (Venda v : getVendas1()) {
 				setTotalValor(getTotalValor() + v.getValorTotalDesconto());
-				}
-			return totalValor;
 			}
 			return totalValor;
 		}
-	
+		return totalValor;
+	}
+
 	// total de dinheiro retirado
 	public Double getValorTotalSaida() {
 		setTotalValor(00.00);
@@ -636,7 +655,7 @@ public class VendaBean implements Serializable {
 		}
 		return totalValor;
 	}
-	
+
 	// total de lucro
 	public Double getLucro() {
 		setTotalValor(00.00);
@@ -652,7 +671,7 @@ public class VendaBean implements Serializable {
 		else
 			return false;
 	}
-	
+
 	// filtragem para fechar o caixa
 	@SuppressWarnings("unchecked")
 	public String getCaixaByDate() {
@@ -692,11 +711,11 @@ public class VendaBean implements Serializable {
 	}
 
 	/** get and set **/
-	
+
 	public List<ItemVenda> getItensVendas() {
 		return itensVendas;
 	}
-	
+
 	public void setItensVendas(List<ItemVenda> itensVendas) {
 		this.itensVendas = itensVendas;
 	}
@@ -872,6 +891,6 @@ public class VendaBean implements Serializable {
 	public void setQuantidadeN(Boolean quantidadeN) {
 		this.quantidadeN = quantidadeN;
 	}
-	
-	
+
+
 }

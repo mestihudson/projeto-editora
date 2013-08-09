@@ -63,7 +63,7 @@
 
 			<div class="Centralizar" style="width: 95%; text-align: left;">
 
-				<p:growl life="2000" id="growl" sticky="true" />
+<!-- 				<p:growl life="2000" id="growl" sticky="true" /> -->
 
 				<div
 					style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
@@ -106,6 +106,10 @@
 						<f:ajax render="@form" />
 					</p:commandButton>
 				</div>
+				
+				<div align="left" style="width: 350px; margin-right: 500px;">
+					<p:messages autoUpdate="true" />
+				</div>
 
 				<p:ajaxStatus>
 					<f:facet name="start">
@@ -116,11 +120,6 @@
 						<h:outputText value="" />
 					</f:facet>
 				</p:ajaxStatus>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
 				<br />
 				<br />
 				<br />

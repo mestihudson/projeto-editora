@@ -126,15 +126,15 @@
 								rendered="#{item.produto.categoria.nome==null}" />
 						</p:column>
 
-						<p:column headerText="qdt Entrada" style="color: #1874CD">
+						<p:column headerText="Entrada" style="color: #1874CD">
 							<h:outputText value="#{item.quantidadeEntrada}" />
 						</p:column>
 
-						<p:column headerText="qdt Saida" style="color: #8B0000">
+						<p:column headerText="Saída" style="color: #8B0000">
 							<h:outputText value="#{item.quantidadeSaida}" />
 						</p:column>
 
-						<p:column headerText="qdt Atual" style="color: blue;">
+						<p:column headerText="qdt. Atual" style="color: blue;">
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"
