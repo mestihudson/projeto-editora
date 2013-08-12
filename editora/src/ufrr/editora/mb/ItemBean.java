@@ -155,6 +155,19 @@ public class ItemBean implements Serializable {
 	}
 
 	/** actions **/
+	
+	// altera preço do item
+	
+	public void alterItem(){
+		if(item.getId()!=null) {
+			dao.atualiza(item);
+			Msg.addMsgInfo("PRECO MODIFICADO COM SUCESSO");
+		} else {
+			Msg.addMsgError("NÃO FOI POSSIVEL EFETUAR OPERACAO, TENTE NOVAMENTE.");
+		}
+	}
+	
+	/** Serach or List **/
 
 	// Pesquisa produto pelo nome
 	@SuppressWarnings("unchecked")
