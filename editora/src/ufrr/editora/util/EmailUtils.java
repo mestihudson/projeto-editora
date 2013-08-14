@@ -13,15 +13,15 @@ import ufrr.editora.mb.LoginBean;
 
 public class EmailUtils {
 	
-	 private static final String HOSTNAME = "mail.ufrr.br";
-	 private static final String USERNAME = "csi";
-	 private static final String PASSWORD = "Csi13/";
-	 private static final String EMAILORIGEM = "csi@ufrr.br";
+//	 private static final String HOSTNAME = "mail.ufrr.br";
+//	 private static final String USERNAME = "csi";
+//	 private static final String PASSWORD = "Csi13/";
+//	 private static final String EMAILORIGEM = "csi@ufrr.br";
 	 
-//	 private static final String HOSTNAME = "smtp.gmail.com";
-//	 private static final String USERNAME = "ufrreditora";
-//	 private static final String PASSWORD = "sistemaeditora";
-//	 private static final String EMAILORIGEM = "ufrreditora@gmail.com";
+	 private static final String HOSTNAME = "smtp.gmail.com";
+	 private static final String USERNAME = "ufrreditora";
+	 private static final String PASSWORD = "sistemaeditora";
+	 private static final String EMAILORIGEM = "ufrreditora@gmail.com";
 	 
 	@SuppressWarnings("deprecation")
 	public static Email conectaEmail() throws EmailException {
@@ -51,7 +51,7 @@ public class EmailUtils {
 	public static void recuperaSenha(LoginBean usuario) throws EmailException {
 		Email email2 = new SimpleEmail();
 		email2 = conectaEmail();
-		email2.setSubject("Recuperacao de senha ao sistema Editora UFRR");
+		email2.setSubject("Recuperacao de senha ao sistema Editora UFRR-noreply");
 		email2.setMsg("Editora UFRR"
 				+ "\n"
 				+ "siga as instrucoes abaixo para prosseguir com a solicitacao"
@@ -76,7 +76,7 @@ public class EmailUtils {
 		public static void confirmaAcesso(Usuario usuario) throws EmailException {
 		 Email email2 = new SimpleEmail();
 		 email2 = conectaEmail();
-		 email2.setSubject("Sistema Editora UFRR");
+		 email2.setSubject("Sistema Editora UFRR-noreply");
 		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no endereco abaixo digite seu email e senha" + "\n" + "\n" +
 		 "http://172.22.10.248:8080/editora" + "\n" + "\n" + "NAO RESPONDA, EMAIL AUTOMATICO.");
 		 email2.addTo(usuario.getLogin());

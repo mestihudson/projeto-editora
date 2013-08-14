@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version last-->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cupomFiscal3" pageWidth="400" pageHeight="300" orientation="Landscape" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="732dc051-c7bd-4680-913d-b420ef739ad6">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cupom-Fiscal" pageWidth="400" pageHeight="300" orientation="Landscape" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="732dc051-c7bd-4680-913d-b420ef739ad6">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -33,8 +33,7 @@ AND   tb_item_venda.venda_id = tb_venda.id
 AND   tb_item_venda.item_id = tb_item.id
 AND   tb_item.produto_id = tb_produto.id
 AND   tb_usuario.id = tb_venda.cliente_id
-AND   u.id = tb_venda.vendedor_id
-AND   tb_usuario."id" <> 1]]>
+AND   u.id = tb_venda.vendedor_id]]>
 	</queryString>
 	<field name="tb_produto_isbn" class="java.lang.Long"/>
 	<field name="tb_produto_nome" class="java.lang.String"/>
@@ -80,7 +79,7 @@ AND   tb_usuario."id" <> 1]]>
 			</textField>
 			<image>
 				<reportElement uuid="94bb2721-f075-4bef-9c7f-71801093f91e" x="0" y="12" width="83" height="66"/>
-				<imageExpression><![CDATA["/home/leonardo/workspace/editora/WebContent/resources/img/logoeditora.png"]]></imageExpression>
+				<imageExpression><![CDATA["/home/leonardo/workspace/editora/WebContent/resources/img/logoeditorarelatorio.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement uuid="7d879750-c86d-4566-9265-180142da9702" style="Detail" x="117" y="32" width="183" height="24"/>
