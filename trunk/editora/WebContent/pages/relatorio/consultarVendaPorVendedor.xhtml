@@ -48,26 +48,40 @@
 							style="color: white; font-size: 12px;" styleClass="OutPut" />
 					</div>
 
-					<p:focus context="cpf" for="cpf"
+					<p:focus context="codigo" for="codigo"
 						rendered="#{vendaBean.box4Search == 1}" />
 					<p:focus context="vendedor" for="vendedor"
 						rendered="#{vendaBean.box4Search == 2}" />
 
-					<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="15"
+					<h:panelGrid id="grid_pesquisa" columns="5" cellspacing="7" cellpadding="3"
 						rendered="#{vendaBean.venda.id==null}">
 
 						<p:selectOneRadio value="#{vendaBean.box4Search}"
 							rendered="#{vendaBean.venda.id==null}" styleClass="OutPut"
 							style="width: 200px;">
-							<f:selectItem itemLabel="Código" itemValue="1" />
+							<f:selectItem itemLabel="Código" itemValue="3" />
 							<f:selectItem itemLabel="Nome" itemValue="2" />
 							<f:ajax render="form_pesquisa_venda" />
 						</p:selectOneRadio>
-
-						<p:inputText value="#{vendaBean.search}"
-							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 1}"
-							size="40" id="cpf" required="true"
-							requiredMessage="INFORME O CÓDIGO DO VENDEDOR" />
+						
+						<p:selectOneMenu style="width: 210px;" id="codigo2"
+							value="#{vendaBean.venda.vendedor}"
+							converter="genericConverter" styleClass="input"
+							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 3}" disabled="true">
+								<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+								<f:selectItems value="#{usuarioBean.ativados}" var="v"
+									itemLabel="#{v.id}" itemValue="#{v}" />
+						</p:selectOneMenu>
+						
+						<p:selectOneMenu style="width: 210px;" id="codigo" filter="true" filterMatchMode="startsWith"
+							value="#{vendaBean.venda.vendedor}"
+							converter="genericConverter" required="true"
+							requiredMessage="INFORME O CODIGO DO VENDEDOR" styleClass="input"
+							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 3}">
+								<f:selectItem itemValue="" itemLabel="" noSelectionOption="true" />
+								<f:selectItems value="#{usuarioBean.ativados}" var="v"
+									itemLabel="#{v.id}" itemValue="#{v}" />
+						</p:selectOneMenu>
 
 						<p:autoComplete value="#{vendaBean.search}"
 							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 2}"
@@ -78,7 +92,7 @@
 							maxResults="5" queryDelay="60" />
 
 						<p:autoComplete value="#{vendaBean.search}"
-							rendered="#{not empty vendaBean.vendas1}" size="40"
+							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 2}" size="40"
 							required="true" requiredMessage="INFORME O NOME DO VENDEDOR"
 							disabled="true"
 							completeMethod="#{usuarioBean.autocompleteVendedor}" var="v"
@@ -87,23 +101,23 @@
 
 						<p:commandButton value="Pesquisar" id="botaoPesquisar"
 							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 2}"
-							action="#{vendaBean.getListaVendaByCDV}" ajax="false"
+							action="#{vendaBean.getListaVendedorByName}" ajax="false"
 							icon="ui-icon-search" />
 
 						<p:commandButton value="Pesquisar" id="botaoPesquisar2"
-							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 1}"
-							action="#{vendaBean.getVendaByFornecedorCodigo}" ajax="false"
+							rendered="#{empty vendaBean.vendas1 and vendaBean.box4Search == 3}"
+							action="#{vendaBean.getVendaByVendedorCodigo}" ajax="false"
 							icon="ui-icon-search" />
 
 						<p:commandButton value="Cancelar operação" id="cancelar"
 							rendered="#{not empty vendaBean.vendas1}" immediate="true"
-							action="consultarVendaPorCliente.xhtml?faces-redirect=true"
+							action="consultarVendaPorVendedor.xhtml?faces-redirect=true"
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
 						<!-- gera o relatório -->
 						<p:commandButton value="Imprimir relatório" icon="ui-icon-print"
 							ajax="false"
-							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 1 
+							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 3 
 						or not empty vendaBean.vendas1 and vendaBean.box4Search == 2}">
 							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
 							<p:dataExporter type="pdf" target="dtable"
@@ -121,6 +135,11 @@
 							align="center">
 							<h:outputText value="RESULTADO"
 								style="color: white; font-size: 12px;" styleClass="OutPut" />
+							<h:outputText value=" - VENDEDOR: " rendered="#{not empty vendaBean.vendas1}"
+								style="color: white; font-size: 12px;" styleClass="OutPut" />
+							<h:outputText value="#{vendaBean.venda.vendedor.nome}"
+								rendered="#{not empty vendaBean.vendas1}"
+								style="color: white; font-size: 12px;" styleClass="OutPut" />
 						</div>
 
 						<!-- 			grid com a lista de vendas			 		 -->
@@ -130,20 +149,27 @@
 							rendered="#{not empty vendaBean.vendas1 and vendaBean.venda.id==null}"
 							rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 							rowIndexVar="rowIx">
+							
+							<p:column width="10" exportable="false">
+								<f:facet name="header">
+									<h:outputText value="Código" />
+								</f:facet>
+								<h:outputLabel value="#{v.vendedor.id}" styleClass="OutPut" />
+							</p:column>
 
-							<p:column width="200" exportable="false">
+							<p:column width="200">
 								<f:facet name="header">
 									<h:outputText value="Vendedor" />
 								</f:facet>
 								<h:outputLabel value="#{v.vendedor.nome}" styleClass="OutPut">
 									<f:converter converterId="stringLimiterConverter" />
-									<f:attribute name="limit" value="20" />
+									<f:attribute name="limit" value="30" />
 									<h:outputText value="..."
-										rendered="#{v.vendedor.nome.length()>=21}" styleClass="OutPut" />
+										rendered="#{v.vendedor.nome.length()>=31}" styleClass="OutPut" />
 								</h:outputLabel>
 							</p:column>
 
-							<p:column width="200">
+							<p:column width="190">
 								<f:facet name="header">
 									<h:outputText value="Cliente" />
 								</f:facet>
@@ -160,17 +186,6 @@
 								<h:outputLabel value="NÃO IDENTIFICADO"
 									rendered="#{v.cliente.id==1}" style="color: #8B0000;"
 									styleClass="OutPut" />
-							</p:column>
-
-							<p:column style="text-align: center;" width="100">
-								<f:facet name="header">
-									<h:outputText value="CPF" />
-								</f:facet>
-								<h:outputLabel value="#{v.cliente.cpf}" styleClass="OutPut"
-									rendered="#{v.cliente.id!=1}" />
-								<h:outputLabel value="CPF NÃO CADASTRADO"
-									rendered="#{v.cliente.id==1 or v.cliente.cpf==''}"
-									style="color: #8B0000;" styleClass="OutPut" />
 							</p:column>
 
 							<p:column style="text-align: center;" width="60">
@@ -192,33 +207,32 @@
 										locale="pt_BR" />
 								</h:outputLabel>
 							</p:column>
-
-							<p:columnGroup type="footer">
-								<p:row>
-									<p:column exportable="true">
-										<f:facet name="footer">
-											<h:outputText
-												value="VALOR TOTAL DE COMPRAS REALIZADAS PELO(A) CLIENTE: "
-												style="font-size: 12px;" />
-											<h:outputText value="#{v.cliente.nome}"
-												style="font-size: 12px; color: #8B0000;" />
-										</f:facet>
-									</p:column>
-								</p:row>
-
-								<p:row>
-
-									<p:column style="background: #A6C9E2;" exportable="true">
-										<f:facet name="footer">
-											<h:outputText value="#{vendaBean.valorTotalCliente}"
-												style="font-size: 12px; color: #8B0000;">
-												<f:convertNumber type="currency" currencySymbol="R$"
-													locale="pt_BR" />
-											</h:outputText>
-										</f:facet>
-									</p:column>
-								</p:row>
-							</p:columnGroup>
+							
+							<p:column width="100">
+								<f:facet name="header">
+									<h:outputText value="Forma de pagto." />
+								</f:facet>
+								<h:outputLabel
+									value="à vista"
+									rendered="#{v.formaPagamento==1}"
+									styleClass="OutPut" />
+								<h:outputLabel
+									value="cartão(crédito)"
+									rendered="#{v.formaPagamento==2}"
+									styleClass="OutPut" />
+								<h:outputLabel value="cartão(débito)"
+									rendered="#{v.formaPagamento==3}"
+									styleClass="OutPut" />
+								<h:outputLabel value="cheque(à vista)"
+									rendered="#{v.formaPagamento==4}"
+									styleClass="OutPut" />
+								<h:outputLabel value="cheque(pré datado)"
+									rendered="#{v.formaPagamento==5}"
+									styleClass="OutPut" />
+								<h:outputLabel value="depósito bancário"
+									rendered="#{v.formaPagamento==6}"
+									styleClass="OutPut" />
+							</p:column>
 
 						</p:dataTable>
 

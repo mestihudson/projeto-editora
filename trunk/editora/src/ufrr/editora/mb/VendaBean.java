@@ -208,6 +208,21 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
+	
+	//consulta venda pelo vendedor
+	public String getListaVendedorByName() {
+		if (box4Search.equals(2)) {
+			vendas1 = dao.getAllByName("obj.vendedor.nome", search);
+			if (vendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("NENHUMA VENDA EFETUADA PARA ESTE VENDEDOR");
+				return null;
+			} else {
+				return null;
+			}
+		}
+		return null;
+	}
 
 	// Pesquisa venda pelo cpf do fornecedor
 	public String getListaVendaFornecedorByCPF() {
@@ -224,15 +239,15 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// pesquisa vendedor pelo código
+	// pesquisa as vendas do vendedor pelo código
 	@SuppressWarnings("unchecked")
-	public void getVendaByFornecedorCodigo() {
+	public void getVendaByVendedorCodigo() {
 		if (venda.getVendedor().getId() == 0) {
 			Msg.addMsgError("INFORME CORRETAMENTE O CODIGO DO VENDEDOR");
 
 		} else {
 			try {
-				Query query = dao.query("SELECT v FROM Venda v WHERE v.vendedor=?");
+				Query query = dao.query("SELECT v FROM Venda v WHERE v.vendedor.id=? and v.operacao=1");
 				query.setParameter(1, venda.getVendedor().getId());
 				vendas1 = query.getResultList();
 				if (vendas1.isEmpty()) {
@@ -573,7 +588,7 @@ public class VendaBean implements Serializable {
 		return "efetuarVendaAdmin.xhtml";
 	}
 
-	// relat�rio
+	// relatorio
 	public void imprimirCupom() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		Report report = new Report("Cupom-Fiscal", params);

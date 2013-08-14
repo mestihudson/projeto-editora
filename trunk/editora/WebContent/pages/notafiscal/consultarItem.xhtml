@@ -145,15 +145,6 @@
 
 						</p:column>
 
-						<p:column headerText="Nota fiscal" style="text-align: center;"
-							filterBy="#{item.notaFiscal.numero}" filterMatchMode="exact">
-							<h:outputText value="#{item.notaFiscal.numero}"
-								rendered="#{item.quantidadeAtual != 0}" />
-
-							<h:outputText value="#{item.notaFiscal.numero}"
-								style="color: red;" rendered="#{item.quantidadeAtual == 0}" />
-						</p:column>
-
 						<p:column headerText="Fornecedor"
 							filterBy="#{item.notaFiscal.fornecedor.nome}"
 							filterMatchMode="contains">

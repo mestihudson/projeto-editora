@@ -186,6 +186,23 @@ public class ItemBean implements Serializable {
 		}
 	}
 	
+	// Pesquisa produto pela editora da obra
+	@SuppressWarnings("unchecked")
+	public void getListaEstoqueByEditora() {
+		try {
+			Query query = dao.query("SELECT i FROM Item i WHERE i.produto.editora=? and i.quantidadeEntrada > i.quantidadeSaida");
+			query.setParameter(1, produto.getEditora());
+			itens1 = query.getResultList();
+			if (itens1.isEmpty()) {
+				init();
+				Msg.addMsgError("NENHUMA OBRA COM ESTA EDITORA DISPONÍVEL NO ESTOQUE");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// Pesquisa produto pelo autor da obra
 	@SuppressWarnings("unchecked")
 	public void getListaEstoqueByAutor() {
