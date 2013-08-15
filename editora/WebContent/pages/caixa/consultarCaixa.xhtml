@@ -44,7 +44,7 @@
 						style="color: white; font-size: 12px; float: center;" styleClass="OutPut" />
 
 					<p:selectOneRadio value="#{vendaBean.box4Search}"
-						styleClass="OutPut" required="true"
+						styleClass="OutPut" required="true" rendered="#{vendaBean.box4Search!=5}"
 						requiredMessage="INFORME A OPERAÇÃO">
 						<f:selectItem itemLabel="Filtrar" itemValue="5" />
 						<f:ajax render="form_caixa" />

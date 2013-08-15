@@ -691,7 +691,7 @@ public class VendaBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public String getCaixaByDate() {
 		if (getDataFinal().before(getDataInicial())) {
-			Msg.addMsgError("Periodo invalido");
+			Msg.addMsgError("PERIODO INVALIDO");
 		} else {
 			try {
 				Query query = dao
@@ -722,6 +722,32 @@ public class VendaBean implements Serializable {
 			e.printStackTrace();
 			System.out.println("... erro na consulta do caixa");
 		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String getCaixaByPeriodo() {
+		if (getDataFinal().before(getDataInicial())) {
+			Msg.addMsgError("PERIODO INVALIDO");
+		} else {
+							
+			try {
+				Query query = dao.query("SELECT v FROM Venda v WHERE v.dataVenda between ? and ? and v.operacao=1"
+						+ "and v.tituloObs!=8 order by v.dataVenda");
+				query.setParameter(1, getDataInicial());
+				query.setParameter(2, getDataFinal());
+				vendas1 = query.getResultList();
+				if (vendas1.isEmpty()) {
+					init();
+					Msg.addMsgError("NENHUMA VENDA EFETUADA NO PERIODO INFORMADO");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("... erro na consulta do caixa");
+			}
+			return null;
+			}
 		return null;
 	}
 
