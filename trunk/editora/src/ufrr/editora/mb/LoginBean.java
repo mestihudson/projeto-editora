@@ -81,6 +81,14 @@ public class LoginBean implements Serializable {
 					usuario.setEsqueciSenha(false);
 					dao2.atualiza(usuario);
 					return "/pages/home/home.xhtml";
+				}
+					
+				if (this.getUsuario().getStatus().equals(true)
+						&& this.getUsuario().getPerfil().getId() == 4) {
+					Msg.addMsgFatal("ACESSO NÃO PERMITIDO PARA CLIENTE");
+					System.out.println("...Cliente: " + getUsuario().getNome() + " tentou acessar area restrita para usuario");
+					return naoAutorizado();
+
 
 				} else {
 					Msg.addMsgInfo("SEJA BEM VINDO " + getUsuario().getNome()
@@ -231,6 +239,15 @@ public class LoginBean implements Serializable {
 		session.invalidate();
 		System.out.println("usuario: " + getUsuario().getNome() + " saiu do sistema");
 		return "/index.xhtml?faces-redirect=true";
+	}
+	
+	// Sair do sistema
+	public String naoAutorizado() {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		session.invalidate();
+		return "/index.xhtml";
 	}
 	
 	// Sair da recuperacao de senha

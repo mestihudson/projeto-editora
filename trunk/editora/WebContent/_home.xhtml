@@ -404,10 +404,20 @@
 								</p:commandLink>
 
 								<p:commandLink
-									action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+									action="/pages/relatorio/consultarVendaPorPeriodo.xhtml?faces-redirect=true">
 									<h:panelGrid columns="2">
 										<h:graphicImage value="/resources/img/seta1.png" />
 										<h:outputLabel value="Vendas por período"
+											style="cursor: pointer; font-family: Verdana;"
+											styleClass="OutPut" />
+									</h:panelGrid>
+								</p:commandLink>
+								
+								<p:commandLink
+									action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
+									<h:panelGrid columns="2">
+										<h:graphicImage value="/resources/img/seta1.png" />
+										<h:outputLabel value="Vendas por produto"
 											style="cursor: pointer; font-family: Verdana;"
 											styleClass="OutPut" />
 									</h:panelGrid>
@@ -418,16 +428,6 @@
 									<h:panelGrid columns="2">
 										<h:graphicImage value="/resources/img/seta1.png" />
 										<h:outputLabel value="Vendas por nota fiscal/lote"
-											style="cursor: pointer; font-family: Verdana;"
-											styleClass="OutPut" />
-									</h:panelGrid>
-								</p:commandLink>
-
-								<p:commandLink
-									action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
-									<h:panelGrid columns="2">
-										<h:graphicImage value="/resources/img/seta1.png" />
-										<h:outputLabel value="Produtos mais vendidos"
 											style="cursor: pointer; font-family: Verdana;"
 											styleClass="OutPut" />
 									</h:panelGrid>
@@ -445,16 +445,6 @@
 									<h:panelGrid columns="2">
 										<h:graphicImage value="/resources/img/seta1.png" />
 										<h:outputLabel value="Estoque por produto"
-											style="cursor: pointer; font-family: Verdana;"
-											styleClass="OutPut" />
-									</h:panelGrid>
-								</p:commandLink>
-
-								<p:commandLink
-									action="/pages/cliente/consultarCliente.xhtml?faces-redirect=true">
-									<h:panelGrid columns="2">
-										<h:graphicImage value="/resources/img/seta1.png" />
-										<h:outputLabel value="Estoque por período"
 											style="cursor: pointer; font-family: Verdana;"
 											styleClass="OutPut" />
 									</h:panelGrid>

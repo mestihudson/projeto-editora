@@ -12,11 +12,12 @@ import javax.persistence.Query;
 import ufrr.editora.dao.DAO;
 import ufrr.editora.entity.Item;
 import ufrr.editora.entity.ItemVenda;
+import ufrr.editora.entity.NotaFiscal;
 import ufrr.editora.util.Msg;
 
 @ManagedBean
 @ViewScoped
-public class itemVendaBean implements Serializable {
+public class ItemVendaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +26,7 @@ public class itemVendaBean implements Serializable {
 
 	private ItemVenda itemVenda = new ItemVenda();
 	private Item item = new Item();
+	private NotaFiscal notaFiscal = new NotaFiscal();
 	private List<ItemVenda> itensVendas;
 	private List<ItemVenda> itensVendas1;
 	private DAO<ItemVenda> dao = new DAO<ItemVenda>(ItemVenda.class);
@@ -152,10 +154,13 @@ public class itemVendaBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	public String getPrestacaoByDate() {
 		try {
-			Query query = dao.query("SELECT v FROM ItemVenda v WHERE extract(month from v.venda.dataVenda) = ? and extract(year from v.venda.dataVenda) = ? order by v.venda.dataVenda");
+			Query query = dao.query("SELECT v FROM ItemVenda v WHERE extract(month from v.venda.dataVenda) = ? "
+					+ "and extract(year from v.venda.dataVenda) = ? "
+					+ "and v.item.notaFiscal.fornecedor.nome = ? and v.venda.tituloObs <> 8"
+					+ "order by v.venda.dataVenda");
 			query.setParameter(1, getMes());
 			query.setParameter(2, getAno());
-			itensVendas1 = dao.getAllByName("obj.item.notaFiscal.fornecedor.nome", search);
+			query.setParameter(3, notaFiscal.getFornecedor().getNome());
 			itensVendas1 = query.getResultList();
 
 			// n�o est� fazendo filtragem com o fornecedor, somente com o m�s e ano!
@@ -288,6 +293,14 @@ public class itemVendaBean implements Serializable {
 
 	public void setItem(Item item) {
 		this.item = item;
-	}	
+	}
+
+	public NotaFiscal getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
 
 }

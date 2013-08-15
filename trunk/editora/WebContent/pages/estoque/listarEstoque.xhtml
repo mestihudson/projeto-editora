@@ -72,7 +72,7 @@
 						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
 						rowIndexVar="rowIx">
 
-						<p:column width="100" id="isbn" headerText="isbn/código"
+						<p:column width="100" id="isbn" headerText="isbn/código" filterStyle="max-width: 80px;"
 							filterBy="#{item.produto.isbn}" filterMatchMode="exact"
 							filterMaxLength="13">
 							<h:outputText value="#{item.produto.isbn}" />
@@ -90,7 +90,8 @@
 								rendered="#{item.produto.nome.length()>=31}" />
 						</p:column>
 
-						<p:column headerText="Lote" width="50" style="text-align: center;">
+						<p:column headerText="Lote" width="90" id="lote" style="text-align: center;" filterStyle="max-width: 40px;"
+						filterBy="#{item.notaFiscal.lote}-#{item.notaFiscal.dataEntrada.weekYear}" filterMatchMode="contains">
 							<h:outputText value="#{item.notaFiscal.lote}"
 								rendered="#{item.notaFiscal.lote!=null}" />-<h:outputText
 								value="#{item.notaFiscal.dataEntrada.time}"
@@ -112,7 +113,7 @@
 								rendered="#{item.produto.autor==null}" />
 						</p:column>
 
-						<p:column headerText="Categoria" width="100"
+						<p:column headerText="Categoria" width="115"
 							filterBy="#{item.produto.categoria.nome}"
 							filterMatchMode="contains">
 							<h:outputText value="#{item.produto.categoria.nome}"
@@ -134,7 +135,7 @@
 							<h:outputText value="#{item.quantidadeSaida}" />
 						</p:column>
 
-						<p:column headerText="qdt. Atual" style="color: blue;">
+						<p:column headerText="qtd. Atual" style="color: blue;" width="50">
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"
