@@ -103,8 +103,10 @@
 							<h:outputText value="..." style="color: #CD0000"
 								rendered="#{item.produto.nome.length()>=42 and item.produto.tipo.id eq 1 and item.quantidadeAtual==0}" />
 						</p:column>
-						
-						<p:column headerText="Lote" width="50" style="text-align: center;">
+												
+						<p:column headerText="Lote" width="50" style="text-align: center;" filterStyle="max-width: 40px;"
+								filterBy="#{item.notaFiscal.lote}-#{item.notaFiscal.dataEntrada.weekYear}"
+								filterMatchMode="contains">
 							<h:outputText value="#{item.notaFiscal.lote} - "
 								rendered="#{item.produto.tipo.id eq 1 and item.quantidadeAtual!=0}" />
 								<h:outputText
