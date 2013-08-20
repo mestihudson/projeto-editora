@@ -158,7 +158,7 @@
 						<p:inputTextarea id="prod_nome"
 							value="#{produtoBean.produto.nome}" required="true"
 							requiredMessage="INFORME O TÍTULO DA OBRA" styleClass="input"
-							maxlength="80">
+							maxlength="80" validatorMessage="INFORME CORRETAMENTE O TITULO DA OBRA">
 							<f:ajax event="blur" render="error_nome" />
 							<f:validateLength minimum="6" />
 						</p:inputTextarea>

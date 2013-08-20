@@ -123,11 +123,45 @@ public class ItemVendaBean implements Serializable {
 		}
 		return null;
 	}
+	
+	// Pesquisa a venda de produto pelo nome
+	@SuppressWarnings("unchecked")
+	public void getListaVendaByProduto() {
+		try {
+			Query query = dao.query("SELECT i FROM ItemVenda i WHERE i.item.produto.nome=?");
+			query.setParameter(1, item.getProduto().getNome());
+			itensVendas1 = query.getResultList();
+			if (itensVendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("NÃO FOI EFETUADA VENDA COM ESTE PRODUTO");
+			}
 
-	// presta��o de conta
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Pesquisa a venda de produto pelo lote
+	@SuppressWarnings("unchecked")
+	public void getListaVendaByLote() {
+		try {
+			Query query = dao.query("SELECT i FROM ItemVenda i WHERE i.item.notaFiscal.lote=?");
+			query.setParameter(1, item.getNotaFiscal().getLote());
+			itensVendas1 = query.getResultList();
+			if (itensVendas1.isEmpty()) {
+				init();
+				Msg.addMsgError("NÃO FOI EFETUADA NENHUMA VENDA PRODUTO DESTE LOTE");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// prestacao de conta
 	// Consulta pelo fornecedor
 
-	// (este m�todo deve funcionar, com a consulta do fornecedor e em seguida o mes) - Falta fazer o mes!!!
+	// (este metodo deve funcionar, com a consulta do fornecedor e em seguida o mes) - Falta fazer o mes!!!
 	public String getLista() {
 
 		if (box4Search.equals(1)) {
@@ -150,7 +184,7 @@ public class ItemVendaBean implements Serializable {
 		return null;
 	}
 
-	//  Preta��o de conta com fornecedor	
+	//  Pretacao de conta com fornecedor	
 	@SuppressWarnings("unchecked")
 	public String getPrestacaoByDate() {
 		try {
@@ -182,7 +216,7 @@ public class ItemVendaBean implements Serializable {
 
 	/** calculo **/
 
-	// m�todo para somar a quantidade dos itens vendidos
+	// metodo para somar a quantidade dos itens vendidos
 	public Integer getTotalProdutos() {
 		setTotalProdutoVendido(0);
 		for (ItemVenda i : getItensVendas()) {
@@ -191,7 +225,7 @@ public class ItemVendaBean implements Serializable {
 		return totalProdutoVendido;
 	}
 
-	// m�todo para somar a quantidade dos itens vendidos
+	// metodo para somar a quantidade dos itens vendidos
 	public Double getTotalValor() {
 		setTotalProdutoValor(0.00);
 		for (ItemVenda i : getItensVendas1()) {

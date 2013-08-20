@@ -133,9 +133,11 @@
 								<h:outputText value="..."
 									rendered="#{item.produto.nome.length()>=31}" />
 							</p:column>
-
-							<p:column headerText="Lote" width="50"
-								style="text-align: center;">
+							
+							<p:column headerText="Lote" width="50" id="lote"
+								style="text-align: center;" filterStyle="max-width: 40px;"
+								filterBy="#{item.notaFiscal.lote}-#{item.notaFiscal.dataEntrada.weekYear}"
+								filterMatchMode="contains">
 								<h:outputText value="#{item.notaFiscal.lote}"
 									rendered="#{item.notaFiscal.lote!=null}" />-<h:outputText
 									value="#{item.notaFiscal.dataEntrada.time}"
@@ -171,7 +173,7 @@
 									rendered="#{item.produto.categoria.nome==null}" />
 							</p:column>
 
-							<p:column headerText="qdt Atual" style="color: blue;" width="35">
+							<p:column headerText="qdt Atual" style="color: blue;" width="37">
 								<h:outputText value="#{item.quantidadeAtual}"
 									rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 								<h:outputText value="(#{item.quantidadeAtual2})"

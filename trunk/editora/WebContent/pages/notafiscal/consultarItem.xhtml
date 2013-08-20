@@ -96,9 +96,8 @@
 								
 						</p:column>
 
-						<p:column headerText="Lote" width="100"
-							style="text-align: center;" filterBy="#{item.notaFiscal.lote}"
-							filterMatchMode="exact">
+						<p:column headerText="Lote" style="text-align: center;" filterStyle="max-width: 40px;" 
+						filterBy="#{item.notaFiscal.lote}-#{item.notaFiscal.dataEntrada.weekYear}" filterMatchMode="contains">
 							<h:outputText value="#{item.notaFiscal.lote}"
 								rendered="#{item.notaFiscal.lote!=null and item.quantidadeAtual != 0}" />
 							<h:outputText value="#{item.notaFiscal.lote}"
@@ -177,7 +176,7 @@
 								rendered="#{item.quantidadeAtual == 0}" />
 						</p:column>
 
-						<p:column headerText="Custo / Venda">
+						<p:column headerText="Custo / Venda" style="text-align: center;">
 							<h:outputText value="#{item.valorCusto}" style="color: #1874CD;">
 								<f:convertNumber pattern="#,##0.00" />
 							</h:outputText> /	

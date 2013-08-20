@@ -752,13 +752,13 @@
 				</div>
 
 				<fieldset
-					style="border: 1px solid #A6C9E2; border-top: 0; width: 1000px;">
+					style="border: 1px solid #A6C9E2; border-top: 0; width: 1050px;">
 
 					<p:dataTable id="dt" value="#{itemBean.estoque}" var="item"
 						emptyMessage="Não encontrado" paginator="true" rows="15"
 						paginatorPosition="bottom"
 						rowStyleClass="#{item.produto.quantidadeMinima >= item.quantidadeAtual ? 'even-row2' : 'old-row'}"
-						rowIndexVar="rowIx" style="width: 1000px;">
+						rowIndexVar="rowIx" style="width: 1050px;">
 
 						<p:column width="100" headerText="isbn/código"
 							filterBy="#{item.produto.isbn}" filterMatchMode="exact"
