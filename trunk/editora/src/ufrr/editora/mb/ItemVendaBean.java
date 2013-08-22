@@ -150,11 +150,34 @@ public class ItemVendaBean implements Serializable {
 			itensVendas1 = query.getResultList();
 			if (itensVendas1.isEmpty()) {
 				init();
-				Msg.addMsgError("NÃO FOI EFETUADA NENHUMA VENDA PRODUTO DESTE LOTE");
+				Msg.addMsgError("NÃO FOI EFETUADA NENHUMA VENDA DESTE LOTE");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	// pesquisa nota pelo numero
+	@SuppressWarnings("unchecked")
+	public void getListaVendaByNota() {
+		if (notaFiscal.getNumero().equals(null) || notaFiscal.getNumero() == 0) {
+			Msg.addMsgError("INFORME CORRETAMENTE A NOTA FISCAL");
+
+		} else {
+			try {
+				Query query = dao
+						.query("SELECT i FROM ItemVenda i WHERE i.item.notaFiscal.numero=?");
+				query.setParameter(1, notaFiscal.getNumero());
+				itensVendas1 = query.getResultList();
+				if (itensVendas1.isEmpty()) {
+					init();
+					Msg.addMsgError("NAO FOI EFETUADA NENHUMA VENDA COM A NOTA INFORMADA");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

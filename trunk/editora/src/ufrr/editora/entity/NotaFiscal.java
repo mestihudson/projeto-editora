@@ -17,9 +17,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ufrr.editora.converter.BaseEntity;
+
 @Entity
 @Table(name="tb_nota_fiscal")
-public class NotaFiscal implements Serializable {
+public class NotaFiscal implements Serializable, BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	

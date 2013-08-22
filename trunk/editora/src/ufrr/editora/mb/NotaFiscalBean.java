@@ -54,7 +54,7 @@ public class NotaFiscalBean implements Serializable {
 		box4Search = 2;
 	}
 
-	// pesquisa nota pelo n�mero
+	// pesquisa nota pelo numero
 	@SuppressWarnings("unchecked")
 	public void getNotaFiscalByNumero() {
 		if (notaFiscal.getNumero().equals(null) || notaFiscal.getNumero() == 0) {

@@ -94,7 +94,7 @@
 								update=":form_ativar_gerente:display2"
 								style="float: center; text-align: center;"
 								title="Desativar acesso">
-								<h:outputText styleClass="ui-icon ui-icon-circle-close"
+								<h:outputText styleClass="ui-icon ui-icon-alert"
 									title="Desativar usuário" style="margin:0 auto;" />
 								<f:setPropertyActionListener target="#{usuarioBean.usuario}"
 									value="#{u}" />
@@ -144,11 +144,11 @@
 							<f:facet name="header">
 								<h:outputText value="" />
 							</f:facet>
-							<p:commandLink value="Desativar" onclick="dlgAtivar2.show()"
+							<p:commandLink onclick="dlgAtivar2.show()"
 								update=":form_ativar_gerente:display2"
-								style="float: center; text-align: center; color: red;"
+								style="float: center; text-align: center;"
 								icon="ui-icon ui-icon-circle-close" title="Desativar acesso">
-								<h:outputText styleClass="ui-icon ui-icon-circle-close"
+								<h:outputText styleClass="ui-icon ui-icon-alert"
 									title="Desativar usuário" style="margin:0 auto;" />
 								<f:setPropertyActionListener target="#{usuarioBean.usuario}"
 									value="#{u}" />
