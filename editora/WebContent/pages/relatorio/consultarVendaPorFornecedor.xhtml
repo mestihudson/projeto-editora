@@ -113,16 +113,6 @@
 							action="consultarVendaPorFornecedor.xhtml?faces-redirect=true"
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
-						<!-- gera o relatório -->
-						<p:commandButton value="Gerar relatório" icon="ui-icon-print"
-							ajax="false"
-							rendered="#{not empty itemVendaBean.itensVendas1 and itemVendaBean.box4Search == 1 
-						or not empty itemVendaBean.itensVendas1 and itemVendaBean.box4Search == 2 or not empty itemVendaBean.itensVendas1 and itemVendaBean.box4Search == 4}">
-							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
-							<p:dataExporter type="pdf" target="dtable"
-								fileName="Relatório-Compras-Cliente"
-								preProcessor="#{reportBean.preProcessPDF}" />
-						</p:commandButton>
 
 					</h:panelGrid>
 

@@ -54,7 +54,8 @@ public class UsuarioBean implements Serializable {
 	private Endereco endereco = new Endereco();
 	private List<Perfil> perfis;
 	private List<Usuario> usuarios;
-	private List<Usuario> usuariosE; // Lista em branco
+	private List<Usuario> usuariosE;
+	private List<Usuario> usuariosEmpty; //lista em branco
 	private Validator<Usuario> validator;
 	private String search;
 	private Integer box4Search;
@@ -355,8 +356,8 @@ public class UsuarioBean implements Serializable {
 				try {
 					Query query = dao.query("SELECT u FROM Usuario u WHERE u.preferencia=?");
 					query.setParameter(1, usuario.getPreferencia());
-					usuariosE = query.getResultList();
-					if (usuariosE.isEmpty()) {
+					usuariosEmpty = query.getResultList();
+					if (usuariosEmpty.isEmpty()) {
 						init();
 						Msg.addMsgError("NENHUM REGISTRO ENCONTRADO");
 					}
@@ -1005,4 +1006,11 @@ public class UsuarioBean implements Serializable {
 		this.emails = emails;
 	}
 
+	public List<Usuario> getUsuariosEmpty() {
+		return usuariosEmpty;
+	}
+
+	public void setUsuariosEmpty(List<Usuario> usuariosEmpty) {
+		this.usuariosEmpty = usuariosEmpty;
+	}
 }

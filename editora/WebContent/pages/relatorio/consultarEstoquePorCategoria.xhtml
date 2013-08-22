@@ -83,16 +83,6 @@
 							action="consultarEstoquePorCategoria.xhtml?faces-redirect=true"
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
-						<!-- gera o relatório -->
-						<p:commandButton value="Gerar Relatório" icon="ui-icon-print"
-							ajax="false"
-							rendered="#{not empty itemBean.itens1 and itemBean.box4Search == 1}">
-							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
-							<p:dataExporter type="pdf" target="dtable"
-								fileName="Relatório-Produto-Estoque"
-								preProcessor="#{reportBean.preProcessPDF}" />
-						</p:commandButton>
-
 					</h:panelGrid>
 
 					<fieldset

@@ -93,7 +93,20 @@
 							style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
 							align="center">
 							<h:outputText value="RESULTADO"
-								style="color: white; font-size: 12px;" styleClass="OutPut" />
+								style="color: white; font-size: 12px;" styleClass="OutPut"
+								rendered="#{empty itemVendaBean.itensVendas1}" />
+								
+							<h:outputText value="RESULTADO: "
+								style="color: white; font-size: 12px;" styleClass="OutPut"
+								rendered="#{not empty itemVendaBean.itensVendas1}" />
+								
+							<h:outputText value="LIVRO "
+								style="color: white; font-size: 12px;" styleClass="OutPut"
+								rendered="#{not empty itemVendaBean.itensVendas1 and itemVendaBean.item.produto.tipo.id==1}" />	
+								
+							<h:outputText value="#{itemVendaBean.item.produto.nome}"
+								style="color: white; font-size: 12px;" styleClass="OutPut"
+								rendered="#{not empty itemVendaBean.itensVendas1}" />		
 						</div>
 
 						<!-- 			grid com a lista de vendas			 		 -->

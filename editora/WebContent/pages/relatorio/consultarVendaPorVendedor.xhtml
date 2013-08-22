@@ -114,17 +114,6 @@
 							action="consultarVendaPorVendedor.xhtml?faces-redirect=true"
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
-						<!-- gera o relatório -->
-						<p:commandButton value="Imprimir relatório" icon="ui-icon-print"
-							ajax="false"
-							rendered="#{not empty vendaBean.vendas1 and vendaBean.box4Search == 3 
-						or not empty vendaBean.vendas1 and vendaBean.box4Search == 2}">
-							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
-							<p:dataExporter type="pdf" target="dtable"
-								fileName="Relatório-Compras-Cliente"
-								preProcessor="#{reportBean.preProcessPDF}" />
-						</p:commandButton>
-
 					</h:panelGrid>
 
 					<fieldset
@@ -150,7 +139,7 @@
 							rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 							rowIndexVar="rowIx">
 							
-							<p:column width="10" exportable="false">
+							<p:column width="20" exportable="false">
 								<f:facet name="header">
 									<h:outputText value="Código" />
 								</f:facet>
@@ -163,9 +152,9 @@
 								</f:facet>
 								<h:outputLabel value="#{v.vendedor.nome}" styleClass="OutPut">
 									<f:converter converterId="stringLimiterConverter" />
-									<f:attribute name="limit" value="30" />
+									<f:attribute name="limit" value="35" />
 									<h:outputText value="..."
-										rendered="#{v.vendedor.nome.length()>=31}" styleClass="OutPut" />
+										rendered="#{v.vendedor.nome.length()>=36}" styleClass="OutPut" />
 								</h:outputLabel>
 							</p:column>
 

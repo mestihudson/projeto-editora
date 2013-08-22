@@ -72,12 +72,12 @@
 							action="#{usuarioBean.getCategoria}" ajax="false"
 							icon="ui-icon-search" />
 
-						<p:commandButton
-							action="#{relatorioBean.relatorioClienteCategoria}"
-							value="Gerar Relatorio" ajax="false" icon="ui-icon-print"
-							rendered="#{not empty usuarioBean.usuariosE}">
-							<f:ajax render="@form" />
-						</p:commandButton>
+<!-- 						<p:commandButton -->
+<!-- 							action="#{relatorioBean.relatorioClienteCategoria}" -->
+<!-- 							value="Gerar Relatorio" ajax="false" icon="ui-icon-print" -->
+<!-- 							rendered="#{not empty usuarioBean.usuariosEmpty}"> -->
+<!-- 							<f:ajax render="@form" /> -->
+<!-- 						</p:commandButton> -->
 
 					</h:panelGrid>
 					<br />
@@ -91,12 +91,14 @@
 							align="center">
 							<h:outputText value="RESULTADO"
 								style="color: white; font-size: 12px;" styleClass="OutPut" />
+				
+							<h:outputText value=" - #{usuarioBean.usuario.preferencia.nome}"
+								style="color: white; font-size: 12px;" styleClass="OutPut" rendered="#{not empty usuarioBean.usuariosEmpty}" />		
 						</div>
 
-						<p:dataTable id="grid_dados" var="usuario" 
-							value="#{usuarioBean.usuariosE}"
+						<p:dataTable id="dtable" var="usuario" value="#{usuarioBean.usuariosEmpty}"
 							emptyMessage="Não encontrado"
-							rendered="#{not empty usuarioBean.usuariosE}">
+							rendered="#{not empty usuarioBean.usuariosEmpty}">	
 
 							<p:column headerText="Nome">
 								<h:outputText value="#{usuario.nome}">

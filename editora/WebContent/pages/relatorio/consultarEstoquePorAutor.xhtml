@@ -82,16 +82,6 @@
 							action="consultarEstoquePorAutor.xhtml?faces-redirect=true"
 							ajax="false" style="color: red;" icon="ui-icon-close" />
 
-						<!-- gera o relatório -->
-						<p:commandButton value="Gerar relatório" icon="ui-icon-print"
-							ajax="false"
-							rendered="#{not empty itemBean.itens1 and itemBean.box4Search == 1}">
-							<!-- 							<p:graphicImage value="/resources/img/pdf.png" /> -->
-							<p:dataExporter type="pdf" target="dtable"
-								fileName="Relatório-Estoque-Autor"
-								preProcessor="#{reportBean.preProcessPDF}" />
-						</p:commandButton>
-
 					</h:panelGrid>
 
 					<fieldset
@@ -103,9 +93,11 @@
 							<h:outputText value="RESULTADO"
 								style="color: white; font-size: 12px;" styleClass="OutPut" />
 							<h:outputText value=" - AUTOR: "
-								style="color: white; font-size: 12px;" styleClass="OutPut" />	
+								style="color: white; font-size: 12px;" styleClass="OutPut"
+								rendered="#{not empty itemBean.itens1}" />	
 							<h:outputText value="#{itemBean.produto.autor}"
-								style="color: white; font-size: 12px;" styleClass="OutPut" />	
+								style="color: white; font-size: 12px;" styleClass="OutPut"
+								rendered="#{not empty itemBean.itens1}" />	
 						</div>
 
 						
