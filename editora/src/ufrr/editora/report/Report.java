@@ -22,6 +22,7 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import ufrr.editora.connection.ConnectionFactory;
 
 public class Report {
 	
@@ -42,7 +43,7 @@ public class Report {
 	}
 
 	/**
-	 * Devolve um relatório PDF na response.
+	 * Devolve um relatorio PDF na response.
 	 */
 	public void pdfReport() {
 		JRExporter exporter = null;
@@ -52,12 +53,12 @@ public class Report {
 	}
 
 	/**
-	 * A partir do to tipo do relatório, do Exporter e do JasperPrint devolver o
-	 * OutputStream do relatório no OutPutStream da Response.
+	 * A partir do to tipo do relatorio, do Exporter e do JasperPrint devolver o
+	 * OutputStream do relatorio no OutPutStream da Response.
 	 * 
-	 * @param tipo MIME TYPE do relatório. Será utilizado para configurar o MIME TYPE da Response.
-	 * @param exporter Exporter específico para cada tipo de relatório.
-	 * @param jasperPrint JasperPrint que irá gerar o relatório.
+	 * @param tipo MIME TYPE do relatorio. Sera utilizado para configurar o MIME TYPE da Response.
+	 * @param exporter Exporter especifico para cada tipo de relatario.
+	 * @param jasperPrint JasperPrint que ira gerar o relatario.
 	 */
 	private void fillReport(String tipo, JRExporter exporter, JasperPrint jasperPrint) {
 
@@ -89,10 +90,10 @@ public class Report {
 	}
 
 	/**
-	 * Obtém um objeto JasperPrint para ser utilizado na configuração do
-	 * Exporter de relatórios.
+	 * Obtem um objeto JasperPrint para ser utilizado na configuracao do
+	 * Exporter de relatarios.
 	 * 
-	 * @return JasperPrint que será utilizado na configuração do Exporter.
+	 * @return JasperPrint que sera utilizado na configuracao do Exporter.
 	 */
 	private JasperPrint getJasperPrint() {
 
@@ -102,7 +103,7 @@ public class Report {
 
 		try {
 			stream = findReport();
-			conn = Conexao.getConexao();			
+			conn = ConnectionFactory.getConnection();
 			jasperPrint = JasperFillManager.fillReport(stream, parameters, conn);
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
@@ -128,7 +129,7 @@ public class Report {
 	}
 
 	/**
-	 * Localiza o arquivo .jasper através do nome do relatório.
+	 * Localiza o arquivo .jasper atraves do nome do relatorio.
 	 * 
 	 * @return ImputStream contendo o arquivo .jasper
 	 */
@@ -141,7 +142,7 @@ public class Report {
 			retValue = new FileInputStream(realPath);
 
 			if (retValue == null) {
-				throw new IllegalArgumentException("O relatório de nome "	+ nome + " não foi encontrado.");
+				throw new IllegalArgumentException("O relatorio de nome "	+ nome + " nao foi encontrado.");
 			}
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);

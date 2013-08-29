@@ -44,7 +44,9 @@
 					<div
 						style="background: #394674; align-top: center; height: 20px; line-height: 20px;"
 						align="center">
-						<h:outputText value="CONSULTAR VENDA"
+						<h:outputText value="CONSULTAR VENDA" rendered="#{vendaBean.box4Search!=2}"
+							style="color: white; font-size: 12px;" styleClass="OutPut" />
+							<h:outputText value="CONSULTAR RETIRADA DE CAPITAL" rendered="#{vendaBean.box4Search==2}"
 							style="color: white; font-size: 12px;" styleClass="OutPut" />
 					</div>
 
@@ -56,11 +58,12 @@
 
 						<p:selectOneRadio value="#{vendaBean.box4Search}"
 							rendered="#{vendaBean.venda.id==null}" styleClass="OutPut"
-							style="width: 120px;">
-							<f:selectItem itemLabel="Filtrar por data" itemValue="1" />
+							style="width: 230px;">
+							<f:selectItem itemLabel="Filtrar venda por data" itemValue="1" />
+							<f:selectItem itemLabel="Consultar retirada de capital" itemValue="2" />
 							<f:ajax render="form_pesquisa_venda" />
 						</p:selectOneRadio>
-
+						
 						<p:calendar value="#{vendaBean.venda.dataVenda.time}"
 							rendered="#{vendaBean.box4Search == 1}" size="25" id="data"
 							validatorMessage="Somente numeros"
@@ -71,6 +74,11 @@
 							rendered="#{vendaBean.box4Search == 1}"
 							action="#{vendaBean.getVendaByData}" ajax="false"
 							icon="ui-icon-search" />
+							
+						<p:commandButton value="Cancelar" id="botaoCancelar" style="color: red;"
+							rendered="#{vendaBean.box4Search==2 or vendaBean.box4Search==1}"
+							action="consultarVenda.xhtml?faces-redirect-true" ajax="false"
+							icon="ui-icon-close" />	
 
 					</h:panelGrid>
 
@@ -78,7 +86,7 @@
 					<p:dataTable id="dtable" var="v" value="#{vendaBean.caixaEntrada}"
 						paginator="true" paginatorPosition="bottom" rows="15"
 						emptyMessage="Nenhuma venda encontrada"
-						rendered="#{vendaBean.venda.id==null}"
+						rendered="#{vendaBean.venda.id==null and vendaBean.box4Search!=2}"
 						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
 						rowIndexVar="rowIx">
 
@@ -118,6 +126,48 @@
 								<f:setPropertyActionListener value="#{v}"
 									target="#{vendaBean.venda}" />
 							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+					
+					<!-- 			grid com a lista de retiradas			 		 -->
+					<p:dataTable id="dt_retirada" var="v" value="#{vendaBean.caixaSaida}"
+						paginator="true" paginatorPosition="bottom" rows="15"
+						emptyMessage="Nao encontrado"
+						rendered="#{vendaBean.venda.id==null and vendaBean.box4Search==2}"
+						rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+						rowIndexVar="rowIx">
+
+						<p:column headerText="Usuário" filterBy="#{v.vendedor.nome}"
+							filterMatchMode="contains">
+							<h:outputLabel value="#{v.vendedor.nome}" styleClass="OutPut" />
+						</p:column>
+
+						<p:column headerText="Data" style="text-align: center;">
+							<h:outputLabel value="#{v.dataVenda.time}" styleClass="OutPut">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputLabel>
+						</p:column>
+
+						<p:column headerText="Valor">
+							<h:outputLabel value="#{v.valorTotalDesconto}"
+								styleClass="OutPut">
+								<f:convertNumber type="currency" currencySymbol="R$"
+									locale="pt_BR" />
+							</h:outputLabel>
+						</p:column>
+						
+<!-- 						<p:column headerText="Motivo"> -->
+<!-- 							<h:outputLabel value="Doação" rendered="#{v.tituloObs==3}" styleClass="OutPut" /> -->
+<!-- 							<h:outputLabel value="Roubo" rendered="#{v.tituloObs==4}" styleClass="OutPut" /> -->
+<!-- 							<h:outputLabel value="Troca" rendered="#{v.tituloObs==5}" styleClass="OutPut" /> -->
+<!-- 							<h:outputLabel value="Venda com desconto" rendered="#{v.tituloObs==6}" styleClass="OutPut" /> -->
+<!-- 							<h:outputLabel value="Venda com valor de custo" rendered="#{v.tituloObs==7}" styleClass="OutPut" /> -->
+<!-- 							<h:outputLabel value="Devolução para fornecedor/editora" rendered="#{v.tituloObs==8}" styleClass="OutPut" /> -->
+<!-- 						</p:column> -->
+												
+						<p:column headerText="Justificativa">
+							<h:outputLabel value="#{v.obs}" styleClass="OutPut" />
 						</p:column>
 
 					</p:dataTable>
@@ -227,9 +277,7 @@
 						<!-- 			Lista dos produtos da venda -->
 						<br />
 						<br />
-						<div
-							style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 70px; height: 20px; line-height: 20px;"
-							align="center">
+						<div style="background: #A6C9E2; align-top: center; margin-left: 10px; margin-right: 70px; height: 20px; line-height: 20px;" align="center">
 							<h:outputText value="PRODUTOS"
 								style="color: #394674; font-size: 12px;" styleClass="OutPut" />
 						</div>

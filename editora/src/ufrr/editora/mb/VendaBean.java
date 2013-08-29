@@ -139,7 +139,6 @@ public class VendaBean implements Serializable {
 			if (getCaixaEntrada().isEmpty()) {
 				init();
 				Msg.addMsgError("NENHUMA VENDA EFETUADA NA DATA INFORMADA");
-				return null;
 			}
 
 		} catch (Exception e) {
@@ -208,7 +207,7 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
-	
+
 	//consulta venda pelo vendedor
 	public String getListaVendedorByName() {
 		if (box4Search.equals(2)) {
@@ -724,13 +723,13 @@ public class VendaBean implements Serializable {
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String getCaixaByPeriodo() {
 		if (getDataFinal().before(getDataInicial())) {
 			Msg.addMsgError("PERIODO INVALIDO");
 		} else {
-							
+
 			try {
 				Query query = dao.query("SELECT v FROM Venda v WHERE v.dataVenda between ? and ? and v.operacao=1"
 						+ "and v.tituloObs!=8 order by v.dataVenda");
@@ -747,9 +746,56 @@ public class VendaBean implements Serializable {
 				System.out.println("... erro na consulta do caixa");
 			}
 			return null;
-			}
+		}
 		return null;
 	}
+
+	// para o relatorio de venda por periodo
+	@SuppressWarnings("unchecked")
+	public String getVendaByPeriodo() {
+		if (getDataFinal().before(getDataInicial())) {
+			Msg.addMsgError("PERIODO INVALIDO");
+		} else {
+			if(venda.getFormaPagamento().equals(0)) {
+				try {
+					Query query = dao.query("SELECT v FROM Venda v WHERE v.dataVenda between ? and ? and v.operacao=1"
+							+ "and v.tituloObs!=8 order by v.dataVenda");
+					query.setParameter(1, getDataInicial());
+					query.setParameter(2, getDataFinal());
+					vendas1 = query.getResultList();
+					if (vendas1.isEmpty()) {
+						init();
+						Msg.addMsgError("NENHUMA VENDA EFETUADA NO PERIODO INFORMADO");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("... erro na consulta do caixa");
+				}
+				return null;
+			} else {
+				try {
+					Query query = dao.query("SELECT v FROM Venda v WHERE v.dataVenda between ? and ? and v.formaPagamento = ? and v.operacao=1"
+							+ "and v.tituloObs!=8 order by v.dataVenda");
+					query.setParameter(1, getDataInicial());
+					query.setParameter(2, getDataFinal());
+					query.setParameter(3, venda.getFormaPagamento());
+					vendas1 = query.getResultList();
+					if (vendas1.isEmpty()) {
+						init();
+						Msg.addMsgError("NENHUMA VENDA EFETUADA NO PERIODO INFORMADO");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("... erro na consulta do caixa");
+				}
+				return null;
+			}
+		}
+		return null;
+
+	} 
 
 	/** get and set **/
 

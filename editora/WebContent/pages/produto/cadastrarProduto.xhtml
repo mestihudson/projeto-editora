@@ -273,7 +273,7 @@
 							rendered="#{produtoBean.produto.id==null}"
 							converterMessage="Somente números" maxlength="13"
 							validatorMessage="ISBN INVÁLIDO">
-							<f:ajax event="blur" render="error_codigobarra" />
+							<f:ajax event="blur" execute="@this" render="error_codigobarra" />
 							<f:validateLength minimum="10" maximum="13" />
 						</p:inputText>
 						<p:message id="error_codigobarra" for="prod_isbn"
@@ -287,7 +287,7 @@
 						<p:message id="error_codigobarra2" for="prod_isbn2"
 							rendered="#{produtoBean.produto.id!=null}" />
 						<br />
-						<br />
+						<h:outputText value="Grupo: #{produtoBean.produto.categoria.nome}" />
 
 					</h:panelGrid>
 					<br />
@@ -328,7 +328,7 @@
 				</div>
 
 				<div align="left" style="width: 350px; margin-right: 500px;">
-					<p:messages autoUpdate="true" />
+					<p:messages autoUpdate="true" globalOnly="true" />
 				</div>
 
 			</h:form>

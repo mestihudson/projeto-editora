@@ -775,16 +775,22 @@
 							<h:outputText value="#{item.produto.isbn}" />
 						</p:column>
 
-						<p:column headerText="Produto" width="250"
+						<p:column headerText="Produto" width="270"
 							filterBy="#{item.produto.nome}" filterMatchMode="contains">
 							<h:outputText value="#{item.produto.tipo.nome}: "
 								rendered="#{item.produto.tipo.id eq 1}" />
 							<h:outputText value="#{item.produto.nome}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="30" />
+								<f:attribute name="limit" value="38" />
 							</h:outputText>
 							<h:outputText value="..."
-								rendered="#{item.produto.nome.length()>=31}" />
+								rendered="#{item.produto.nome.length()>=39}" />
+						</p:column>
+						
+						<p:column headerText="Valor" style="text-align: center;">
+							<h:outputText value="#{item.valorVenda}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
 						</p:column>
 
 						<p:column headerText="Lote" width="50" id="lote" style="text-align: center;" filterStyle="max-width: 40px;"
@@ -824,15 +830,15 @@
 								rendered="#{item.produto.categoria.nome==null}" />
 						</p:column>
 
-						<p:column headerText="Entrada" style="color: #1874CD">
+						<p:column headerText="E" style="color: #1874CD" width="10">
 							<h:outputText value="#{item.quantidadeEntrada}" />
 						</p:column>
 
-						<p:column headerText="Saída" style="color: #8B0000">
+						<p:column headerText="S" style="color: #8B0000" width="10">
 							<h:outputText value="#{item.quantidadeSaida}" />
 						</p:column>
 
-						<p:column headerText="qdt. Atual" style="color: blue;">
+						<p:column headerText="A" style="color: blue;" width="10">
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"
