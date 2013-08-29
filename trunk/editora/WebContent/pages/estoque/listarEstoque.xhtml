@@ -22,13 +22,15 @@
 
 			<div id="atencao"
 				style="background: #EFF3FA; height: 55px; width: 100%; float: left;">
-				<br />
 				<h:outputText value="Atenção!" styleClass="OutPut"
 					style="color: red" />
 				<br />
 				<h:outputText
 					value="As linhas destacadas de amarelo mostra a quantidade em nível crítico"
-					styleClass="OutPut" />
+					styleClass="OutPut" /><br />
+				<h:outputLabel value="E - Entrada, " style="color: #1874CD" styleClass="OutPut" />	
+				<h:outputLabel value="S - Saída, " style="color: #8B0000" styleClass="OutPut" />
+				<h:outputLabel value="A - Quantidade Atual" style="color: blue" styleClass="OutPut" />
 			</div>
 
 		</div>
@@ -89,6 +91,12 @@
 							<h:outputText value="..."
 								rendered="#{item.produto.nome.length()>=31}" />
 						</p:column>
+						
+						<p:column headerText="Valor" style="text-align: center;">
+							<h:outputText value="#{item.valorVenda}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+						</p:column>
 
 						<p:column headerText="Lote" width="90" id="lote" style="text-align: center;" filterStyle="max-width: 40px;"
 						filterBy="#{item.notaFiscal.lote}-#{item.notaFiscal.dataEntrada.weekYear}" filterMatchMode="contains">
@@ -127,15 +135,15 @@
 								rendered="#{item.produto.categoria.nome==null}" />
 						</p:column>
 
-						<p:column headerText="Entrada" style="color: #1874CD">
+						<p:column headerText="E" style="color: #1874CD" width="10">
 							<h:outputText value="#{item.quantidadeEntrada}" />
 						</p:column>
 
-						<p:column headerText="Saída" style="color: #8B0000">
+						<p:column headerText="S" style="color: #8B0000" width="10">
 							<h:outputText value="#{item.quantidadeSaida}" />
 						</p:column>
 
-						<p:column headerText="qtd. Atual" style="color: blue;" width="50">
+						<p:column headerText="A" style="color: blue;" width="10">
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual > item.produto.quantidadeMinima}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"

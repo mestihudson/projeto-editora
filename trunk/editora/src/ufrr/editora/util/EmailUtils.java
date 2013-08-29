@@ -58,7 +58,7 @@ public class EmailUtils {
 				+ "\n"
 				+ "\n"
 				+ "Clique no link e informe o codigo abaixo: "
-				+ "http://172.22.10.248:8080/editora/esqueceuSenha.xhtml?faces-redirect=true"
+				+ "http://csi.ufrr.br:8080/editora/esqueceuSenha.xhtml?faces-redirect=true"
 				+ "\n" + "\n" + usuario.getUsuario().getSenha());
 		email2.addTo(usuario.getUsuario().getLogin());
 		String resposta = email2.send();
@@ -78,7 +78,7 @@ public class EmailUtils {
 		 email2 = conectaEmail();
 		 email2.setSubject("Sistema Editora UFRR-noreply");
 		 email2.setMsg("Sua solicitacao de acesso ao sistema editora UFRR foi aceita com sucesso." + "\n" + "Clique no endereco abaixo digite seu email e senha" + "\n" + "\n" +
-		 "http://172.22.10.248:8080/editora" + "\n" + "\n" + "NAO RESPONDA, EMAIL AUTOMATICO.");
+		 "http://csi.ufrr.br:8080/editora" + "\n" + "\n" + "NAO RESPONDA, EMAIL AUTOMATICO.");
 		 email2.addTo(usuario.getLogin());
 		 String resposta = email2.send();
 		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CONFIRMAÇÃO DE ACESSO ENVIADO PARA O EMAIL: " + usuario.getLogin(), "Informacao"));

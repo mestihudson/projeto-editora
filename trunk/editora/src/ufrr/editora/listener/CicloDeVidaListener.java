@@ -4,7 +4,7 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
-public class CicloDeVidaListener implements PhaseListener{
+public class CicloDeVidaListener implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
 

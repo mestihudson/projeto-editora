@@ -206,13 +206,13 @@
 							</p:column>
 
 							<p:column>
-								<f:facet name="header">Fornecedor</f:facet>
-								<h:outputLabel value="#{i.item.notaFiscal.fornecedor.nome}">
+								<f:facet name="header">Cliente</f:facet>
+								<h:outputLabel value="#{i.venda.cliente.nome}">
 									<f:converter converterId="stringLimiterConverter" />
-									<f:attribute name="limit" value="37" />
+									<f:attribute name="limit" value="27" />
 								</h:outputLabel>
 								<h:outputText value="..."
-									rendered="#{i.item.notaFiscal.fornecedor.nome.length()>=38}" />
+									rendered="#{i.venda.cliente.nome.length()>=28}" />
 							</p:column>
 
 							<p:column width="50">

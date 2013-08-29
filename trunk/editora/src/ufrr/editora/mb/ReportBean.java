@@ -25,7 +25,7 @@ public class ReportBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// relat�rio de clientes (todos)
+	// relatorio de clientes (todos)
 	public void relatorioClientes() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		Report report = new Report("Relatorio-Clientes", params);
@@ -34,7 +34,7 @@ public class ReportBean implements Serializable {
 				.println("...solicitacao do relatorio de todos os clientes cadastrados");
 	}
 
-	// relat�rio de clientes por categoria
+	// relatorio de clientes por categoria
 	public void relatorioCategoria() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		Report report = new Report("Relatorio-Categoria", params);
@@ -44,7 +44,7 @@ public class ReportBean implements Serializable {
 				.println("...solicitacao do relatorio dos clientes por categoria");
 	}
 
-	// relat�rio de fornecedores (todos)
+	// relatorio de fornecedores (todos)
 	public void relatorioFornecedores() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		Report report = new Report("Relatorio-Fornecedores", params);
@@ -101,5 +101,4 @@ public class ReportBean implements Serializable {
 
 		pdf.add(Image.getInstance(logo));
 	}
-
 }

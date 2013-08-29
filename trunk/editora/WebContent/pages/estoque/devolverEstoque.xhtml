@@ -22,12 +22,14 @@
 
 			<div id="atencao"
 				style="background: #EFF3FA; height: 55px; width: 100%; float: left;">
-				<br />
 				<h:outputText value="Atenção!" styleClass="OutPut"
 					style="color: red" />
 				<br />
 				<h:outputText value="A quantidade informada afetará o estoque atual"
 					styleClass="OutPut" />
+				<br />
+				<h:outputLabel value="E - Entrada, " style="color: #1874CD" styleClass="OutPut" />	
+				<h:outputLabel value="A - Quantidade Atual" style="color: blue" styleClass="OutPut" />
 			</div>
 
 		</div>
@@ -80,17 +82,17 @@
 								style="color: #CD0000;" rendered="#{item.quantidadeAtual==0}" />
 						</p:column>
 
-						<p:column headerText="Produto" width="250"
+						<p:column headerText="Produto" width="280"
 							filterBy="#{item.produto.nome}" filterMatchMode="contains">
 							<h:outputText value="#{item.produto.tipo.nome}: "
 								rendered="#{item.produto.tipo.id eq 1 and item.quantidadeAtual!=0}" />
 							<h:outputText value="#{item.produto.nome}"
 								rendered="#{item.quantidadeAtual!=0}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="41" />
+								<f:attribute name="limit" value="43" />
 							</h:outputText>
 							<h:outputText value="..."
-								rendered="#{item.produto.nome.length()>=42 and item.produto.tipo.id eq 1 and item.quantidadeAtual!=0}" />
+								rendered="#{item.produto.nome.length()>=44 and item.produto.tipo.id eq 1 and item.quantidadeAtual!=0}" />
 
 							<h:outputText value="#{item.produto.tipo.nome}: "
 								style="color: #CD0000;"
@@ -98,10 +100,16 @@
 							<h:outputText value="#{item.produto.nome}"
 								style="color: #CD0000;" rendered="#{item.quantidadeAtual==0}">
 								<f:converter converterId="stringLimiterConverter" />
-								<f:attribute name="limit" value="41" />
+								<f:attribute name="limit" value="43" />
 							</h:outputText>
 							<h:outputText value="..." style="color: #CD0000"
-								rendered="#{item.produto.nome.length()>=42 and item.produto.tipo.id eq 1 and item.quantidadeAtual==0}" />
+								rendered="#{item.produto.nome.length()>=44 and item.produto.tipo.id eq 1 and item.quantidadeAtual==0}" />
+						</p:column>
+						
+						<p:column headerText="Valor" style="text-align: center;" width="50">
+							<h:outputText value="#{item.valorVenda}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
 						</p:column>
 												
 						<p:column headerText="Lote" width="50" style="text-align: center;" filterStyle="max-width: 40px;"
@@ -138,7 +146,7 @@
 								rendered="#{item.produto.autor==null}" />
 						</p:column>
 
-						<p:column headerText="qtd Entrada" style="color: #1874CD" width="20">
+						<p:column headerText="E" style="color: #1874CD" width="20">
 							<h:outputText value="#{item.quantidadeEntrada}"
 								rendered="#{item.quantidadeAtual!=0}" />
 
@@ -146,7 +154,7 @@
 								style="color: #CD0000;" rendered="#{item.quantidadeAtual==0}" />
 						</p:column>
 
-						<p:column headerText="qtd Atual" style="color: blue;" width="20">
+						<p:column headerText="A" style="color: blue;" width="20">
 							<h:outputText value="#{item.quantidadeAtual}"
 								rendered="#{item.quantidadeAtual!=0}" />
 							<h:outputText value="(#{item.quantidadeAtual2})"
