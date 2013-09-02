@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-//	public static Connection getConnection() {
+//	public Connection getConnection() {
 //		try {
 //			return DriverManager.getConnection("jdbc:postgresql://localhost/editora", "postgres", "leo123");
 //		} catch (SQLException e) {
@@ -16,9 +16,9 @@ public class ConnectionFactory {
 //	}
 	
 	// para servidor de teste
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		try {
-			return DriverManager.getConnection("jdbc:postgresql://172.22.10.248:8080/SIS_editora", "csi", "D515_UfRR");
+			return DriverManager.getConnection("jdbc:postgresql://172.22.10.248/SIS_editora", "csi", "D515_UfRR");
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
