@@ -25,7 +25,7 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import ufrr.editora.connection.ConnectionFactory;
 
 public class Report {
-	
+
 	HashMap<String, Object> parameters;
 	FacesContext facesContext;
 	String nome;
@@ -37,7 +37,7 @@ public class Report {
 		parameters = new HashMap<String, Object>();
 		parameters.putAll(params);
 	}	
-	
+
 	public Report() {
 		facesContext = FacesContext.getCurrentInstance();		
 	}
@@ -70,8 +70,8 @@ public class Report {
 
 		try {
 			// tentando jogar direto para impressora
-//			JasperPrintManager.printReport("/WEB-INF/classes/ufrr/editora/report/" + nome + ".jasper", false);
-			
+			//			JasperPrintManager.printReport("/WEB-INF/classes/ufrr/editora/report/" + nome + ".jasper", false);
+
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
@@ -103,7 +103,7 @@ public class Report {
 
 		try {
 			stream = findReport();
-			conn = ConnectionFactory.getConnection();
+			conn = new ConnectionFactory().getConnection();
 			jasperPrint = JasperFillManager.fillReport(stream, parameters, conn);
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
@@ -138,7 +138,7 @@ public class Report {
 		InputStream retValue = null;
 		try {
 			ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-			String realPath = servletContext.getRealPath("/WEB-INF/classes/ufrr/editora/report/" + nome + ".jasper");
+			String realPath = servletContext.getRealPath("/WEB-INF/jasper/" + nome + ".jasper");
 			retValue = new FileInputStream(realPath);
 
 			if (retValue == null) {
@@ -149,23 +149,12 @@ public class Report {
 		}
 		return retValue;
 	}
-	
+
 	public String findSubReport(String nomeSub) {
 		String realPath2 = "";
 		try {
 			ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-			realPath2 = servletContext.getRealPath("/WEB-INF/classes/ufrr/editora/report/" + nomeSub + ".jasper");			
-		} catch (Exception ex) {
-			Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return realPath2;
-	}
-	
-	public String findLogo() {
-		String realPath2 = "";
-		try {
-			ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-			realPath2 = servletContext.getRealPath("/img/logomarca.jpg");			
+			realPath2 = servletContext.getRealPath("/WEB-INF/jasper/" + nomeSub + ".jasper");			
 		} catch (Exception ex) {
 			Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
 		}

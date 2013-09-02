@@ -437,7 +437,7 @@ public class VendaBean implements Serializable {
 		return null;
 	}
 
-	// m�todo para adicionar produto a venda
+	// metodo para adicionar produto a venda
 	public void guardaItem() {
 		boolean all = true;
 		if (!all) {
@@ -451,7 +451,7 @@ public class VendaBean implements Serializable {
 			}
 			if (this.cadastro == true) {
 
-				// este for verifica se a quantidade do produto informado est� dispon�vel no estoque
+				// este for verifica se a quantidade do produto informado esta disponivel no estoque
 				// se for menor que 0, error!
 				for (ItemVenda i : this.getVenda().getItensVendas()) {
 					if (i.getItem().getQuantidadeAtual() - i.getQuantidade() <= -1) {

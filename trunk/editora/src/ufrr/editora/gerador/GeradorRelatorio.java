@@ -26,7 +26,7 @@ public class GeradorRelatorio {
 	public void geraPDFParaOutPutStream(OutputStream outputStream) {
 		try {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(this.nomeArquivo, this.parametros, this.connection);
-			
+
 			JRExporter exporter = new JRPdfExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, outputStream);

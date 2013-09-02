@@ -9,7 +9,7 @@ import ufrr.editora.entity.Usuario;
 
 public class UsuarioDAO {
 
-	// Para usuário logar no sistema
+	// Para usuario logar no sistema
 	public Usuario existe(Usuario usuario) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
@@ -32,7 +32,7 @@ public class UsuarioDAO {
 		return login;
 	}
 	
-	// Para usuário logar no sistema com código criptografado
+	// Para usuario logar no sistema com codigo criptografado
 	public Usuario senhaCriptografada(Usuario usuario) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
@@ -54,7 +54,7 @@ public class UsuarioDAO {
 		return login;
 	}
 	
-	// Para usuário logar no com cpf e solicitar nova senha
+	// Para usuario logar no com cpf e solicitar nova senha
 	public Usuario trocaSenha(Usuario usuario) {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
